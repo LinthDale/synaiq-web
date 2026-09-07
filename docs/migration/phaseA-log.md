@@ -79,16 +79,18 @@ API 於 `docs.astro.build` 覆核：Content Layer `glob()` loader（`astro/loade
   `<meta name="robots" content="noindex">`，且不入 sitemap。
 - `docs/guidelines/CSS-Handbook.md`：三條規則與「怎麼改 token」的操作說明。
 
-### S6 語系與 SEO（FR-106） — todo
+### S6 語系與 SEO（FR-106） — done
 
 - `sitemap-index.xml` + `sitemap-0.xml` 涵蓋 zh-Hant 9 條路由，排除 draft（`/en/**`）與 `/styleguide/`。
 - 每頁 canonical 指向自身；`hreflang` 對 `zh-Hant-TW` / `en` 成對並含 `x-default`（指向 zh-Hant）。
 - 語言切換器只連非 draft 目標：zh-Hant 頁面因對應 `/en/` 為 draft 而不顯示切換器，
   `/en/` 頁面則顯示回 zh-Hant 的連結。
 
-### S7 測試（FR-107） — todo
+### S7 測試（FR-107） — done
 
-- `tests/`，`node --test`，`pretest` 會先 build，全部斷言只讀 `dist/`。
+- `tests/`（4 個測試檔、25 個測試），`node --test`，`pretest` 會先 build，全部斷言只讀 `dist/`。
+- 遷移零遺漏由 397 個字串逐一比對 dist HTML 驗證。
+- 舊內容目錄 `content/pages/` 於測試通過後移除；對照表留在 docs/migration/。
 - 涵蓋：路由 × 語系的關鍵區塊存在、`<html lang>`、`<title>` 全站唯一、
   sitemap 內容、hreflang 成對、`dist/` 無 `localhost`／`8400`／`http://`、
   內容頁零 `<script type="module">`、`src/` 除 `tokens.css` 外零硬編碼色值、

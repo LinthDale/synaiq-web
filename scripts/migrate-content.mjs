@@ -11,7 +11,7 @@
  *    `tests/fixtures/content-key-map.json`（`npm test` 用來驗證每個舊 key 的文字都出現在 dist HTML）。
  */
 
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -43,7 +43,16 @@ const SWITCHER_LABELS = { 'zh-Hant': '語言', en: 'Language' };
 const HOME_TITLE_TEMPLATE = '%s';
 
 function readSource(name) {
-  return parsePageMarkdown(readFileSync(join(SOURCE_DIR, `${name}.md`), 'utf8'));
+  const file = join(SOURCE_DIR, `${name}.md`);
+  if (!existsSync(file)) {
+    throw new Error(
+      `找不到舊內容檔 content/pages/${name}.md。\n` +
+        '遷移完成並通過 npm test 後，舊內容目錄已從工作區移除（對照表留在 ' +
+        'docs/migration/content-key-map.md）。要重跑遷移請先從 git 歷史還原：\n' +
+        '  git checkout <FR-104 之前的 commit> -- content/pages',
+    );
+  }
+  return parsePageMarkdown(readFileSync(file, 'utf8'));
 }
 
 function writeMarkdown(path, frontmatter) {
