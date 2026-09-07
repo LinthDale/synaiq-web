@@ -6,16 +6,8 @@ node_modules/
 
 # 建置產物
 dist/
-.next/
-out/
-.vite/
+.astro/
 *.tsbuildinfo
-next-env.d.ts.bak
-
-# Cloudflare / Wrangler
-.wrangler/
-.dev.vars
-.dev.vars.*
 
 # 環境變數（絕不入版控）
 .env
@@ -42,6 +34,3 @@ desktop.ini
 
 # 本機開發工具殘留
 .impeccable/
-
-# vinext dev cache
-.vinext/

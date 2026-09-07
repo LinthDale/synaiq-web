@@ -1,0 +1,78 @@
+/* ==========================================================================
+   SynaiQ Design Tokens — 佔位組（PLACEHOLDER SET）
+
+   ⚠ 這裡的每一個「數值」都是中性佔位，不是品牌色票，也不是最終字級。
+     正式數值由 PRD-005（品牌手冊）與 PRD-003（視覺設計）定案後整批置換。
+     本檔在 PRD-001 的角色只有一個：證明「token 機制」成立
+     —— 全站唯一的 CSS custom property 定義處。
+
+   規則（詳見 docs/guidelines/CSS-Handbook.md）
+   1. 只有本檔可以宣告 `--` 開頭的 custom property，其餘檔案一律只能 `var()` 引用。
+   2. 全 repo 除本檔外零硬編碼色值（`#`、`rgb(`、`hsl(`）——由 npm test 驗證。
+   3. 改本檔一個值，`/styleguide` 與所有路由同步變動；不需要改任何元件。
+   ========================================================================== */
+
+:root {
+  /* --- 色彩：中性灰階 + 單一強調色（佔位） ----------------------------- */
+  --color-ink-900: #14161a;
+  --color-ink-700: #3d434d;
+  --color-ink-500: #6b7280;
+  --color-ink-300: #b6bcc6;
+  --color-ink-100: #e3e6ea;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f6f8;
+  --color-accent: #2f5bd8;
+  --color-accent-contrast: #ffffff;
+
+  /* --- 色彩語意別名：元件只用這一層，不直接用上面的階梯 ---------------- */
+  --color-text: var(--color-ink-900);
+  --color-text-muted: var(--color-ink-500);
+  --color-text-inverse: var(--color-accent-contrast);
+  --color-border: var(--color-ink-300);
+  --color-border-subtle: var(--color-ink-100);
+  --color-link: var(--color-accent);
+  --color-focus-ring: var(--color-accent);
+
+  /* --- 字體家族（佔位；FR-108 資產瘦身後才換自訂字型） ----------------- */
+  --font-sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* --- 字級：單一 1.25 模組化級數，base 1rem = 16px（佔位） ------------- */
+  --text-xs: 0.8rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5625rem;
+  --text-2xl: 1.9531rem;
+  --text-3xl: 2.4414rem;
+
+  /* --- 行高與字距 ------------------------------------------------------- */
+  --leading-tight: 1.25;
+  --leading-normal: 1.6;
+  --tracking-wide: 0.08em;
+
+  /* --- 字重 -------------------------------------------------------------- */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* --- 間距：單一 4px 基準級數（佔位） --------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* --- 版面 -------------------------------------------------------------- */
+  --layout-max: 72rem;
+  --layout-gutter: var(--space-4);
+
+  /* --- 邊框與圓角 -------------------------------------------------------- */
+  --border-width: 1px;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+}

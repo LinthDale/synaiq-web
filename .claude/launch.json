@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "synaiq-web-dev",
+      "name": "synaiq-web-astro-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "-p", "3001"],
-      "port": 3001,
+      "runtimeArgs": ["run", "dev", "--", "--port", "4321"],
+      "port": 4321,
       "autoPort": false
     }
   ]
