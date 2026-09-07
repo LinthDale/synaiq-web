@@ -13,7 +13,7 @@ Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
 
 | PRD | 標題 | 版本 | 狀態 | Owner | ADO Feature | 順序 |
 |---|---|---|---|---|---|---|
-| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整與死碼清理 | v0.1 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
+| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整與死碼清理 | v0.2 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
 | [PRD-002](prd/PRD-002-kip-content.md) | SYNAIQ KIP 產品線資訊更新 | v0.1 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 平行（M1 為 004 的前置閘門） |
 | [PRD-003](prd/PRD-003-visual-design.md) | 設計更新 | v0.1 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 4 |
 | [PRD-004](prd/PRD-004-uiux.md) | UIUX 更新與雙語資訊架構 | v0.1 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 3 |
@@ -46,7 +46,7 @@ flowchart LR
 
 ## ADO 對照表
 
-Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐條開立。
+Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐條開立。Sprint 22（2026-08-31 至 09-11）已排入 PRD-001 的五條不需裁定即可動工的 FR。
 
 | 類型 | ADO 標題 | 連結 |
 |---|---|---|
@@ -57,6 +57,9 @@ Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐�
 | Feature | `[官網] PRD-004 UIUX 更新 — 資訊架構、導覽、RWD 與 WCAG 2.2 AA` | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) |
 | Feature | `[官網] PRD-005 統一視覺手冊 — 色票、字級、logo 用法與禁則` | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) |
 | Feature | `[官網] PRD 規範 — 網站專案精簡 guideline、模板與 ADR 流程` | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) |
+| PBI（Sprint 22） | `[官網] PRD-001 架構重整 — Sprint 22 啟動（FR-106/101/102/103/107）` | [#1302](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1302) |
+| PBI（Sprint 22，Done） | `[官網] PRD 規範 — 文件組建立（guideline、5 份 PRD、模板、ADR）` | [#1308](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1308) |
+| Task × 5（Sprint 22） | FR-106、FR-101、FR-102、FR-103、FR-107，見 PRD-001 §3 | [#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303)、[#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304)、[#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305)、[#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306)、[#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) |
 
 ## 相關文件
 

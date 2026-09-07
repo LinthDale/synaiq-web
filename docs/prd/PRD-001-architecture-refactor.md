@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.1 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-07 |
+| v0.2 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-07 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 > 技術現況、缺陷清單、待釐清事項的唯一事實來源為 [`../../HANDOVER.md`](../../HANDOVER.md)，本文不複述。
@@ -34,13 +34,13 @@
 
 | FR | 需求 | 驗收條件 | ADO Task |
 |---|---|---|---|
-| FR-101 | 移除 `app/layout.tsx:26` 指向 `http://localhost:8400` 且帶 token 的 live script；該 token 視為已外洩，另列輪替待辦 | `npm run build` 後於 `dist/` 全文搜尋 `localhost` 與 `8400` 皆零命中；9 條路由的輸出 HTML 皆無 `http://` 外部資源；輪替待辦已建 ADO Task 並指派負責人 | TBD |
-| FR-102 | 刪除整個 `app/_sites-preview/`（`SkeletonPreview.tsx` 匯入的 `react-loading-skeleton` 不在 `package.json` 也不在 lock 檔） | 目錄不存在；`npm run build` 綠燈；全 repo 搜尋 `react-loading-skeleton` 零命中 | TBD |
-| FR-103 | `app/page.tsx:551` 的「畫布編輯」浮動按鈕改為僅在 `?edit=1` 或開發環境渲染（目前無條件渲染，CSS 也無隱藏規則） | 生產 build 下 `/` 的輸出 HTML 不含該按鈕；加上 `?edit=1` 後按鈕與面板皆出現 | TBD |
+| FR-101 | 移除 `app/layout.tsx:26` 指向 `http://localhost:8400` 且帶 token 的 live script；該 token 視為已外洩，另列輪替待辦 | `npm run build` 後於 `dist/` 全文搜尋 `localhost` 與 `8400` 皆零命中；9 條路由的輸出 HTML 皆無 `http://` 外部資源；輪替待辦已建 ADO Task 並指派負責人 | [#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304) |
+| FR-102 | 刪除整個 `app/_sites-preview/`（`SkeletonPreview.tsx` 匯入的 `react-loading-skeleton` 不在 `package.json` 也不在 lock 檔） | 目錄不存在；`npm run build` 綠燈；全 repo 搜尋 `react-loading-skeleton` 零命中 | [#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305) |
+| FR-103 | `app/page.tsx:551` 的「畫布編輯」浮動按鈕改為僅在 `?edit=1` 或開發環境渲染（目前無條件渲染，CSS 也無隱藏規則） | 生產 build 下 `/` 的輸出 HTML 不含該按鈕；加上 `?edit=1` 後按鈕與面板皆出現 | [#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306) |
 | FR-104 | **決策後移除**死檔：`db/`、`drizzle/`、`drizzle-orm`、`drizzle-kit`、`app/chatgpt-auth.ts`、`next.config.ts`、`scripts/status-reporter.mjs`、`WEBSITE_CODE_HANDOFF.md`。移除授權尚未取得，見 §7 OQ-7 | 取得業主書面授權後：上述路徑不存在；`package.json` 移除 `drizzle-orm`／`drizzle-kit` 與 `db:generate`／`status` script；`npm run build`、`npm test`、`npm run lint` 綠燈 | TBD |
 | FR-105 | 資產瘦身：`NotoSansCJKtc-Medium.otf`（16.5 MB）subset 後轉 WOFF2；刪除零引用的 `synaiq-logo-dark.svg`（7.5 MB）；壓縮 `wally-series.png`（13.3 MB）等大圖 | 字型 ≤ 300 KB；單張圖 ≤ 500 KB；`public/` 總量 ≤ 15 MB；9 條路由目視無缺字、無破圖 | TBD |
-| FR-106 | 重寫 `tests/rendered-html.test.mjs`：斷言一律針對 build 後的輸出 HTML，移除所有 `.tsx` 原始碼 regex 與字型檔 byte 數斷言。**本 FR 為 FR-101/102/103/104/105 的前置** | 測試檔內零 `readFile('*.tsx')` 類原始碼讀取、零 byte 數斷言；9 條路由各有至少一條「關鍵區塊存在」斷言；改 class 名或抽元件不會使測試變紅 | TBD |
-| FR-107 | 建立本機 `npm install → npm run build → npm test` 綠燈基線，並把 OpenAI Sites 的實際部署動作寫入 `docs/`（repo 目前無 CI 與部署設定） | 三道指令在乾淨 clone 上依序綠燈，輸出留存；`docs/` 內有一份可照做的部署步驟，經一次實際部署驗證 | TBD |
+| FR-106 | 重寫 `tests/rendered-html.test.mjs`：斷言一律針對 build 後的輸出 HTML，移除所有 `.tsx` 原始碼 regex 與字型檔 byte 數斷言。**本 FR 為 FR-101/102/103/104/105 的前置** | 測試檔內零 `readFile('*.tsx')` 類原始碼讀取、零 byte 數斷言；9 條路由各有至少一條「關鍵區塊存在」斷言；改 class 名或抽元件不會使測試變紅 | [#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303) |
+| FR-107 | 建立本機 `npm install → npm run build → npm test` 綠燈基線，並把 OpenAI Sites 的實際部署動作寫入 `docs/`（repo 目前無 CI 與部署設定） | 三道指令在乾淨 clone 上依序綠燈，輸出留存；`docs/` 內有一份可照做的部署步驟，經一次實際部署驗證 | [#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) |
 | FR-108 | Tailwind v4 去留決策（全站零 utility class，只用到 preflight 與少數 CSS 變數） | 產出一句話決策並記錄於 §8；若決定移除則 `tailwindcss`／`@tailwindcss/postcss` 自 `package.json` 消失且 9 條路由視覺無差異（截圖比對） | TBD |
 
 ## 4. NFR 差異
@@ -88,3 +88,4 @@
 | 版本 | 日期 | 變更摘要 | commit / ADR |
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，依 `HANDOVER.md` 建立 FR-101 至 FR-108 | |
+| v0.2 | 2026-09-07 | 掛接 Sprint 22：PBI [#1302](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1302) 與 Task #1303 至 #1307（FR-106／101／102／103／107）。FR-104、105、108 未排入 sprint | |
