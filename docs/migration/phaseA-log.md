@@ -104,6 +104,30 @@ API 於 `docs.astro.build` 覆核：Content Layer `glob()` loader（`astro/loade
 - `docs/operations/deploy-hostinger.md`：前置作業、首次 staging 部署、`synaiq.com` 切換
   （含 WordPress 備份與 `public_html` 覆蓋）、18 個 URL 驗證、回滾。
 
+## 驗收證據（2026-09-07，乾淨 `npm ci` 後量測）
+
+| 項目 | 指令 | 數字 |
+|---|---|---|
+| 乾淨安裝 | `npm ci` | 343 packages，exit 0 |
+| 建置 | `npm run build` | 19 頁（9 路由 × 2 語系 + `/styleguide`），exit 0 |
+| 測試 | `npm test` | 4 個測試檔、25 個測試，pass 25 / fail 0 |
+| dist 產物 | — | 49 個檔案，其中 19 個 HTML |
+| client JS | `<script type="module">` 命中 | **0**（`<script>` 全站也是 0） |
+| 外部依賴 | dist HTML 含 `http://` / `localhost` / `8400` | **0 / 0 / 0** |
+| token 機制 | `src/**/*.{astro,css,ts}` 除 `tokens.css` 外硬編碼色值 | **0**（掃 47 個檔） |
+| island 白名單 | `src/` 的 `client:` 指令 | **0**（與 PRD §2 目前的空白名單一致） |
+| 內容零遺漏 | 對照表 | 191 筆舊 key、397 個字串，全部在 dist HTML 命中 |
+| schema 失敗訊息 | 刪掉 `about.md` 的 `metadata.description` 重跑 build | 建置失敗，訊息含 `pages → zh-hant/about`、`metadata.description: Required` 與絕對檔案路徑 |
+
+## 已知風險（未在本階段解決）
+
+| # | 風險 | 說明 |
+|---|---|---|
+| R1 | `public/` 59.84 MB，遠超 guideline 的 15 MB | FR-108 資產瘦身本階段刻意不做。最大三個檔：`fonts/NotoSansCJKtc-Medium.otf` 15.74 MB、`brand/wally/wally-series.png` 12.71 MB、`brand/synaiq-logo-dark.svg` 7.15 MB（內嵌 base64 PNG）。11 張圖超過 500 KB。這會讓每次 FTP 上傳都搬約 60 MB |
+| R2 | 頁首暫時用文字「SynaiQ」當品牌連結，沒有放 logo 圖 | `synaiq-logo-light.svg` 是純白色（`fill:#fff`），放在目前的白底上看不見；`synaiq-logo-dark.svg` 是 7 MB 的內嵌 PNG。等 FR-108 產出合適的 logo 資產、或 PRD-003 定案底色後再放 |
+| R3 | 安全標頭（HSTS / CSP / `X-Content-Type-Options` / `Referrer-Policy`）未設定 | 共享主機要靠 `.htaccess`，需實際部署後才能驗證，已記在部署手冊 §6 |
+| R4 | Lighthouse 四項門檻未量測 | 需要實際部署的 URL，待首次 staging 部署後補 |
+
 ## 偏離與決策
 
 | # | 項目 | 決策 | 理由 |
