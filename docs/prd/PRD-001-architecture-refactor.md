@@ -1,87 +1,126 @@
-# PRD-001：架構重整與死碼清理
+# PRD-001：架構重整：Astro + React islands 換底重建
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.2 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-07 |
+| v0.3 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-07 |
 
-> NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
-> 技術現況、缺陷清單、待釐清事項的唯一事實來源為 [`../../HANDOVER.md`](../../HANDOVER.md)，本文不複述。
+> NFR 繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異；換底決策、被否決方案與查證來源見 [`ADR-001`](../adr/ADR-001-astro-react-islands-hostinger.md)；舊樹現況見 [`../../HANDOVER.md`](../../HANDOVER.md)。三者皆不複述。
 
 ## 1. 問題與目標
 
-**問題**：接手的站台帶著指向 `http://localhost:8400` 且 URL 內含 token 的開發用 live script、
-對外訪客可見的內部「畫布編輯」按鈕、依賴未安裝套件的死檔，以及一組讀 `.tsx` 原始碼做 regex
-比對的不可信測試。在這個狀態下，任何後續改動既不安全（token 已外洩、mixed content 被擋）
-也無法驗證（合法重構會誤報失敗，真正的破壞抓不到）。四條工作線都疊在這個地基上。
+**問題**：站台建立在 `vinext@1.0.0-beta.2` 上，跑在 Cloudflare Worker、託管 OpenAI Sites，而公司實際持有的是 Hostinger 帳號，repo 內零部署設定，改完既無法上線也無法驗證。
+內容靠自寫 `## key` 解析器載入，無 schema、無 per-locale 結構；Tailwind 裝了零使用；測試讀 `.tsx` 原始碼做 regex 比對。原地清理只會把四條工作線繼續疊在一個無升級路徑、無部署路徑的 beta 相容層上。
 
 | 項目 | 內容 |
 |---|---|
-| Goal | 1. 全站輸出 HTML 零 `localhost` 引用、零 mixed content；2. `npm install → build → test` 在本機一次綠燈且測試斷言全部驗證輸出 HTML；3. `public/` 總量由 60 MB 以上降至 ≤ 15 MB |
-| Non-Goal | 不改任何文案（PRD-002）、不改視覺樣式（PRD-003）、不動資訊架構與導覽（PRD-004） |
-| Constraints | `vinext` 為 1.0.0-beta.2，升版風險自負；repo 內無 CI 與部署設定；重構不得讓日後的 per-locale 內容結構（PRD-004）更難做 |
-| 角色 | 開發者（唯一角色，本 PRD 對訪客無可見變更，除 FR-103 移除內部按鈕外） |
+| Goal | 1. **建置與部署**：乾淨 clone 執行 `npm ci && npm run build` 產出純靜態 `dist/`，並依文件化步驟成功部署到 Hostinger `public_html` 一次；2. **效能**：內容頁（§2 islands 表列之外）client JS 為 0 bytes，Lighthouse 行動裝置達 guideline §4 四項門檻，`public/` ≤ 15 MB；3. **內容**：9 頁 × 2 語系以 Content Collections 加 zod schema 載入，任一必填欄位缺漏在 build 期失敗並指出檔名與欄位路徑 |
+| Non-Goal | 1. 不做視覺改版（PRD-003）、不改資訊架構與導覽項（PRD-004）、不改文案（PRD-002）；2. token **數值**只由 `app/globals.css` 原樣搬一組暫用值，正式色票與字級歸 PRD-005；3. 不寫英文文案（PRD-002 M2），本案只建 `/en/` 路由骨架與佔位內容 |
+| Constraints | Hostinger Git 部署不執行 build、原生自動部署僅綁 GitHub，而本 repo 在 Azure DevOps，故 build 必須在 Hostinger 之外完成；Astro 7 需 Node ≥ 22.12.0；Hostinger 方案已確認為 Business Web Hosting，`synaiq.com` 現為其上的 WordPress 站，CDN 與 SSH 未確認（§7）；重建期間舊站與現行 WP 皆維持現狀不動 |
+| 角色 | 開發者（重建執行者）、內容編輯（改 frontmatter 欄位，仍需重新 build 才生效） |
 
 ## 2. 範圍
 
-| 項目 | 內容 |
-|---|---|
-| 涵蓋路由 | 全部 9 條（僅影響共用 layout 與首頁），不改任何路由結構 |
-| 涵蓋檔案 | `app/layout.tsx`、`app/page.tsx`、`app/_sites-preview/`、`db/`、`drizzle/`、`app/chatgpt-auth.ts`、`next.config.ts`、`scripts/status-reporter.mjs`、`WEBSITE_CODE_HANDOFF.md`、`tests/rendered-html.test.mjs`、`package.json`、`public/fonts/`、`public/brand/` |
-| 不涵蓋 | `content/pages/*.md` 的內容、`app/globals.css` 的視覺樣式、`worker/index.ts` 的請求邏輯 |
-| 依賴 PRD | 無（本案第一順位） |
+```
+astro.config.mjs        output:'static'、i18n（zh-Hant 無前綴／en 前綴）、integrations:[react()]
+src/content.config.ts   defineCollection + glob() loader + zod schema
+src/content/site/{zh-hant,en}.md
+src/content/pages/{zh-hant,en}/{home,about,products,wally,knowledge-base,generative-ai,agi,media,contact}.md
+src/layouts/、src/components/**.astro（零 client JS）、src/components/islands/**（唯一可寫 React 之處）
+src/pages/{index,about,…,styleguide}.astro、src/pages/en/**
+src/styles/tokens.css（token 單一事實來源）、public/（字型與品牌資產，經 FR-108 瘦身）
+```
+
+導覽、頁尾、`/styleguide` 與全部內容區塊皆為 `.astro`，零水合。候選 island 只有下列四項：
+
+| 元件 | 是否 island | 水合指令 | 備註 |
+|---|---|---|---|
+| 行動選單開合 | 是 | `client:media` | 先試純 CSS，不成立才升為 island |
+| 語言切換器 | 否（預設） | — | 對應 URL 在 build 期可算出，`<a>` 即可；PRD-004 若要求下拉互動再升為 island |
+| 首頁 GSAP 捲動敘事 | 待定 | `client:visible` | 是否保留由 PRD-003 決定（OQ-3），保留則為全站最大 island |
+| `/contact` 表單 | 待定 | — | 現況 `mailto:`，是否做表單歸 PRD-004 FR-406 |
+
+### 內容模型與編輯規則
+
+| Collection | 檔案 | frontmatter 欄位（正文 markdown 走 `render()` 的 `<Content />`） |
+|---|---|---|
+| `site` | `src/content/site/<locale>.md` | `header{skipLink,homeLabel,menuOpen,menuClose,navigationLabel}`、`nav[]{label,href,style}`、`footer{company,copyright}`、`defaultAction{eyebrow,title}` |
+| `pages` 基底 | `src/content/pages/<locale>/<slug>.md` | `metadata{title,description,titleTemplate?,ogImage?}`、`hero{eyebrow?,title,description,caption?,imageAlt?,scrollHint?,primaryAction?,secondaryAction?}`、`action{eyebrow?,title?,description?,label}`、`draft?`、`blocks[]` |
+| `blocks[]` | 同上，`z.discriminatedUnion('type')` | `services{items[],documents[]{kind,label},target}`、`products{items[]{name,description,href},itemAction}`、`technology{abilities[]{code,title,description}}`、`experience{items[],images[]{src,alt,caption},devicesLabel}`、`capabilities`／`features`／`vision`／`selection`／`approach`{eyebrow,title,description?,items[]}、`flow{steps[]}`、`models{items[],scenarioLabel,comparisonLabel,comparisonHeadings[]}`、`screenshots{items[]}`、`team{groups[]{eyebrow,title,members[]}}`、`supporting{photos[]}`、`news{empty{title,description,action}}`、`events{items[]{title,status,details,imagePlaceholder}}`、`social{platform,status,description,action,actionLabel}`、`consultation{steps[]}`、`contact{cards[]}`、`deployment{items[]}`、`useCases{description}` |
+
+| 編輯者面向 | 之前 | 之後 |
+|---|---|---|
+| 區塊識別 | `## key` 二階標題，`##` 之前的內容視為註解 | YAML frontmatter 欄位名，`---` 之後為正文 |
+| 表格 | markdown 表格由 `table()` 解析成物件陣列 | frontmatter 的 YAML 陣列，欄位名即 key |
+| 語系 | 單一檔案、單一語系 | 每語系一份檔案，路徑即語系 |
+| 錯誤時機 | build 期 throw，訊息只有 key 名 | build 期 zod 驗證失敗，訊息含檔名與欄位路徑（仍需重新 build 才生效） |
+
+**不沿用**：舊樹 `app/**`、`worker/`、`build/sites-vite-plugin.ts`、`.openai/`、`db/`、`drizzle/`、`app/chatgpt-auth.ts`、`app/_sites-preview/`、`next.config.ts`、
+`scripts/status-reporter.mjs`、`WEBSITE_CODE_HANDOFF.md`、Tailwind v4、`tests/rendered-html.test.mjs` 一律不移植；沿用者只有 `content/pages/*.md` 的文字、`public/brand/**` 與字型、7 個色票暫用值。
+**構造上即滿足**：`http://localhost:8400` 帶 token 的 live script、首頁「畫布編輯」按鈕、`app/_sites-preview/`、讀 `.tsx` 原始碼的 regex 測試在新樹中**都不存在**，
+舊 FR-101／102／103 無須實作；該 token 仍視為已外洩，輪替待辦另掛 ADO Task 並指派上游窗口。
 
 ## 3. 功能需求
 
 | FR | 需求 | 驗收條件 | ADO Task |
 |---|---|---|---|
-| FR-101 | 移除 `app/layout.tsx:26` 指向 `http://localhost:8400` 且帶 token 的 live script；該 token 視為已外洩，另列輪替待辦 | `npm run build` 後於 `dist/` 全文搜尋 `localhost` 與 `8400` 皆零命中；9 條路由的輸出 HTML 皆無 `http://` 外部資源；輪替待辦已建 ADO Task 並指派負責人 | [#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304) |
-| FR-102 | 刪除整個 `app/_sites-preview/`（`SkeletonPreview.tsx` 匯入的 `react-loading-skeleton` 不在 `package.json` 也不在 lock 檔） | 目錄不存在；`npm run build` 綠燈；全 repo 搜尋 `react-loading-skeleton` 零命中 | [#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305) |
-| FR-103 | `app/page.tsx:551` 的「畫布編輯」浮動按鈕改為僅在 `?edit=1` 或開發環境渲染（目前無條件渲染，CSS 也無隱藏規則） | 生產 build 下 `/` 的輸出 HTML 不含該按鈕；加上 `?edit=1` 後按鈕與面板皆出現 | [#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306) |
-| FR-104 | **決策後移除**死檔：`db/`、`drizzle/`、`drizzle-orm`、`drizzle-kit`、`app/chatgpt-auth.ts`、`next.config.ts`、`scripts/status-reporter.mjs`、`WEBSITE_CODE_HANDOFF.md`。移除授權尚未取得，見 §7 OQ-7 | 取得業主書面授權後：上述路徑不存在；`package.json` 移除 `drizzle-orm`／`drizzle-kit` 與 `db:generate`／`status` script；`npm run build`、`npm test`、`npm run lint` 綠燈 | TBD |
-| FR-105 | 資產瘦身：`NotoSansCJKtc-Medium.otf`（16.5 MB）subset 後轉 WOFF2；刪除零引用的 `synaiq-logo-dark.svg`（7.5 MB）；壓縮 `wally-series.png`（13.3 MB）等大圖 | 字型 ≤ 300 KB；單張圖 ≤ 500 KB；`public/` 總量 ≤ 15 MB；9 條路由目視無缺字、無破圖 | TBD |
-| FR-106 | 重寫 `tests/rendered-html.test.mjs`：斷言一律針對 build 後的輸出 HTML，移除所有 `.tsx` 原始碼 regex 與字型檔 byte 數斷言。**本 FR 為 FR-101/102/103/104/105 的前置** | 測試檔內零 `readFile('*.tsx')` 類原始碼讀取、零 byte 數斷言；9 條路由各有至少一條「關鍵區塊存在」斷言；改 class 名或抽元件不會使測試變紅 | [#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303) |
-| FR-107 | 建立本機 `npm install → npm run build → npm test` 綠燈基線，並把 OpenAI Sites 的實際部署動作寫入 `docs/`（repo 目前無 CI 與部署設定） | 三道指令在乾淨 clone 上依序綠燈，輸出留存；`docs/` 內有一份可照做的部署步驟，經一次實際部署驗證 | [#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) |
-| FR-108 | Tailwind v4 去留決策（全站零 utility class，只用到 preflight 與少數 CSS 變數） | 產出一句話決策並記錄於 §8；若決定移除則 `tailwindcss`／`@tailwindcss/postcss` 自 `package.json` 消失且 9 條路由視覺無差異（截圖比對） | TBD |
+| FR-101 | Astro 7 骨架：`@astrojs/react`、`output:'static'`、i18n（`defaultLocale:'zh-Hant'`、`routing.prefixDefaultLocale:false`） | `npm ci && npm run build` 綠燈並產出 `dist/`；`dist/index.html` 與 `dist/en/index.html` 皆存在；README 記錄 Node ≥ 22.12.0 | TBD |
+| FR-102 | CSS 手冊三合一機制：`src/styles/tokens.css` 為唯一 custom property 來源（`.astro` scoped `<style>` 與 island 的 CSS Modules 只引用 token），加 `/styleguide` 路由與 `docs/` 手冊文件 | 全 repo 除 `tokens.css` 外零硬編碼色值；改一個 token 值後 `/styleguide` 與至少兩條路由同步變動；`dist/styleguide/index.html` 含 `<meta name="robots" content="noindex">` 且不在 sitemap；頁面列出全部 token 的變數名與實際值 | TBD |
+| FR-103 | `src/content.config.ts`：以 `glob()` loader 加 zod 定義 `site` 與 `pages` 兩個 collection，per-locale | 任一必填欄位缺漏時 `astro build` 失敗並輸出檔名與欄位路徑；新增語系只需加目錄與 config 一行，不改任何 `.astro` | TBD |
+| FR-104 | 內容遷移：9 頁加 `site.md` 的 zh-Hant 文字由 `## key` 轉為 frontmatter 與正文 | 舊 key 對照表由遷移腳本產生並留存，逐頁 diff 零遺漏；`/en/` 以 zh-Hant 佔位並標 `draft: true`，不入 sitemap、不顯示切換器 | TBD |
+| FR-105 | 元件重建：9 條路由以 `.astro` 重建，React 僅限 `src/components/islands/` | `dist/` 內容頁除 §2 表列 islands 外零 `<script type="module">`；`client:` 指令出現位置與 §2 表一致 | TBD |
+| FR-106 | 語系與 SEO 骨架：兩語系 `sitemap.xml`、`hreflang` 成對含 `x-default`、canonical、每頁唯一 title/description | sitemap 涵蓋兩語系且排除 `draft` 與 `/styleguide`；每對頁面互指 `hreflang`；title 全站無重複 | TBD |
+| FR-107 | 測試改為對 `dist/` HTML 斷言 | 測試檔零 `.astro`／`.tsx` 原始碼讀取、零 byte 數斷言；9 條路由 × 2 語系各有「關鍵區塊存在」「`<html lang>` 正確」「`<title>` 全站唯一」三類斷言；改 class 名或抽元件不變紅 | [#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303) |
+| FR-108 | 資產瘦身與搬遷：字型 subset 轉 WOFF2、刪零引用大檔、壓縮大圖 | 字型 ≤ 300 KB、單張圖 ≤ 500 KB、`public/` ≤ 15 MB；18 個頁面目視無缺字、無破圖 | TBD |
+| FR-109 | Hostinger 部署基線：定案並文件化「乾淨 clone → build → 上傳 `dist/` → 驗證」，且實際走一次 | `docs/` 內有可照做步驟；部署方式（SFTP、Hostinger Git 加 SSH、或 CI 推送）已定案；上線後 18 個 URL 可開、零 mixed content、HTTPS 正常 | [#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) |
+
+### Sprint 22 既有 Task 處置
+
+| ID | 處置 | 提案新標題／理由 |
+|---|---|---|
+| [#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303) | 保留改題（→ FR-107） | `[官網] PRD-001 FR-107 測試改為對 dist/ HTML 斷言` |
+| [#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304) | 關閉為 superseded | 新樹不含該 live script，構造上即滿足；token 輪替另開 Task |
+| [#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305) | 關閉為 superseded | 新樹不存在 `app/_sites-preview/` |
+| [#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306) | 關閉為 superseded | 新樹不存在「畫布編輯」按鈕 |
+| [#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) | 保留改題（→ FR-109） | `[官網] PRD-001 FR-109 Hostinger 部署基線` |
 
 ## 4. NFR 差異
 
 | 維度 | 目標值 | 與基準線差異原因 |
 |---|---|---|
-| Lighthouse | 本 PRD 只要求「不低於重構前」 | 效能達標由 PRD-003／004 負責；本階段僅建立可量測的基線數字 |
-| 資產體積 | 與基準線相同，且為本 PRD 的 Goal 之一 | FR-105 是達成基準線的主要手段 |
+| Client JS | 內容頁（§2 islands 表列之外）0 bytes | 基準線只規範 CWV，未規範 JS 量；Astro 零 JS 為預設，可直接當驗收條件 |
+| 語系、SEO 與建置 | 本 PRD 只交付語系機制骨架（`lang`／`hreflang`／兩語系 sitemap），英文文案歸 PRD-002、切換 UX 歸 PRD-004；`/styleguide` 為 `noindex` 且排除於 sitemap；建置指令為 `npm ci && npm run build && npm test`，Node ≥ 22.12.0 | 基準線把語系標記寫成單一條目，需切分歸屬以免重工；手冊頁不對外索引；Astro 7 有 Node 下限 |
 
 ## 5. 風險
 
 | 風險 | 機率 | 衝擊 | 緩解 |
 |---|---|---|---|
-| 測試不可信導致重構誤報或漏報 | H | H | FR-106 排在其他 FR 之前，先把測試換成輸出 HTML 斷言再動程式碼 |
-| `vinext` 為 1.0.0-beta.2，升版或行為變動破壞 Next 相容層 | M | H | 本 PRD 不升版，鎖定現有版本；升版另開 ADR，並以 FR-106 的測試當回歸網 |
-| 部署路徑不明，改完無法驗證是否真的上線 | M | H | FR-107 要求走完一次實際部署並寫成文件，未走通前不宣告完成 |
-| 刪除 `db/` 後日後要做會員區需重建 | M | M | FR-104 綁 OQ-7 授權；刪除以獨立 commit 進行，必要時 `git revert` 即可復原 |
-| 字型 subset 漏字造成 CJK 缺字 | M | M | subset 字集由 `content/pages/*.md` 全文加常用字表產生，並保留 fallback 字族 |
+| Hostinger 部署路徑未確認（不 build、原生自動部署綁 GitHub，本 repo 在 Azure DevOps） | H | H | FR-109 提前到 FR-101 之後的第二優先；未走通一次實際部署前不進內容遷移；備案為 SFTP 上傳 `dist/` 或 ADO Pipeline 推送 |
+| 內容 schema 遷移遺漏或錯置（9 頁、上百個 key） | H | M | FR-104 以腳本產生舊 key 對照表逐頁 diff，非人工搬運；zod 必填欄位讓遺漏在 build 期爆 |
+| island 邊界劃錯，整頁 JS 被拉回來 | M | H | §2 明列 islands 白名單；FR-105 以 `dist/` 內 `<script type="module">` 數量為驗收條件，超出即失敗 |
+| `/en/` 前綴上線後再改，既有連結與 SEO 權重流失 | M | H | 英文頁在 PRD-002 M2 前標 `draft` 不入 sitemap；zh-Hant 既有 9 條 URL 不改；日後變更需新 ADR 加 301 導向 |
+| 團隊不熟 Astro，island 與 scoped CSS 上手期拖慢進度 | H | M | FR-101 至 FR-102 先做一條最小垂直切片再全站推廣；`/styleguide` 同時當內部範例頁 |
+| 首頁 GSAP 捲動敘事移植成本被低估 | M | M | OQ-3 在 FR-105 開工前拍板；未拍板前首頁先上靜態版本，敘事以獨立 island 後補 |
 
 ## 6. 驗收方式
 
 | # | 方式 | 通過條件 |
 |---|---|---|
-| 1 | `npm install && npm run build && npm test` | 三者皆綠燈，輸出留存並附給業主 |
-| 2 | `npm run lint` | 零 error |
-| 3 | 在 `dist/` 搜尋 `localhost`、`8400`、`http://` | 零命中 |
-| 4 | 量測 `public/` 總量與最大單檔 | ≤ 15 MB、單張圖 ≤ 500 KB、字型 ≤ 300 KB |
-| 5 | 9 條路由人工目視（桌機加行動裝置） | 無缺字、無破圖、首頁無「畫布編輯」按鈕 |
-| 6 | 一次實際部署至 OpenAI Sites | 線上站台可開，且步驟已寫入 `docs/` |
+| 1 | 乾淨 clone 執行 `npm ci && npm run build && npm test`，再故意刪一個必填 frontmatter 欄位重跑 build | 三者綠燈且原始輸出留存並附給業主；刪欄位後建置失敗且訊息含檔名與欄位路徑 |
+| 2 | `grep -rn "script type=\"module\"" dist/`、`grep -rn "client:" src/`、在 `dist/` 搜尋 `localhost`／`8400`／`http://` | 前兩者命中位置與 §2 islands 表一致；後者零命中 |
+| 3 | 量測 `public/` 總量與最大單檔 | ≤ 15 MB、單張圖 ≤ 500 KB、字型 ≤ 300 KB |
+| 4 | 依 FR-109 文件實際部署一次，並對首頁與兩條內頁跑 Lighthouse 行動裝置 | 18 個 URL 可開、HTTPS 正常、零 mixed content；Lighthouse 達 guideline §4 四項門檻 |
 
 ## 7. Open Questions
 
 | # | 問題 | 待決者 | 期限 |
 |---|---|---|---|
-| OQ-1 | OpenAI Sites 的實際部署動作為何？`dist/` 產出後如何上線 | 業主／上游交接窗口 | FR-107 開工前 |
-| OQ-2 | `vinext` 是否會讀取 `next.config.ts`？若不讀該檔應刪 | 開發者（`npm install` 後實測） | FR-104 開工前 |
-| OQ-3 | 上游是否還有含 `.git` 的原始工作樹？兩邊內容是否已分歧 | 上游交接窗口 | 2026-09-14 |
-| OQ-4 | `app/chatgpt-auth.ts` 是刻意保留供日後做會員區，還是純殘留 | 業主 | FR-104 開工前 |
-| OQ-5 | Cloudflare D1／R2 是否有上線計畫？確定不用才可整組移除 drizzle | 業主 | FR-104 開工前 |
-| OQ-6 | `localhost:8400` 的 live bridge 屬於哪套開發工具？token 向誰申請輪替 | 上游交接窗口 | FR-101 完成後 3 日內 |
-| OQ-7 | **死碼刪除授權**：FR-104 列出的 8 個路徑是否核准移除（逐項或整批） | 業主 | FR-104 開工前 |
+| OQ-1 | 部署路徑定案：ADR-001 列出的 A（ADO Pipeline 加 SFTP）／B（GitHub 鏡像加 Hostinger Web Apps）／C（人工上傳）擇一；方案已確認為 Business Web Hosting，CDN 與 SSH 是否可用仍未確認 | 業主 | FR-109 開工前 |
+| OQ-1b | `synaiq.com` 現為同帳號下的 WordPress 站：切換窗口、WP 備份保留期、是否先以帳號內的 `*.hostingersite.com` 暫時網域做 staging | 業主 | FR-109 開工前 |
+| OQ-2 | **確認舊樹無任何內容需移植**（原 v0.2 OQ-7「授權刪除死碼」已不適用：本案為新樹重建，除文字、品牌資產與 7 個色票外零沿用） | 業主 | FR-104 開工前 |
+| OQ-3 | 首頁 GSAP 捲動敘事是否保留（保留則為最大 island，成本另估） | 業主 → PRD-003 | FR-105 開工前 |
+| OQ-4 | `/contact` 維持 `mailto:` 或導入真表單（純靜態託管下表單需外部服務） | 業主 → PRD-004 FR-406 | FR-105 開工前 |
+| OQ-5 | 英文 URL 前綴確認為 `/en/`（Astro `prefixDefaultLocale:false` 的預設形式） | 業主 → PRD-004 FR-402 | FR-101 開工前 |
+| OQ-6 | CI 選型：ADO Pipelines 建置後推送，或維持本機建置人工上傳 | 業主 | FR-109 開工前 |
 
 ## 8. 變更紀錄
 
@@ -89,3 +128,4 @@
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，依 `HANDOVER.md` 建立 FR-101 至 FR-108 | |
 | v0.2 | 2026-09-07 | 掛接 Sprint 22：PBI [#1302](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1302) 與 Task #1303 至 #1307（FR-106／101／102／103／107）。FR-104、105、108 未排入 sprint | |
+| v0.3 | 2026-09-07 | 業主裁定換底重建：Astro 加 React islands、託管 Hostinger、純 CSS token、Content Collections、Astro 內建 i18n。全文改寫，FR 重編為 FR-101 至 FR-109，補 Sprint 22 Task 處置表 | [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) |

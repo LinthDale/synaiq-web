@@ -13,7 +13,7 @@ Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
 
 | PRD | 標題 | 版本 | 狀態 | Owner | ADO Feature | 順序 |
 |---|---|---|---|---|---|---|
-| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整與死碼清理 | v0.2 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
+| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整：Astro + React islands 換底重建 | v0.3 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
 | [PRD-002](prd/PRD-002-kip-content.md) | SYNAIQ KIP 產品線資訊更新 | v0.1 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 平行（M1 為 004 的前置閘門） |
 | [PRD-003](prd/PRD-003-visual-design.md) | 設計更新 | v0.1 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 4 |
 | [PRD-004](prd/PRD-004-uiux.md) | UIUX 更新與雙語資訊架構 | v0.1 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 3 |
@@ -24,7 +24,9 @@ Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
 執行順序為 **001 → 005 → 004 → 003**，PRD-002 全程平行進行。唯一硬閘門：PRD-002 的
 里程碑 M1（KIP 是否需要新路由／新導覽項的資訊架構決策）必須在 PRD-004 開工前拍板，否則
 004 的導覽與 i18n 結構會做白工。PRD-004 先於 PRD-003 是業主明示決定：資訊架構與雙語結構
-定案前不動視覺。
+定案前不動視覺。2026-09-07 起 PRD-001 依 [ADR-001](adr/ADR-001-astro-react-islands-hostinger.md)
+改為 Astro 換底重建（非原地清理），且 PRD-005 視覺手冊的 token **機制**（`src/styles/tokens.css`
+加 `/styleguide` 路由）在 PRD-001 落地，PRD-005 只負責 token 的數值與用法。
 
 ```mermaid
 flowchart LR
@@ -59,7 +61,7 @@ Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐�
 | Feature | `[官網] PRD 規範 — 網站專案精簡 guideline、模板與 ADR 流程` | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) |
 | PBI（Sprint 22） | `[官網] PRD-001 架構重整 — Sprint 22 啟動（FR-106/101/102/103/107）` | [#1302](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1302) |
 | PBI（Sprint 22，Done） | `[官網] PRD 規範 — 文件組建立（guideline、5 份 PRD、模板、ADR）` | [#1308](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1308) |
-| Task × 5（Sprint 22） | FR-106、FR-101、FR-102、FR-103、FR-107，見 PRD-001 §3 | [#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303)、[#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304)、[#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305)、[#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306)、[#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) |
+| Task × 5（Sprint 22） | 換底後處置見 PRD-001 §3「Sprint 22 既有 Task 處置」：[#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303) **擬改題**（→ FR-107 測試改為對 dist/ HTML 斷言）、[#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304) **擬關閉（換底後不存在）**、[#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305) **擬關閉（換底後不存在）**、[#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306) **擬關閉（換底後不存在）**、[#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) **擬改題**（→ FR-109 Hostinger 部署基線）。ID 不變更 | 見左欄 |
 
 ## 相關文件
 
@@ -70,3 +72,4 @@ Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐�
 | `~/.claude/guidelines/PRD-Architecture-Guideline.md`（不在本 repo，位於公司全域設定） | 公司全域 PRD guideline，衝突時以其為準 |
 | [`prd/_TEMPLATE.md`](prd/_TEMPLATE.md) | PRD 空白模板（固定 8 節） |
 | [`adr/README.md`](adr/README.md) | 何時必須開 ADR、編號規則與索引 |
+| [`adr/ADR-001-astro-react-islands-hostinger.md`](adr/ADR-001-astro-react-islands-hostinger.md) | 換底決策：Astro 加 React islands、Hostinger 託管、純 CSS token、Content Collections、Astro 內建 i18n |

@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.1 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2026-09-07 |
+| v0.2 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2026-09-07 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 
@@ -23,7 +23,7 @@
 
 | 項目 | 內容 |
 |---|---|
-| 產出物 | `docs/` 內一份 markdown 視覺手冊，加一份 `public/brand/**` 資產清冊 |
+| 產出物 | 三合一手冊的**內容**：`docs/` 內一份 markdown 視覺手冊、`src/styles/tokens.css` 的 token **數值與用法**、`public/brand/**` 資產清冊。檔案位置、`/styleguide` 路由與建置串接等**機制**由 PRD-001 FR-102 提供（[ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md)） |
 | 涵蓋資產 | `public/brand/synaiq-logo-light.svg`、`synaiq-logo-s.webp`、`public/fonts/NotoSansCJKtc-Medium.otf`（PRD-001 FR-105 後為 WOFF2）、Wally 與 Duoduo 角色圖、團隊照 `public/brand/team/*`、`public/favicon.svg` |
 | 不涵蓋 | 簡報／社群／印刷物範本（Non-Goal）、實際套用到頁面（PRD-003）、版面與斷點（PRD-004） |
 | 依賴 PRD | PRD-001（資產清冊與字型格式確定）；PRD-003 與 PRD-004 依賴本 PRD |
@@ -32,7 +32,7 @@
 
 | 項目 | 現況 |
 |---|---|
-| 品牌色 | `--ink:#120725`、`--purple:#612271`、`--violet:#8b5fd3`、`--lavender:#c498ee`、`--gold:#d0ae68`、`--paper:#f5f1ea`、`--white:#fff`（`app/globals.css` `:root`），無用途說明 |
+| 品牌色 | `--ink:#120725`、`--purple:#612271`、`--violet:#8b5fd3`、`--lavender:#c498ee`、`--gold:#d0ae68`、`--paper:#f5f1ea`、`--white:#fff`（舊樹 `app/globals.css` `:root`），無用途說明。換底後這 7 個值由 PRD-001 原樣搬入 `src/styles/tokens.css` 作暫用值，正式數值由本 PRD 覆寫 |
 | 字型 | `NotoSansCJKtc-Medium.otf` 16.1 MB 全量載入，`font-weight:500` 單一字重；fallback 為 PingFang TC／Microsoft JhengHei；無指定西文字型 |
 | Logo | `synaiq-logo-light.svg`、`synaiq-logo-s.webp` 有引用；`synaiq-logo-dark.svg`（7.3 MB）零引用，由 PRD-001 FR-105 刪除 |
 | 影像 | `public/brand/` 共 20 餘檔，多張超過 1 MB，最大 `wally-series.png` 13.0 MB |
@@ -46,7 +46,7 @@
 | FR-503 | Logo 用法與禁則：可用版本、最小尺寸、安全留白、可用背景、favicon 規格，加禁則清單（禁改色、禁變形、禁加陰影、禁放低對比底） | 每條規則附正例與反例圖示；站上現有引用逐一對照可判定通過或違反 | TBD |
 | FR-504 | 影像與插圖規範：Wally／Duoduo 角色圖的使用情境與去背規則、團隊照的裁切與比例、單張體積上限與格式（WebP／AVIF 優先） | 規範內的體積上限與 guideline §4 的「單張圖 ≤ 500 KB」一致；現有大圖逐張標註處理方式 | TBD |
 | FR-505 | `public/brand/**` 資產清冊：每項標註檔名、尺寸、體積、引用位置、去留決策 | 清冊涵蓋 `public/` 全部檔案，零遺漏；每項有明確去留；零引用者標為待刪並連到 PRD-001 FR-105 | TBD |
-| FR-506 | 交付與維護：手冊存放位置、版本規則、後續修改流程 | 手冊位於 `docs/`，掛 v1.0 並在 [`../README.md`](../README.md) 連結；修改流程與 guideline §6 一致；擴充至非網站媒材需開 ADR | TBD |
+| FR-506 | 交付與維護：手冊存放位置、版本規則、後續修改流程 | 手冊位於 `docs/`，掛 v1.0 並在 [`../README.md`](../README.md) 連結；手冊每條 token 規則皆對應 `src/styles/tokens.css` 的一個變數並可在 `/styleguide` 目視驗收；修改流程與 guideline §6 一致；擴充至非網站媒材需開 ADR | TBD |
 
 ## 4. NFR 差異
 
@@ -88,3 +88,4 @@
 | 版本 | 日期 | 變更摘要 | commit / ADR |
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，建立 FR-501 至 FR-506 與資產現況基線 | |
+| v0.2 | 2026-09-07 | 依換底決策調整：token 檔案改為 `src/styles/tokens.css`、新增 `/styleguide` 驗收面，本 PRD 只負責 token 數值與用法，機制歸 PRD-001 FR-102 | [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) |

@@ -12,7 +12,7 @@ PRD 鎖定（`v1.0` Locked）之後的變更不改 PRD 內文，一律開 ADR，
 | Locked 後的架構變更 | 內容管線改為 CMS、樣式由單一 `globals.css` 拆為多檔 |
 | 框架變更 | 離開 `vinext`（換 Next.js、Astro 等），或 `vinext` 跨版本升級 |
 | 託管或部署變更 | 離開 OpenAI Sites、改變 Cloudflare Worker 的角色、導入 CI |
-| i18n URL 策略拍板 | PRD-004 OQ-1 決定後即開 ADR-001，事後再改需新 ADR 加 301 導向 |
+| i18n URL 策略拍板 | 已由 ADR-001 定為 zh-Hant 無前綴加 `/en/` 前綴；事後再改需新 ADR 加 301 導向 |
 | 視覺手冊範圍擴張 | PRD-005 由網站限定擴充至簡報、社群或印刷物 |
 | 引入外部服務或後端 | `/contact` 導入真表單與後端、導入 analytics 或第三方追蹤 |
 
@@ -32,4 +32,4 @@ PRD 鎖定（`v1.0` Locked）之後的變更不改 PRD 內文，一律開 ADR，
 
 | ADR | 標題 | Status | 相關 PRD | 日期 |
 |---|---|---|---|---|
-| _（目前無 ADR）_ | | | | |
+| [ADR-001](ADR-001-astro-react-islands-hostinger.md) | 改用 Astro + React islands，託管移至 Hostinger | Proposed | [PRD-001](../prd/PRD-001-architecture-refactor.md)、[PRD-004](../prd/PRD-004-uiux.md)、[PRD-005](../prd/PRD-005-brand-guide.md) | 2026-09-07 |
