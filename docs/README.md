@@ -13,7 +13,7 @@ Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
 
 | PRD | 標題 | 版本 | 狀態 | Owner | ADO Feature | 順序 |
 |---|---|---|---|---|---|---|
-| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整：Astro + React islands 換底重建 | v0.3 | Draft | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
+| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整：Astro + React islands 換底重建 | v1.0 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
 | [PRD-002](prd/PRD-002-kip-content.md) | SYNAIQ KIP 產品線資訊更新 | v0.1 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 平行（M1 為 004 的前置閘門） |
 | [PRD-003](prd/PRD-003-visual-design.md) | 設計更新 | v0.1 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 4 |
 | [PRD-004](prd/PRD-004-uiux.md) | UIUX 更新與雙語資訊架構 | v0.1 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 3 |
@@ -26,7 +26,9 @@ Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
 004 的導覽與 i18n 結構會做白工。PRD-004 先於 PRD-003 是業主明示決定：資訊架構與雙語結構
 定案前不動視覺。2026-09-07 起 PRD-001 依 [ADR-001](adr/ADR-001-astro-react-islands-hostinger.md)
 改為 Astro 換底重建（非原地清理），且 PRD-005 視覺手冊的 token **機制**（`src/styles/tokens.css`
-加 `/styleguide` 路由）在 PRD-001 落地，PRD-005 只負責 token 的數值與用法。
+加 `/styleguide` 路由）在 PRD-001 落地，PRD-005 只負責 token 的數值與用法。同日業主裁定**視覺全面重做**：
+PRD-003 由「套用手冊樣式」升級為「全新設計」，且設計方向（PRD-005 token 加 PRD-003 概念）必須在 PRD-001
+的 FR-106 元件重建之前定案；PRD-001 其餘機制類 FR 不受影響，先行。
 
 ```mermaid
 flowchart LR

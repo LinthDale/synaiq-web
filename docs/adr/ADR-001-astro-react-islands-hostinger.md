@@ -2,14 +2,14 @@
 
 | 項目 | 內容 |
 |---|---|
-| Status | Proposed |
+| Status | Accepted |
 | 日期 | 2026-09-07 |
 | 決策者 | 業主（Dale） |
 | 相關 PRD | [PRD-001](../prd/PRD-001-architecture-refactor.md) §8、[PRD-004](../prd/PRD-004-uiux.md) §8、[PRD-005](../prd/PRD-005-brand-guide.md) §8 |
 
 ## Status
 
-Proposed（2026-09-07 業主裁定）。Hostinger 方案已確認為 Business Web Hosting；待部署路徑（A／B／C）定案、PRD-001 v0.3 的 FR-101 骨架跑通後轉 Accepted。
+Accepted（2026-09-07 業主裁定）。部署路徑採 **A**（ADO Pipeline 建置後以 SFTP 推送 `dist/`）；staging 使用帳號內的暫時網域 `*.hostingersite.com`（該站現為空白 WordPress，部署時覆蓋），驗證通過後才切 `synaiq.com`。業主同日裁定**視覺全面重做**：本 ADR 不移植任何舊視覺，元件重建待 PRD-005／PRD-003 設計方向定案。
 本案同時觸發 [`README.md`](README.md) 的「框架變更」與「託管或部署變更」兩條開立條件。
 
 ## Context
