@@ -1,0 +1,2117 @@
+[
+  {
+    "page": "site",
+    "oldKey": "header.skip-link",
+    "kind": "text",
+    "newPath": "header.skipLink",
+    "route": "/",
+    "values": [
+      "跳至主要內容"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "header.home-label",
+    "kind": "text",
+    "newPath": "header.homeLabel",
+    "route": "/",
+    "values": [
+      "SynaiQ 首頁"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "header.menu-open",
+    "kind": "text",
+    "newPath": "header.menuOpen",
+    "route": "/",
+    "values": [
+      "開啟主要導覽"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "header.menu-close",
+    "kind": "text",
+    "newPath": "header.menuClose",
+    "route": "/",
+    "values": [
+      "關閉主要導覽"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "header.navigation-label",
+    "kind": "text",
+    "newPath": "header.navigationLabel",
+    "route": "/",
+    "values": [
+      "主要導覽"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "header.navigation",
+    "kind": "table",
+    "newPath": "nav[]",
+    "route": "/",
+    "values": [
+      "關於公司",
+      "/about",
+      "link",
+      "產品",
+      "/products",
+      "link",
+      "媒體中心",
+      "/media",
+      "link",
+      "聯絡我們",
+      "/contact",
+      "cta"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "footer.company",
+    "kind": "text",
+    "newPath": "footer.company",
+    "route": "/",
+    "values": [
+      "鑫揚智能科技股份有限公司"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "footer.copyright",
+    "kind": "text",
+    "newPath": "footer.copyright",
+    "route": "/",
+    "values": [
+      "© 2026 SynaiQ. All rights reserved."
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "action.default-eyebrow",
+    "kind": "text",
+    "newPath": "defaultAction.eyebrow",
+    "route": "/about/",
+    "values": [
+      "LET'S BUILD WHAT'S NEXT"
+    ]
+  },
+  {
+    "page": "site",
+    "oldKey": "action.default-title",
+    "kind": "text",
+    "newPath": "defaultAction.title",
+    "route": "/about/",
+    "values": [
+      "從一個明確場景，開始下一步。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "metadata.title-template",
+    "kind": "custom",
+    "newPath": "site/<locale>.md → titleTemplate",
+    "route": "/about/",
+    "values": [
+      "｜SynaiQ"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "navigation.labels",
+    "kind": "lines",
+    "newPath": "pageNav.items[].label",
+    "route": "/",
+    "values": [
+      "品牌介紹",
+      "我們的服務",
+      "品牌產品",
+      "技術應用",
+      "產品畫面",
+      "行動呼籲"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/",
+    "values": [
+      "SynaiQ｜企業知識庫、生成式 AI 與 AGI 整合"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/",
+    "values": [
+      "SynaiQ 協助企業整理知識、串接既有系統，並依照工作流程導入生成式 AI、AGI 與 Wally 系列互動設備。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/",
+    "values": [
+      "讓企業知識\n進入日常工作流程"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/",
+    "values": [
+      "SynaiQ 整合企業知識庫、生成式 AI 與 AGI，協助團隊整理分散資料、找到需要的資訊，並逐步把重複工作交給 AI 執行。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "hero.image-alt",
+    "kind": "text",
+    "newPath": "hero.imageAlt",
+    "route": "/",
+    "values": [
+      "SynaiQ 立體品牌標誌"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "hero.scroll-hint",
+    "kind": "text",
+    "newPath": "hero.scrollHint",
+    "route": "/",
+    "values": [
+      "向下捲動"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "hero.primary-action",
+    "kind": "text",
+    "newPath": "hero.primaryAction.label",
+    "route": "/",
+    "values": [
+      "認識我們的服務"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "hero.secondary-action",
+    "kind": "text",
+    "newPath": "hero.secondaryAction.label",
+    "route": "/",
+    "values": [
+      "了解 SynaiQ"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "action.title",
+    "kind": "text",
+    "newPath": "action.title",
+    "route": "/",
+    "values": [
+      "從一個明確的\n使用場景開始。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "action.description",
+    "kind": "text",
+    "newPath": "action.description",
+    "route": "/",
+    "values": [
+      "我們會先釐清資料來源、使用對象與預期成果，再確認適合的部署方式。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/",
+    "values": [
+      "討論導入需求"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "services.title",
+    "kind": "text",
+    "newPath": "blocks[services].title",
+    "route": "/",
+    "values": [
+      "從資料整理，\n到系統導入。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "services.description",
+    "kind": "text",
+    "newPath": "blocks[services].description",
+    "route": "/",
+    "values": [
+      "從資料盤點、知識庫建置與模型整合，到操作介面與場域部署，依照組織現況分階段規劃。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "services.items",
+    "kind": "lines",
+    "newPath": "blocks[services].items[]",
+    "route": "/",
+    "values": [
+      "企業資料整合",
+      "專屬知識庫建置",
+      "生成式 AI 導入",
+      "AGI 與 AI Agent 開發",
+      "系統與場域整合"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "services.documents",
+    "kind": "table",
+    "newPath": "blocks[services].documents[]",
+    "route": "/",
+    "values": [
+      "pdf",
+      "PDF 文件",
+      "word",
+      "Word 文件",
+      "excel",
+      "Excel 文件",
+      "image",
+      "圖片文件",
+      "scan",
+      "掃描文件"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "services.target",
+    "kind": "text",
+    "newPath": "blocks[services].target",
+    "route": "/",
+    "values": [
+      "資料\n整合"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "products.title",
+    "kind": "text",
+    "newPath": "blocks[products].title",
+    "route": "/",
+    "values": [
+      "同一套知識底座，\n支援不同應用場景。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "products.description",
+    "kind": "text",
+    "newPath": "blocks[products].description",
+    "route": "/",
+    "values": [
+      "從企業知識庫、生成式 AI 與 AGI，到 Wally 系列互動設備，依照工作流程與使用場域選擇導入方式。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "products.items",
+    "kind": "table",
+    "newPath": "blocks[products].items[]",
+    "route": "/",
+    "values": [
+      "企業知識庫",
+      "將分散文件與資料整理成可搜尋、可追溯、可持續更新的企業知識網絡。",
+      "/knowledge-base",
+      "生成式 AI 服務",
+      "運用企業資料與情境脈絡，協助內容生成、資訊整理與決策支援。",
+      "/generative-ai",
+      "AGI",
+      "整合知識、推理、工具串接與代理執行，形成企業專屬的人工智慧整合框架。",
+      "/agi",
+      "Wally 系列",
+      "整合數位人物、企業知識與互動載具，提供多語言、跨系統的 AI 互動服務。",
+      "/wally"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "products.item-action",
+    "kind": "text",
+    "newPath": "blocks[products].itemAction",
+    "route": "/",
+    "values": [
+      "查看產品"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "technology.title",
+    "kind": "text",
+    "newPath": "blocks[technology].title",
+    "route": "/",
+    "values": [
+      "先找到需要的資訊，\n再串接系統完成工作。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "technology.abilities",
+    "kind": "table",
+    "newPath": "blocks[technology].abilities[]",
+    "route": "/",
+    "values": [
+      "RAG",
+      "先找資料再回答",
+      "先從企業文件找出相關內容，再生成回覆。",
+      "REASON",
+      "整理資訊與推理",
+      "把已知資料和模型推理放在同一個工作流程。",
+      "MCP",
+      "接上既有工具",
+      "用模型上下文協定（MCP）連接企業系統與外部工具。",
+      "AGENT",
+      "交給 AI 執行",
+      "讓 AI Agent 依照授權拆解步驟並完成工作。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.title",
+    "kind": "text",
+    "newPath": "blocks[experience].title",
+    "route": "/",
+    "values": [
+      "從軟體介面，\n到現場互動設備。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.description",
+    "kind": "text",
+    "newPath": "blocks[experience].description",
+    "route": "/",
+    "values": [
+      "同一套企業知識可依照使用情境，呈現在工作平台、既有系統或 Wally 系列設備上。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.items",
+    "kind": "lines",
+    "newPath": "blocks[experience].items[]",
+    "route": "/",
+    "values": [
+      "企業知識庫介面",
+      "生成式 AI 成果",
+      "Wally 場域延伸"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.knowledge-alt",
+    "kind": "text",
+    "newPath": "blocks[experience].images[0].alt",
+    "route": "/",
+    "values": [
+      "企業知識庫介面截圖"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.knowledge-caption",
+    "kind": "text",
+    "newPath": "blocks[experience].images[0].caption",
+    "route": "/",
+    "values": [
+      "企業知識庫介面"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.generative-alt",
+    "kind": "text",
+    "newPath": "blocks[experience].images[1].alt",
+    "route": "/",
+    "values": [
+      "生成式 AI 服飾商品情境影像成果畫面"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.generative-caption",
+    "kind": "text",
+    "newPath": "blocks[experience].images[1].caption",
+    "route": "/",
+    "values": [
+      "生成式 AI 服飾業應用成果"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.devices-label",
+    "kind": "text",
+    "newPath": "blocks[experience].devicesLabel",
+    "route": "/",
+    "values": [
+      "Wally 場域延伸產品"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.wally-1-alt",
+    "kind": "text",
+    "newPath": "blocks[experience].devices[0].alt",
+    "route": "/",
+    "values": [
+      "Wally 1 產品照片"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "experience.wally-mini-alt",
+    "kind": "text",
+    "newPath": "blocks[experience].devices[1].alt",
+    "route": "/",
+    "values": [
+      "Wally Mini 產品照片"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "contact.title",
+    "kind": "text",
+    "newPath": "blocks[contact].title",
+    "route": "/",
+    "values": [
+      "想先解決哪一段\n工作流程？"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "contact.description",
+    "kind": "text",
+    "newPath": "blocks[contact].description",
+    "route": "/",
+    "values": [
+      "告訴我們目前的資料來源、使用者與遇到的問題。"
+    ]
+  },
+  {
+    "page": "home",
+    "oldKey": "contact.cards",
+    "kind": "table",
+    "newPath": "blocks[contact].cards[]",
+    "route": "/",
+    "values": [
+      "EMAIL SUPPORT",
+      "service@synaiq.com",
+      "mailto:service@synaiq.com",
+      "SERVICE CALL",
+      "+886 4 2393 1368",
+      "tel:+886423931368",
+      "COMPANY HQ",
+      "台中市西屯區文心路二段 201 號 11 樓之 8"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/about/",
+    "values": [
+      "關於公司"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/about/",
+    "values": [
+      "認識 SynaiQ 如何把企業內部知識轉化為可運用的智慧資產。"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/about/",
+    "values": [
+      "ABOUT SYNAIQ"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/about/",
+    "values": [
+      "將企業內部知識，轉化為可運用的智慧資產。"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/about/",
+    "values": [
+      "SynaiQ 是一家專注於專屬知識庫模型訂製服務的創新科技公司，協助企業與組織建立貼合自身需求的智能系統，讓人工智慧真正融入決策與日常運作。"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/about/",
+    "values": [
+      "聯絡我們"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "approach.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[approach].eyebrow",
+    "route": "/about/",
+    "values": [
+      "OUR APPROACH"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "approach.title",
+    "kind": "text",
+    "newPath": "blocks[approach].title",
+    "route": "/about/",
+    "values": [
+      "把企業知識，變成可持續成長的智慧資產。"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "approach.description",
+    "kind": "text",
+    "newPath": "blocks[approach].description",
+    "route": "/about/",
+    "values": [
+      "我們以企業內部知識轉化為核心，透過軟硬體整合與跨系統協作，為不同產業建立可持續發展的 AI 應用環境。"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "approach.items",
+    "kind": "lines",
+    "newPath": "blocks[approach].items[]",
+    "route": "/about/",
+    "values": [
+      "專屬知識庫模型訂製服務",
+      "AI 智能系統整合",
+      "Wally 系列數位人互動系統"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[team].eyebrow",
+    "route": "/about/",
+    "values": [
+      "TEAM"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.title",
+    "kind": "text",
+    "newPath": "blocks[team].title",
+    "route": "/about/",
+    "values": [
+      "經營團隊與技術團隊"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.leadership.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[team].groups[0].eyebrow",
+    "route": "/about/",
+    "values": [
+      "LEADERSHIP TEAM"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.leadership.title",
+    "kind": "text",
+    "newPath": "blocks[team].groups[0].title",
+    "route": "/about/",
+    "values": [
+      "經營團隊"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.leadership.members",
+    "kind": "table",
+    "newPath": "blocks[team].groups[0].members[]",
+    "route": "/about/",
+    "values": [
+      "wilson",
+      "Wilson Chiu",
+      "鉅瀚綠能總經理",
+      "國立交通大學工業工程與管理研究所",
+      "Wilson Chiu 個人照片",
+      "sunny",
+      "Sunny Kang",
+      "鑫揚智能科技執行長",
+      "鉅詢永續策略總經理、鑫揚智能科技營運長",
+      "Sunny Kang 個人照片",
+      "leef",
+      "Leef Lee",
+      "財務長",
+      "國立成功大學會計系、財會協理",
+      "Leef Lee 個人照片"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.technical.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[team].groups[1].eyebrow",
+    "route": "/about/",
+    "values": [
+      "TECHNICAL TEAM"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.technical.title",
+    "kind": "text",
+    "newPath": "blocks[team].groups[1].title",
+    "route": "/about/",
+    "values": [
+      "技術團隊"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "team.technical.members",
+    "kind": "table",
+    "newPath": "blocks[team].groups[1].members[]",
+    "route": "/about/",
+    "values": [
+      "lou",
+      "Yi Shyang Lou",
+      "總經理特助",
+      "國立中央大學資訊管理研究所博士",
+      "Yi Shyang Lou 個人照片",
+      "dale",
+      "Dale Lin",
+      "全端暨韌體總工程師",
+      "國立中興大學電機工程研究所",
+      "Dale Lin 個人照片",
+      "daniel",
+      "Daniel Shih",
+      "專利策略師",
+      "國立陽明交通大學科技管理研究所",
+      "Daniel Shih 個人照片"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "vision.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[vision].eyebrow",
+    "route": "/about/",
+    "values": [
+      "VISION"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "vision.title",
+    "kind": "text",
+    "newPath": "blocks[vision].title",
+    "route": "/about/",
+    "values": [
+      "讓 AI 真正融入企業的日常運作。"
+    ]
+  },
+  {
+    "page": "about",
+    "oldKey": "vision.items",
+    "kind": "lines",
+    "newPath": "blocks[vision].items[]",
+    "route": "/about/",
+    "values": [
+      "以使用者為中心的 AI 互動設計",
+      "具備場域導向的 AI 系統整合能力",
+      "依組織需求規劃部署與分階段導入方式"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/products/",
+    "values": [
+      "產品總覽"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/products/",
+    "values": [
+      "從企業知識庫、生成式 AI 與 AGI，到 Wally 系列互動設備，探索 SynaiQ 的產品路徑。"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/products/",
+    "values": [
+      "從企業知識底座，延伸到每一個智慧應用場景。"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/products/",
+    "values": [
+      "SynaiQ 以企業知識為核心，整合生成式 AI、AGI 與互動載具，讓組織依照資料現況、工作流程與服務場域選擇合適的導入方式。"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/products/",
+    "values": [
+      "討論導入需求"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "products",
+    "kind": "table",
+    "newPath": "blocks[products].items[]",
+    "route": "/products/",
+    "values": [
+      "企業知識庫",
+      "將分散文件與資料整理成可搜尋、可追溯、可持續更新的企業知識網絡。",
+      "/knowledge-base",
+      "生成式 AI 服務",
+      "運用企業資料與情境脈絡，協助內容生成、資訊整理與決策支援。",
+      "/generative-ai",
+      "AGI",
+      "整合知識、推理、工具串接與代理執行，形成企業專屬的人工智慧整合框架。",
+      "/agi",
+      "Wally 系列",
+      "整合數位人物、企業知識與互動載具，提供多語言、跨系統的 AI 互動服務。",
+      "/wally"
+    ]
+  },
+  {
+    "page": "products",
+    "oldKey": "product.action",
+    "kind": "text",
+    "newPath": "blocks[products].itemAction",
+    "route": "/products/",
+    "values": [
+      "了解產品"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/wally/",
+    "values": [
+      "Wally 系列"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/wally/",
+    "values": [
+      "比較 Wally 1、Wally 1 Plus、Wally 2、Wally 2 Plus 與 Wally Mini 的場域與互動方式。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/wally/",
+    "values": [
+      "WALLY SERIES"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/wally/",
+    "values": [
+      "讓企業智慧，以更自然的方式與人互動。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/wally/",
+    "values": [
+      "Wally 系列提供企業在不同場域中的多元應用，透過數位人物、企業知識與數位內容的整合，提供更專業的 AI 互動服務。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "hero.image-alt",
+    "kind": "text",
+    "newPath": "hero.imageAlt",
+    "route": "/wally/",
+    "values": [
+      "Wally 系列產品總覽"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/wally/",
+    "values": [
+      "預約展示"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "action.eyebrow",
+    "kind": "text",
+    "newPath": "action.eyebrow",
+    "route": "/wally/",
+    "values": [
+      "CHOOSE BY SCENE"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "action.title",
+    "kind": "text",
+    "newPath": "action.title",
+    "route": "/wally/",
+    "values": [
+      "先從場域需求，選擇合適型號。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "action.description",
+    "kind": "text",
+    "newPath": "action.description",
+    "route": "/wally/",
+    "values": [
+      "告訴我們需要定點互動、自主移動或快速部署，我們再一起縮小選擇範圍。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "selection.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[selection].eyebrow",
+    "route": "/wally/",
+    "values": [
+      "START WITH THE SCENE"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "selection.title",
+    "kind": "text",
+    "newPath": "blocks[selection].title",
+    "route": "/wally/",
+    "values": [
+      "先問兩件事，再看型號。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "selection.items",
+    "kind": "table",
+    "newPath": "blocks[selection].items[]",
+    "route": "/wally/",
+    "values": [
+      "需要在場域內移動？",
+      "選擇 Wally 1 Plus 或 Wally 2 Plus。",
+      "需要定點或快速部署？",
+      "比較 Wally 1、Wally 2 或 Wally Mini。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[models].eyebrow",
+    "route": "/wally/",
+    "values": [
+      "SERIES MODELS"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models.title",
+    "kind": "text",
+    "newPath": "blocks[models].title",
+    "route": "/wally/",
+    "values": [
+      "Wally 系列型號"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models.navigation-label",
+    "kind": "text",
+    "newPath": "blocks[models].navigationLabel",
+    "route": "/wally/",
+    "values": [
+      "Wally 型號導覽"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models.comparison-label",
+    "kind": "text",
+    "newPath": "blocks[models].comparisonLabel",
+    "route": "/wally/",
+    "values": [
+      "Wally 型號快速比較"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models.comparison-headings",
+    "kind": "lines",
+    "newPath": "blocks[models].comparisonHeadings[]",
+    "route": "/wally/",
+    "values": [
+      "型號",
+      "適合場域",
+      "互動方式"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models.scenario-label",
+    "kind": "text",
+    "newPath": "blocks[models].scenarioLabel",
+    "route": "/wally/",
+    "values": [
+      "適用場域"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "models",
+    "kind": "table",
+    "newPath": "blocks[models].items[]",
+    "route": "/wally/",
+    "values": [
+      "wally-1",
+      "Wally 1",
+      "Wally 1 產品照片",
+      "定點式智慧互動服務設備，提供穩定、高效率的 AI 智慧應答與數位接待服務。",
+      "長期定點部署",
+      "高穩定度與一致服務品質",
+      "適合高頻率諮詢",
+      "櫃檯、入口、大廳與資訊服務站",
+      "定點互動",
+      "wally-1-plus",
+      "Wally 1 Plus",
+      "Wally 1 Plus 產品照片",
+      "在 Wally 1 AI 功能基礎上，整合自主移動模組，於指定空間內進行自主移動服務。",
+      "自主移動巡航（需建圖）",
+      "擴大服務覆蓋範圍",
+      "適合中大型與具動線場域",
+      "中大型與具動線的服務空間",
+      "自主移動（需建圖）",
+      "wally-2",
+      "Wally 2",
+      "Wally 2 產品照片",
+      "以 55 吋透明 OLED 顯示為核心的 AI 數位人解決方案，主打高科技形象展示與智慧互動整合。",
+      "高展示震撼度",
+      "定點式智慧接待與導覽",
+      "適合品牌形象與展示空間",
+      "品牌形象與展示空間",
+      "55 吋透明 OLED 定點展示",
+      "wally-2-plus",
+      "Wally 2 Plus",
+      "Wally 2 Plus 產品照片",
+      "在透明 OLED 顯示基礎上整合自主移動底盤，可於場域內巡航導覽與定點講解。",
+      "巡航移動＋語音巡講",
+      "高展示與高互動並重",
+      "適合展會、展館與大型公共空間",
+      "展會、展館與大型公共空間",
+      "透明 OLED＋巡航移動",
+      "wally-mini",
+      "Wally Mini",
+      "Wally Mini 產品照片",
+      "專為高機動部署、即時互動與陪伴型應用設計的非行走式行動陪伴型 AI 數位人。",
+      "原地互動",
+      "水平方向 360° AI 人臉追蹤",
+      "隨身攜帶與快速部署",
+      "陪伴型應用與需要快速部署的互動場景",
+      "非行走式、原地互動"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "features.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[features].eyebrow",
+    "route": "/wally/",
+    "values": [
+      "CORE FEATURES"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "features.title",
+    "kind": "text",
+    "newPath": "blocks[features].title",
+    "route": "/wally/",
+    "values": [
+      "把企業知識帶進真實互動場域。"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "features.items",
+    "kind": "lines",
+    "newPath": "blocks[features].items[]",
+    "route": "/wally/",
+    "values": [
+      "支援語音、文字、觸控與影像識別互動",
+      "可建置企業專屬知識庫與影像資料庫",
+      "支援擬真口型同步、客製化數位人物與聲線",
+      "支援雲端模式與本地端架構建置及部署",
+      "可透過模型上下文協定（MCP）串接外部系統與 IoT 周邊裝置",
+      "提供中文、英文、日文、韓文等多語言語音服務"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "supporting.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[supporting].eyebrow",
+    "route": "/wally/",
+    "values": [
+      "SCENE GALLERY"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "supporting.title",
+    "kind": "text",
+    "newPath": "blocks[supporting].title",
+    "route": "/wally/",
+    "values": [
+      "Wally 系列情境展示"
+    ]
+  },
+  {
+    "page": "wally",
+    "oldKey": "supporting.photos",
+    "kind": "table",
+    "newPath": "blocks[supporting].photos[]",
+    "route": "/wally/",
+    "values": []
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/knowledge-base/",
+    "values": [
+      "企業知識庫"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/knowledge-base/",
+    "values": [
+      "把企業文件整理成可查詢、可追溯的知識資產，作為生成式 AI 與 AGI 的工作底座。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/knowledge-base/",
+    "values": [
+      "ENTERPRISE KNOWLEDGE HUB"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/knowledge-base/",
+    "values": [
+      "讓分散的企業資料，成為可信賴的知識網絡。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/knowledge-base/",
+    "values": [
+      "將散落在資料夾的文件、規章與案例，轉化為可查詢、可追溯的知識資產，並可作為 AGI 的知識底座。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "hero.caption",
+    "kind": "text",
+    "newPath": "hero.caption",
+    "route": "/knowledge-base/",
+    "values": [
+      "知識庫.png｜企業知識庫介面截圖"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "hero.image-alt",
+    "kind": "text",
+    "newPath": "hero.imageAlt",
+    "route": "/knowledge-base/",
+    "values": [
+      "企業知識庫介面截圖"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/knowledge-base/",
+    "values": [
+      "討論知識庫需求"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "action.eyebrow",
+    "kind": "text",
+    "newPath": "action.eyebrow",
+    "route": "/knowledge-base/",
+    "values": [
+      "START WITH YOUR DOCUMENTS"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "action.title",
+    "kind": "text",
+    "newPath": "action.title",
+    "route": "/knowledge-base/",
+    "values": [
+      "從一組文件，開始整理知識。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "action.description",
+    "kind": "text",
+    "newPath": "action.description",
+    "route": "/knowledge-base/",
+    "values": [
+      "準備資料來源、使用對象與查詢場景，我們一起確認第一個可驗證的知識流程。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "capabilities.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[capabilities].eyebrow",
+    "route": "/knowledge-base/",
+    "values": [
+      "CORE CAPABILITIES"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "capabilities.title",
+    "kind": "text",
+    "newPath": "blocks[capabilities].title",
+    "route": "/knowledge-base/",
+    "values": [
+      "讓企業文件成為可查詢、可追溯的知識資產。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "capabilities.items",
+    "kind": "lines",
+    "newPath": "blocks[capabilities].items[]",
+    "route": "/knowledge-base/",
+    "values": [
+      "支援多種格式文件解析與建檔",
+      "以自然語言提問，答案附上原文出處，可開啟原檔核對",
+      "查無依據時明確告知，不以推測內容作答",
+      "問題籠統時主動反問澄清",
+      "文件可持續增補與汰換，不需重新建置整套系統",
+      "支援本地端部署選項，依需求規劃資料環境"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "use-cases.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[useCases].eyebrow",
+    "route": "/knowledge-base/",
+    "values": [
+      "USE CASES"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "use-cases.title",
+    "kind": "text",
+    "newPath": "blocks[useCases].title",
+    "route": "/knowledge-base/",
+    "values": [
+      "從文件查詢，到 AGI 知識底座。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "use-cases.description",
+    "kind": "text",
+    "newPath": "blocks[useCases].description",
+    "route": "/knowledge-base/",
+    "values": [
+      "支援文件、規章與案例查詢，提供原文出處供核對，並可持續增補與汰換企業文件。"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "screenshots.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[screenshots].eyebrow",
+    "route": "/knowledge-base/",
+    "values": [
+      "PRODUCT SCREENS"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "screenshots.title",
+    "kind": "text",
+    "newPath": "blocks[screenshots].title",
+    "route": "/knowledge-base/",
+    "values": [
+      "企業知識庫介面"
+    ]
+  },
+  {
+    "page": "knowledge-base",
+    "oldKey": "screenshots",
+    "kind": "table",
+    "newPath": "blocks[screenshots].items[]",
+    "route": "/knowledge-base/",
+    "values": [
+      "/brand/knowledge-workflow.jpg",
+      "企業管理系知識庫流程與工作流介面截圖",
+      "企業管理系知識庫.jpg｜流程／知識庫工作流介面截圖"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/generative-ai/",
+    "values": [
+      "生成式 AI 服務"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/generative-ai/",
+    "values": [
+      "把品牌素材與人物形象轉化為可重複產出的內容，並逐步融入企業工作流程。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/generative-ai/",
+    "values": [
+      "GENERATIVE AI SERVICES"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/generative-ai/",
+    "values": [
+      "讓品牌素材與人物形象，轉化為穩定可重複產出的內容。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/generative-ai/",
+    "values": [
+      "將品牌素材與人物形象，轉化為規格穩定、可重複產出的圖片與影片。目前已應用於服飾業的線上試穿與商品情境影像產製。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "hero.caption",
+    "kind": "text",
+    "newPath": "hero.caption",
+    "route": "/generative-ai/",
+    "values": [
+      "媒體工廠.png｜服飾業應用成果"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "hero.image-alt",
+    "kind": "text",
+    "newPath": "hero.imageAlt",
+    "route": "/generative-ai/",
+    "values": [
+      "生成式 AI 服飾商品情境影像成果畫面"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/generative-ai/",
+    "values": [
+      "討論生成流程"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "action.eyebrow",
+    "kind": "text",
+    "newPath": "action.eyebrow",
+    "route": "/generative-ai/",
+    "values": [
+      "START WITH ONE CONTENT FLOW"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "action.title",
+    "kind": "text",
+    "newPath": "action.title",
+    "route": "/generative-ai/",
+    "values": [
+      "先選一個內容流程，開始驗證。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "action.description",
+    "kind": "text",
+    "newPath": "action.description",
+    "route": "/generative-ai/",
+    "values": [
+      "帶著素材來源、使用者與預期產出，我們一起拆解可先試做的工作流程。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "services.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[services].eyebrow",
+    "route": "/generative-ai/",
+    "values": [
+      "SERVICE SCOPE"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "services.title",
+    "kind": "text",
+    "newPath": "blocks[services].title",
+    "route": "/generative-ai/",
+    "values": [
+      "讓生成內容穩定、可重複，也能融入企業流程。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "services.items",
+    "kind": "lines",
+    "newPath": "blocks[services].items[]",
+    "route": "/generative-ai/",
+    "values": [
+      "同一人物形象可跨圖片與影片維持一致，不需重複拍攝",
+      "可建立企業專屬數位模特，支援多視角與動態展示",
+      "生成流程可依企業場域調整",
+      "以網頁介面操作，不需具備人工智慧或影像製作專業",
+      "介面可依企業品牌調整，以企業名義對外提供服務",
+      "可介接企業既有系統，將生成能力嵌入現行作業流程",
+      "可依需求規劃雲端或本地端部署與素材管理方式"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "flow.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[flow].eyebrow",
+    "route": "/generative-ai/",
+    "values": [
+      "ADOPTION FLOW"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "flow.title",
+    "kind": "text",
+    "newPath": "blocks[flow].title",
+    "route": "/generative-ai/",
+    "values": [
+      "分階段驗證，再逐步擴大應用。"
+    ]
+  },
+  {
+    "page": "generative-ai",
+    "oldKey": "flow.steps",
+    "kind": "lines",
+    "newPath": "blocks[flow].steps[]",
+    "route": "/generative-ai/",
+    "values": [
+      "盤點資料與應用目標",
+      "確認使用者、權限與工作流程",
+      "建立原型並驗證輸出品質",
+      "串接企業系統並分階段上線",
+      "持續更新資料與優化應用"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/agi/",
+    "values": [
+      "AGI"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/agi/",
+    "values": [
+      "從企業知識、檢索與推理，延伸到工具串接與代理執行的智慧系統整合框架。"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/agi/",
+    "values": [
+      "AGI FOR ENTERPRISE"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/agi/",
+    "values": [
+      "從理解企業知識，到主動完成任務。"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/agi/",
+    "values": [
+      "企業專屬人工智慧整合框架，整合文字資料、影像資料、推理生成與代理執行，讓 AI 從資訊回應進一步延伸到工具調用與任務完成。"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/agi/",
+    "values": [
+      "規劃 AGI 應用"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "capabilities.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[capabilities].eyebrow",
+    "route": "/agi/",
+    "values": [
+      "CORE CAPABILITIES"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "capabilities.title",
+    "kind": "text",
+    "newPath": "blocks[capabilities].title",
+    "route": "/agi/",
+    "values": [
+      "知識、推理、工具與代理執行。"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "capabilities.items",
+    "kind": "lines",
+    "newPath": "blocks[capabilities].items[]",
+    "route": "/agi/",
+    "values": [
+      "先從企業知識庫找出依據，再生成回覆（RAG）",
+      "結合文字與影像查詢結果，提供更多元的資料呈現",
+      "支援多模態語意萃取，以及結構化與非結構化知識索引",
+      "依照企業授權，由 AI 代理拆解步驟並執行任務",
+      "用模型上下文協定（MCP）把外部系統接進工作流程",
+      "支援多種操作介面，對應不同使用情境",
+      "依照任務目標混合運用不同 AI 能力"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "flow.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[flow].eyebrow",
+    "route": "/agi/",
+    "values": [
+      "OPERATING FLOW"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "flow.title",
+    "kind": "text",
+    "newPath": "blocks[flow].title",
+    "route": "/agi/",
+    "values": [
+      "先找到資料，再接上工具完成工作。"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "flow.description",
+    "kind": "text",
+    "newPath": "blocks[flow].description",
+    "route": "/agi/",
+    "values": [
+      "企業資料會先整理成可查詢的知識，再依任務需要進行檢索、推理、工具串接與代理執行。"
+    ]
+  },
+  {
+    "page": "agi",
+    "oldKey": "deployment.items",
+    "kind": "lines",
+    "newPath": "blocks[deployment].items[]",
+    "route": "/agi/",
+    "values": [
+      "雲端部署",
+      "本地端部署",
+      "混合部署"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/media/",
+    "values": [
+      "媒體中心"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/media/",
+    "values": [
+      "查看 SynaiQ 已確認的活動與社群入口；新聞資料確認後再逐項公開。"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/media/",
+    "values": [
+      "MEDIA CENTER"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/media/",
+    "values": [
+      "掌握 SynaiQ 最新消息與應用動態。"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/media/",
+    "values": [
+      "媒體中心將收錄新聞、活動與社群內容；正式資料確認後再逐項公開。"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/media/",
+    "values": [
+      "聯絡 SynaiQ"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "action.eyebrow",
+    "kind": "text",
+    "newPath": "action.eyebrow",
+    "route": "/media/",
+    "values": [
+      "MEDIA & PARTNERSHIPS"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "action.title",
+    "kind": "text",
+    "newPath": "action.title",
+    "route": "/media/",
+    "values": [
+      "想了解活動或合作資訊？"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "action.description",
+    "kind": "text",
+    "newPath": "action.description",
+    "route": "/media/",
+    "values": [
+      "目前未公開的新聞與活動欄位，會在資料確認後更新；其他詢問歡迎直接聯絡我們。"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "news.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[news].eyebrow",
+    "route": "/media/",
+    "values": [
+      "NEWS"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "news.title",
+    "kind": "text",
+    "newPath": "blocks[news].title",
+    "route": "/media/",
+    "values": [
+      "新聞集錦"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "news.empty-title",
+    "kind": "text",
+    "newPath": "blocks[news].empty.title",
+    "route": "/media/",
+    "values": [
+      "目前沒有可公開的新聞"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "news.empty-description",
+    "kind": "text",
+    "newPath": "blocks[news].empty.description",
+    "route": "/media/",
+    "values": [
+      "新聞標題、日期與來源確認後，才會在這裡逐項更新。"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "news.empty-action",
+    "kind": "text",
+    "newPath": "blocks[news].empty.action.label",
+    "route": "/media/",
+    "values": [
+      "聯絡 SynaiQ"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "events.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[events].eyebrow",
+    "route": "/media/",
+    "values": [
+      "EVENTS"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "events.title",
+    "kind": "text",
+    "newPath": "blocks[events].title",
+    "route": "/media/",
+    "values": [
+      "活動訊息"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "event.title",
+    "kind": "text",
+    "newPath": "blocks[events].items[0].title",
+    "route": "/media/",
+    "values": [
+      "台灣國際淨零永續展"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "event.status",
+    "kind": "text",
+    "newPath": "blocks[events].items[0].status",
+    "route": "/media/",
+    "values": [
+      "暫存活動／資料待補"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "event.details",
+    "kind": "table",
+    "newPath": "blocks[events].items[0].details[]",
+    "route": "/media/",
+    "values": [
+      "日期",
+      "10/14–16（年份待補）",
+      "攤位",
+      "攤位編號 M1105a",
+      "地點",
+      "地點待補",
+      "報名連結",
+      "報名網址待補"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "event.image-placeholder",
+    "kind": "text",
+    "newPath": "blocks[events].items[0].imagePlaceholder",
+    "route": "/media/",
+    "values": [
+      "活動圖片待補"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[social].eyebrow",
+    "route": "/media/",
+    "values": [
+      "SOCIAL"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.title",
+    "kind": "text",
+    "newPath": "blocks[social].title",
+    "route": "/media/",
+    "values": [
+      "社群平台"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.platform",
+    "kind": "text",
+    "newPath": "blocks[social].platform",
+    "route": "/media/",
+    "values": [
+      "Instagram"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.status",
+    "kind": "text",
+    "newPath": "blocks[social].status",
+    "route": "/media/",
+    "values": [
+      "已確認連結"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.description",
+    "kind": "text",
+    "newPath": "blocks[social].description",
+    "route": "/media/",
+    "values": [
+      "追蹤 SynaiQ 的最新內容與應用動態。"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.action",
+    "kind": "text",
+    "newPath": "blocks[social].action",
+    "route": "/media/",
+    "values": [
+      "前往 Instagram ↗"
+    ]
+  },
+  {
+    "page": "media",
+    "oldKey": "social.action-label",
+    "kind": "text",
+    "newPath": "blocks[social].actionLabel",
+    "route": "/media/",
+    "values": [
+      "在新分頁開啟 SynaiQ Instagram"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "metadata.title",
+    "kind": "text",
+    "newPath": "metadata.title",
+    "route": "/contact/",
+    "values": [
+      "聯絡我們"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "metadata.description",
+    "kind": "text",
+    "newPath": "metadata.description",
+    "route": "/contact/",
+    "values": [
+      "提供資料來源、使用對象與導入目標，與 SynaiQ 討論企業知識與 AI 應用方向。"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "hero.eyebrow",
+    "kind": "text",
+    "newPath": "hero.eyebrow",
+    "route": "/contact/",
+    "values": [
+      "LET'S BUILD WHAT'S NEXT"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "hero.title",
+    "kind": "text",
+    "newPath": "hero.title",
+    "route": "/contact/",
+    "values": [
+      "準備好讓企業知識開始行動了嗎？"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "hero.description",
+    "kind": "text",
+    "newPath": "hero.description",
+    "route": "/contact/",
+    "values": [
+      "歡迎告訴我們你的資料現況、應用場景與導入目標，我們將與你一起討論合適的智慧應用方向。"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "action.label",
+    "kind": "text",
+    "newPath": "action.label",
+    "route": "/contact/",
+    "values": [
+      "寄送初步需求"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "action.eyebrow",
+    "kind": "text",
+    "newPath": "action.eyebrow",
+    "route": "/contact/",
+    "values": [
+      "START A CONSULTATION"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "action.title",
+    "kind": "text",
+    "newPath": "action.title",
+    "route": "/contact/",
+    "values": [
+      "帶著三個線索，開始討論導入。"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "action.description",
+    "kind": "text",
+    "newPath": "action.description",
+    "route": "/contact/",
+    "values": [
+      "資料來源、使用對象與希望改善的流程，會讓第一次討論更聚焦。"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "contact.cards",
+    "kind": "table",
+    "newPath": "blocks[contact].cards[]",
+    "route": "/contact/",
+    "values": [
+      "SERVICE CALL",
+      "+886 4 2393 1368",
+      "撥打電話 ↗",
+      "tel:+886423931368",
+      "EMAIL SUPPORT",
+      "service@synaiq.com",
+      "寄送 Email ↗",
+      "mailto:service@synaiq.com",
+      "COMPANY HQ",
+      "鑫揚智能科技股份有限公司",
+      "台中市西屯區文心路二段 201 號 11 樓之 8"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "consultation.eyebrow",
+    "kind": "text",
+    "newPath": "blocks[consultation].eyebrow",
+    "route": "/contact/",
+    "values": [
+      "CONSULTATION FLOW"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "consultation.title",
+    "kind": "text",
+    "newPath": "blocks[consultation].title",
+    "route": "/contact/",
+    "values": [
+      "第一次討論，先從三個問題開始。"
+    ]
+  },
+  {
+    "page": "contact",
+    "oldKey": "consultation.steps",
+    "kind": "table",
+    "newPath": "blocks[consultation].steps[]",
+    "route": "/contact/",
+    "values": [
+      "01",
+      "資料來源",
+      "目前有哪些文件、資料或系統需要整理？",
+      "02",
+      "使用對象",
+      "誰會查詢、使用或維護這些內容？",
+      "03",
+      "預期成果",
+      "哪一段工作流程最希望先被改善？"
+    ]
+  }
+]
