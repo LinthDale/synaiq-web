@@ -71,10 +71,11 @@ API 於 `docs.astro.build` 覆核：Content Layer `glob()` loader（`astro/loade
   9 條路由 × 2 語系 = 18 頁，加 `/styleguide/` 共 19 頁。
 - FR-105 的「視覺重建」本階段不做（PRD 明定閘門）：頁面只出語意 HTML。
 
-### S5 CSS 手冊機制（FR-102） — todo
+### S5 CSS 手冊機制（FR-102） — done
 
 - `src/styles/tokens.css` 為唯一 custom property 宣告處（中性佔位組，PRD-005 定案後整批置換）。
-- `/styleguide`：列出全部 token 的變數名與實際值、每種 block 型別各一個範例、
+- `/styleguide`：列出全部 44 個 token 的變數名與實際值（建置期解析 tokens.css，不手抄）、
+  21 種 block 型別各一個真實內容範例、
   `<meta name="robots" content="noindex">`，且不入 sitemap。
 - `docs/guidelines/CSS-Handbook.md`：三條規則與「怎麼改 token」的操作說明。
 

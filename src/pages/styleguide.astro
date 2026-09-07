@@ -1,0 +1,175 @@
+---
+/**
+ * CSS 手冊頁（PRD-001 FR-102）。
+ *
+ * 兩個用途：
+ * 1. 列出 `tokens.css` 全部 token 的變數名與實際值 —— 直接解析 CSS，不手抄。
+ * 2. 每一種內容區塊型別各出一個範例 —— 取自真實內容（第一個用到該型別的頁面），
+ *    不另外編造假資料，所以這頁同時是元件目錄，也是內容 schema 的實況檢查。
+ *
+ * 本頁 `noindex` 且被 `astro.config.mjs` 的 sitemap filter 排除。
+ */
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BLOCK_COMPONENTS } from '../components/blocks/index.ts';
+import { DEFAULT_LOCALE, NOINDEX_PATHS, contentDirFor } from '../config/site.ts';
+import { loadSite } from '../lib/content.ts';
+import { previewFor, readTokenGroups } from '../lib/tokens.ts';
+import type { PageBlockType } from '../content.config.ts';
+
+/** 內部工具頁的標題與說明；不屬於 9 條內容路由，故不進 Content Collections。 */
+const PAGE_TITLE = '樣式指南';
+const PAGE_DESCRIPTION = 'SynaiQ 設計 token 與內容區塊的內部參考頁，不對外索引。';
+
+const locale = DEFAULT_LOCALE;
+const site = await loadSite(locale);
+const groups = readTokenGroups();
+const tokenCount = groups.reduce((count, group) => count + group.tokens.length, 0);
+
+const prefix = `${contentDirFor(locale)}/`;
+const pages = (await getCollection('pages')).filter((page) => page.id.startsWith(prefix));
+
+/** 每種 block 型別取第一個出現的真實區塊當範例。 */
+const samples = new Map<PageBlockType, { block: unknown; from: string }>();
+for (const page of pages) {
+  for (const block of page.data.blocks) {
+    if (samples.has(block.type)) continue;
+    samples.set(block.type, { block, from: page.id.slice(prefix.length) });
+  }
+}
+
+const blockTypes = Object.keys(BLOCK_COMPONENTS) as PageBlockType[];
+const missing = blockTypes.filter((type) => !samples.has(type));
+---
+
+<BaseLayout
+  locale={locale}
+  path={NOINDEX_PATHS[0]}
+  title={site.titleTemplate.replace('%s', () => PAGE_TITLE)}
+  description={PAGE_DESCRIPTION}
+  robots="noindex"
+>
+  <section class="block" aria-labelledby="styleguide-heading">
+    <div class="container">
+      <h1 id="styleguide-heading">{PAGE_TITLE}</h1>
+      <p>{PAGE_DESCRIPTION}</p>
+      <p>
+        目前共 <strong>{tokenCount}</strong> 個 token、<strong>{blockTypes.length}</strong> 種區塊型別。
+        規則與改法見 <code>docs/guidelines/CSS-Handbook.md</code>。
+      </p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="tokens-heading">
+    <div class="container">
+      <h2 id="tokens-heading">設計 token</h2>
+      {
+        groups.map((group) => (
+          <div class="token-group">
+            <h3>{group.title}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">變數名</th>
+                  <th scope="col">值</th>
+                  <th scope="col">預覽</th>
+                </tr>
+              </thead>
+              <tbody>
+                {group.tokens.map((token) => {
+                  const preview = previewFor(token);
+                  return (
+                    <tr>
+                      <th scope="row"><code>{token.name}</code></th>
+                      <td><code>{token.value}</code></td>
+                      <td>
+                        {preview.kind === 'text' ? (
+                          <span class="preview-text" style={preview.style}>Aa 字級範例</span>
+                        ) : (
+                          <span class={`preview-${preview.kind}`} style={preview.style} />
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="blocks-heading">
+    <div class="container">
+      <h2 id="blocks-heading">內容區塊型別</h2>
+      {
+        missing.length > 0 && (
+          <p class="styleguide-warning">
+            尚無真實內容可示範的型別：<code>{missing.join('、')}</code>
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    blockTypes.map((type) => {
+      const sample = samples.get(type);
+      if (!sample) return null;
+      // Astro 的元件工廠沒有共同的泛型介面，這裡是本檔唯一的型別接縫。
+      const Block = BLOCK_COMPONENTS[type] as never;
+      return (
+        <div class="styleguide-sample">
+          <div class="container">
+            <p class="styleguide-sample-label">
+              <code>{type}</code> — 範例來自 <code>{sample.from}.md</code>
+            </p>
+          </div>
+          <Block block={sample.block} locale={locale} />
+        </div>
+      );
+    })
+  }
+</BaseLayout>
+
+<style>
+  .token-group {
+    margin-block-end: var(--space-8);
+  }
+
+  .preview-swatch {
+    display: inline-block;
+    inline-size: var(--space-12);
+    block-size: var(--space-6);
+    border: var(--border-width) solid var(--color-border);
+  }
+
+  .preview-bar {
+    display: inline-block;
+    max-inline-size: 100%;
+    block-size: var(--space-2);
+    background-color: var(--color-ink-500);
+  }
+
+  .preview-text {
+    display: inline-block;
+  }
+
+  .styleguide-sample {
+    border-top: var(--border-width) dashed var(--color-border);
+  }
+
+  .styleguide-sample-label {
+    margin-block: var(--space-6) 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .styleguide-warning {
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+</style>
