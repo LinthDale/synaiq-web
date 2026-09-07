@@ -1,0 +1,13 @@
+---
+/** English content routes; `home` lives at en/index.astro. */
+import PageLayout from '../../layouts/PageLayout.astro';
+import { PAGE_SLUGS, type PageSlug } from '../../config/site.ts';
+
+export function getStaticPaths() {
+  return PAGE_SLUGS.filter((slug) => slug !== 'home').map((slug) => ({ params: { slug } }));
+}
+
+const slug = Astro.params.slug as PageSlug;
+---
+
+<PageLayout locale="en" slug={slug} />

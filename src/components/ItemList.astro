@@ -1,0 +1,14 @@
+---
+/** Plain string list; `ordered` switches to <ol> for sequenced content. */
+interface Props {
+  items: string[];
+  ordered?: boolean;
+}
+
+const { items, ordered = false } = Astro.props;
+const Tag = ordered ? 'ol' : 'ul';
+---
+
+<Tag class="item-list">
+  {items.map((item) => <li>{item}</li>)}
+</Tag>

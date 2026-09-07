@@ -1,0 +1,12 @@
+---
+import ItemList from '../ItemList.astro';
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'flow'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  {block.steps.length > 0 && <ItemList items={block.steps} ordered />}
+</Section>

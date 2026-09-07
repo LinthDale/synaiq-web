@@ -1,0 +1,48 @@
+---
+/**
+ * Contact cards. Cards with an href become links (mailto: / tel:), the rest are
+ * plain items. The contact page source has no heading for this block, so none
+ * is invented here.
+ */
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'contact'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <ul class="contact-cards">
+    {
+      block.cards.map((card) => (
+        <li class="contact-card">
+          <p class="eyebrow">{card.eyebrow}</p>
+          <p class="contact-card-title">
+            {card.href ? <a href={card.href}>{card.title}</a> : card.title}
+          </p>
+          {card.detail && <p class="contact-card-detail">{card.detail}</p>}
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .contact-cards {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-card-title {
+    margin-block-end: var(--space-1);
+    font-weight: var(--weight-bold);
+  }
+
+  .contact-card-detail {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

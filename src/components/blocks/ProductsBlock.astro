@@ -1,0 +1,49 @@
+---
+/**
+ * Product cards. Each item is a link; the heading level follows the block:
+ * with a block heading the items are h3, without one (the /products page,
+ * whose source has no section heading) they are h2 so the order stays valid.
+ */
+import Section from '../Section.astro';
+import { localizeHref } from '../../lib/content.ts';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'products'>;
+const { block, locale } = Astro.props;
+const ItemHeading = block.title ? 'h3' : 'h2';
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <ul class="product-list">
+    {
+      block.items.map((item) => (
+        <li class="product-item">
+          <ItemHeading>
+            <a href={localizeHref(item.href, locale)}>{item.name}</a>
+          </ItemHeading>
+          <p>{item.description}</p>
+          <p class="product-action">{block.itemAction}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .product-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  .product-item {
+    margin-block-end: var(--space-8);
+    padding-block-end: var(--space-4);
+    border-bottom: var(--border-width) solid var(--color-border-subtle);
+  }
+
+  .product-action {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

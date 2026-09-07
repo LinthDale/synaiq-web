@@ -1,0 +1,48 @@
+---
+import Figure from '../Figure.astro';
+import ItemList from '../ItemList.astro';
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'experience'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <ItemList items={block.items} />
+
+  {
+    block.images.length > 0 && (
+      <div class="experience-gallery">
+        {block.images.map((image) => (
+          <Figure src={image.src} alt={image.alt} caption={image.caption} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    block.devices.length > 0 && (
+      <div class="experience-devices">
+        <h3>{block.devicesLabel}</h3>
+        <div class="experience-gallery">
+          {block.devices.map((device) => (
+            <Figure src={device.src} alt={device.alt} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+</Section>
+
+<style>
+  .experience-gallery {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .experience-devices {
+    margin-block-start: var(--space-8);
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import Figure from '../Figure.astro';
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'team'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  {
+    block.groups.map((group) => (
+      <div class="team-group">
+        <p class="eyebrow">{group.eyebrow}</p>
+        <h3>{group.title}</h3>
+        <ul class="team-grid">
+          {group.members.map((member) => (
+            <li class="team-member" id={`member-${member.id}`}>
+              <Figure src={member.src} alt={member.alt} />
+              <h4>{member.name}</h4>
+              <p class="team-role">{member.role}</p>
+              <p>{member.background}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</Section>
+
+<style>
+  .team-group {
+    margin-block-end: var(--space-12);
+  }
+
+  .team-grid {
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    padding: 0;
+    list-style: none;
+  }
+
+  .team-role {
+    margin-block-end: var(--space-1);
+    color: var(--color-text-muted);
+  }
+</style>

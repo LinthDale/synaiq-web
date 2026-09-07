@@ -1,0 +1,40 @@
+---
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'technology'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <ul class="ability-list">
+    {
+      block.abilities.map((ability) => (
+        <li class="ability">
+          <p class="ability-code">{ability.code}</p>
+          <h3>{ability.title}</h3>
+          <p>{ability.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .ability-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  .ability {
+    margin-block-end: var(--space-6);
+  }
+
+  .ability-code {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-muted);
+  }
+</style>

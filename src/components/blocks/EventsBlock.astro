@@ -1,0 +1,55 @@
+---
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'events'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  {
+    block.items.map((item) => (
+      <article class="event">
+        <p class="event-status">{item.status}</p>
+        <h3>{item.title}</h3>
+        <dl class="event-details">
+          {item.details.map((detail) => (
+            <div class="event-detail">
+              <dt>{detail.label}</dt>
+              <dd>{detail.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="event-image-placeholder">{item.imagePlaceholder}</p>
+      </article>
+    ))
+  }
+</Section>
+
+<style>
+  .event {
+    padding: var(--space-6);
+    border: var(--border-width) solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  .event-status,
+  .event-image-placeholder {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .event-detail {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .event-detail dt {
+    min-width: 6rem;
+    font-weight: var(--weight-medium);
+  }
+
+  .event-detail dd {
+    margin: 0;
+  }
+</style>

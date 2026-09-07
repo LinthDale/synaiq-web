@@ -51,17 +51,17 @@ API 於 `docs.astro.build` 覆核：Content Layer `glob()` loader（`astro/loade
   `site.titleTemplate` / `localeName` / `languageSwitcherLabel`（`%s｜SynaiQ` 屬全站設定，
   舊樹誤放 `home.md`）。皆為必要欄位，未刪 PRD 既有欄位。
 
-### S3 內容遷移（FR-104） — todo
+### S3 內容遷移（FR-104） — done
 
 - `npm run migrate:content` 以舊解析器讀 `content/pages/*.md`，輸出
   `src/content/site/{zh-hant,en}.md` 與 `src/content/pages/{zh-hant,en}/*.md`，
   並產生 `docs/migration/content-key-map.md`（舊 key → 新欄位路徑 → 驗證路由）。
 - 零遺漏保證：腳本比對「解析器解出的 key 集合」與「recorder 記錄過的 key 集合」，
-  差集非空即以非零離開碼失敗。（實測數字於完成後回填）
+  差集非空即以非零離開碼失敗。實測 10 檔共 191 個舊 key，未對應 0 個。
 - `/en/` 為 zh-Hant 佔位並標 `draft: true`；`metadata.title` / `description` 加 `[EN] ` 前綴，
   理由見下方「偏離與決策」。
 
-### S4 版面與區塊（FR-101 / FR-105 結構層） — todo
+### S4 版面與區塊（FR-101 / FR-105 結構層） — done
 
 - `src/layouts/BaseLayout.astro`：`<html lang>` 依語系、載入 `tokens.css` + `base.css`、
   header／footer 取自 `site` collection、canonical、`hreflang` 成對含 `x-default`、

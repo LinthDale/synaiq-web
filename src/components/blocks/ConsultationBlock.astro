@@ -1,0 +1,38 @@
+---
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'consultation'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <ol class="consultation-steps">
+    {
+      block.steps.map((step) => (
+        <li>
+          <p class="consultation-number">{step.number}</p>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Section>
+
+<style>
+  .consultation-steps {
+    padding: 0;
+    list-style: none;
+  }
+
+  .consultation-steps li {
+    margin-block-end: var(--space-6);
+  }
+
+  .consultation-number {
+    margin: 0;
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+</style>

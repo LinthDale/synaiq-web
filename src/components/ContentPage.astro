@@ -1,0 +1,44 @@
+---
+/**
+ * Renders one content entry: hero, optional section nav, markdown body,
+ * every block in order, then the closing call to action.
+ * Block components are looked up by `type`; an unknown type fails the build.
+ */
+import PageAction from './PageAction.astro';
+import PageHero from './PageHero.astro';
+import PageNav from './PageNav.astro';
+import { BLOCK_COMPONENTS } from './blocks/index.ts';
+import type { Locale } from '../config/site.ts';
+import type { PageData, SiteData } from '../lib/content.ts';
+
+interface Props {
+  page: PageData;
+  site: SiteData;
+  locale: Locale;
+}
+
+const { page, site, locale } = Astro.props;
+
+function componentFor(type: keyof typeof BLOCK_COMPONENTS) {
+  const component = BLOCK_COMPONENTS[type];
+  if (!component) {
+    throw new Error(`未知的 block 型別「${type}」：請在 src/components/blocks/index.ts 註冊元件。`);
+  }
+  // Astro 的元件工廠沒有共同的泛型介面，這裡是本專案唯一的型別接縫。
+  return component as never;
+}
+---
+
+<PageHero hero={page.hero} locale={locale} />
+{page.pageNav && <PageNav nav={page.pageNav} />}
+
+<slot />
+
+{
+  page.blocks.map((block) => {
+    const Block = componentFor(block.type);
+    return <Block block={block} locale={locale} />;
+  })
+}
+
+<PageAction action={page.action} site={site} locale={locale} />

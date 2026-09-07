@@ -1,0 +1,39 @@
+---
+/**
+ * Shared section wrapper for every content block.
+ *
+ * Renders the optional eyebrow / heading / lead paragraph and turns the section
+ * into a named landmark only when a heading exists. Blocks whose source content
+ * has no heading (agi deployment, contact cards) stay unnamed on purpose --
+ * headings are never invented here.
+ */
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const { id, eyebrow, title, description } = Astro.props;
+const headingId = title && id ? `${id}-heading` : undefined;
+---
+
+<section id={id} aria-labelledby={headingId} class="block">
+  <div class="container">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {title && <h2 id={headingId}>{title}</h2>}
+    {description && <p class="block-lead">{description}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .block {
+    padding-block: var(--space-12);
+  }
+
+  .block-lead {
+    max-width: 56ch;
+    color: var(--color-text-muted);
+  }
+</style>

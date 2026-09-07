@@ -1,0 +1,33 @@
+---
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'social'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title}>
+  <div class="social-card">
+    <p class="social-status">{block.status}</p>
+    <h3>{block.platform}</h3>
+    <p>{block.description}</p>
+    <p>
+      <a href={block.href} target="_blank" rel="noopener noreferrer" aria-label={block.actionLabel}>
+        {block.action}
+      </a>
+    </p>
+  </div>
+</Section>
+
+<style>
+  .social-card {
+    padding: var(--space-6);
+    border: var(--border-width) solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  .social-status {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

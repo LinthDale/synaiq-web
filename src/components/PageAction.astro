@@ -1,0 +1,42 @@
+---
+/**
+ * Closing call to action. Pages without their own eyebrow/title fall back to
+ * the site-wide `defaultAction`, exactly as the old tree did.
+ * `id="action"` matches the anchor used by the home page section nav.
+ */
+import type { Locale } from '../config/site.ts';
+import { localizeHref, type PageData, type SiteData } from '../lib/content.ts';
+
+interface Props {
+  action: PageData['action'];
+  site: SiteData;
+  locale: Locale;
+}
+
+const { action, site, locale } = Astro.props;
+const eyebrow = action.eyebrow ?? site.defaultAction.eyebrow;
+const title = action.title ?? site.defaultAction.title;
+---
+
+<section id="action" class="page-action" aria-labelledby="action-heading">
+  <div class="container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 id="action-heading">{title}</h2>
+    {action.description && <p class="page-action-description">{action.description}</p>}
+    <p>
+      <a class="page-action-link" href={localizeHref(action.href, locale)}>{action.label}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .page-action {
+    padding-block: var(--space-12);
+    border-top: var(--border-width) solid var(--color-border-subtle);
+  }
+
+  .page-action-description {
+    max-width: 56ch;
+    color: var(--color-text-muted);
+  }
+</style>
