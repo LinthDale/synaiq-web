@@ -42,3 +42,6 @@ desktop.ini
 
 # 本機開發工具殘留
 .impeccable/
+
+# vinext dev cache
+.vinext/
