@@ -1,0 +1,95 @@
+# SynaiQ 官網部署管線（PRD-001 FR-109 / ADR-001 部署路徑 A）
+#
+# Hostinger 的 Git 部署不會執行 build，原生自動部署又只綁 GitHub，
+# 而本 repo 在 Azure DevOps，因此 build 一律在 ADO 完成，只把 dist/ 推上去。
+#
+# 密鑰不進 repo：FTP 主機、帳號、密碼與遠端目錄全部來自變數群組 synaiq-web-hostinger。
+# 操作步驟見 docs/operations/deploy-hostinger.md。
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none
+
+parameters:
+  - name: target
+    displayName: 部署目標
+    type: string
+    default: staging
+    values:
+      - staging
+      - production
+
+variables:
+  # HOSTINGER_FTP_HOST / HOSTINGER_FTP_USER / HOSTINGER_FTP_PASSWORD / HOSTINGER_REMOTE_DIR
+  # 由業主在 ADO 建立，密碼請標記為 secret，HOSTINGER_REMOTE_DIR 建議勾選
+  # 「Settable at queue time」，切換 staging 與正式站時不必改群組。
+  - group: synaiq-web-hostinger
+  - name: nodeVersion
+    value: '22.x'
+  - name: artifactName
+    value: site
+
+stages:
+  - stage: build
+    displayName: 建置與測試
+    jobs:
+      - job: build
+        displayName: npm ci / build / test
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: NodeTool@0
+            displayName: 安裝 Node ${{ variables.nodeVersion }}
+            inputs:
+              versionSpec: $(nodeVersion)
+
+          - script: npm ci
+            displayName: npm ci
+
+          - script: npm run build
+            displayName: npm run build
+
+          # pretest 會再 build 一次，因此測試斷言的 dist/ 一定就是要上傳的那一份。
+          - script: npm test
+            displayName: npm test
+
+          - publish: dist
+            artifact: $(artifactName)
+            displayName: 發佈 dist/ 為管線成品
+
+  - stage: deploy
+    displayName: 部署到 Hostinger（${{ parameters.target }}）
+    dependsOn: build
+    condition: succeeded()
+    jobs:
+      - deployment: upload
+        displayName: FTP 上傳 dist/
+        pool:
+          vmImage: ubuntu-latest
+        # ADO 的核准與檢查掛在 environment 上；正式站請在此環境設定人工核准。
+        environment: synaiq-web-${{ parameters.target }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: $(artifactName)
+                  displayName: 下載管線成品
+
+                - task: FtpUpload@2
+                  displayName: 上傳到 $(HOSTINGER_REMOTE_DIR)
+                  inputs:
+                    credentialsOption: inputs
+                    serverUrl: ftps://$(HOSTINGER_FTP_HOST)
+                    username: $(HOSTINGER_FTP_USER)
+                    password: $(HOSTINGER_FTP_PASSWORD)
+                    rootDirectory: $(Pipeline.Workspace)/$(artifactName)
+                    filePatterns: '**'
+                    remoteDirectory: $(HOSTINGER_REMOTE_DIR)
+                    # clean: true = 上傳前先清空遠端目錄，確保不留上一版的孤兒檔。
+                    clean: true
+                    preservePaths: true
+                    trustSSL: false

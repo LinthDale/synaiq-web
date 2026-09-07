@@ -96,7 +96,7 @@ API 於 `docs.astro.build` 覆核：Content Layer `glob()` loader（`astro/loade
   內容頁零 `<script type="module">`、`src/` 除 `tokens.css` 外零硬編碼色值、
   以及「每個舊 key 的文字都出現在對應路由的 HTML」。
 
-### S8 部署基線（FR-109） — todo
+### S8 部署基線（FR-109） — done
 
 - `azure-pipelines.yml`：trigger `main`、Node 22、`npm ci` → `npm run build` → `npm test` →
   `FtpUpload@2` 上傳 `dist/`，`clean: true`，參數 `target: staging|production`，
