@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.2 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 2026-09-08 |
+| v0.3 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 > 內容管線規則見 [`../../HANDOVER.md`](../../HANDOVER.md) §2，本文不複述。
@@ -79,7 +79,7 @@
 |---|---|---|---|
 | OQ-1 | KIP 的定位、產品規格與命名（含是否含子產品線） | 行銷部 | M1 之前 |
 | OQ-2 | **已決（2026-09-08）**：不併入 `/products`，而是 `/products` 併入 `/kip`；KIP 即主軸（見 M1） | 業主 + 行銷部 | 已決 |
-| OQ-3 | Wally 與 KIP 的關係：同一產品線或並列品牌。**2026-09-08 業主未給口頭裁定，改提供淨零展展位現場照（Wally 實機）為素材**；工作假設仍為 wireframes §9 的「Wally 是 KIP 的現場化身」，`/wally` Hero 定位句依此撰寫，若日後推翻則同步改 wireframes §9-1 與本欄 | 業主 | 仍待裁定；`/wally` 文案定稿前 |
+| OQ-3 | **已決（2026-09-08）**：Wally 是 KIP 的現場化身，同一產品線的兩個出口。`/wally` Hero 定位句、首頁 Wally 區塊與 `/kip` 的「現場出口」段落皆依此撰寫；同日裁定對外優勢採 `S2` 的八項 | 業主 | 已決 |
 | OQ-4 | 英文版的目標市場與語調（正式／技術／行銷） | 行銷部 | M2 開工前 |
 | OQ-5 | `media.md` 的活動年份、地點、圖片由誰提供 | 行銷部 | 2026-09-21 |
 | OQ-6 | 成效指標為何（詢問數、停留時間），站上目前無任何 analytics | 業主 | 與 PRD-004 OQ 併案 |
@@ -90,3 +90,4 @@
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，建立 M1／M2 里程碑與 FR-201 至 FR-206 | |
 | v0.2 | 2026-09-08 | **M1 拍板**：KIP 取代 `/products` 成為 `/kip` 並吸收 `/knowledge-base`、`/agi`，`/media` 併入 `/cases`，新增 `/kip/security`；路由數由 9 改為 8，涵蓋檔案改為 `src/content/**`；文案事實來源明列為 `kip-deck-extract.md`；OQ-2 已決、OQ-3 補記展位照片事實仍待裁定；FR-201／203／204／205 依新架構調整 | [wireframes-v1](../design/wireframes-v1.md) §2、PRD-004 FR-401 |
+| v0.3 | 2026-09-08 | 業主裁定：Wally 是 KIP 的現場化身（OQ-3 已決）；對外優勢採 `S2` 八項而非 `S1` 十項。文案結構以 [wireframes-v2](../design/wireframes-v2.md) 為準 | wireframes-v2 |
