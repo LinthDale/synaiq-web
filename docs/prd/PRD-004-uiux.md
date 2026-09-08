@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.3 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 2026-09-08 |
+| v0.4 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 > 路由表與內容管線見 [`../../HANDOVER.md`](../../HANDOVER.md) §2。
@@ -40,7 +40,7 @@
 | FR-401 | **資訊架構已決（2026-09-08，業主裁定即 PRD-002 M1）**：`/products`、`/knowledge-base` 併入 `/kip`，`/agi` 併入 `/kip#ika`，`/media` 併入 `/cases`；新增 `/kip/security` 與 `/cases`；主導覽 5 項加 1 CTA（KIP 平台／Wally 數位人／生成式 AI／應用實績／關於 SynaiQ 加「洽談導入」），無下拉，`/generative-ai` 不進主導覽仍由頁尾與內鏈進入 | 網站地圖與導覽與 [wireframes §2.2／§2.3](../design/wireframes-v1.md) 逐項一致；首頁起算兩次點擊可達每一條路由；`src/content/site/<locale>.md` 的 `nav[]` 同步更新；[wireframes §2.4](../design/wireframes-v1.md) 的 4 條 301 以 `.htaccess` `Redirect 301` 實作（中英各一組），部署後逐條驗證狀態碼為 301 且落點正確 | TBD |
 | FR-402 | **i18n URL 策略與語言切換**：路由機制已由 [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) 定為 Astro 內建 i18n（zh-Hant 無前綴、英文 `/en/` 前綴）並由 PRD-001 FR-101／FR-106 建骨架；本 FR 負責確認該形式、實作 header 語言切換器與缺頁行為。**業主裁定（2026-09-08）**：英文文案完成前切換器即顯示；目標語系無對應頁時切到該語系的上層區段頁並顯示可見提示，不靜默導回首頁；英文路由在 PRD-002 M2 前維持 `noindex` 且不進 sitemap。本裁定**取代** PRD-001 FR-104 驗收條件中的「不顯示切換器」 | 每頁 `<html lang>` 為 `zh-Hant` 或 `en`；每對頁面互指 `hreflang` 且含 `x-default`（指向無前綴 zh-Hant）；語言切換停留在對應的同一頁而非回首頁；缺對應頁時落在該語系上層區段頁且提示對鍵盤與螢幕報讀器可達；M2 前 `/en/**` 皆輸出 `<meta name="robots" content="noindex, follow">` 且不在 `sitemap.xml` | TBD |
 | FR-403 | per-locale 內容結構已由 PRD-001 FR-103／FR-104 以 Astro Content Collections 加 zod schema 交付（`src/content/pages/<locale>/*.md`）；本 FR 只負責驗收該結構並補足 IA 調整所需的欄位 | 兩語系各自 build 綠燈；任一語系缺必填欄位時建置期即失敗並指出檔名與欄位路徑；新增語系不需修改任何 `.astro` | TBD |
-| FR-404 | 統一 RWD 斷點（現況混用 560／900／1199／1200 多組），定義行動、平板、桌機三段規則 | 斷點集中定義且全站引用；320px 至 1920px 逐段檢視無破版、無橫向捲軸 | TBD |
+| FR-404 | **全站 RWD（業主 2026-09-08 明示為硬性要求）**：單一流動式版面、mobile-first，不做桌機與手機兩套固定版。斷點集中定義於 `src/styles/`（建議三段：≤ 767 手機、768 至 1279 平板、≥ 1280 桌機，容器上限 1440）並全站引用；字級與間距以 `clamp()` 流動；圖片用 `<picture>`／`srcset`＋`sizes` 與 `loading="lazy"`；表格於窄幅依 wireframe 註解轉為堆疊卡片或容器內橫向捲動；導覽於 < 1024 轉抽屜；觸控目標 ≥ 44px；`prefers-reduced-motion` 有降級。每個區塊在 1440／768／390 的重排規則以 [wireframes-v2](../design/wireframes-v2.md) 為準。做法依據 MDN「Responsive design」與 web.dev「Learn Responsive Design」 | 自動化：`tests/rwd.test.mjs` 以 headless Chrome 用 320／390／768／1024／1280／1440／1920 七個寬度渲染 `dist/` 全部路由，斷言 `document.documentElement.scrollWidth <= window.innerWidth`（零橫向捲軸）且無元素右緣超出視窗；Lighthouse 行動裝置達 guideline §4 門檻。人工：iPhone SE、iPad 直式、1920 桌機各一輪目視無破版、字不被截、表格可讀 | TBD |
 | FR-405 | WCAG 2.2 AA 全站符合：語意標記、標題階層、焦點順序與可見焦點、跳至主要內容連結、圖片替代文字、鍵盤可操作 | 自動掃描零 violation；鍵盤單獨走完全部路由與導覽展開／收合；`src/content/pages/**` 內每張圖有 alt；Lighthouse A11y ≥ 95 | TBD |
 | FR-406 | `/contact` 互動方式**已決（2026-09-08）**：採 [ADR-002](../adr/ADR-002-contact-form-php-endpoint.md) 的 Hostinger 自架 PHP 收信端點（wireframes §5 選項 B），表單欄位為 [wireframes §3.7](../design/wireframes-v1.md) 三問加姓名／單位／聯絡方式 | ADR-002 §驗收 5 項全數通過（含 security-reviewer 零 CRITICAL）；頁面同時保留電話與 Email 明碼；同意勾選框預設不勾選；關閉 JS 仍可送出並看到結果頁 | TBD |
 | FR-407 | 導覽與頁尾的雙語一致性：兩語系的導覽項數量與順序一致 | 兩語系導覽項對應完整，無單語系獨有項目（例外需書面說明） | TBD |
@@ -94,3 +94,4 @@
 | v0.1 | 2026-09-07 | 初版，建立 FR-401 至 FR-407，納入雙語資訊架構 | |
 | v0.2 | 2026-09-07 | 依換底決策調整：涵蓋檔案改為 `src/**`，i18n 路由與 per-locale 內容結構改由 PRD-001 交付，本 PRD 只負責 IA、切換 UX 與驗收；OQ-1 由「待決策」改為「待確認」 | [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) |
 | v0.3 | 2026-09-08 | 業主裁定三案落地：FR-401 資訊架構定案（`/kip` 為主軸、4 條 301、5 項導覽，即 PRD-002 M1）、FR-402 語言切換器提前顯示並定義缺頁行為（取代 PRD-001 FR-104 的「不顯示切換器」）、FR-406 表單採 ADR-002；OQ-2／OQ-3／OQ-5 標記已決，風險與驗收各補兩列 | [ADR-002](../adr/ADR-002-contact-form-php-endpoint.md)、[wireframes-v1](../design/wireframes-v1.md) |
+| v0.4 | 2026-09-08 | 業主明示 RWD 為硬性要求：FR-404 改寫為單一流動式版面的具體做法與可自動化驗收（七個寬度零橫向捲軸的 headless 測試、Lighthouse 行動裝置門檻）；wireframes-v1 因結構被否決而作廢，改以 wireframes-v2（1440／768／390 三切片加逐區塊重排規則）為版面依據 | wireframes-v2（進行中） |
