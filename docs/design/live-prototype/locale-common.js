@@ -37,7 +37,7 @@ export const zhHant = {
   },
   "footer": {
     "company": "鑫揚智能科技股份有限公司",
-    "address": "台中市西屯區文心路二段 201 號 11 樓之 8"
+    "address": "407臺中市西屯區何安里臺灣大道二段910號10樓之2"
   },
   "advantages": {
     "eyebrow": "Built around your knowledge.",
@@ -164,7 +164,7 @@ export const en = {
   },
   "footer": {
     "company": "SynaiQ",
-    "address": "11F.-8, No. 201, Sec. 2, Wenxin Rd., Xitun Dist., Taichung, Taiwan"
+    "address": "10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan"
   },
   "advantages": {
     "eyebrow": "Built around your knowledge.",

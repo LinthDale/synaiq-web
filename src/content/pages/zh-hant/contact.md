@@ -27,7 +27,7 @@ blocks:
         href: 'mailto:service@synaiq.com'
       - eyebrow: 'COMPANY HQ'
         title: '鑫揚智能科技股份有限公司'
-        detail: '台中市西屯區文心路二段 201 號 11 樓之 8'
+        detail: '407臺中市西屯區何安里臺灣大道二段910號10樓之2'
   - type: 'consultation'
     id: 'consultation'
     eyebrow: 'CONSULTATION FLOW'

@@ -15,6 +15,17 @@ import { ROOT, decodeEntities, htmlFor } from './lib/dist.mjs';
 
 const KEY_MAP = join(ROOT, 'tests', 'fixtures', 'content-key-map.json');
 const records = JSON.parse(readFileSync(KEY_MAP, 'utf8'));
+const FORMER_ADDRESS = '台中市西屯區文心路二段 201 號 11 樓之 8';
+const APPROVED_ADDRESS = '407臺中市西屯區何安里臺灣大道二段910號10樓之2';
+
+// Preserve the original migration fixture; the user approved only these two address edits on 2026-09-08.
+function isApprovedAddressRecord(record) {
+  return ['home', 'contact'].includes(record.page) && record.oldKey === 'contact.cards';
+}
+
+function expectedMigratedValue(record, value) {
+  return isApprovedAddressRecord(record) && value === FORMER_ADDRESS ? APPROVED_ADDRESS : value;
+}
 
 /** 舊樹的 10 個內容檔（`site.md` 加 9 頁）。 */
 const SOURCE_FILES = [
@@ -56,16 +67,30 @@ test('對照表本身完整：欄位齊全且同一檔案內的舊 key 不重複
   }
 });
 
+test('核准的地址變更僅涵蓋首頁與聯絡頁各一筆既有 contact.cards 記錄', () => {
+  const approved = records.filter(record => isApprovedAddressRecord(record) && record.values.includes(FORMER_ADDRESS));
+  assert.equal(approved.length, 2);
+  assert.deepEqual(approved.map(record => record.page).sort(), ['contact', 'home']);
+  for (const record of approved) {
+    assert.equal(record.values.filter(value => value === FORMER_ADDRESS).length, 1);
+    assert.equal(expectedMigratedValue(record, FORMER_ADDRESS), APPROVED_ADDRESS);
+  }
+  assert.equal(expectedMigratedValue({ page: 'about', oldKey: 'contact.cards' }, FORMER_ADDRESS), FORMER_ADDRESS);
+  assert.equal(expectedMigratedValue({ page: 'home', oldKey: 'other.cards' }, FORMER_ADDRESS), FORMER_ADDRESS);
+  assert.equal(expectedMigratedValue(approved[0], 'service@synaiq.com'), 'service@synaiq.com');
+});
+
 test('每個舊 key 的文字都出現在對應路由的建置結果', () => {
   const misses = [];
 
   for (const record of records) {
     const html = decodedHtml(record.route);
     for (const value of record.values) {
-      if (html.includes(value)) continue;
+      const expected = expectedMigratedValue(record, value);
+      if (html.includes(expected)) continue;
       misses.push(
         `${record.page}.md「${record.oldKey}」→ ${record.route}（${record.newPath}）` +
-          `：找不到「${value.slice(0, 60)}」`,
+          `：找不到「${expected.slice(0, 60)}」`,
       );
     }
   }
