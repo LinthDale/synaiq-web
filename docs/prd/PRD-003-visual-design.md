@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.2 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 2026-09-08 |
+| v0.3 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 > 版面結構與各頁記憶點見 [`../design/wireframes-v1.md`](../design/wireframes-v1.md)，本文只談視覺。
@@ -11,8 +11,8 @@
 
 **問題**：業主已裁定**視覺全面重做**（2026-09-07），舊樹樣式一律不沿用，因此本 PRD 的工作
 不是「把手冊套到既有版面上」，而是**在 wireframes-v1 的結構上做一套全新設計**。目前既無設計
-方向（三案未提），也無正式 token 數值（Phase A 只落了 44 個中性佔位），任何一頁「是不是符合
-品牌」仍無從判斷。
+方向（三案與設計語言 v1 已完成，但首頁 A／B 尚未擇一），也無正式 token 數值（Phase A 只落了
+44 個中性佔位），任何一頁「是不是符合品牌」仍無從判斷。
 
 | 項目 | 內容 |
 |---|---|
@@ -35,6 +35,8 @@
 - 舊樹 `app/globals.css` 的 7 個品牌色與 `--radius` **不沿用**（PRD-001 §1 Non-Goal，業主裁定視覺全面重做），此處僅備查。
 - Phase A 已落 `src/styles/tokens.css`（44 個中性佔位 token）與 `/styleguide` 驗收頁；**正式數值仍 TBD**，由 PRD-005 FR-501／FR-502 供給。
 - Tailwind 已依 [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) 移除，樣式為純 CSS。
+- 三個視覺方向已交付於 [`directions-v1.md`](../design/directions-v1.md)；可施工的設計語言已交付於 [`style-language-v1.md`](../design/style-language-v1.md)。展示字已裁定為 **C：Newsreader＋Noto Serif TC**。
+- 首頁 A／B 六張三寬度畫板與 KIP 三寬度畫板已落於 [`wireframes-v2/`](../design/wireframes-v2/)；A／B 未選定前只作設計驗證，不得寫入 `src/**`。
 
 ## 3. 功能需求
 
@@ -83,6 +85,7 @@
 | OQ-2 | **已決（2026-09-08）**：首頁六幕 GSAP 捲動敘事**移除**，改為點擊觸發的問答演示（理由見 [wireframes §4](../design/wireframes-v1.md)：一個記憶點、兩種訪客都在掃描、與 ADR-001 零 JS 預設衝突、50–70 KB 成本、`prefers-reduced-motion` 降級後等於維護兩套首頁） | 業主 + 設計 | 已決 |
 | OQ-3 | 是否需要淺色版（`--paper` 已定義但站上幾乎未用） | 業主 | 本 PRD 開工前 |
 | OQ-4 | 英文版是否沿用同一套字級階層（西文與 CJK 視覺重量不同） | 設計 + PRD-004 | FR-302 開工前 |
+| OQ-5 | 首頁首屏選 A「第一屏直接打出有頁碼的答案」或 B「先用滿版現場照、第二屏再打答案」；兩案共用同一句答案與兩行主張，須先看 1440／768／390 實際 render 再選 | 業主 | FR-307 關閉前 |
 
 ## 8. 變更紀錄
 
@@ -90,3 +93,4 @@
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，建立 FR-301 至 FR-306 與現況基線 | |
 | v0.2 | 2026-09-08 | 範圍由「套用手冊樣式」改為**全新設計**（業主裁定舊視覺不沿用）；新增 FR-307 設計方向 3 案並定為 PRD-001 FR-105 前置閘門；OQ-2 已決，FR-306 由 GSAP 六幕改為點擊觸發問答演示；涵蓋檔案改為 `src/**` 與 `tokens.css`，現況基線改記 Phase A 的 44 個佔位 token；FR-304 補記 logo 不可用的現況 | [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md)、[wireframes-v1](../design/wireframes-v1.md) §4 |
+| v0.3 | 2026-09-08 | 記錄三方向與設計語言 v1 已交付、展示字裁定 C（Newsreader＋Noto Serif TC）；首頁新增 A／B 六張三寬度畫板與 OQ-5 擇案閘門，KIP 平台架構同步為 1440 `pin-wipe`、768／390 靜態全資訊退化；明列未擇案前只落設計檔、不進 `src/**` | [style-language-v1](../design/style-language-v1.md)、[wireframes-v2](../design/wireframes-v2.md) |

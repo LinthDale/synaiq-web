@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SynaiQ — 知識留在組織裡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Noto+Serif+TC:wght@300;400&family=Manrope:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="prototype.css"><link rel="stylesheet" href="home-design.css"><link rel="stylesheet" href="editorial-design.css"><link rel="stylesheet" href="demo-animation.css"><link rel="stylesheet" href="paper-material.css"><link rel="stylesheet" href="kip-design.css"></head><body>
+<a class="skip" href="#main" data-i18n="navigation.skip">跳至主要內容</a>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="?page=home" aria-label="SynaiQ 首頁" data-i18n-aria="navigation.homeLabel"><img class="brand-logo" src="assets/synaiq-logo-ink.svg" data-brand-variant="ink" width="844" height="143" alt="SynaiQ"></a>
+    <nav class="page-navigation" aria-label="網站頁面" data-i18n-aria="navigation.site">
+      <a href="?page=home" data-page-link="home"><span data-i18n="navigation.home">首頁</span></a>
+      <a href="?page=kip" data-page-link="kip"><span data-i18n="navigation.kip">KIP 平台</span></a>
+    </nav>
+    <div class="nav-actions">
+      <select id="language" class="language language-select" aria-label="語言" data-i18n-aria="navigation.language"><option value="zh-Hant">ZH</option><option value="en">EN</option></select>
+      <a class="button small" href="#contact" data-i18n="contact.cta">洽談導入</a>
+      <button id="menu" class="menu" type="button" aria-expanded="false" aria-controls="mobile-nav" data-i18n="navigation.menu">本頁目錄</button>
+    </div>
+  </div>
+</header>
+<nav id="mobile-nav" class="page-context" aria-label="首頁段落">
+  <div class="wrap page-context-inner">
+    <p class="page-context-label" id="page-context-label">首頁內容</p>
+    <div class="page-context-links" id="page-context-links"><a href="#wally">Wally 數位人</a><a href="#proof">產品畫面</a><a href="#footer">關於 SynaiQ</a></div>
+  </div>
+</nav>
+<main id="main"></main>
+<footer id="footer"><div class="wrap footer-grid"><div><a class="brand" href="?page=home" aria-label="SynaiQ 首頁" data-i18n-aria="navigation.homeLabel"><img class="brand-logo" src="/brand/synaiq-logo-light.svg" data-brand-variant="light" width="844" height="143" alt="SynaiQ"></a><p data-i18n="footer.company">鑫揚智能科技股份有限公司</p><p class="fine" data-i18n="footer.address">台中市西屯區文心路二段 201 號 11 樓之 8</p></div><div class="footer-links"><a href="?page=kip" data-i18n="navigation.kip">KIP 平台</a><a href="?page=home#wally" data-i18n="navigation.wally">Wally 數位人</a><a href="mailto:service@synaiq.com">service@synaiq.com</a><a href="tel:+886423931368">+886 4 2393 1368</a></div></div><div class="wrap footer-bottom"><span>© SynaiQ</span><span>Knowledge stays with you.</span></div></footer>
+<script type="module" src="prototype.js"></script></body></html>

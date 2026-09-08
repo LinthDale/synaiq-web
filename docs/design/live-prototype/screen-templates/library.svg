@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<title id="title">{{title}}</title><desc id="desc">{{description}}</desc>
+<rect width="1440" height="900" rx="20" fill="#f8f8f7"/><path d="M0 68H1440M230 68V900" stroke="#d5d5ce"/><path d="M0 68H230V900H0Z" fill="#ecece8"/>
+<g font-family="Noto Sans TC,Microsoft JhengHei,sans-serif" fill="#282825">
+<image x="32" y="20" width="166" height="28" href="{{brand.logoDataUrl}}"/><text x="266" y="42" font-size="16">{{appTitle}}</text><text x="1150" y="42" font-size="14" fill="#64645e">{{sampleBadge}}</text>
+<text x="30" y="139" font-size="16">{{backToChat}}</text><rect x="18" y="182" width="194" height="50" rx="6" fill="#dcdcd5"/><text x="30" y="214" font-size="16">{{documents}}</text><text x="30" y="285" font-size="16">{{knowledgeBases}}</text><text x="30" y="356" font-size="16">{{permissions}}</text><text x="30" y="427" font-size="16">{{activity}}</text>
+<text x="292" y="161" font-size="35">{{heading}}</text><text x="292" y="211" font-size="19" fill="#64645e">{{intro}}</text>
+<rect x="291" y="274" width="760" height="56" rx="9" fill="#fff" stroke="#c8c8c0"/><text x="315" y="310" font-size="17" fill="#64645e">{{searchPlaceholder}}</text><rect x="1171" y="274" width="176" height="56" rx="9" fill="#282825"/><text x="1204" y="310" font-size="17" fill="#f4f4f2">{{addDocument}}</text>
+<rect x="291" y="376" width="1056" height="60" fill="#e9e9e3"/><text x="317" y="413" font-size="16">{{columnName}}</text><text x="892" y="413" font-size="16">{{columnFormat}}</text><text x="1080" y="413" font-size="16">{{columnStatus}}</text>
+<g font-size="21"><text x="317" y="492">{{contractFilename}}</text><text x="317" y="587">{{workflowFilename}}</text><text x="317" y="682">{{indexFilename}}</text></g>
+<g font-size="17" fill="#64645e"><text x="892" y="492">{{pdfFormat}}</text><text x="892" y="587">{{wordFormat}}</text><text x="892" y="682">{{excelFormat}}</text><text x="1080" y="492">{{contractStatus}}</text><text x="1080" y="587">{{workflowStatus}}</text><text x="1080" y="682">{{indexStatus}}</text></g>
+<path d="M291 533H1347M291 628H1347M291 723H1347" stroke="#cecec6"/>
+<text x="291" y="793" font-size="15" fill="#64645e">{{disclaimer}}</text>
+<text x="552" y="854" font-size="14" fill="#64645e">{{footer}}</text>
+</g></svg>

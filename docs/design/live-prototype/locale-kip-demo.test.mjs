@@ -1,0 +1,50 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { renderKip } from './kip-design.js';
+import { renderAnimatedDemo, initAnimatedDemo } from './demo-animation.js';
+
+test('English KIP and demo render English copy, labels and sample filenames throughout', () => {
+  const kip = renderKip({ locale: 'en', advantageSection: () => '', contact: () => '' });
+  assert.match(kip, /Ask naturally\./);
+  assert.match(kip, /assets\/kip-search-demo-en\.svg/);
+  assert.match(kip, /Four layers,/);
+  assert.doesNotMatch(kip, /\p{Script=Han}/u);
+  const demo = renderAnimatedDemo({ locale: 'en' });
+  assert.match(demo, /Procurement_Contract_2023\.pdf/);
+  assert.match(demo, /Knowledge_Workflow_Sample\.docx/);
+  assert.match(demo, /Data_Index_Sample\.xlsx/);
+  assert.match(kip, /Procurement_Contract_2023\.pdf · Page 12/);
+  assert.match(demo, />Replay<\/button>/);
+  assert.match(demo, />Pause animation<\/button>/);
+  assert.doesNotMatch(demo, /\p{Script=Han}/u);
+});
+
+test('demo playback labels remain English after pause, replay and reduced-motion changes', t => {
+  const keys = ['document', 'matchMedia', 'IntersectionObserver', 'ResizeObserver', 'requestAnimationFrame', 'cancelAnimationFrame'];
+  const originals = new Map(keys.map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  t.after(() => { for (const [key, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key]; } });
+  const control = () => ({ textContent: '', disabled: false, handlers: {}, addEventListener(type, callback) { this.handlers[type] = callback; } });
+  const pause = control(), replay = control();
+  const box = { getBoundingClientRect: () => ({ width: 800, height: 500, left: 0, top: 0 }) };
+  const root = { dataset: {}, style: { setProperty() {} }, classList: { toggle() {} }, querySelectorAll: () => [], querySelector(selector) { return selector === '[data-demo-pause]' ? pause : selector === '[data-demo-replay]' ? replay : box; } };
+  const preference = { matches: false, addEventListener(type, callback) { this.change = callback; }, removeEventListener() {} };
+  const document = { hidden: false, querySelector: () => root, addEventListener() {}, removeEventListener() {} };
+  let observe;
+  const mocks = { document, matchMedia: () => preference, IntersectionObserver: class { constructor(callback) { observe = callback; } observe() {} disconnect() {} }, ResizeObserver: class { observe() {} disconnect() {} }, requestAnimationFrame: () => 1, cancelAnimationFrame() {} };
+  for (const [key, value] of Object.entries(mocks)) Object.defineProperty(globalThis, key, { configurable: true, value });
+  const dispose = initAnimatedDemo({ locale: 'en' });
+  observe([{ isIntersecting: true }]);
+  assert.equal(pause.textContent, 'Pause animation');
+  pause.handlers.click();
+  assert.equal(pause.textContent, 'Play animation');
+  replay.handlers.click();
+  assert.equal(pause.textContent, 'Pause animation');
+  assert.equal(root.dataset.state, 'question');
+  preference.matches = true;
+  preference.change();
+  assert.equal(pause.textContent, 'Reduced motion: still preview');
+  assert.equal(root.dataset.state, 'source');
+  assert.equal(pause.disabled, true);
+  assert.equal(replay.disabled, true);
+  dispose();
+});

@@ -27,6 +27,7 @@ img{display:block;max-width:100%;filter:grayscale(1)}
 .w{width:var(--cw);margin:0 auto}
 .ey{font-size:12px;letter-spacing:.22em;color:#5f5f5f}
 .h1{font-size:var(--fs-h1);line-height:1.1;letter-spacing:-.025em;font-weight:700}
+.nh{font-size:var(--fs-nh);line-height:1.08;letter-spacing:-.025em;font-weight:700}
 .h2{font-size:var(--fs-h2);line-height:1.16;letter-spacing:-.02em;font-weight:700}
 .bd{font-size:var(--fs-bd);line-height:1.6}
 .mu{color:#5f5f5f}
@@ -51,7 +52,7 @@ img{display:block;max-width:100%;filter:grayscale(1)}
 </style>
 </helmet>
 
-<div class="board" style="--pw:768px;--cw:704px;--fold:1024px;--fs-h1:48px;--fs-h2:32px;--fs-bd:16px;--fs-tb:15px">
+<div class="board" style="--pw:768px;--cw:704px;--fold:1024px;--fs-h1:48px;--fs-nh:40px;--fs-h2:32px;--fs-bd:16px;--fs-tb:15px">
 <div class="fold"><b>FOLD 768×1024</b></div>
 
 <!-- 01 NAV + HERO -->
@@ -120,32 +121,38 @@ img{display:block;max-width:100%;filter:grayscale(1)}
   <dt>768</dt><dd><b>左圖右文 → 上圖下文</b>；六格維持 3×2；分頁列若字數增加改為<b>橫向捲動</b>不換行；下一段提示改為整列可點</dd></dl>
 </div>
 
-<!-- 03 ARCH -->
-<div class="p" style="--h:600px">
+<!-- 03 ARCH (static mobile fallback for pinned narrative) -->
+<div class="p" style="--h:760px">
   <span class="bn">03</span>
   <div class="w" style="padding-top:46px">
     <div class="ey">一張圖看懂</div>
-    <h2 class="h2" style="margin-top:12px">平台架構</h2>
+    <h2 class="nh" style="margin-top:12px">平台架構</h2>
     <p class="mu bd" style="margin-top:12px;max-width:560px">使用者接入與大模型層在上方接入，知識來源在底部餵入。</p>
     <div style="position:relative;margin-top:22px;height:340px;overflow:hidden;background:#1b1b1b">
       <div style="width:1060px;height:340px;position:relative">
         <img src="img/arch-kip.jpg" alt="KIP 平台架構圖" style="width:1060px;height:340px;object-fit:cover;object-position:center 44%">
-        <span class="hs" style="left:18px;top:16px">USER ACCESS　Web／API／行動裝置</span>
-        <span class="hs" style="left:18px;top:158px">MODEL LAYER ＋ IKA</span>
-        <span class="hs" style="left:680px;top:16px">KNOWLEDGE CENTER</span>
+        <span class="hs" style="left:18px;top:16px">① USER ACCESS　Web／API／行動裝置</span>
+        <span class="hs" style="left:18px;top:158px">② MODEL LAYER ＋ IKA</span>
+        <span class="hs" style="left:680px;top:16px">③ KNOWLEDGE CENTER</span>
       </div>
       <span class="tag" style="right:0;bottom:0">← 橫向捲動看完整架構</span>
     </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;margin-top:18px;border-top:1px solid #161616;padding-top:16px">
+      <div><b style="font-size:13px">① 使用者接入</b><div class="mu" style="font-size:13px;line-height:1.5;margin-top:4px">Web、API 與行動裝置三種入口。</div></div>
+      <div><b style="font-size:13px">② 大模型層 ＋ IKA</b><div class="mu" style="font-size:13px;line-height:1.5;margin-top:4px">模型可放雲端，也可裝在自己機房。</div></div>
+      <div><b style="font-size:13px">③ 知識中心 KC</b><div class="mu" style="font-size:13px;line-height:1.5;margin-top:4px">文件在這裡進來、解析、分庫。</div></div>
+      <div><b style="font-size:13px">④ 五項功能</b><div class="mu" style="font-size:13px;line-height:1.5;margin-top:4px">介接、權限、紀錄、影像檢索、報表。</div></div>
+    </div>
   </div>
 </div>
-<div class="n" style="--h:600px">
-  <h4>03 平台架構</h4>
-  <dl><dt>媒介</dt><dd>圖</dd>
+<div class="n" style="--h:760px">
+  <h4>03 平台架構（敘事釘住場景的<b>平板退化</b>）</h4>
+  <dl><dt>媒介</dt><dd>圖＋四行常駐說明</dd>
   <dt>來源</dt><dd><b>S1</b> 架構圖與講者註記</dd>
-  <dt>動態</dt><dd>熱點改 tap，一次只開一個</dd>
-  <dt>收合</dt><dd>四層說明預設收合</dd>
-  <dt>768</dt><dd>標題與支持句<b>由左右並排改上下堆疊</b>；架構圖<b>不縮放，改容器內橫向捲動</b>（min-width 1060）——縮到 704 寬標籤會不可讀</dd></dl>
-  <div class="rf">替代方案：重繪為<b>縱向四層堆疊圖</b>（待業主裁定）。</div>
+  <dt>動態</dt><dd><b>不釘住、不逐層點亮</b>；scroll-reveal 只讓整段一次進場</dd>
+  <dt>收合</dt><dd><b>不收合</b>：四行說明直接全部顯示，與 reduced-motion 的資訊量相同</dd>
+  <dt>768</dt><dd>視窗 &lt; 900 關閉 1440 的 pin-wipe；敘事大標降為 40px；架構圖<b>不縮放，改容器內橫向捲動</b>（min-width 1060）；四行說明排 2×2</dd></dl>
+  <div class="rf">替代方案仍是重繪為<b>縱向四層堆疊圖</b>（待業主裁定）；在素材未到位前保留橫捲，但資訊不再藏在 hover／tap。</div>
 </div>
 
 <!-- 04 ADVANTAGES -->
@@ -278,18 +285,21 @@ img{display:block;max-width:100%;filter:grayscale(1)}
 </div>
 
 <!-- 09 SOVEREIGNTY -->
-<div class="p dk" style="--h:280px">
+<div class="p dk" style="--h:360px">
   <span class="bn" style="background:#ededed;color:#161616">09</span>
   <div class="w" style="padding-top:52px">
-    <p style="font-size:21px;line-height:1.5;font-weight:600">整套可裝在公司自己機房，文件不進外部雲，問答內容不會被拿去訓練外部模型。</p>
-    <div style="margin-top:20px"><span class="pill inv" style="font-size:14px">導入規劃 <i>→</i></span></div>
+    <p class="nh">整套可裝在公司自己機房。</p>
+    <p class="bd mu" style="margin-top:20px">文件不進外部雲，問答內容不會被拿去訓練外部模型。</p>
+    <div style="margin-top:24px"><span class="pill inv" style="font-size:14px">導入規劃 <i>→</i></span></div>
   </div>
 </div>
-<div class="n" style="--h:280px">
-  <h4>09 資料主權（單句）</h4>
+<div class="n" style="--h:360px">
+  <h4>09 資料主權（敘事大標單句）</h4>
   <dl><dt>媒介</dt><dd><b>字</b>（交付承諾句；本頁唯一整句段落）</dd>
   <dt>來源</dt><dd><b>S2</b> SOVEREIGNTY</dd>
-  <dt>768</dt><dd>26→21px；膠囊由右側移到句下</dd></dl>
+  <dt>動態</dt><dd>scroll-reveal 整段淡入，<b>不逐字</b></dd>
+  <dt>768</dt><dd>主張改為<b>敘事大標 40px</b>滿欄；依據句 16px；膠囊移到句下。<b>本頁敘事大標第 2 次，已達上限</b></dd></dl>
+  <div class="rf">與 1440 同樣拆成「主張＋依據」，<b>字未增減</b>；對外是否主打地端部署仍待業主裁定。</div>
 </div>
 
 <!-- 10 CTA -->
