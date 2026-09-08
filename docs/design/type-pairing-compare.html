@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>SYNAIQ 展示字配對比較 A / B / C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Chiron+Sung+HK:wght@300..400&family=Instrument+Serif&family=Newsreader:opsz,wght@6..72,200..700&family=Noto+Serif+TC:wght@200..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Manrope:wght@200..800&family=Noto+Sans+TC:wght@100..900&display=swap">
+<style>
+  :root{
+    --paper:#f4f4f2; --paper2:#f8f8f7; --ink:#282825; --ink2:#64645e; --ink3:#8f8f89;
+    --blue:#2173be; --green:#529a6a; --coral:#eb5b55; --purple:#c455eb; --orange:#f09236;
+    --body:"Manrope","Noto Sans TC",sans-serif;
+    --mono:"Courier Prime","Noto Sans TC",monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);}
+  body{font-family:var(--body);font-weight:400;-webkit-font-smoothing:antialiased;font-synthesis:none;}
+  .wrap{width:1280px;margin:0 auto;}
+  .page-head{padding:56px 0 32px;}
+  .page-head h1{font-family:var(--body);font-size:20px;font-weight:500;margin:0 0 10px;letter-spacing:0.01em;}
+  .page-head p{font-size:14px;line-height:1.7;color:var(--ink2);margin:0;max-width:820px;}
+  .band{border-top:1px solid var(--ink);padding:44px 0 64px;}
+  .band:last-of-type{border-bottom:1px solid var(--ink);}
+  .band-head{display:flex;gap:20px;align-items:baseline;margin-bottom:8px;}
+  .band-key{font-family:var(--body);font-size:40px;font-weight:200;line-height:1;width:44px;flex:none;}
+  .band-name{font-size:16px;font-weight:500;line-height:1.5;}
+  .band-note{font-size:13px;font-weight:400;color:var(--ink2);line-height:1.6;margin-top:2px;}
+  .readout{font-family:var(--mono);font-size:14px;color:var(--ink2);line-height:1.8;margin:14px 0 34px;padding:10px 14px;background:var(--paper2);border-left:2px solid var(--ink3);}
+  .readout b{font-weight:700;color:var(--ink);}
+
+  /* display roles */
+  .disp{font-weight:300;letter-spacing:-0.02em;font-optical-sizing:auto;margin:0;}
+  .hero-col{width:1280px;}
+  .hero-q{font-size:80px;line-height:1.05;color:var(--ink2);}
+  .hero-a{font-size:80px;line-height:1.05;color:var(--ink);margin-top:26px;}
+  .cursor{display:inline-block;width:0.06em;height:0.78em;background:var(--ink);vertical-align:-0.06em;margin-left:0.06em;}
+  .narrative{font-size:64px;line-height:1.05;margin-top:44px;}
+  .sect{font-size:40px;line-height:1.2;margin-top:36px;}
+
+  .body-col{width:500px;margin-top:26px;}
+  .body-col p{font-size:16px;font-weight:400;line-height:1.9;margin:0;}
+  .row{width:700px;margin-top:30px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);display:flex;align-items:baseline;gap:24px;padding:14px 0;}
+  .row .lab{font-size:18px;font-weight:400;width:220px;flex:none;}
+  .row .val{font-size:16px;font-weight:300;color:var(--ink2);line-height:1.6;}
+  .cap{font-family:var(--mono);font-size:14px;font-weight:400;color:var(--ink2);margin-top:18px;}
+  .accents{margin-top:26px;display:flex;gap:34px;align-items:baseline;font-size:24px;font-weight:300;letter-spacing:-0.01em;}
+  .a1{color:var(--blue);} .a2{color:var(--green);} .a3{color:var(--coral);}
+  .a4{color:var(--purple);} .a5{color:var(--orange);}
+
+  /* per-band display stacks */
+  .bandA .disp,.bandA .accents{font-family:"Instrument Serif","Noto Serif TC",serif;}
+  .bandB .disp,.bandB .accents{font-family:"Bodoni Moda","Chiron Sung HK",serif;}
+  .bandC .disp,.bandC .accents{font-family:"Newsreader","Noto Serif TC",serif;}
+  #M{position:absolute;left:-99999px;top:0;font-family:monospace;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-head">
+    <h1>展示字配對比較　A / B / C</h1>
+    <p>三段內容完全相同，只換展示襯線的拉丁字與中文字。內文一律 Manrope 加 Noto Sans TC，說明字一律 Courier Prime。紙 #f4f4f2、墨 #282825。標題一律 font-weight 300、letter-spacing -0.02em。量測欄寬 1280，視窗 1440。每段最上方那行等寬字是渲染後由瀏覽器量出來的實際數字，不是估算。</p>
+  </div>
+
+  <!-- ============ BAND A ============ -->
+  <section class="band bandA" data-band="A">
+    <div class="band-head">
+      <div class="band-key">A</div>
+      <div>
+        <div class="band-name">Instrument Serif 400　＋　Noto Serif TC 300 / 400</div>
+        <div class="band-note">拉丁展示字只有一個字重（400），設 300 時瀏覽器取最接近的 400，不做假細體；中文吃得到真正的 300。</div>
+      </div>
+    </div>
+    <div class="readout" data-readout>量測中…</div>
+
+    <div class="hero-col">
+      <div class="disp hero-q"><span class="t">這份 2023 年的合約，第 12 頁寫了什麼？</span></div>
+      <div class="disp hero-a"><span class="t">第 12 頁寫的是驗收與付款條件。</span><span class="cursor"></span></div>
+    </div>
+
+    <div class="disp narrative"><span class="t">查得到出處的那一句，才算答案。</span></div>
+    <div class="disp sect"><span class="t">資料主權與地端部署</span></div>
+
+    <div class="body-col">
+      <p>KIP 讀完這批文件之後，每一句回答都指得回原文：是哪一份、第 12 頁的哪一行。上萬份文件裡的那一句話，不必先知道它在哪一份，也找得到。</p>
+    </div>
+
+    <div class="row">
+      <div class="lab">資訊來源驗證</div>
+      <div class="val">每句都指得到原文哪一份、哪一頁，可開啟原檔核對</div>
+    </div>
+
+    <div class="cap">來源：採購契約_2023.pdf 第 12 頁</div>
+
+    <div class="accents">
+      <span class="a1">PDF</span><span class="a2">掃描件</span><span class="a3">手寫</span><span class="a4">試算表</span><span class="a5">圖片</span>
+    </div>
+  </section>
+
+  <!-- ============ BAND B ============ -->
+  <section class="band bandB" data-band="B">
+    <div class="band-head">
+      <div class="band-key">B</div>
+      <div>
+        <div class="band-name">Bodoni Moda 400（Google Fonts 無 300）　＋　Chiron Sung HK 300 / 400</div>
+        <div class="band-note">Chiron Sung HK 確認在 Google Fonts 上（可變字重 200 至 900，本頁用 300），不需退回 Noto Serif HK。Bodoni Moda 的可變字重下限是 400，拿不到 300。</div>
+      </div>
+    </div>
+    <div class="readout" data-readout>量測中…</div>
+
+    <div class="hero-col">
+      <div class="disp hero-q"><span class="t">這份 2023 年的合約，第 12 頁寫了什麼？</span></div>
+      <div class="disp hero-a"><span class="t">第 12 頁寫的是驗收與付款條件。</span><span class="cursor"></span></div>
+    </div>
+
+    <div class="disp narrative"><span class="t">查得到出處的那一句，才算答案。</span></div>
+    <div class="disp sect"><span class="t">資料主權與地端部署</span></div>
+
+    <div class="body-col">
+      <p>KIP 讀完這批文件之後，每一句回答都指得回原文：是哪一份、第 12 頁的哪一行。上萬份文件裡的那一句話，不必先知道它在哪一份，也找得到。</p>
+    </div>
+
+    <div class="row">
+      <div class="lab">資訊來源驗證</div>
+      <div class="val">每句都指得到原文哪一份、哪一頁，可開啟原檔核對</div>
+    </div>
+
+    <div class="cap">來源：採購契約_2023.pdf 第 12 頁</div>
+
+    <div class="accents">
+      <span class="a1">PDF</span><span class="a2">掃描件</span><span class="a3">手寫</span><span class="a4">試算表</span><span class="a5">圖片</span>
+    </div>
+  </section>
+
+  <!-- ============ BAND C ============ -->
+  <section class="band bandC" data-band="C">
+    <div class="band-head">
+      <div class="band-key">C</div>
+      <div>
+        <div class="band-name">Newsreader 300 / 400（opsz 自動）　＋　Noto Serif TC 300 / 400</div>
+        <div class="band-note">唯一能在拉丁側做出真正 300 字重的一組，光學尺寸隨字級自動變化。</div>
+      </div>
+    </div>
+    <div class="readout" data-readout>量測中…</div>
+
+    <div class="hero-col">
+      <div class="disp hero-q"><span class="t">這份 2023 年的合約，第 12 頁寫了什麼？</span></div>
+      <div class="disp hero-a"><span class="t">第 12 頁寫的是驗收與付款條件。</span><span class="cursor"></span></div>
+    </div>
+
+    <div class="disp narrative"><span class="t">查得到出處的那一句，才算答案。</span></div>
+    <div class="disp sect"><span class="t">資料主權與地端部署</span></div>
+
+    <div class="body-col">
+      <p>KIP 讀完這批文件之後，每一句回答都指得回原文：是哪一份、第 12 頁的哪一行。上萬份文件裡的那一句話，不必先知道它在哪一份，也找得到。</p>
+    </div>
+
+    <div class="row">
+      <div class="lab">資訊來源驗證</div>
+      <div class="val">每句都指得到原文哪一份、哪一頁，可開啟原檔核對</div>
+    </div>
+
+    <div class="cap">來源：採購契約_2023.pdf 第 12 頁</div>
+
+    <div class="accents">
+      <span class="a1">PDF</span><span class="a2">掃描件</span><span class="a3">手寫</span><span class="a4">試算表</span><span class="a5">圖片</span>
+    </div>
+  </section>
+</div>
+<div id="M">pending</div>
+<script>
+(function(){
+  var SPEC = {
+    A:{latin:'Instrument Serif', latinSpec:'400 80px "Instrument Serif"',
+       cjk:'Noto Serif TC',     cjkSpec:'300 80px "Noto Serif TC"'},
+    B:{latin:'Bodoni Moda',      latinSpec:'400 80px "Bodoni Moda"',
+       cjk:'Chiron Sung HK',    cjkSpec:'300 80px "Chiron Sung HK"'},
+    C:{latin:'Newsreader',       latinSpec:'300 80px "Newsreader"',
+       cjk:'Noto Serif TC',     cjkSpec:'300 80px "Noto Serif TC"'}
+  };
+  function intrinsic(el){
+    var cs = getComputedStyle(el);
+    var m = document.createElement('div');
+    m.style.cssText = 'position:absolute;left:-99999px;top:0;white-space:nowrap;visibility:hidden;';
+    m.style.fontFamily = cs.fontFamily;
+    m.style.fontSize = cs.fontSize;
+    m.style.fontWeight = cs.fontWeight;
+    m.style.fontStyle = cs.fontStyle;
+    m.style.letterSpacing = cs.letterSpacing;
+    m.style.fontOpticalSizing = cs.fontOpticalSizing;
+    m.textContent = el.textContent;
+    document.body.appendChild(m);
+    var w = m.getBoundingClientRect().width;
+    document.body.removeChild(m);
+    return w;
+  }
+  function ok(b){ return b ? '已載入' : '未載入'; }
+  function run(){
+    var lines = [];
+    var bands = document.querySelectorAll('[data-band]');
+    for (var i=0;i<bands.length;i++){
+      var band = bands[i];
+      var id = band.getAttribute('data-band');
+      var s = SPEC[id];
+      var col = Math.round(band.querySelector('.hero-col').getBoundingClientRect().width);
+      var q = band.querySelector('.hero-q .t');
+      var a = band.querySelector('.hero-a .t');
+      var n = band.querySelector('.narrative .t');
+      var qw = intrinsic(q), aw = intrinsic(a), nw = intrinsic(n);
+      var ql = q.getClientRects().length, al = a.getClientRects().length, nl = n.getClientRects().length;
+      var fL = document.fonts.check(s.latinSpec, '2023 KIP');
+      var fC = document.fonts.check(s.cjkSpec, '這份合約第頁寫了什麼');
+      var out = band.querySelector('[data-readout]');
+      out.innerHTML =
+        '拉丁 ' + s.latin + '：<b>' + ok(fL) + '</b>　中文 ' + s.cjk + '：<b>' + ok(fC) + '</b><br>' +
+        '問句 80px 單行寬 <b>' + qw.toFixed(1) + 'px</b>　欄寬 ' + col + 'px　實際斷 <b>' + ql + '</b> 行' +
+        '　　答句 單行寬 <b>' + aw.toFixed(1) + 'px</b>　斷 <b>' + al + '</b> 行<br>' +
+        '敘事 64px 單行寬 <b>' + nw.toFixed(1) + 'px</b>　斷 <b>' + nl + '</b> 行';
+      lines.push('MEASURE ' + id + ' col=' + col + ' qw=' + qw.toFixed(1) + ' ql=' + ql +
+                 ' aw=' + aw.toFixed(1) + ' al=' + al + ' nw=' + nw.toFixed(1) + ' nl=' + nl +
+                 ' latin=' + (fL?1:0) + ' cjk=' + (fC?1:0));
+    }
+    var fB = document.fonts.check('400 16px "Manrope"','KIP') ? 1 : 0;
+    var fS = document.fonts.check('400 16px "Noto Sans TC"','讀完這批文件') ? 1 : 0;
+    var fM = document.fonts.check('400 14px "Courier Prime"','2023.pdf') ? 1 : 0;
+    lines.push('MEASURE BODY manrope=' + fB + ' notosanstc=' + fS + ' courierprime=' + fM);
+    lines.push('PAGEH=' + Math.ceil(document.documentElement.scrollHeight));
+    document.getElementById('M').textContent = lines.join(' | ');
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function(){ setTimeout(run, 300); });
+  } else {
+    setTimeout(run, 1500);
+  }
+})();
+</script>
+</body>
+</html>
