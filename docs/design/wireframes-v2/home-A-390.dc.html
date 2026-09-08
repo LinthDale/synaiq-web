@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+x-dc{display:block}
+body{background:#c9c9c9;font-family:-apple-system,"Segoe UI","Microsoft JhengHei","Noto Sans TC",sans-serif;color:#161616;-webkit-font-smoothing:antialiased}
+a{color:#161616;text-decoration:none}
+img{display:block;max-width:100%;filter:grayscale(1)}
+.board{display:grid;grid-template-columns:var(--pw) 320px;width:calc(var(--pw) + 320px);position:relative}
+.p{background:#eee;height:var(--h);overflow:hidden;position:relative}
+.n{background:#1b1b1b;color:#e0e0e0;height:var(--h);overflow:hidden;padding:13px 15px;border-bottom:1px solid #313131;font-size:11px;line-height:1.45}
+.n h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:7px}
+.n dl{display:grid;grid-template-columns:40px 1fr;column-gap:8px;row-gap:4px}
+.n dt{color:#8d8d8d;font-size:10px;letter-spacing:.06em}
+.n dd{color:#d2d2d2}
+.n .rf{margin-top:8px;padding-top:7px;border-top:1px solid #313131;color:#bdbdbd}
+.n .sm{margin-top:9px;padding:9px 10px;background:#262626;border-left:2px solid #8d8d8d}
+.n .sm b{color:#fff}
+.fold{position:absolute;left:0;top:var(--fold);width:var(--pw);border-top:2px dashed #111;z-index:60;pointer-events:none}
+.fold b{position:absolute;right:6px;top:-11px;background:#111;color:#eee;font:600 10px/1 system-ui;letter-spacing:.14em;padding:4px 6px}
+.bn{position:absolute;left:0;top:0;background:#161616;color:#eee;font:600 11px/1 system-ui;padding:6px 8px;z-index:40}
+.w{width:var(--cw);margin:0 auto}
+.ey{font-size:11px;letter-spacing:.22em;color:#5f5f5f}
+.h1{font-size:var(--fs-h1);line-height:1.2;letter-spacing:-.02em;font-weight:700}
+.nh{font-size:var(--fs-nh);line-height:1.16;letter-spacing:-.02em;font-weight:700}
+.h2{font-size:var(--fs-h2);line-height:1.24;letter-spacing:-.015em;font-weight:700}
+.bd{font-size:var(--fs-bd);line-height:1.65}
+.mu{color:#5f5f5f}
+.pill{display:inline-flex;align-items:center;gap:11px;border:1px solid #161616;border-radius:999px;padding:12px 12px 12px 20px;font-size:15px;font-weight:600;min-height:48px}
+.pill i{width:26px;height:26px;border-radius:50%;background:#161616;color:#eee;display:grid;place-items:center;font-style:normal;font-size:12px}
+.pill.inv{border-color:#ededed;color:#ededed}
+.pill.inv i{background:#ededed;color:#111}
+.dk{background:#1b1b1b;color:#ededed}
+.dk .ey,.dk .mu{color:#a8a8a8}
+.cl{border:1px dashed #9d9d9d;background:#e3e3e3;color:#5f5f5f;font-size:11.5px;padding:10px 12px;display:flex;justify-content:space-between;gap:8px}
+.tag{position:absolute;background:#161616;color:#eee;font-size:10.5px;letter-spacing:.04em;padding:4px 8px}
+.hs{position:absolute;background:rgba(238,238,238,.94);border:1px solid #161616;color:#161616;font-size:10.5px;padding:4px 7px;white-space:nowrap}
+.num{font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.rowx{display:flex;align-items:center;justify-content:space-between}
+.chip{border:1px solid #161616;border-radius:999px;padding:9px 14px;font-size:13px;min-height:40px;display:inline-flex;align-items:center}
+.card{border:1px solid #b9b9b9;background:#e6e6e6;padding:14px}
+.pnav{height:60px;background:#ededed;color:#161616;position:relative;z-index:30;border-bottom:1px solid #c4c4c4}
+.frag{position:absolute;color:#3f3f3f;font-size:12px;letter-spacing:.04em;pointer-events:none}
+.caret{display:inline-block;width:5px;height:.86em;background:#ededed;vertical-align:-2px;margin-left:5px}
+.cite{font-size:13px;color:#bdbdbd;position:relative;display:inline-block}
+.cite::after{content:"";position:absolute;left:0;right:0;top:calc(100% + 3px);border-top:1.5px solid #8f8f89}
+.art{border:1px dashed #8f8f89;color:#a8a8a8;font-size:10.5px;line-height:1.55;display:grid;place-items:center;text-align:center;padding:10px}
+.q{font-size:14px;color:#a8a8a8;line-height:1.5}
+</style>
+</helmet>
+
+<div class="board" style="--pw:390px;--cw:350px;--fold:844px;--fs-h1:34px;--fs-nh:40px;--fs-h2:26px;--fs-bd:15px">
+<div class="fold"><b>FOLD 390×844</b></div>
+
+<!-- 01 NAV + HERO A -->
+<div class="p dk" style="--h:844px">
+  <span class="bn" style="background:#ededed;color:#161616;z-index:50">01</span>
+  <div class="pnav">
+    <div class="w rowx" style="height:59px">
+      <span style="display:inline-grid;gap:5px;width:22px"><span style="height:2px;background:#161616"></span><span style="height:2px;background:#161616"></span><span style="height:2px;background:#161616"></span></span>
+      <div style="font-size:17px;font-weight:700;letter-spacing:-.02em">SynaiQ</div>
+      <span style="width:40px;height:40px;border-radius:50%;border:1px solid #161616;display:grid;place-items:center;font-size:13px">✉</span>
+    </div>
+  </div>
+
+  <span class="frag" style="left:20px;top:104px">p. 12</span>
+  <span class="frag" style="left:262px;top:132px;font-size:11px">.pdf</span>
+  <span class="frag" style="left:150px;top:96px;font-size:11px">§ 3.2</span>
+  <span class="frag" style="left:330px;top:250px;font-size:11px">v2.1</span>
+  <span class="frag" style="left:16px;top:598px;font-size:11px">.docx</span>
+  <span class="frag" style="left:130px;top:806px;font-size:11px">掃描件</span>
+  <span class="frag" style="left:20px;top:756px;font-size:11px">§ 5</span>
+
+  <div style="position:absolute;right:-16px;bottom:-24px;width:200px;height:210px" class="art">
+    委製線稿（待補）<br>俯身翻找卷宗<br><span style="font-size:10px;color:#8f8f89">大幅裁切</span>
+  </div>
+
+  <div class="w" style="position:relative;height:784px;display:flex;flex-direction:column;justify-content:center;padding-bottom:150px">
+    <div class="ey" style="color:#a8a8a8">KNOWLEDGE INTELLIGENCE PLATFORM</div>
+    <div style="margin-top:20px">
+      <div style="font-size:10px;letter-spacing:.2em;color:#7c7c7c">訪客提問</div>
+      <div class="q" style="margin-top:6px">這份 2023 年的合約，<br>第 12 頁寫了什麼？</div>
+    </div>
+    <h1 class="h1" style="margin-top:16px">第 12 頁是保固條款：驗收後兩年內免費更換。<span class="caret"></span></h1>
+    <div style="margin-top:18px"><span class="cite">來源：示範採購合約 2023 v2　第 12 頁</span></div>
+    <div style="margin-top:26px"><span class="pill inv">看 KIP 怎麼運作 <i>→</i></span></div>
+  </div>
+
+  <svg viewBox="0 0 390 18" preserveAspectRatio="none" style="position:absolute;left:0;bottom:0;width:390px;height:18px" aria-hidden="true">
+    <path d="M0 18 L0 10 C 60 2 120 16 195 9 C 260 3 320 15 390 8 L390 18 Z" fill="#eee"></path>
+  </svg>
+</div>
+<div class="n" style="--h:844px">
+  <h4>01 首屏 Hero・提案 A「墨色打字機」</h4>
+  <div class="sm">
+    <b>記憶點</b>：與 1440 相同——首屏就看見 KIP 逐字寫出一個指得到頁碼的答案。<br>
+    <b>折線</b>：390×844 落在首屏下緣；紙白波浪 18px 主動長進首屏，<b>不放捲動箭頭</b>。<br>
+    <b>動態</b>：hero-rise・打字機 100ms／字・游標硬切閃爍。<b>無輪播、無視差、無釘住</b>（觸控裝置全部關閉）。<br>
+    <b>表面字數</b>：首屏 48 字（不隨版面變窄而增減）；全頁 429 字。<br>
+    <b>重排</b>：導覽＝漢堡（左）／字標（中）／洽談導入圖示鈕（右，40px 觸控區）；提問拆兩行；答案 80→34px、3 行；出處署名 14→13px；線稿 376×470 → 200×210 貼右下且左右下三邊被裁；碎片由 14 條減到 7 條，只留不壓字的。
+  </div>
+  <dl><dt>媒介</dt><dd>字（打字機答案為主）＋一張委製線稿＋碎片底紋</dd>
+  <dt>來源</dt><dd>示範問答文案<b>待定（見 hero-copy-candidates.md）</b>；出處署名為<b>示範用假文件名</b>；線稿＝委製<b>待補</b></dd>
+  <dt>動態</dt><dd>打字機 21 字約 2.1 秒；圖中為終態。<b>行動版仍保留打字機</b>——它是全站唯一一個必須留的動態，不佔捲動、不擋內容</dd>
+  <dt>收合</dt><dd>導覽主連結與語言切換<b>全部收進全螢幕抽屜</b></dd>
+  <dt>390</dt><dd>答案滿欄（&lt; 900 不套欄寬比例）；CTA 高 48px 符合 44px 觸控下限</dd></dl>
+  <div class="rf">reduced-motion：直接顯示完整句與署名。</div>
+</div>
+
+<!-- 02 ARCH -->
+<div class="p" style="--h:560px">
+  <span class="bn">02</span>
+  <div class="w" style="padding-top:36px">
+    <div class="ey">一張圖看懂</div>
+    <h2 class="h2" style="margin-top:10px">知識中樞怎麼<br>接進公司</h2>
+    <p class="mu bd" style="margin-top:12px">Web、API 與行動裝置接入；大模型可雲端、也可裝在自己機房。</p>
+    <div style="position:relative;margin-top:18px;height:300px;overflow:hidden;background:#1b1b1b">
+      <div style="width:900px;height:300px;position:relative">
+        <img src="img/arch-kip.jpg" alt="KIP 平台架構圖" style="width:900px;height:300px;object-fit:cover;object-position:center 42%">
+        <span class="hs" style="left:14px;top:14px">USER ACCESS</span>
+        <span class="hs" style="left:14px;top:132px">MODEL LAYER ＋ IKA</span>
+      </div>
+      <span class="tag" style="right:0;bottom:0">← 橫向捲動</span>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:560px">
+  <h4>02 架構一張圖（本斷點<b>不釘住</b>）</h4>
+  <dl><dt>媒介</dt><dd>圖</dd>
+  <dt>來源</dt><dd><b>S1</b>；需重繪為灰階向量圖（<b>待補</b>）</dd>
+  <dt>動態</dt><dd><b>pin-wipe 在 &lt; 900 一律關閉</b>；只留 scroll-reveal。四層說明改 tap 展開，一次只開一個</dd>
+  <dt>收合</dt><dd>四層說明預設收合</dd>
+  <dt>390</dt><dd>大標拆兩行；支持句滿欄；架構圖<b>維持原比例、容器內橫向捲動</b>（min-width 900），不縮放；熱點只留兩個最上層標籤</dd></dl>
+  <div class="rf">若改為縱向四層堆疊圖，此段可省掉橫向捲動（<b>待業主裁定</b>）。<br>本區塊仍緊接首屏，順序與 1440 一致。</div>
+</div>
+
+<!-- 03 PROOF -->
+<div class="p" style="--h:700px">
+  <span class="bn">03</span>
+  <div class="w" style="padding-top:36px">
+    <div class="ey">產品畫面</div>
+    <h2 class="h2" style="margin-top:10px">每一句答案，<br>都指得到原文</h2>
+    <div style="position:relative;margin-top:18px;height:380px;overflow:hidden;border:1px solid #b9b9b9;background:#fff">
+      <img src="img/kip-iks-2.jpg" alt="KIP 回應與來源檢視畫面" style="width:100%;height:100%;object-fit:cover;object-position:52% top">
+      <span class="tag" style="left:0;bottom:0">點擊放大</span>
+    </div>
+    <div style="margin-top:16px;border-top:1px solid #161616">
+      <div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #b9b9b9"><span style="font-weight:700">①</span><span class="bd">引用來源可展開，看得到是哪一份、哪一頁。</span></div>
+      <div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #b9b9b9"><span style="font-weight:700">②</span><span class="bd">查不到就說查不到，不以推測內容作答。</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:700px">
+  <h4>03 產品證據（IKS 畫面）</h4>
+  <dl><dt>媒介</dt><dd>圖</dd>
+  <dt>來源</dt><dd>截圖＝<b>S4／S5</b>；①＝<b>S2-6</b>；②＝<b>S2-1</b>。<b>業主 2026-09-08 裁定：截圖可直接對外使用</b></dd>
+  <dt>動態</dt><dd>scroll-reveal；點截圖開全螢幕覆蓋層（可雙指縮放）</dd>
+  <dt>收合</dt><dd>截圖細節收在覆蓋層</dd>
+  <dt>390</dt><dd><b>左右 → 上下堆疊</b>；截圖裁切焦點 52% top（保住答案區與來源列）；「點擊放大」標籤常駐，因為 390 讀不清截圖文字</dd></dl>
+</div>
+
+<!-- 04 ADVANTAGES -->
+<div class="p" style="--h:700px">
+  <span class="bn">04</span>
+  <div class="w" style="padding-top:36px">
+    <h2 class="h2">八項核心優勢</h2>
+    <div style="margin-top:18px;display:grid;gap:10px">
+      <div class="card rowx"><div><b style="font-size:15px">準確回答，低 AI 幻覺</b><div class="mu" style="font-size:13px;margin-top:4px">有依據才回答</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">快速找到需要的資訊</b><div class="mu" style="font-size:13px;margin-top:4px">上萬份文件秒級定位</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">自然語言提問</b><div class="mu" style="font-size:13px;margin-top:4px">不必先想關鍵字</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">知識內容隨時更新</b><div class="mu" style="font-size:13px;margin-top:4px">制度一改版，答案跟著更新</div></div><span style="font-size:17px">＋</span></div>
+      <div class="cl"><span>已收合 4 列：多知識來源整合／資訊來源驗證／多輪對話／多媒體知識</span><span>＋</span></div>
+    </div>
+    <div style="margin-top:18px"><span class="chip">展開全部 8 項 ＋</span></div>
+  </div>
+</div>
+<div class="n" style="--h:700px">
+  <h4>04 八項優勢</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd><b>S2</b> 全 8 項（業主 2026-09-08 裁定採 8 項）</dd>
+  <dt>動態</dt><dd><b>只有 row-expand 260ms 與 hover</b>，不加進場動畫</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：前 4 張卡可見、後 4 列摺起</dd>
+  <dt>390</dt><dd><b>表格 → 堆疊卡片</b>（不做橫向捲動：只有兩欄，堆疊後仍可讀）；整張卡為 44px 以上的觸控區</dd></dl>
+  <div class="rf">表格不做 scroll-reveal：採購者要對它按 Ctrl+F、截圖轉貼與列印。</div>
+</div>
+
+<!-- 05 WALLY -->
+<div class="p dk" style="--h:640px">
+  <span class="bn" style="background:#ededed;color:#161616">05</span>
+  <div class="w" style="padding-top:36px">
+    <div class="ey">WALLY 系列</div>
+    <h2 class="h2" style="margin-top:10px">同一套知識，<br>走到現場</h2>
+    <p class="mu bd" style="margin-top:10px">櫃檯、展場、大廳：知識庫換一個介面出現。</p>
+    <div style="display:flex;gap:12px;margin-top:18px;overflow:hidden">
+      <div style="flex:none;width:290px"><div style="height:330px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-2.jpg" alt="Wally 2" style="width:100%;height:100%;object-fit:contain"></div><div style="margin-top:10px;font-size:12px;letter-spacing:.06em;color:#c4c4c4">WALLY.2</div></div>
+      <div style="flex:none;width:290px"><div style="height:330px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-mini.jpg" alt="Wally Mini" style="width:100%;height:100%;object-fit:contain"></div></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:6px;align-items:center">
+      <span style="width:18px;height:3px;background:#ededed"></span><span style="width:18px;height:3px;background:#5f5f5f"></span><span style="width:18px;height:3px;background:#5f5f5f"></span><span style="width:18px;height:3px;background:#5f5f5f"></span><span style="width:18px;height:3px;background:#5f5f5f"></span>
+      <span style="color:#a8a8a8;font-size:11px;margin-left:6px">1／5</span>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:640px">
+  <h4>05 Wally：KIP 的現場化身</h4>
+  <dl><dt>媒介</dt><dd>圖</dd>
+  <dt>來源</dt><dd><code>wally.md</code>。<b>業主 2026-09-08 裁定：Wally 是 KIP 的現場化身</b></dd>
+  <dt>動態</dt><dd>scroll-snap 一次一格；<b>不自動輪播</b></dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>五連拍 → 單張輪播</b>（290 寬，露出 12px 下一張暗示可滑）；型號名只顯示目前這張；進度改 5 段條</dd></dl>
+</div>
+
+<!-- 06 CASE -->
+<div class="p" style="--h:700px">
+  <span class="bn">06</span>
+  <div class="w" style="padding-top:36px">
+    <div class="ey">應用實績</div>
+    <h2 class="h2" style="margin-top:10px">市長 AI 分身，<br>進軍東京食品展</h2>
+    <div style="height:300px;overflow:hidden;position:relative;margin-top:18px">
+      <img src="img/case-tokyo-crowd.jpg" alt="東京食品展台南館現場" style="width:100%;height:100%;object-fit:cover;object-position:58% 42%">
+      <span class="tag" style="left:0;bottom:0">東京食品展・台南館</span>
+    </div>
+    <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div><div class="num" style="font-size:28px">14 家</div><div class="mu" style="font-size:13px;margin-top:5px">業者展區</div></div>
+      <div><div class="num" style="font-size:28px">4 語</div><div class="mu" style="font-size:13px;margin-top:5px">日英韓中導覽</div></div>
+    </div>
+    <div style="margin-top:22px"><span class="pill">看全部實績 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:700px">
+  <h4>06 實績（單一案例）</h4>
+  <dl><dt>媒介</dt><dd>圖</dd>
+  <dt>來源</dt><dd>現行 synaiq.com <code>#success</code>；具名授權<b>待確認</b></dd>
+  <dt>動態</dt><dd>scroll-reveal；數字<b>靜態顯示、不做滾動</b></dd>
+  <dt>收合</dt><dd>媒體清單留在 /cases</dd>
+  <dt>390</dt><dd>標題在圖上方；照片由 16:10 改 7:6、焦點 58%／42%；數字 2 欄；CTA 另起一列</dd></dl>
+</div>
+
+<!-- 07 NUMBER -->
+<div class="p" style="--h:320px">
+  <span class="bn">07</span>
+  <div class="w" style="padding-top:36px">
+    <div style="border-top:1px solid #161616;padding-top:28px">
+      <div class="num">上萬份</div>
+      <div class="mu bd" style="margin-top:10px">文件秒級定位</div>
+      <div style="margin-top:22px"><span class="pill">看 KIP 平台 <i>→</i></span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:320px">
+  <h4>07 數字帶（收成一個數字）</h4>
+  <dl><dt>媒介</dt><dd>表的最短形式</dd>
+  <dt>來源</dt><dd><b>S2-2</b></dd>
+  <dt>動態</dt><dd><b>沒有數字滾動</b>；reduced-motion 下與平常一致</dd>
+  <dt>390</dt><dd>數字 64→44px；膠囊在數字下方滿欄可點</dd></dl>
+  <div class="rf"><b>順序與內容變更</b>：原 2×2 四個數字由區塊 02 移到實績之後，收成 1 個；其餘三個下放 /cases。行動版因此少捲 60px。</div>
+</div>
+
+<!-- 08 SOVEREIGNTY -->
+<div class="p" style="--h:360px">
+  <span class="bn">08</span>
+  <div class="w" style="padding-top:34px;border-top:1px solid #161616">
+    <div style="padding-top:26px">
+      <p class="nh">整套可裝在<br>公司自己機房。</p>
+      <p class="bd mu" style="margin-top:18px">文件不進外部雲，問答內容不會被拿去訓練外部模型。</p>
+      <div style="margin-top:18px"><span class="pill" style="font-size:14px">十項資安機制 <i>→</i></span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:360px">
+  <h4>08 資料主權（敘事大標單句）</h4>
+  <dl><dt>媒介</dt><dd><b>字</b>（全頁唯一的整句段落）</dd>
+  <dt>來源</dt><dd><b>S2</b> SOVEREIGNTY</dd>
+  <dt>動態</dt><dd>scroll-reveal 整段淡入，<b>不逐字</b></dd>
+  <dt>390</dt><dd><b>敘事大標 40px</b>（<code>clamp()</code> 下限），2 行滿欄；依據句 15px；膠囊置句下</dd></dl>
+  <div class="rf"><b>要注意</b>：敘事大標的下限 40px 在 390 上<b>大於</b>首屏大標 34px（兩條 clamp 的下限互相倒置）。實測 350 欄寬一行放得下 8 個中文字仍可讀；若業主認為倒置不可接受，敘事大標行動版下限可降到 2rem（32px）。</div>
+</div>
+
+<!-- 09 CTA -->
+<div class="p" style="--h:400px">
+  <span class="bn">09</span>
+  <div class="w" style="padding-top:52px">
+    <h2 class="h2">先講一個場景，<br>我們回一個做法。</h2>
+    <div style="margin-top:22px;display:grid;gap:9px">
+      <span class="chip" style="justify-content:flex-start">① 資料來源</span>
+      <span class="chip" style="justify-content:flex-start">② 使用對象</span>
+      <span class="chip" style="justify-content:flex-start">③ 預期成果</span>
+    </div>
+    <div style="margin-top:24px"><span class="pill">洽談導入 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:400px">
+  <h4>09 行動呼籲</h4>
+  <dl><dt>媒介</dt><dd>字＋三標籤</dd>
+  <dt>390</dt><dd>標籤<b>橫排 → 直排</b>滿欄，每列 40px 觸控區</dd>
+  <dt>動態</dt><dd>標籤依序進場 100ms（最多 5 階）</dd></dl>
+</div>
+
+<!-- 10 FOOTER -->
+<div class="p dk" style="--h:460px">
+  <span class="bn" style="background:#ededed;color:#161616">10</span>
+  <div class="w" style="padding-top:34px;font-size:14px">
+    <div style="font-size:18px;font-weight:700">SynaiQ</div>
+    <div class="mu" style="font-size:12.5px;line-height:1.7;margin-top:8px">鑫揚智能科技股份有限公司<br>台中市西屯區文心路二段 201 號 11 樓之 8</div>
+    <div style="margin-top:20px;border-top:1px solid #3a3a3a">
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>產品</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>公司</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>聯絡</span><span class="mu">－</span></div>
+      <div style="padding:8px 0 13px;border-bottom:1px solid #3a3a3a;color:#c4c4c4;line-height:2;font-size:13px">+886 4 2393 1368<br>service@synaiq.com<br>Instagram ↗</div>
+      <div class="rowx" style="padding:13px 0"><span>ZH ／ EN</span><span class="mu">－</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:460px">
+  <h4>10 頁尾</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：產品／公司兩組摺起，聯絡組預設展開</dd>
+  <dt>390</dt><dd><b>4 欄 → 摺疊清單</b>；每列 44px 觸控區</dd></dl>
+  <div class="rf">提案 A 全頁 10 塊，順序與 1440／768 完全一致。釘住場景在本斷點<b>0 個</b>。</div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>
