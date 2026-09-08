@@ -45,3 +45,6 @@ desktop.ini
 
 # vinext dev cache
 .vinext/
+
+# design canvas seeded bundle (3 MB, regenerable)
+docs/design/directions-v1/synaiq-website-directions.html
