@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+x-dc{display:block}
+body{background:#c9c9c9;font-family:-apple-system,"Segoe UI","Microsoft JhengHei","Noto Sans TC",sans-serif;color:#161616;-webkit-font-smoothing:antialiased}
+a{color:#161616;text-decoration:none}
+img{display:block;max-width:100%;filter:grayscale(1)}
+.board{display:grid;grid-template-columns:var(--pw) 320px;width:calc(var(--pw) + 320px);position:relative}
+.p{background:#eee;height:var(--h);overflow:hidden;position:relative}
+.n{background:#1b1b1b;color:#e0e0e0;height:var(--h);overflow:hidden;padding:13px 15px;border-bottom:1px solid #313131;font-size:11px;line-height:1.45}
+.n h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:7px}
+.n dl{display:grid;grid-template-columns:40px 1fr;column-gap:8px;row-gap:4px}
+.n dt{color:#8d8d8d;font-size:10px;letter-spacing:.06em}
+.n dd{color:#d2d2d2}
+.n .rf{margin-top:8px;padding-top:7px;border-top:1px solid #313131;color:#bdbdbd}
+.fold{position:absolute;left:0;top:var(--fold);width:var(--pw);border-top:2px dashed #111;z-index:60;pointer-events:none}
+.fold b{position:absolute;right:6px;top:-11px;background:#111;color:#eee;font:600 10px/1 system-ui;letter-spacing:.16em;padding:4px 7px}
+.bn{position:absolute;left:0;top:0;background:#161616;color:#eee;font:600 11px/1 system-ui;padding:6px 9px;z-index:40}
+.w{width:var(--cw);margin:0 auto}
+.ey{font-size:12px;letter-spacing:.24em;color:#5f5f5f}
+.h1{font-size:var(--fs-h1);line-height:1.06;letter-spacing:-.03em;font-weight:700}
+.h2{font-size:var(--fs-h2);line-height:1.14;letter-spacing:-.02em;font-weight:700}
+.bd{font-size:var(--fs-bd);line-height:1.6}
+.mu{color:#5f5f5f}
+.pill{display:inline-flex;align-items:center;gap:14px;border:1px solid #161616;border-radius:999px;padding:12px 12px 12px 24px;font-size:15px;font-weight:600}
+.pill i{width:30px;height:30px;border-radius:50%;background:#161616;color:#eee;display:grid;place-items:center;font-style:normal;font-size:13px}
+.pill.inv{border-color:#ededed;color:#ededed}
+.pill.inv i{background:#ededed;color:#111}
+.tb{width:100%;border-collapse:collapse;font-size:var(--fs-tb)}
+.tb th{text-align:left;font-weight:600;font-size:12px;letter-spacing:.08em;color:#5f5f5f;padding:0 12px 10px 0;border-bottom:1px solid #161616}
+.tb td{padding:14px 12px 14px 0;border-bottom:1px solid #b9b9b9;vertical-align:top}
+.ph{background:#dcdcdc;border:1px dashed #9d9d9d;display:grid;place-items:center;text-align:center;color:#5f5f5f;font-size:12px;padding:10px}
+.dk{background:#1b1b1b;color:#ededed}
+.dk .ey,.dk .mu{color:#a8a8a8}
+.cl{border:1px dashed #9d9d9d;background:#e3e3e3;color:#5f5f5f;font-size:12px;padding:11px 14px;display:flex;justify-content:space-between}
+.tag{position:absolute;background:#161616;color:#eee;font-size:11px;letter-spacing:.05em;padding:5px 9px}
+.rowx{display:flex;align-items:center;justify-content:space-between}
+.chip{border:1px solid #161616;border-radius:999px;padding:7px 14px;font-size:13px}
+.nav{position:absolute;left:0;top:0;width:100%;height:84px;z-index:30;border-bottom:1px solid rgba(22,22,22,.16)}
+</style>
+</helmet>
+
+<div class="board" style="--pw:1440px;--cw:1240px;--fold:900px;--fs-h1:72px;--fs-h2:44px;--fs-bd:17px;--fs-tb:16px">
+<div class="fold"><b>FOLD 1440×900</b></div>
+
+<!-- 01 NAV + HERO -->
+<div class="p" style="--h:820px">
+  <span class="bn" style="z-index:50">01</span>
+  <div class="nav">
+    <div class="w rowx" style="height:84px">
+      <div style="font-size:21px;font-weight:700;letter-spacing:-.02em">SynaiQ</div>
+      <div style="display:flex;gap:34px;font-size:15px;align-items:center">
+        <span class="mu">KIP 平台</span><span style="border-bottom:2px solid #161616;padding-bottom:3px">Wally 數位人</span><span class="mu">應用實績</span><span class="mu">關於 SynaiQ</span>
+      </div>
+      <div style="display:flex;gap:18px;align-items:center">
+        <span class="mu" style="font-size:13px">ZH ／ EN</span>
+        <span class="pill" style="padding:9px 9px 9px 18px;font-size:14px">洽談導入 <i>→</i></span>
+      </div>
+    </div>
+  </div>
+  <div class="w" style="position:relative;padding-top:132px">
+    <div class="ey">WALLY SERIES</div>
+    <div class="rowx" style="align-items:flex-end;margin-top:18px">
+      <h1 class="h1">讓企業知識，<br>走進現場。</h1>
+      <div style="max-width:480px;text-align:right">
+        <p class="bd mu">五個型號，差別只在要不要移動、要不要透明螢幕。</p>
+        <div style="margin-top:20px"><span class="pill">預約展示 <i>→</i></span></div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;left:0;bottom:0;width:100%;height:400px;overflow:hidden;background:#e6e6e6">
+    <img src="img/wally-series.jpg" alt="Wally 五款型號產品排列" style="width:100%;height:100%;object-fit:cover;object-position:center 48%">
+    <span class="tag" style="left:100px;bottom:0">WALLY.1　WALLY.1 PLUS　WALLY.2　WALLY.2 PLUS　WALLY MINI</span>
+  </div>
+</div>
+<div class="n" style="--h:820px">
+  <h4>01 導覽列＋首屏 Hero（淺底產品全景）</h4>
+  <dl><dt>媒介</dt><dd>圖（五型號全景照佔下半屏）</dd>
+  <dt>來源</dt><dd>大標改寫自 <code>wally.md</code> hero「讓企業智慧，以更自然的方式與人互動」；支持句由 <code>wally.md</code> selection 兩問改寫；影像＝<code>/brand/wally/wally-series.png</code></dd>
+  <dt>動態</dt><dd>hero-rise；產品全景由下往上推進 32px（700ms）；<b>不做輪播</b></dd>
+  <dt>收合</dt><dd>不適用</dd>
+  <dt>1440</dt><dd><b>淺底 hero</b>（與 KIP 的深底 hero 對比）；大標左、支持句與 CTA 右對齊；產品全景滿寬 400 貼底，型號名壓在圖左下；首屏 820，折線 900 落在下一段上緣</dd></dl>
+  <div class="rf">若業主提供現場實拍，此處優先換成照片（<b>待補</b>）。</div>
+</div>
+
+<!-- 02 TWO QUESTIONS -->
+<div class="p" style="--h:380px">
+  <span class="bn">02</span>
+  <div class="w" style="padding-top:52px">
+    <h2 class="h2">先問兩件事，再看型號。</h2>
+    <table class="tb" style="margin-top:24px">
+      <tr><th style="width:420px">問題</th><th>就看這幾台</th></tr>
+      <tr><td style="font-weight:600">需要在場域內移動？</td><td>WALLY.1 PLUS ／ WALLY.2 PLUS</td></tr>
+      <tr><td style="font-weight:600">需要定點或快速部署？</td><td>WALLY.1 ／ WALLY.2 ／ WALLY MINI</td></tr>
+    </table>
+  </div>
+</div>
+<div class="n" style="--h:380px">
+  <h4>02 先問兩件事（選型入口）</h4>
+  <dl><dt>媒介</dt><dd>表（兩列，取代一整段選型說明）</dd>
+  <dt>來源</dt><dd><code>wally.md</code> selection items 逐字</dd>
+  <dt>動態</dt><dd>scroll-reveal；點任一列自動捲到下一段比較表並高亮對應列</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>1440</dt><dd>兩欄：問題 420／型號 彈性</dd></dl>
+</div>
+
+<!-- 03 MODEL TABLE -->
+<div class="p" style="--h:620px">
+  <span class="bn">03</span>
+  <div class="w" style="padding-top:52px">
+    <div class="rowx" style="align-items:flex-end">
+      <div><div class="ey">SERIES MODELS</div><h2 class="h2" style="margin-top:14px">五型號快速比較</h2></div>
+      <span class="chip">全部展開 ＋</span>
+    </div>
+    <table class="tb" style="margin-top:24px">
+      <tr><th style="width:180px">型號</th><th style="width:360px">適合場域</th><th>互動方式</th><th style="width:100px;text-align:right">細節</th></tr>
+      <tr><td style="font-weight:600">WALLY.1</td><td>櫃檯、入口、大廳與資訊服務站</td><td>定點互動</td><td style="text-align:right" class="mu">－</td></tr>
+      <tr style="background:#e3e3e3"><td></td><td colspan="3">定點式智慧互動服務設備，提供穩定、高效率的 AI 智慧應答與數位接待服務。<div class="mu" style="margin-top:8px">長期定點部署　・　高穩定度與一致服務品質　・　適合高頻率諮詢</div></td></tr>
+      <tr><td style="font-weight:600">WALLY.1 PLUS</td><td>中大型與具動線的服務空間</td><td>自主移動（需建圖）</td><td style="text-align:right" class="mu">＋</td></tr>
+      <tr><td style="font-weight:600">WALLY.2</td><td>品牌形象與展示空間</td><td>55 吋透明 OLED 定點展示</td><td style="text-align:right" class="mu">＋</td></tr>
+      <tr><td style="font-weight:600">WALLY.2 PLUS</td><td>展會、展館與大型公共空間</td><td>透明 OLED ＋ 巡航移動</td><td style="text-align:right" class="mu">＋</td></tr>
+      <tr><td style="font-weight:600">WALLY MINI</td><td>陪伴型應用與需快速部署的互動場景</td><td>非行走式、原地互動</td><td style="text-align:right" class="mu">＋</td></tr>
+    </table>
+  </div>
+</div>
+<div class="n" style="--h:620px">
+  <h4>03 五型號比較（可展開表格）</h4>
+  <dl><dt>媒介</dt><dd>表（本頁主體；借現行 synaiq.com <code>#compare</code> 的三欄比較表骨架）</dd>
+  <dt>來源</dt><dd><code>wally.md</code> models 全 5 筆：<code>scenario</code>／<code>mode</code>／<code>positioning</code>／<code>features</code></dd>
+  <dt>動態</dt><dd>row-expand 260ms；由上一段點進來時該列高亮 1.2s</dd>
+  <dt>收合</dt><dd><b>五列全可見，五段定位句與 15 條特點全部收合</b>（第 1 列示範展開樣態）</dd>
+  <dt>1440</dt><dd>四欄：型號 180／場域 360／互動方式 彈性／＋ 100 右對齊</dd></dl>
+  <div class="rf">Wally 型號資料一律以 <code>wally.md</code> 為準，不引用 KIP 簡報（簡報無 Wally 內容）。</div>
+</div>
+
+<!-- 04 MODEL PHOTOS -->
+<div class="p dk" style="--h:620px">
+  <span class="bn" style="background:#ededed;color:#161616">04</span>
+  <div class="w" style="padding-top:52px">
+    <div class="rowx" style="align-items:flex-end">
+      <h2 class="h2">五個型號，長這樣</h2>
+      <span class="mu bd">點任一台 → 展開規格與場域</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:28px">
+      <div><div style="height:340px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-1.jpg" alt="Wally 1" style="width:100%;height:100%;object-fit:contain"></div><div style="margin-top:12px;font-size:13px;letter-spacing:.05em;color:#c4c4c4">WALLY.1</div></div>
+      <div><div style="height:340px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-1-plus.jpg" alt="Wally 1 Plus" style="width:100%;height:100%;object-fit:contain"></div><div style="margin-top:12px;font-size:13px;letter-spacing:.05em;color:#c4c4c4">WALLY.1 PLUS</div></div>
+      <div><div style="height:340px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-2.jpg" alt="Wally 2" style="width:100%;height:100%;object-fit:contain"></div><div style="margin-top:12px;font-size:13px;letter-spacing:.05em;color:#c4c4c4">WALLY.2</div></div>
+      <div><div style="height:340px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-2-plus.jpg" alt="Wally 2 Plus" style="width:100%;height:100%;object-fit:contain"></div><div style="margin-top:12px;font-size:13px;letter-spacing:.05em;color:#c4c4c4">WALLY.2 PLUS</div></div>
+      <div><div style="height:340px;background:#ededed;overflow:hidden;padding:10px"><img src="img/wally-mini.jpg" alt="Wally Mini" style="width:100%;height:100%;object-fit:contain"></div><div style="margin-top:12px;font-size:13px;letter-spacing:.05em;color:#c4c4c4">WALLY MINI</div></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:620px">
+  <h4>04 型號圖列</h4>
+  <dl><dt>媒介</dt><dd>圖（五張產品照）</dd>
+  <dt>來源</dt><dd><code>wally.md</code> models <code>src</code> 五張既有產品照</dd>
+  <dt>動態</dt><dd>scroll-reveal 依序 60ms；hover 時該台放大 1.03、其餘降到 60% 不透明度</dd>
+  <dt>收合</dt><dd>點擊展開該型號的規格與場域（與區塊 03 同一份資料，不重複寫文案）</dd>
+  <dt>1440</dt><dd>5 欄等寬 232×340；深底反白</dd></dl>
+</div>
+
+<!-- 05 CORE FEATURES -->
+<div class="p" style="--h:480px">
+  <span class="bn">05</span>
+  <div class="w" style="padding-top:52px">
+    <h2 class="h2">把企業知識帶進真實互動場域</h2>
+    <table class="tb" style="margin-top:24px">
+      <tr><td style="font-weight:600;width:50%">支援語音、文字、觸控與影像識別互動</td><td style="font-weight:600">可建置企業專屬知識庫與影像資料庫</td></tr>
+      <tr><td style="font-weight:600">支援擬真口型同步、客製化數位人物與聲線</td><td style="font-weight:600">支援雲端模式與本地端架構建置及部署</td></tr>
+      <tr><td style="font-weight:600">可透過 MCP 串接外部系統與 IoT 周邊裝置</td><td style="font-weight:600">提供中文、英文、日文、韓文等多語言語音服務</td></tr>
+    </table>
+  </div>
+</div>
+<div class="n" style="--h:480px">
+  <h4>05 核心能力</h4>
+  <dl><dt>媒介</dt><dd>表（3×2 網格表，取代六點條列）</dd>
+  <dt>來源</dt><dd><code>wally.md</code> features 六項逐字</dd>
+  <dt>動態</dt><dd>scroll-reveal，格子依序 40ms</dd>
+  <dt>收合</dt><dd>無——每項只有一行</dd>
+  <dt>1440</dt><dd>兩欄三列，欄寬各 50%</dd></dl>
+  <div class="rf">MCP 與本地端部署兩項與 KIP 的 <b>S1 FEATURES</b> 相互呼應，可互連。</div>
+</div>
+
+<!-- 06 SCENE -->
+<div class="p" style="--h:560px">
+  <span class="bn">06</span>
+  <div style="position:absolute;inset:0"><img src="img/scene-booth.jpg" alt="展場現場：Wally 與觀眾互動" style="width:100%;height:100%;object-fit:cover;object-position:center 40%"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,14,14,.8),rgba(14,14,14,.35) 55%,rgba(14,14,14,.15))"></div></div>
+  <div class="w" style="position:relative;height:560px;display:flex;flex-direction:column;justify-content:center;color:#ededed">
+    <div class="ey" style="color:#c3c3c3">SCENE GALLERY</div>
+    <h2 class="h2" style="margin-top:14px;max-width:600px">展場、櫃檯、大廳</h2>
+    <p class="bd" style="margin-top:16px;max-width:420px;color:#cfcfcf">同一套知識庫，換一個介面站在人前面。</p>
+  </div>
+  <span class="tag" style="right:0;bottom:0">現場情境照・<b>更多照片待補</b></span>
+</div>
+<div class="n" style="--h:560px">
+  <h4>06 現場情境</h4>
+  <dl><dt>媒介</dt><dd>圖（全幅現場照）</dd>
+  <dt>來源</dt><dd><code>wally.md</code> supporting（<code>photos: []</code> 目前為空）；本圖暫用現行 synaiq.com 商用場景照，<b>照片組待業主提供</b></dd>
+  <dt>動態</dt><dd>image-parallax ±4%；文字 scroll-reveal</dd>
+  <dt>收合</dt><dd>無（未來改為 3–5 張的情境輪播）</dd>
+  <dt>1440</dt><dd>全幅出血，文字靠左置中，左深右淺遮罩</dd></dl>
+</div>
+
+<!-- 07 KIP LINK -->
+<div class="p" style="--h:260px">
+  <span class="bn">07</span>
+  <div class="w" style="padding-top:52px;border-top:1px solid #161616">
+    <div class="rowx" style="align-items:center;padding-top:20px">
+      <p style="font-size:26px;line-height:1.45;font-weight:600;max-width:800px">Wally 說出口的每一句話，來自同一套 KIP 知識庫。</p>
+      <span class="pill" style="flex:none">認識 KIP 平台 <i>→</i></span>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:260px">
+  <h4>07 與 KIP 的關係（單句）</h4>
+  <dl><dt>媒介</dt><dd><b>字</b></dd>
+  <dt>理由</dt><dd>這是一句品牌關係宣告，圖表都無法更短</dd>
+  <dt>來源</dt><dd><b>工作假設</b>：Wally＝KIP 的現場化身。KIP 簡報 6 張完全未提 Wally，<b>無依據</b>；PRD-002 OQ-3 <b>待業主裁定</b></dd>
+  <dt>動態</dt><dd>scroll-reveal</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>1440</dt><dd>單句限寬 800，右掛連結膠囊</dd></dl>
+  <div class="rf">若業主裁定改為「兩個並列品牌」，此塊<b>整塊移除</b>，不需改動其他區塊。</div>
+</div>
+
+<!-- 08 CTA -->
+<div class="p" style="--h:400px">
+  <span class="bn">08</span>
+  <div class="w" style="padding-top:70px">
+    <div class="ey">CHOOSE BY SCENE</div>
+    <h2 class="h2" style="margin-top:14px">先從場域需求，選擇合適型號。</h2>
+    <p class="bd mu" style="margin-top:16px;max-width:600px">告訴我們需要定點互動、自主移動或快速部署，我們再一起縮小選擇範圍。</p>
+    <div style="margin-top:28px"><span class="pill">預約展示 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:400px">
+  <h4>08 行動呼籲</h4>
+  <dl><dt>媒介</dt><dd>字（兩句）</dd>
+  <dt>來源</dt><dd><code>wally.md</code> action 逐字</dd>
+  <dt>動態</dt><dd>scroll-reveal</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>1440</dt><dd>左對齊，說明限寬 600</dd></dl>
+</div>
+
+<!-- 09 FOOTER -->
+<div class="p dk" style="--h:300px">
+  <span class="bn" style="background:#ededed;color:#161616">09</span>
+  <div class="w" style="padding-top:48px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;font-size:14px;line-height:2">
+    <div><div style="font-size:20px;font-weight:700;margin-bottom:14px">SynaiQ</div><div class="mu" style="font-size:13px;line-height:1.7">鑫揚智能科技股份有限公司<br>台中市西屯區文心路二段 201 號 11 樓之 8</div></div>
+    <div><div class="ey" style="margin-bottom:12px">產品</div>KIP 平台<br>資安防護<br>Wally 數位人<br>生成式 AI</div>
+    <div><div class="ey" style="margin-bottom:12px">公司</div>關於 SynaiQ<br>應用實績<br>媒體中心</div>
+    <div><div class="ey" style="margin-bottom:12px">聯絡</div>+886 4 2393 1368<br>service@synaiq.com<br>Instagram ↗</div>
+  </div>
+</div>
+<div class="n" style="--h:300px">
+  <h4>09 頁尾</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd>SITEMAP ＋ <code>contact.md</code></dd>
+  <dt>1440</dt><dd>4 欄，全站一致</dd></dl>
+  <div class="rf">全頁 9 塊：圖 3／表 3／字 3（其中 2 句為單句宣告）。表面字數約 240 字。</div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+x-dc{display:block}
+body{background:#c9c9c9;font-family:-apple-system,"Segoe UI","Microsoft JhengHei","Noto Sans TC",sans-serif;color:#161616;-webkit-font-smoothing:antialiased}
+a{color:#161616;text-decoration:none}
+img{display:block;max-width:100%;filter:grayscale(1)}
+.board{display:grid;grid-template-columns:var(--pw) 320px;width:calc(var(--pw) + 320px);position:relative}
+.p{background:#eee;height:var(--h);overflow:hidden;position:relative}
+.n{background:#1b1b1b;color:#e0e0e0;height:var(--h);overflow:hidden;padding:13px 15px;border-bottom:1px solid #313131;font-size:11px;line-height:1.45}
+.n h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:7px}
+.n dl{display:grid;grid-template-columns:40px 1fr;column-gap:8px;row-gap:4px}
+.n dt{color:#8d8d8d;font-size:10px;letter-spacing:.06em}
+.n dd{color:#d2d2d2}
+.n .rf{margin-top:8px;padding-top:7px;border-top:1px solid #313131;color:#bdbdbd}
+.fold{position:absolute;left:0;top:var(--fold);width:var(--pw);border-top:2px dashed #111;z-index:60;pointer-events:none}
+.fold b{position:absolute;right:6px;top:-11px;background:#111;color:#eee;font:600 10px/1 system-ui;letter-spacing:.14em;padding:4px 6px}
+.bn{position:absolute;left:0;top:0;background:#161616;color:#eee;font:600 11px/1 system-ui;padding:6px 8px;z-index:40}
+.w{width:var(--cw);margin:0 auto}
+.ey{font-size:11px;letter-spacing:.2em;color:#5f5f5f}
+.h1{font-size:var(--fs-h1);line-height:1.18;letter-spacing:-.02em;font-weight:700}
+.h2{font-size:var(--fs-h2);line-height:1.24;letter-spacing:-.015em;font-weight:700}
+.bd{font-size:var(--fs-bd);line-height:1.65}
+.mu{color:#5f5f5f}
+.pill{display:inline-flex;align-items:center;gap:11px;border:1px solid #161616;border-radius:999px;padding:12px 12px 12px 20px;font-size:15px;font-weight:600;min-height:48px}
+.pill i{width:26px;height:26px;border-radius:50%;background:#161616;color:#eee;display:grid;place-items:center;font-style:normal;font-size:12px}
+.pill.inv{border-color:#ededed;color:#ededed}
+.pill.inv i{background:#ededed;color:#111}
+.ph{background:#dcdcdc;border:1px dashed #9d9d9d;display:grid;place-items:center;color:#5f5f5f;font-size:11.5px;padding:6px}
+.dk{background:#1b1b1b;color:#ededed}
+.dk .ey,.dk .mu{color:#a8a8a8}
+.cl{border:1px dashed #9d9d9d;background:#e3e3e3;color:#5f5f5f;font-size:11.5px;padding:10px 12px;display:flex;justify-content:space-between;gap:8px}
+.tag{position:absolute;background:#161616;color:#eee;font-size:10.5px;letter-spacing:.04em;padding:4px 8px}
+.hs{position:absolute;background:rgba(238,238,238,.94);border:1px solid #161616;color:#161616;font-size:10.5px;padding:4px 7px;white-space:nowrap}
+.rowx{display:flex;align-items:center;justify-content:space-between}
+.chip{border:1px solid #161616;border-radius:999px;padding:9px 14px;font-size:13px;display:inline-flex;align-items:center;min-height:40px}
+.nav{position:absolute;left:0;top:0;width:100%;height:60px;z-index:30;color:#ededed;border-bottom:1px solid rgba(237,237,237,.24)}
+.tab{padding:10px 0;font-size:14px;font-weight:600;border-bottom:2px solid transparent;color:#5f5f5f;white-space:nowrap}
+.tab.on{color:#161616;border-bottom-color:#161616}
+.card{border:1px solid #b9b9b9;background:#e6e6e6;padding:13px}
+</style>
+</helmet>
+
+<div class="board" style="--pw:390px;--cw:350px;--fold:844px;--fs-h1:32px;--fs-h2:25px;--fs-bd:15px">
+<div class="fold"><b>FOLD 390×844</b></div>
+
+<!-- 01 NAV + HERO -->
+<div class="p dk" style="--h:760px">
+  <span class="bn" style="background:#ededed;color:#161616;z-index:50">01</span>
+  <div class="nav">
+    <div class="w rowx" style="height:60px">
+      <span style="display:inline-grid;gap:5px;width:22px"><span style="height:2px;background:#ededed"></span><span style="height:2px;background:#ededed"></span><span style="height:2px;background:#ededed"></span></span>
+      <div style="font-size:17px;font-weight:700;letter-spacing:-.02em">SynaiQ</div>
+      <span style="width:40px;height:40px;border-radius:50%;border:1px solid #ededed;display:grid;place-items:center;font-size:13px">✉</span>
+    </div>
+  </div>
+  <div class="w" style="position:relative;padding-top:92px">
+    <div class="ey">SYNAIQ KIP</div>
+    <h1 class="h1" style="margin:12px 0 0">問得到、<br>答得準、接得上。</h1>
+    <p class="bd" style="margin-top:16px;color:#c4c4c4">把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。</p>
+    <div style="margin-top:20px"><span class="pill inv">預約導入評估 <i>→</i></span></div>
+    <div style="margin-top:14px"><span style="font-size:14px;color:#c4c4c4;border-bottom:1px solid #6f6f6f;padding-bottom:3px">先看十項資安機制</span></div>
+  </div>
+  <div style="position:absolute;left:20px;right:0;bottom:0;height:270px;overflow:hidden;background:#ededed">
+    <img src="img/kip-iks-1.jpg" alt="KIP 智慧知識搜尋畫面" style="width:100%;height:100%;object-fit:cover;object-position:left top">
+    <div style="position:absolute;inset:0;background:rgba(27,27,27,.14)"></div>
+    <span class="tag" style="left:0;top:0">產品實際畫面・點擊放大</span>
+  </div>
+</div>
+<div class="n" style="--h:760px">
+  <h4>01 導覽列＋首屏 Hero</h4>
+  <dl><dt>媒介</dt><dd>圖＋短標題</dd>
+  <dt>來源</dt><dd>大標＝<b>S2</b> 副標；支持句＝<b>S1</b>；畫面＝<b>S4／S5</b></dd>
+  <dt>動態</dt><dd>hero-rise 三段依序；產品畫面由下淡入；不做輪播；抽屜全螢幕</dd>
+  <dt>收合</dt><dd>導覽收進全螢幕抽屜；產品畫面細節收在點擊後的覆蓋層</dd>
+  <dt>390</dt><dd><b>左文右畫面 → 上文下畫面</b>；眉標由「SYNAIQ KNOWLEDGE INTELLIGENCE PLATFORM」<b>縮短為 SYNAIQ KIP</b>（避免 3 行眉標）；大標 76→32px 拆 2 行；次要連結由 CTA 右側移到<b>下一列</b>；畫面高 270、左內縮 20 維持出血</dd></dl>
+  <div class="rf">首屏 760 &lt; 844，下一段露出 84px。</div>
+</div>
+
+<!-- 02 DATAFLOW -->
+<div class="p" style="--h:620px">
+  <span class="bn">02</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">資料怎麼進來</div>
+    <h2 class="h2" style="margin-top:10px">三段就上線</h2>
+    <div style="display:flex;gap:20px;margin-top:18px;border-bottom:1px solid #b9b9b9;overflow:hidden">
+      <span class="tab on">1 資料接入</span><span class="tab">2 自動解析</span><span class="tab">3 搜尋可用</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px">
+      <div class="ph" style="height:76px">PDF</div><div class="ph" style="height:76px">Word</div>
+      <div class="ph" style="height:76px">Excel</div><div class="ph" style="height:76px">掃描件</div>
+      <div class="ph" style="height:76px">手寫</div><div class="ph" style="height:76px">圖片</div>
+    </div>
+    <div style="margin-top:18px">
+      <div class="bd" style="font-weight:600">六種來源，同一個入口。</div>
+      <div class="bd mu" style="margin-top:8px">掃描件、手寫與圖片一併接入，不必先人工轉檔。</div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:620px">
+  <h4>02 三段資料流（分頁）</h4>
+  <dl><dt>媒介</dt><dd>圖＋表</dd>
+  <dt>來源</dt><dd><b>S1</b> 資料流三段</dd>
+  <dt>動態</dt><dd>分頁切換 200ms 交叉淡入；分頁列可左右滑</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：分頁 2、3 點選才載入</dd>
+  <dt>390</dt><dd>六格 <b>3×2 → 2×3</b>；分頁列<b>橫向捲動</b>不換行、目前分頁自動捲入視野；「下一段」提示列移除（分頁已足夠）</dd></dl>
+</div>
+
+<!-- 03 ARCH -->
+<div class="p" style="--h:540px">
+  <span class="bn">03</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">一張圖看懂</div>
+    <h2 class="h2" style="margin-top:10px">平台架構</h2>
+    <p class="mu bd" style="margin-top:10px">使用者接入與大模型層在上方接入，知識來源在底部餵入。</p>
+    <div style="position:relative;margin-top:18px;height:290px;overflow:hidden;background:#1b1b1b">
+      <div style="width:900px;height:290px;position:relative">
+        <img src="img/arch-kip.jpg" alt="KIP 平台架構圖" style="width:900px;height:290px;object-fit:cover;object-position:center 44%">
+        <span class="hs" style="left:12px;top:12px">USER ACCESS</span>
+        <span class="hs" style="left:12px;top:130px">MODEL LAYER ＋ IKA</span>
+      </div>
+      <span class="tag" style="right:0;bottom:0">← 橫向捲動</span>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:540px">
+  <h4>03 平台架構</h4>
+  <dl><dt>媒介</dt><dd>圖</dd>
+  <dt>來源</dt><dd><b>S1</b></dd>
+  <dt>動態</dt><dd>熱點改 tap，一次只開一個</dd>
+  <dt>收合</dt><dd>四層說明預設收合</dd>
+  <dt>390</dt><dd>架構圖<b>維持原比例、容器內橫向捲動</b>（min-width 900）；熱點只保留最上兩層，其餘靠捲動；標題與說明全部堆疊</dd></dl>
+  <div class="rf">替代：重繪<b>縱向四層堆疊圖</b>（待業主裁定）可免去橫捲。</div>
+</div>
+
+<!-- 04 ADVANTAGES -->
+<div class="p" style="--h:960px">
+  <span class="bn">04</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">KEY ADVANTAGES</div>
+    <h2 class="h2" style="margin-top:10px">八項核心優勢</h2>
+    <div style="margin-top:16px;display:grid;gap:8px">
+      <div class="card"><div class="rowx"><b style="font-size:15px">1　準確回答，低 AI 幻覺</b><span style="font-size:17px">－</span></div><div class="mu" style="font-size:13px;margin-top:4px">有依據才回答</div><div style="margin-top:9px;padding-top:9px;border-top:1px dashed #a5a5a5;font-size:13px">查不到就說查不到<span class="mu">（展開後樣態）</span></div></div>
+      <div class="card rowx"><div><b style="font-size:15px">2　快速找到需要的資訊</b><div class="mu" style="font-size:13px;margin-top:4px">上萬份文件秒級定位</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">3　自然語言提問</b><div class="mu" style="font-size:13px;margin-top:4px">不必先想關鍵字</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">4　知識內容隨時更新</b><div class="mu" style="font-size:13px;margin-top:4px">制度一改版，答案跟著更新</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">5　多知識來源整合</b><div class="mu" style="font-size:13px;margin-top:4px">跨部門跨系統一次查得到</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">6　資訊來源驗證</b><div class="mu" style="font-size:13px;margin-top:4px">指得到原文哪一份、哪一頁</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">7　多輪對話能力</b><div class="mu" style="font-size:13px;margin-top:4px">可以接著追問</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">8　多媒體知識支援</b><div class="mu" style="font-size:13px;margin-top:4px">掃描件、手寫、圖表都讀得懂</div></div><span style="font-size:17px">＋</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:960px">
+  <h4>04 八項核心優勢</h4>
+  <dl><dt>媒介</dt><dd>表（本頁主體）</dd>
+  <dt>來源</dt><dd><b>S2</b> 全 8 項</dd>
+  <dt>動態</dt><dd>row-expand 260ms；整張卡為觸控區</dd>
+  <dt>收合</dt><dd>八張卡全可見，<b>八個說明全部收合</b>（第 1 張示範展開）</dd>
+  <dt>390</dt><dd><b>表格 → 堆疊卡片</b>（不用橫向捲動：欄位只有兩個，橫捲會讓人漏看右欄）；一句話縮短 2–4 字以維持單行；「全部展開」按鈕移除，改逐張點</dd></dl>
+</div>
+
+<!-- 05 FEATURES -->
+<div class="p" style="--h:520px">
+  <span class="bn">05</span>
+  <div class="w" style="padding-top:34px">
+    <h2 class="h2">五項平台功能</h2>
+    <div style="margin-top:16px;border-top:1px solid #161616">
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9"><b style="font-size:15px">系統介接 API／MCP</b><div class="mu" style="font-size:13.5px;margin-top:4px">可與企業相關系統連接使用</div></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9"><b style="font-size:15px">分庫與權限控管</b><div class="mu" style="font-size:13.5px;margin-top:4px">獨立資料庫管理，依權限開放</div></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9"><b style="font-size:15px">帳號記錄管理</b><div class="mu" style="font-size:13.5px;margin-top:4px">帳號、使用紀錄、對話歷史</div></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9"><b style="font-size:15px">影像檢索</b><div class="mu" style="font-size:13.5px;margin-top:4px">用文字找圖、用圖找相似圖</div></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9"><b style="font-size:15px">意見回饋與報表</b><div class="mu" style="font-size:13.5px;margin-top:4px">使用者回報自動分類、產報表</div></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:520px">
+  <h4>05 五項平台功能</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd><b>S1</b> FEATURES 五項逐字</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>兩欄表 → 上下兩行的清單列</b>；功能名 15px、說明 13.5px；保留細線分隔以維持「表」的讀法</dd></dl>
+</div>
+
+<!-- 06 IKS -->
+<div class="p" style="--h:660px">
+  <span class="bn">06</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">智慧知識搜尋 IKS</div>
+    <h2 class="h2" style="margin-top:10px">問完，順手看原文</h2>
+    <p class="mu bd" style="margin-top:10px">回應的內容附上知識資料的來源檢視與索引。</p>
+    <div style="display:flex;gap:12px;margin-top:18px;overflow:hidden">
+      <div style="flex:none;width:330px;position:relative;height:380px;overflow:hidden;border:1px solid #b9b9b9;background:#fff">
+        <img src="img/kip-iks-1.jpg" alt="IKS 回應畫面" style="width:100%;height:100%;object-fit:cover;object-position:52% top">
+        <span class="tag" style="left:0;bottom:0">① 提問與結構化回應</span>
+      </div>
+      <div style="flex:none;width:330px;height:380px;overflow:hidden;border:1px solid #b9b9b9;background:#fff">
+        <img src="img/kip-iks-2.jpg" alt="IKS 來源檢視畫面" style="width:100%;height:100%;object-fit:cover;object-position:52% top">
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:6px;align-items:center">
+      <span style="width:20px;height:3px;background:#161616"></span><span style="width:20px;height:3px;background:#b9b9b9"></span>
+      <span class="mu" style="font-size:11px;margin-left:6px">1／2・左右滑動</span>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:660px">
+  <h4>06 智慧知識搜尋（IKS）</h4>
+  <dl><dt>媒介</dt><dd>圖（兩張產品截圖）</dd>
+  <dt>來源</dt><dd><b>S4</b>＋<b>S5</b></dd>
+  <dt>動態</dt><dd>scroll-snap 一次一張；點圖開全螢幕覆蓋層可雙指縮放</dd>
+  <dt>收合</dt><dd>放大檢視在覆蓋層</dd>
+  <dt>390</dt><dd><b>並列 → 單張輪播</b>（330 寬，露出 12px 暗示可滑）；裁切焦點改 52% top 保住答案與來源列；圖說只顯示目前這張</dd></dl>
+</div>
+
+<!-- 07 KC -->
+<div class="p" style="--h:560px">
+  <span class="bn">07</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">知識中心 KC</div>
+    <h2 class="h2" style="margin-top:10px">後台就是<br>資料管理中心</h2>
+    <p class="bd mu" style="margin-top:12px">進行各項系統設定與資料管理作業；自動與手動管理資料的狀態與設定。</p>
+    <div style="position:relative;height:250px;overflow:hidden;border:1px solid #b9b9b9;background:#fff;margin-top:16px">
+      <div style="width:900px;height:250px"><img src="img/kip-kc.jpg" alt="知識中心後台管理介面" style="width:900px;height:250px;object-fit:cover;object-position:left top"></div>
+      <span class="tag" style="right:0;bottom:0">← 橫向捲動</span>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:560px">
+  <h4>07 知識中心（KC）</h4>
+  <dl><dt>媒介</dt><dd>圖（後台截圖）</dd>
+  <dt>來源</dt><dd><b>S6</b>＋<b>S1</b></dd>
+  <dt>動態</dt><dd>scroll-reveal</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd>上文下圖；後台為寬版表格介面，<b>容器內橫向捲動</b>（min-width 900）而非縮小到讀不出欄位</dd></dl>
+</div>
+
+<!-- 08 SECURITY -->
+<div class="p" style="--h:620px">
+  <span class="bn">08</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">SECURITY CONTROLS</div>
+    <h2 class="h2" style="margin-top:10px">十項資安防護機制</h2>
+    <div style="margin-top:16px;display:grid;gap:8px">
+      <div class="card"><b style="font-size:15px">身分驗證</b><span class="mu" style="font-size:12px">　Authentication</span><div class="mu" style="font-size:13.5px;margin-top:4px">每人一組帳號，先登入才進得來</div></div>
+      <div class="card"><b style="font-size:15px">權限控管</b><span class="mu" style="font-size:12px">　Authorization</span><div class="mu" style="font-size:13.5px;margin-top:4px">依角色與分庫，只查得到被授權的內容</div></div>
+      <div class="card"><b style="font-size:15px">存取日誌與稽核</b><span class="mu" style="font-size:12px">　Logging</span><div class="mu" style="font-size:13.5px;margin-top:4px">誰、何時、查了什麼，全程留痕</div></div>
+      <div class="cl"><span>已收合 7 列：資料加密／密碼安全／異常登入／備份復原／防惡意程式／個資保護／工作階段</span></div>
+    </div>
+    <div style="margin-top:18px"><span class="pill">看完整十項 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:620px">
+  <h4>08 資安防護（摘要）</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd><b>S3</b> 全 10 項；本頁 3 項，其餘在 <code>/kip/security</code></dd>
+  <dt>收合</dt><dd><b>7 列收合且不在本頁展開</b>，改連子頁</dd>
+  <dt>390</dt><dd><b>表格 → 堆疊卡片</b>；英文名縮成 12px 接在中文後（不另起一行，省高度）</dd></dl>
+</div>
+
+<!-- 09 SOVEREIGNTY -->
+<div class="p dk" style="--h:300px">
+  <span class="bn" style="background:#ededed;color:#161616">09</span>
+  <div class="w" style="padding-top:44px">
+    <p style="font-size:18px;line-height:1.55;font-weight:600">整套可裝在公司自己機房，文件不進外部雲，問答內容不會被拿去訓練外部模型。</p>
+    <div style="margin-top:18px"><span class="pill inv" style="font-size:14px">導入規劃 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:300px">
+  <h4>09 資料主權（單句）</h4>
+  <dl><dt>媒介</dt><dd><b>字</b>（本頁唯一整句段落）</dd>
+  <dt>來源</dt><dd><b>S2</b> SOVEREIGNTY</dd>
+  <dt>390</dt><dd>26→18px，共 4 行；膠囊置於句下</dd></dl>
+</div>
+
+<!-- 10 CTA -->
+<div class="p" style="--h:360px">
+  <span class="bn">10</span>
+  <div class="w" style="padding-top:48px">
+    <h2 class="h2">從一組文件開始。</h2>
+    <p class="bd mu" style="margin-top:14px">準備資料來源、使用對象與查詢場景，一起確認第一個可驗證的知識流程。</p>
+    <div style="margin-top:22px"><span class="pill">討論知識庫需求 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:360px">
+  <h4>10 行動呼籲</h4>
+  <dl><dt>媒介</dt><dd>字（兩句）</dd>
+  <dt>來源</dt><dd><code>knowledge-base.md</code> action</dd>
+  <dt>390</dt><dd>滿欄；CTA 高 48px</dd></dl>
+</div>
+
+<!-- 11 FOOTER -->
+<div class="p dk" style="--h:460px">
+  <span class="bn" style="background:#ededed;color:#161616">11</span>
+  <div class="w" style="padding-top:34px;font-size:14px">
+    <div style="font-size:18px;font-weight:700">SynaiQ</div>
+    <div class="mu" style="font-size:12.5px;line-height:1.7;margin-top:8px">鑫揚智能科技股份有限公司<br>台中市西屯區文心路二段 201 號 11 樓之 8</div>
+    <div style="margin-top:20px;border-top:1px solid #3a3a3a">
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>產品</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>公司</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>聯絡</span><span class="mu">－</span></div>
+      <div style="padding:8px 0 13px;border-bottom:1px solid #3a3a3a;color:#c4c4c4;line-height:2;font-size:13px">+886 4 2393 1368<br>service@synaiq.com<br>Instagram ↗</div>
+      <div class="rowx" style="padding:13px 0"><span>ZH ／ EN</span><span class="mu">－</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:460px">
+  <h4>11 頁尾</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：產品／公司收起，聯絡展開</dd>
+  <dt>390</dt><dd>4 欄 → 摺疊清單，每列 44px 觸控區</dd></dl>
+  <div class="rf">全頁 11 塊；順序與 1440／768 一致。</div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

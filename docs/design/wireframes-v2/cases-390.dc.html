@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+x-dc{display:block}
+body{background:#c9c9c9;font-family:-apple-system,"Segoe UI","Microsoft JhengHei","Noto Sans TC",sans-serif;color:#161616;-webkit-font-smoothing:antialiased}
+a{color:#161616;text-decoration:none}
+img{display:block;max-width:100%;filter:grayscale(1)}
+.board{display:grid;grid-template-columns:var(--pw) 320px;width:calc(var(--pw) + 320px);position:relative}
+.p{background:#eee;height:var(--h);overflow:hidden;position:relative}
+.n{background:#1b1b1b;color:#e0e0e0;height:var(--h);overflow:hidden;padding:13px 15px;border-bottom:1px solid #313131;font-size:11px;line-height:1.45}
+.n h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:7px}
+.n dl{display:grid;grid-template-columns:40px 1fr;column-gap:8px;row-gap:4px}
+.n dt{color:#8d8d8d;font-size:10px;letter-spacing:.06em}
+.n dd{color:#d2d2d2}
+.n .rf{margin-top:8px;padding-top:7px;border-top:1px solid #313131;color:#bdbdbd}
+.fold{position:absolute;left:0;top:var(--fold);width:var(--pw);border-top:2px dashed #111;z-index:60;pointer-events:none}
+.fold b{position:absolute;right:6px;top:-11px;background:#111;color:#eee;font:600 10px/1 system-ui;letter-spacing:.14em;padding:4px 6px}
+.bn{position:absolute;left:0;top:0;background:#161616;color:#eee;font:600 11px/1 system-ui;padding:6px 8px;z-index:40}
+.w{width:var(--cw);margin:0 auto}
+.ey{font-size:11px;letter-spacing:.2em;color:#5f5f5f}
+.h1{font-size:var(--fs-h1);line-height:1.18;letter-spacing:-.02em;font-weight:700}
+.h2{font-size:var(--fs-h2);line-height:1.24;letter-spacing:-.015em;font-weight:700}
+.bd{font-size:var(--fs-bd);line-height:1.65}
+.mu{color:#5f5f5f}
+.pill{display:inline-flex;align-items:center;gap:11px;border:1px solid #161616;border-radius:999px;padding:12px 12px 12px 20px;font-size:15px;font-weight:600;min-height:48px}
+.pill i{width:26px;height:26px;border-radius:50%;background:#161616;color:#eee;display:grid;place-items:center;font-style:normal;font-size:12px}
+.pill.inv{border-color:#ededed;color:#ededed}
+.pill.inv i{background:#ededed;color:#111}
+.ph{background:#dcdcdc;border:1px dashed #9d9d9d;display:grid;place-items:center;text-align:center;color:#5f5f5f;font-size:12px;line-height:1.6;padding:10px}
+.dk{background:#1b1b1b;color:#ededed}
+.dk .ey,.dk .mu{color:#a8a8a8}
+.cl{border:1px dashed #9d9d9d;background:#e3e3e3;color:#5f5f5f;font-size:11.5px;padding:10px 12px;display:flex;justify-content:space-between;gap:8px}
+.tag{position:absolute;background:#161616;color:#eee;font-size:10.5px;letter-spacing:.04em;padding:4px 8px}
+.rowx{display:flex;align-items:center;justify-content:space-between}
+.card{border:1px solid #b9b9b9;background:#e6e6e6;padding:13px}
+.num{font-size:32px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.nav{position:absolute;left:0;top:0;width:100%;height:60px;z-index:30;color:#ededed;border-bottom:1px solid rgba(237,237,237,.24)}
+.cov{position:absolute;inset:0;overflow:hidden}
+.cov img{width:100%;height:100%;object-fit:cover}
+</style>
+</helmet>
+
+<div class="board" style="--pw:390px;--cw:350px;--fold:844px;--fs-h1:32px;--fs-h2:25px;--fs-bd:15px">
+<div class="fold"><b>FOLD 390×844</b></div>
+
+<!-- 01 NAV + HERO -->
+<div class="p" style="--h:844px">
+  <span class="bn" style="z-index:50">01</span>
+  <div class="cov"><img src="img/case-tokyo-crowd.jpg" alt="東京食品展台南館現場" style="object-position:58% 42%"><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,14,14,.5),rgba(14,14,14,.22) 30%,rgba(14,14,14,.92))"></div></div>
+  <div class="nav">
+    <div class="w rowx" style="height:60px">
+      <span style="display:inline-grid;gap:5px;width:22px"><span style="height:2px;background:#ededed"></span><span style="height:2px;background:#ededed"></span><span style="height:2px;background:#ededed"></span></span>
+      <div style="font-size:17px;font-weight:700;letter-spacing:-.02em">SynaiQ</div>
+      <span style="width:40px;height:40px;border-radius:50%;border:1px solid #ededed;display:grid;place-items:center;font-size:13px">✉</span>
+    </div>
+  </div>
+  <div class="w" style="position:relative;height:844px;color:#ededed;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:92px">
+    <div class="ey" style="color:#c3c3c3">CASE 01 ／ 政府・國際展會</div>
+    <h1 class="h1" style="margin:12px 0 0">市長 AI 分身，<br>用四種語言接單。</h1>
+    <p class="bd" style="margin-top:16px;color:#cfcfcf">台南市率隊進軍東京食品展，14 家業者組成歷年最大展區。</p>
+    <div style="margin-top:22px"><span class="pill inv">看這個案例 <i>→</i></span></div>
+  </div>
+  <div style="position:absolute;left:20px;bottom:40px;display:flex;gap:9px;align-items:center;color:#bdbdbd;font-size:11px">
+    <span style="width:7px;height:7px;border-radius:50%;background:#ededed"></span>
+    <span style="width:7px;height:7px;border-radius:50%;border:1px solid #ededed"></span>
+    <span style="margin-left:8px">1／2</span>
+  </div>
+</div>
+<div class="n" style="--h:844px">
+  <h4>01 導覽列＋首屏 Hero（單一案例全幅）</h4>
+  <dl><dt>媒介</dt><dd>圖（整屏現場照）</dd>
+  <dt>來源</dt><dd>現行 synaiq.com <code>#success</code> 原文與照片</dd>
+  <dt>動態</dt><dd>hero-rise；<b>視差關閉</b>；輪播只靠手勢</dd>
+  <dt>收合</dt><dd>導覽收進全螢幕抽屜</dd>
+  <dt>390</dt><dd>文字由<b>垂直置中改貼齊底部</b>；遮罩由左深右淺改<b>上下漸層</b>；大標 72→32px 拆兩行；眉標由「政府單位・國際展會」縮短為「政府・國際展會」；照片<b>裁切焦點 58%／42%</b>保住人群密度；圓點說明文字移除只留 1／2</dd></dl>
+  <div class="rf">具名授權、可用照片、媒體轉載＝<b>待業主裁定</b>；未取得前不得上線。</div>
+</div>
+
+<!-- 02 NUMBERS -->
+<div class="p" style="--h:400px">
+  <span class="bn">02</span>
+  <div class="w" style="padding-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:26px 16px">
+    <div style="border-left:1px solid #b9b9b9;padding-left:14px"><div class="num">14 家</div><div class="mu" style="margin-top:6px;font-size:13px">業者組成展區</div></div>
+    <div style="border-left:1px solid #b9b9b9;padding-left:14px"><div class="num">4 語</div><div class="mu" style="margin-top:6px;font-size:13px">日英韓中導覽</div></div>
+    <div style="border-left:1px solid #b9b9b9;padding-left:14px"><div class="num">10 則</div><div class="mu" style="margin-top:6px;font-size:13px">媒體報導</div></div>
+    <div style="border-left:1px solid #b9b9b9;padding-left:14px"><div class="num mu" style="font-size:22px;padding-top:8px">訂單金額</div><div class="mu" style="margin-top:6px;font-size:13px">待授權與查證</div></div>
+  </div>
+</div>
+<div class="n" style="--h:400px">
+  <h4>02 案例數字</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd>現行網站原文；第四格為對外宣稱，<b>未查證前不放數字</b></dd>
+  <dt>動態</dt><dd>count-up；reduced-motion 直接顯示終值</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>4 欄 → 2×2</b>；數字 46→32px</dd></dl>
+</div>
+
+<!-- 03 PHOTO MOSAIC -->
+<div class="p" style="--h:700px">
+  <span class="bn">03</span>
+  <div class="w" style="padding-top:34px">
+    <h2 class="h2">現場</h2>
+    <div style="margin-top:16px;display:grid;gap:10px">
+      <div style="height:250px;overflow:hidden;position:relative;background:#dcdcdc"><img src="img/case-tokyo-crowd.jpg" alt="台南館展區人潮" style="width:100%;height:100%;object-fit:cover;object-position:58% 45%"><span class="tag" style="left:0;bottom:0">展區人潮</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="height:168px;overflow:hidden;background:#dcdcdc"><img src="img/case-tokyo-a.jpg" alt="台南市長於展區致詞" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="height:168px;overflow:hidden;background:#dcdcdc"><img src="img/case-tokyo-b.jpg" alt="展區來賓與 AI 分身互動" style="width:100%;height:100%;object-fit:cover"></div>
+      </div>
+      <div style="height:168px;overflow:hidden;position:relative;background:#dcdcdc"><img src="img/case-tokyo-dh.jpg" alt="AI 分身以四語導覽" style="width:100%;height:100%;object-fit:cover;object-position:center 40%"><span class="tag" style="left:0;bottom:0">AI 分身四語導覽</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:700px">
+  <h4>03 現場圖組（拼貼）</h4>
+  <dl><dt>媒介</dt><dd>圖（四張，本頁主要證據）</dd>
+  <dt>來源</dt><dd>現行 synaiq.com <code>#success</code> 四張照片；<b>高解析原檔待補</b></dd>
+  <dt>動態</dt><dd>scroll-reveal 依序 80ms；點圖開全螢幕覆蓋層可左右切換與雙指縮放</dd>
+  <dt>收合</dt><dd>放大檢視在覆蓋層</dd>
+  <dt>390</dt><dd><b>3 欄拼貼 → 縱向堆疊</b>：大圖滿欄 250、兩張方圖並排 168、橫圖滿欄 168；<b>不做橫向捲動</b>（照片要一眼看到全部）；「點任一張放大」提示改為圖上常駐標籤</dd></dl>
+</div>
+
+<!-- 04 CASE TABLE -->
+<div class="p" style="--h:640px">
+  <span class="bn">04</span>
+  <div class="w" style="padding-top:34px">
+    <h2 class="h2">怎麼做的</h2>
+    <div style="margin-top:16px;display:grid;gap:9px">
+      <div class="card">
+        <div class="rowx"><b style="font-size:15px">情境</b><span style="font-size:17px">－</span></div>
+        <div style="font-size:14px;margin-top:5px">面對眾多國際買家，語言與人力都不夠用</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #a5a5a5;font-size:13.5px" class="mu">台南市長黃偉哲率隊進軍 2026 年 3 月 10 日東京食品展，攜手 14 家業者組成歷年最大展區。（展開後樣態）</div>
+      </div>
+      <div class="card rowx"><div><b style="font-size:15px">做法</b><div style="font-size:14px;margin-top:5px">設置市長 AI 分身，日英韓中四語導覽</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">技術</b><div style="font-size:14px;margin-top:5px">國產軟硬體，數位人＋多模態服務</div></div><span style="font-size:17px">＋</span></div>
+      <div class="card rowx"><div><b style="font-size:15px">成果</b><div style="font-size:14px;margin-top:5px">爭取買家目光，媒體報導 10 則</div></div><span style="font-size:17px">＋</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:640px">
+  <h4>04 案例表（可展開）</h4>
+  <dl><dt>媒介</dt><dd>表（原本 330 字的說明卡拆成四列）</dd>
+  <dt>來源</dt><dd>現行 synaiq.com <code>#success</code> 兩張說明卡全文</dd>
+  <dt>動態</dt><dd>row-expand 260ms；整張卡為觸控區</dd>
+  <dt>收合</dt><dd><b>四列全可見，四段全文收合</b>（第 1 張示範展開）</dd>
+  <dt>390</dt><dd><b>三欄表 → 堆疊卡片</b>；「全部展開」按鈕移除，改逐張點</dd></dl>
+  <div class="rf">這是「該進表格卻寫成段落」的修正示範。</div>
+</div>
+
+<!-- 05 MEDIA -->
+<div class="p" style="--h:560px">
+  <span class="bn">05</span>
+  <div class="w" style="padding-top:34px">
+    <h2 class="h2">媒體報導</h2>
+    <div style="margin-top:16px;border-top:1px solid #161616">
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><div class="mu" style="font-size:12px">中央社／綜合</div><div style="font-size:14px;margin-top:3px">前進東京食品展　黃偉哲 AI 分身多語言助攻</div></div><span class="mu">↗</span></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><div class="mu" style="font-size:12px">風傳媒</div><div style="font-size:14px;margin-top:3px">台南 AI 市長引發關注</div></div><span class="mu">↗</span></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><div class="mu" style="font-size:12px">PChome</div><div style="font-size:14px;margin-top:3px">鑫揚智能科技助攻東京食品展</div></div><span class="mu">↗</span></div>
+      <div style="padding:13px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><div class="mu" style="font-size:12px">ETtoday</div><div style="font-size:14px;margin-top:3px">AI 分身市長閃耀東京展場</div></div><span class="mu">↗</span></div>
+    </div>
+    <div class="cl" style="margin-top:12px"><span>已收合 6 則</span><span>展開全部 10 則 ＋</span></div>
+  </div>
+</div>
+<div class="n" style="--h:560px">
+  <h4>05 媒體報導（可展開）</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd>現行網站「媒體報導彙整」10 則；<b>媒體名稱與連結待補、轉載授權待確認</b></dd>
+  <dt>動態</dt><dd>row-expand 260ms</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：顯示 4 則，6 則摺起</dd>
+  <dt>390</dt><dd><b>三欄表 → 兩行式清單列</b>：媒體名 12px 在上、標題 14px 在下，連結箭頭固定右側；每列 44px 以上</dd></dl>
+</div>
+
+<!-- 06 MORE CASES -->
+<div class="p" style="--h:620px">
+  <span class="bn">06</span>
+  <div class="w" style="padding-top:34px">
+    <h2 class="h2">其他實績</h2>
+    <div class="mu bd" style="margin-top:8px">資料整理中</div>
+    <div style="display:grid;gap:12px;margin-top:16px">
+      <div class="ph" style="height:140px">案例二　<b>待補</b><br><span style="font-size:11px">企業內部知識庫導入（需客戶具名授權）</span></div>
+      <div class="ph" style="height:140px">案例三　<b>待補</b><br><span style="font-size:11px">淨零展場域接待（需現場照片）</span></div>
+      <div class="ph" style="height:140px">案例四　<b>待補</b><br><span style="font-size:11px">生成式 AI 內容產製（可用 media-factory 成果圖）</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:620px">
+  <h4>06 其他實績（佔位）</h4>
+  <dl><dt>媒介</dt><dd>圖（標示主題的佔位框）</dd>
+  <dt>來源</dt><dd><b>全數待補</b>——簡報無實績案例，<code>media.md</code> 新聞區為空</dd>
+  <dt>動態</dt><dd>scroll-reveal</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>3 欄 → 單欄堆疊</b>；框高 250→140，主題字縮到 11px</dd></dl>
+</div>
+
+<!-- 07 CTA -->
+<div class="p dk" style="--h:380px">
+  <span class="bn" style="background:#ededed;color:#161616">07</span>
+  <div class="w" style="padding-top:48px">
+    <h2 class="h2">你的場域，<br>會是下一個案例。</h2>
+    <p class="bd mu" style="margin-top:14px">告訴我們資料來源、使用對象與希望改善的流程。</p>
+    <div style="margin-top:22px"><span class="pill inv">洽談導入 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:380px">
+  <h4>07 行動呼籲</h4>
+  <dl><dt>媒介</dt><dd>字（兩句）</dd>
+  <dt>來源</dt><dd><code>contact.md</code> hero description 改寫</dd>
+  <dt>390</dt><dd>大標拆兩行；CTA 高 48px</dd></dl>
+</div>
+
+<!-- 08 FOOTER -->
+<div class="p dk" style="--h:460px">
+  <span class="bn" style="background:#ededed;color:#161616">08</span>
+  <div class="w" style="padding-top:34px;font-size:14px;border-top:1px solid #3a3a3a">
+    <div style="padding-top:24px;font-size:18px;font-weight:700">SynaiQ</div>
+    <div class="mu" style="font-size:12.5px;line-height:1.7;margin-top:8px">鑫揚智能科技股份有限公司<br>台中市西屯區文心路二段 201 號 11 樓之 8</div>
+    <div style="margin-top:18px;border-top:1px solid #3a3a3a">
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>產品</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>公司</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>聯絡</span><span class="mu">－</span></div>
+      <div style="padding:8px 0 13px;border-bottom:1px solid #3a3a3a;color:#c4c4c4;line-height:2;font-size:13px">+886 4 2393 1368<br>service@synaiq.com<br>Instagram ↗</div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:460px">
+  <h4>08 頁尾</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：產品／公司收起，聯絡展開</dd>
+  <dt>390</dt><dd>4 欄 → 摺疊清單</dd></dl>
+  <div class="rf">全頁 8 塊；順序與 1440 一致。</div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

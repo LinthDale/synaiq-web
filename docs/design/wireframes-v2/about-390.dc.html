@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+x-dc{display:block}
+body{background:#c9c9c9;font-family:-apple-system,"Segoe UI","Microsoft JhengHei","Noto Sans TC",sans-serif;color:#161616;-webkit-font-smoothing:antialiased}
+a{color:#161616;text-decoration:none}
+img{display:block;max-width:100%;filter:grayscale(1)}
+.board{display:grid;grid-template-columns:var(--pw) 320px;width:calc(var(--pw) + 320px);position:relative}
+.p{background:#eee;height:var(--h);overflow:hidden;position:relative}
+.n{background:#1b1b1b;color:#e0e0e0;height:var(--h);overflow:hidden;padding:13px 15px;border-bottom:1px solid #313131;font-size:11px;line-height:1.45}
+.n h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:7px}
+.n dl{display:grid;grid-template-columns:40px 1fr;column-gap:8px;row-gap:4px}
+.n dt{color:#8d8d8d;font-size:10px;letter-spacing:.06em}
+.n dd{color:#d2d2d2}
+.n .rf{margin-top:8px;padding-top:7px;border-top:1px solid #313131;color:#bdbdbd}
+.fold{position:absolute;left:0;top:var(--fold);width:var(--pw);border-top:2px dashed #111;z-index:60;pointer-events:none}
+.fold b{position:absolute;right:6px;top:-11px;background:#111;color:#eee;font:600 10px/1 system-ui;letter-spacing:.14em;padding:4px 6px}
+.bn{position:absolute;left:0;top:0;background:#161616;color:#eee;font:600 11px/1 system-ui;padding:6px 8px;z-index:40}
+.w{width:var(--cw);margin:0 auto}
+.ey{font-size:11px;letter-spacing:.2em;color:#5f5f5f}
+.h1{font-size:var(--fs-h1);line-height:1.2;letter-spacing:-.02em;font-weight:700}
+.h2{font-size:var(--fs-h2);line-height:1.26;letter-spacing:-.015em;font-weight:700}
+.bd{font-size:var(--fs-bd);line-height:1.65}
+.mu{color:#5f5f5f}
+.pill{display:inline-flex;align-items:center;gap:11px;border:1px solid #161616;border-radius:999px;padding:12px 12px 12px 20px;font-size:15px;font-weight:600;min-height:48px}
+.pill i{width:26px;height:26px;border-radius:50%;background:#161616;color:#eee;display:grid;place-items:center;font-style:normal;font-size:12px}
+.pill.inv{border-color:#ededed;color:#ededed}
+.pill.inv i{background:#ededed;color:#111}
+.dk{background:#1b1b1b;color:#ededed}
+.dk .ey,.dk .mu{color:#a8a8a8}
+.tag{position:absolute;background:#161616;color:#eee;font-size:10.5px;letter-spacing:.04em;padding:4px 8px}
+.rowx{display:flex;align-items:center;justify-content:space-between}
+.nav{position:absolute;left:0;top:0;width:100%;height:60px;z-index:30;color:#ededed;border-bottom:1px solid rgba(237,237,237,.24)}
+.cov{position:absolute;inset:0;overflow:hidden}
+.cov img{width:100%;height:100%;object-fit:cover}
+</style>
+</helmet>
+
+<div class="board" style="--pw:390px;--cw:350px;--fold:844px;--fs-h1:30px;--fs-h2:25px;--fs-bd:15px">
+<div class="fold"><b>FOLD 390×844</b></div>
+
+<!-- 01 NAV + HERO -->
+<div class="p dk" style="--h:600px">
+  <span class="bn" style="background:#ededed;color:#161616;z-index:50">01</span>
+  <div class="nav">
+    <div class="w rowx" style="height:60px">
+      <span style="display:inline-grid;gap:5px;width:22px"><span style="height:2px;background:#ededed"></span><span style="height:2px;background:#ededed"></span><span style="height:2px;background:#ededed"></span></span>
+      <div style="font-size:17px;font-weight:700;letter-spacing:-.02em">SynaiQ</div>
+      <span style="width:40px;height:40px;border-radius:50%;border:1px solid #ededed;display:grid;place-items:center;font-size:13px">✉</span>
+    </div>
+  </div>
+  <div class="w" style="position:relative;padding-top:96px">
+    <div class="ey">ABOUT SYNAIQ</div>
+    <h1 class="h1" style="margin:12px 0 0">把企業內部知識，<br>變成用得上的資產。</h1>
+    <p class="bd mu" style="margin-top:14px">專注於專屬知識庫模型訂製的科技公司，協助組織建立貼合自身需求的智能系統。</p>
+  </div>
+  <div style="position:absolute;left:0;bottom:0;width:100%;height:190px;overflow:hidden;background:#111">
+    <img src="img/brand-statement.jpg" alt="SynaiQ 自研平台的產品畫面（展位面板裁切）" style="width:819px;margin-top:-250px;margin-left:-215px;max-width:none">
+    <span class="tag" style="right:0;bottom:0">展位面板・裁切</span>
+  </div>
+</div>
+<div class="n" style="--h:600px">
+  <h4>01 導覽列＋首屏 Hero（深底＋裁切影像帶）</h4>
+  <dl><dt>媒介</dt><dd>圖（產品畫面帶佔下段）</dd>
+  <dt>來源</dt><dd>大標＝<code>about.md</code> hero title 縮短；支持句＝hero description 縮短；影像＝<code>260722 展位-右.jpg</code></dd>
+  <dt>動態</dt><dd>hero-rise；<b>視差關閉</b></dd>
+  <dt>收合</dt><dd>導覽收進全螢幕抽屜</dd>
+  <dt>390</dt><dd>大標與支持句<b>由左右並排改上下堆疊</b>；影像帶 330→190 高，且<b>把原圖放大到 819px 再裁</b>（390 寬直接縮圖會讓設備畫面小到看不出是什麼）；首屏 600 &lt; 844，下一段露出 244px</dd></dl>
+  <div class="rf">建議改用真實辦公室或團隊合照（<b>待補</b>）。</div>
+</div>
+
+<!-- 02 THREE LINES -->
+<div class="p" style="--h:440px">
+  <span class="bn">02</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">OUR APPROACH</div>
+    <h2 class="h2" style="margin-top:10px">我們做三件事</h2>
+    <div style="margin-top:16px;border-top:1px solid #161616">
+      <div style="padding:14px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><b style="font-size:15px">1　專屬知識庫模型訂製服務</b><div class="mu" style="font-size:13px;margin-top:4px">KIP 平台</div></div><span class="mu">→</span></div>
+      <div style="padding:14px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><b style="font-size:15px">2　AI 智能系統整合</b><div class="mu" style="font-size:13px;margin-top:4px">KIP 平台・五項功能</div></div><span class="mu">→</span></div>
+      <div style="padding:14px 0;border-bottom:1px solid #b9b9b9" class="rowx"><div><b style="font-size:15px">3　Wally 系列數位人互動系統</b><div class="mu" style="font-size:13px;margin-top:4px">Wally 數位人</div></div><span class="mu">→</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:440px">
+  <h4>02 三條服務線</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd><code>about.md</code> approach items 逐字</dd>
+  <dt>動態</dt><dd>scroll-reveal 依序 60ms；整列可點</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>三欄 → 兩行式清單列</b>：編號併入標題、對應頁面降為 13px 副標、箭頭固定右側；每列 44px 以上</dd></dl>
+</div>
+
+<!-- 03 TEAM -->
+<div class="p" style="--h:860px">
+  <span class="bn">03</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">TEAM</div>
+    <h2 class="h2" style="margin-top:10px">經營團隊與技術團隊</h2>
+    <div class="mu" style="font-size:12px;letter-spacing:.14em;margin-top:20px;border-top:1px solid #161616;padding-top:10px">LEADERSHIP TEAM　經營團隊</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px">
+      <div><div style="height:110px;overflow:hidden;background:#dcdcdc"><img src="img/team-wilson.jpg" alt="Wilson Chiu" style="width:100%;height:100%;object-fit:cover"></div><div style="margin-top:8px;font-weight:600;font-size:13px">Wilson Chiu</div><div class="mu" style="font-size:11.5px">鉅瀚綠能總經理</div></div>
+      <div><div style="height:110px;overflow:hidden;background:#dcdcdc"><img src="img/team-sunny.jpg" alt="Sunny Kang" style="width:100%;height:100%;object-fit:cover"></div><div style="margin-top:8px;font-weight:600;font-size:13px">Sunny Kang</div><div class="mu" style="font-size:11.5px">鑫揚智能執行長</div></div>
+      <div><div style="height:110px;overflow:hidden;background:#dcdcdc"><img src="img/team-leff.jpg" alt="Leef Lee" style="width:100%;height:100%;object-fit:cover"></div><div style="margin-top:8px;font-weight:600;font-size:13px">Leef Lee</div><div class="mu" style="font-size:11.5px">財務長</div></div>
+    </div>
+    <div class="mu" style="font-size:12px;letter-spacing:.14em;margin-top:24px;border-top:1px solid #161616;padding-top:10px">TECHNICAL TEAM　技術團隊</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px">
+      <div><div style="height:110px;overflow:hidden;background:#dcdcdc"><img src="img/team-lou.jpg" alt="Yi Shyang Lou" style="width:100%;height:100%;object-fit:cover"></div><div style="margin-top:8px;font-weight:600;font-size:13px">Yi Shyang Lou</div><div class="mu" style="font-size:11.5px">總經理特助</div></div>
+      <div><div style="height:110px;overflow:hidden;background:#dcdcdc"><img src="img/team-dale.jpg" alt="Dale Lin" style="width:100%;height:100%;object-fit:cover"></div><div style="margin-top:8px;font-weight:600;font-size:13px">Dale Lin</div><div class="mu" style="font-size:11.5px">全端暨韌體總工程師</div></div>
+      <div><div style="height:110px;overflow:hidden;background:#dcdcdc"><img src="img/team-daniel.jpg" alt="Daniel Shih" style="width:100%;height:100%;object-fit:cover"></div><div style="margin-top:8px;font-weight:600;font-size:13px">Daniel Shih</div><div class="mu" style="font-size:11.5px">專利策略師</div></div>
+    </div>
+    <div style="margin-top:22px;border:1px dashed #9d9d9d;background:#e3e3e3;color:#5f5f5f;font-size:11.5px;padding:10px 12px;display:flex;justify-content:space-between"><span>點任一位展開學經歷（6 段全部收合）</span><span>＋</span></div>
+  </div>
+</div>
+<div class="n" style="--h:860px">
+  <h4>03 團隊</h4>
+  <dl><dt>媒介</dt><dd>圖（六張人像）</dd>
+  <dt>來源</dt><dd><code>about.md</code> team groups 全 6 人</dd>
+  <dt>動態</dt><dd>scroll-reveal 依序 60ms；<b>hover 改為 tap</b>，一次只展開一位</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：6 段學經歷藏在展開層</dd>
+  <dt>390</dt><dd><b>6 欄一列 → 3 欄兩列</b>，並<b>拆回經營／技術兩組</b>（1440 用一條分組線即可，390 一列只放得下 3 人，硬擠會讓分組看不出來）；人像 190→110 高；職稱縮字（鑫揚智能科技執行長 → 鑫揚智能執行長）</dd></dl>
+</div>
+
+<!-- 04 VISION -->
+<div class="p dk" style="--h:420px">
+  <span class="bn" style="background:#ededed;color:#161616">04</span>
+  <div class="w" style="padding-top:34px">
+    <div class="ey">VISION</div>
+    <h2 class="h2" style="margin-top:10px">讓 AI 真正融入<br>企業的日常運作。</h2>
+    <div style="margin-top:20px;display:grid;gap:14px">
+      <div style="border-left:1px solid #4a4a4a;padding-left:16px;font-size:15px;font-weight:600">以使用者為中心的 AI 互動設計</div>
+      <div style="border-left:1px solid #4a4a4a;padding-left:16px;font-size:15px;font-weight:600">具備場域導向的 AI 系統整合能力</div>
+      <div style="border-left:1px solid #4a4a4a;padding-left:16px;font-size:15px;font-weight:600">依組織需求規劃部署與分階段導入</div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:420px">
+  <h4>04 願景</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>來源</dt><dd><code>about.md</code> vision 逐字</dd>
+  <dt>動態</dt><dd>scroll-reveal 依序 60ms</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>3 欄 → 單欄三列</b>，左細線保留作為欄位記號；大標拆兩行</dd></dl>
+</div>
+
+<!-- 05 COMPANY FACTS -->
+<div class="p" style="--h:520px">
+  <span class="bn">05</span>
+  <div class="w" style="padding-top:34px">
+    <h2 class="h2">公司資料</h2>
+    <div style="margin-top:16px;border-top:1px solid #161616;font-size:14px">
+      <div style="padding:12px 0;border-bottom:1px solid #b9b9b9"><div class="mu" style="font-size:12px">公司名稱</div><div style="font-weight:600;margin-top:3px">鑫揚智能科技股份有限公司</div></div>
+      <div style="padding:12px 0;border-bottom:1px solid #b9b9b9"><div class="mu" style="font-size:12px">地址</div><div style="font-weight:600;margin-top:3px">台中市西屯區文心路二段 201 號 11 樓之 8</div></div>
+      <div style="padding:12px 0;border-bottom:1px solid #b9b9b9"><div class="mu" style="font-size:12px">電話</div><div style="font-weight:600;margin-top:3px">+886 4 2393 1368</div></div>
+      <div style="padding:12px 0;border-bottom:1px solid #b9b9b9"><div class="mu" style="font-size:12px">信箱</div><div style="font-weight:600;margin-top:3px">service@synaiq.com</div></div>
+      <div style="padding:12px 0;border-bottom:1px solid #b9b9b9"><div class="mu" style="font-size:12px">統一編號／成立年份</div><div style="font-weight:600;margin-top:3px" class="mu">待補</div></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:520px">
+  <h4>05 公司資料</h4>
+  <dl><dt>媒介</dt><dd>表（鍵值表）</dd>
+  <dt>來源</dt><dd><code>contact.md</code> cards；統編與成立年份<b>待補</b></dd>
+  <dt>動態</dt><dd>無</dd>
+  <dt>收合</dt><dd>無</dd>
+  <dt>390</dt><dd><b>四欄鍵值 → 單欄「鍵在上、值在下」</b>；統編與成立年份合併成一列以省高度；電話與信箱可直接撥打／寄信</dd></dl>
+</div>
+
+<!-- 06 CTA -->
+<div class="p" style="--h:360px">
+  <span class="bn">06</span>
+  <div class="w" style="padding-top:48px">
+    <h2 class="h2">想更了解我們？</h2>
+    <p class="bd mu" style="margin-top:14px">歡迎直接聯絡，我們可以先聊聊你的場域與資料現況。</p>
+    <div style="margin-top:22px"><span class="pill">聯絡我們 <i>→</i></span></div>
+  </div>
+</div>
+<div class="n" style="--h:360px">
+  <h4>06 行動呼籲</h4>
+  <dl><dt>媒介</dt><dd>字（兩句）</dd>
+  <dt>來源</dt><dd><code>about.md</code> action ＋ <code>contact.md</code> 改寫</dd>
+  <dt>390</dt><dd>滿欄；CTA 高 48px</dd></dl>
+</div>
+
+<!-- 07 FOOTER -->
+<div class="p dk" style="--h:460px">
+  <span class="bn" style="background:#ededed;color:#161616">07</span>
+  <div class="w" style="padding-top:34px;font-size:14px">
+    <div style="font-size:18px;font-weight:700">SynaiQ</div>
+    <div class="mu" style="font-size:12.5px;line-height:1.7;margin-top:8px">鑫揚智能科技股份有限公司<br>台中市西屯區文心路二段 201 號 11 樓之 8</div>
+    <div style="margin-top:20px;border-top:1px solid #3a3a3a">
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>產品</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>公司</span><span class="mu">＋</span></div>
+      <div class="rowx" style="padding:13px 0;border-bottom:1px solid #3a3a3a"><span>聯絡</span><span class="mu">－</span></div>
+      <div style="padding:8px 0 13px;border-bottom:1px solid #3a3a3a;color:#c4c4c4;line-height:2;font-size:13px">+886 4 2393 1368<br>service@synaiq.com<br>Instagram ↗</div>
+      <div class="rowx" style="padding:13px 0"><span>ZH ／ EN</span><span class="mu">－</span></div>
+    </div>
+  </div>
+</div>
+<div class="n" style="--h:460px">
+  <h4>07 頁尾</h4>
+  <dl><dt>媒介</dt><dd>表</dd>
+  <dt>收合</dt><dd><b>預設收合</b>：產品／公司收起，聯絡展開</dd>
+  <dt>390</dt><dd>4 欄 → 摺疊清單</dd></dl>
+  <div class="rf">全頁 7 塊；順序與 1440 一致。</div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

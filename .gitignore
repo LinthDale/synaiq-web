@@ -48,3 +48,7 @@ desktop.ini
 
 # design canvas seeded bundle (3 MB, regenerable)
 docs/design/directions-v1/synaiq-website-directions.html
+
+# wireframe per-board renders are regenerable via docs/design/wireframes-v2/_render.ps1
+docs/design/wireframes-v2/*.png
+!docs/design/wireframes-v2/contact-sheet.png
