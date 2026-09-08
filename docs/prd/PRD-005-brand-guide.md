@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.2 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2026-09-07 |
+| v0.3 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 
@@ -34,8 +34,9 @@
 |---|---|
 | 品牌色 | `--ink:#120725`、`--purple:#612271`、`--violet:#8b5fd3`、`--lavender:#c498ee`、`--gold:#d0ae68`、`--paper:#f5f1ea`、`--white:#fff`（舊樹 `app/globals.css` `:root`），無用途說明。換底後這 7 個值由 PRD-001 原樣搬入 `src/styles/tokens.css` 作暫用值，正式數值由本 PRD 覆寫 |
 | 字型 | `NotoSansCJKtc-Medium.otf` 16.1 MB 全量載入，`font-weight:500` 單一字重；fallback 為 PingFang TC／Microsoft JhengHei；無指定西文字型 |
-| Logo | `synaiq-logo-light.svg`、`synaiq-logo-s.webp` 有引用；`synaiq-logo-dark.svg`（7.3 MB）零引用，由 PRD-001 FR-105 刪除 |
-| 影像 | `public/brand/` 共 20 餘檔，多張超過 1 MB，最大 `wally-series.png` 13.0 MB |
+| Logo | **無可用檔（2026-09-08 Phase A 發現）**：`synaiq-logo-light.svg` 為純白，淺底看不見；`synaiq-logo-dark.svg`（7.3 MB）內容是內嵌 PNG 而非向量。Phase A 的 header 因此暫用文字「SynaiQ」。缺口見 OQ-7 與 [`../design/content-gap-list.md`](../design/content-gap-list.md) |
+| Token 機制 | **已落地（Phase A）**：`src/styles/tokens.css` 共 44 個中性佔位 token，`/styleguide` 可目視驗收；**數值全部 TBD**，由本 PRD FR-501／FR-502 覆寫 |
+| 影像 | `public/brand/` 共 20 餘檔，多張超過 1 MB，最大 `wally-series.png` 13.0 MB；瘦身歸 PRD-001 FR-108 |
 
 ## 3. 功能需求
 
@@ -43,7 +44,7 @@
 |---|---|---|---|
 | FR-501 | 色票表：每色列出名稱、hex、CSS 變數名、用途、可用背景、與主要文字色的對比度 | 現有 7 個品牌色全部有列；每組「文字色 × 背景色」的允許組合皆標註對比度且達 AA；不允許的組合明列為禁則 | TBD |
 | FR-502 | 字級與字型規範：字族（CJK 與西文各自指定）、字重、字級階層（display／h1／h2／h3／body／caption）、行高、字距 | 階層表可直接對應 PRD-003 FR-302 的 token；西文字型已指定；字型檔格式與 subset 策略與 PRD-001 FR-105 一致 | TBD |
-| FR-503 | Logo 用法與禁則：可用版本、最小尺寸、安全留白、可用背景、favicon 規格，加禁則清單（禁改色、禁變形、禁加陰影、禁放低對比底） | 每條規則附正例與反例圖示；站上現有引用逐一對照可判定通過或違反 | TBD |
+| FR-503 | Logo 用法與禁則：可用版本、最小尺寸、安全留白、可用背景、favicon 規格，加禁則清單（禁改色、禁變形、禁加陰影、禁放低對比底）。**前置：先取得可用的向量 logo 原稿（OQ-7），現有兩個檔案皆不可用** | 至少一個深底版與一個淺底版為真向量 SVG 且 ≤ 50 KB；每條規則附正例與反例圖示；站上引用逐一對照可判定通過或違反；PRD-003 FR-304 可據此把 header 的文字「SynaiQ」換回 logo | TBD |
 | FR-504 | 影像與插圖規範：Wally／Duoduo 角色圖的使用情境與去背規則、團隊照的裁切與比例、單張體積上限與格式（WebP／AVIF 優先） | 規範內的體積上限與 guideline §4 的「單張圖 ≤ 500 KB」一致；現有大圖逐張標註處理方式 | TBD |
 | FR-505 | `public/brand/**` 資產清冊：每項標註檔名、尺寸、體積、引用位置、去留決策 | 清冊涵蓋 `public/` 全部檔案，零遺漏；每項有明確去留；零引用者標為待刪並連到 PRD-001 FR-105 | TBD |
 | FR-506 | 交付與維護：手冊存放位置、版本規則、後續修改流程 | 手冊位於 `docs/`，掛 v1.0 並在 [`../README.md`](../README.md) 連結；手冊每條 token 規則皆對應 `src/styles/tokens.css` 的一個變數並可在 `/styleguide` 目視驗收；修改流程與 guideline §6 一致；擴充至非網站媒材需開 ADR | TBD |
@@ -82,6 +83,7 @@
 | OQ-4 | 品牌語調（Tone of Voice）是否納入手冊，或歸 PRD-002 | 業主 + 行銷部 | FR-506 開工前 |
 | OQ-5 | 西文字型選型（需與 Noto Sans CJK TC 視覺重量搭配且授權可商用） | 設計 | FR-502 開工前 |
 | OQ-6 | Wally／Duoduo 角色資產是否有外部授權或委託合約限制 | 業主 | FR-504 開工前 |
+| OQ-7 | **可用 logo 檔缺口（2026-09-08 開立）**：現有 `synaiq-logo-light.svg` 純白、`synaiq-logo-dark.svg` 為 7.3 MB 內嵌 PNG，皆無法用於淺底 header；需業主提供向量原稿或授權重製深／淺底兩版 | 業主 | PRD-003 FR-304 開工前 |
 
 ## 8. 變更紀錄
 
@@ -89,3 +91,4 @@
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，建立 FR-501 至 FR-506 與資產現況基線 | |
 | v0.2 | 2026-09-07 | 依換底決策調整：token 檔案改為 `src/styles/tokens.css`、新增 `/styleguide` 驗收面，本 PRD 只負責 token 數值與用法，機制歸 PRD-001 FR-102 | [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) |
+| v0.3 | 2026-09-08 | 現況基線更新：token 機制已於 Phase A 落地（44 個中性佔位，`/styleguide` 可驗收，數值仍 TBD）；新增 OQ-7 記錄**無可用 logo 檔**（純白 SVG 加 7.3 MB 內嵌 PNG，header 暫用文字），FR-503 補前置條件與向量檔驗收 | PRD-001 Phase A、PRD-003 FR-304 |

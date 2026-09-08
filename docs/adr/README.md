@@ -32,4 +32,5 @@ PRD 鎖定（`v1.0` Locked）之後的變更不改 PRD 內文，一律開 ADR，
 
 | ADR | 標題 | Status | 相關 PRD | 日期 |
 |---|---|---|---|---|
-| [ADR-001](ADR-001-astro-react-islands-hostinger.md) | 改用 Astro + React islands，託管移至 Hostinger | Proposed | [PRD-001](../prd/PRD-001-architecture-refactor.md)、[PRD-004](../prd/PRD-004-uiux.md)、[PRD-005](../prd/PRD-005-brand-guide.md) | 2026-09-07 |
+| [ADR-001](ADR-001-astro-react-islands-hostinger.md) | 改用 Astro + React islands，託管移至 Hostinger | Accepted | [PRD-001](../prd/PRD-001-architecture-refactor.md)、[PRD-004](../prd/PRD-004-uiux.md)、[PRD-005](../prd/PRD-005-brand-guide.md) | 2026-09-07 |
+| [ADR-002](ADR-002-contact-form-php-endpoint.md) | `/contact` 採 Hostinger 自架 PHP 收信端點（ADR-001 純靜態的例外） | Accepted | [PRD-004](../prd/PRD-004-uiux.md)、[PRD-001](../prd/PRD-001-architecture-refactor.md) | 2026-09-08 |

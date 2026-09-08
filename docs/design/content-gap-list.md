@@ -31,11 +31,12 @@
 | `wally-series.png` | 13.0 MB，零路由引用 | 確認去留；留則重製，不留則刪 | 開發 |
 | 台南市長 AI 分身現場照 | 無檔案 | 至少 1 張高解析現場照或影片截幀，**需市府具名授權** | 行銷部 |
 | 東京食品展現場照 | 無檔案 | 1–2 張 | 行銷部 |
+| **淨零展展位現場照（Wally 實機）** | **已有可用檔**：`\\192.168.0.97\行銷部\99.進行中專案\260723_凈零展覽\260722 展位-左.jpg`（業主 2026-09-08 提供，畫面中間機器為 Wally）；授權為**公司內部素材**，無第三方限制 | 複製進 repo 前壓縮並轉 WebP（≤ 500 KB）；用於 `/wally` Hero 與 `/cases` 場域實績；需確認畫面內無他人可辨識肖像與客戶文件 | 開發 |
 | 淨零展活動圖 | `media.md` 標「活動圖片待補」 | 活動主視覺 1 張 | 行銷部 |
 | 媒體露出連結 | 現行 synaiq.com 有清單 | 逐則核對連結是否仍有效、是否可轉載 | 行銷部 |
 | 靜態地圖圖片（`/contact`） | 無 | 公司位置靜態圖 1 張（避免嵌入第三方地圖 iframe 的追蹤與 JS 成本） | 開發 |
 | 團隊照 ×6 | `public/brand/team/*.jpg` 齊全，34–38 KB | 可直接用 | — |
-| Logo | `synaiq-logo-light.svg` 4 KB 可用；`synaiq-logo-s.webp` 139 KB | `synaiq-logo-dark.svg` 7.3 MB 零引用，PRD-001 FR-105 刪除 | 開發 |
+| **Logo（缺口，2026-09-08 Phase A 發現）** | 兩個檔案皆不可用：`synaiq-logo-light.svg` 4 KB 為**純白**（淺底看不見）、`synaiq-logo-dark.svg` 7.3 MB 是**內嵌 PNG 非向量**；`synaiq-logo-s.webp` 139 KB 僅適合小尺寸。Phase A 的 header 因此暫用文字「SynaiQ」 | 需業主提供向量原稿，或授權重製深／淺底兩版真 SVG（各 ≤ 50 KB）。缺此檔則 PRD-003 FR-304 無法收尾 | 業主（PRD-005 OQ-7） |
 | `duoduo-cutout.png` | 2.1 MB，新結構中無位置 | 確認是否保留（PRD-005 OQ-6 角色授權） | 待定 |
 | `knowledge-base.png`／`media-factory.png` | 各 283 KB／2.1 MB | `media-factory.png` 移至 `/generative-ai`，需壓縮 | 開發 |
 | OG 圖 | 無 | 每頁一張（中英各一，PRD-004 OQ-4） | 待定 |
@@ -44,12 +45,13 @@
 
 | # | 項目 | 阻塞於 |
 |---|---|---|
-| 1 | `/cases` 主案例全文與照片 | 市府具名授權（§8-4）。授權不下來則整個 `/cases` 記憶點失效，需改以 Wally 場域照替代 |
-| 2 | Wally Hero 定位句 | KIP 與 Wally 品牌關係裁定（§8-2） |
-| 3 | 個資蒐集告知全文 | 表單端點方案裁定（§8-3）；選 A 需揭露第三方服務商名稱 |
+| 1 | `/cases` 主案例全文與照片 | 市府具名授權（§8-4）。授權不下來則改以淨零展展位現場照當替代主視覺（該照已可用，見上表） |
+| 2 | Wally Hero 定位句 | KIP 與 Wally 品牌關係仍待裁定（§8-2）；工作假設沿用 §9-1「Wally 是 KIP 的現場化身」 |
+| 3 | 個資蒐集告知全文 | **不再阻塞**：端點已定為自架 PHP（§8-3、[ADR-002](../adr/ADR-002-contact-form-php-endpoint.md)），無第三方服務商需揭露；行銷部可逕行撰寫中英兩版 |
 | 4 | IKA 定義段 | 行銷部補寫，簡報無素材 |
 | 5 | 淨零展年份、地點、報名連結 | 行銷部（PRD-002 OQ-5，期限 2026-09-21） |
-| 6 | 英文全站文案 | zh-Hant 定稿 + 簡報 final（PRD-002 M2） |
+| 6 | 英文全站文案 | zh-Hant 定稿 + 簡報 final（PRD-002 M2）。切換器已決定提前顯示，缺頁退到上層區段頁（wireframes §6） |
+| 7 | header 的 logo | 可用向量 logo 原稿（PRD-005 OQ-7）；未到位前維持文字「SynaiQ」 |
 
 **不阻塞、可立即動工**：`/kip` 與 `/kip/security` 的主體文案（`S1`–`S3` 已可直接上站）、
 `/about`（`about.md` 完整）、`/wally` 型號表（`wally.md` 5 列齊全）。

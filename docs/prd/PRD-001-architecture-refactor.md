@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v1.0 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-07 |
+| v1.1 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-08 |
 
 > NFR 繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異；換底決策、被否決方案與查證來源見 [`ADR-001`](../adr/ADR-001-astro-react-islands-hostinger.md)；舊樹現況見 [`../../HANDOVER.md`](../../HANDOVER.md)。三者皆不複述。
 
@@ -130,3 +130,4 @@ src/styles/tokens.css（token 單一事實來源）、public/（字型與品牌�
 | v0.2 | 2026-09-07 | 掛接 Sprint 22：PBI [#1302](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1302) 與 Task #1303 至 #1307（FR-106／101／102／103／107）。FR-104、105、108 未排入 sprint | |
 | v0.3 | 2026-09-07 | 業主裁定換底重建：Astro 加 React islands、託管 Hostinger、純 CSS token、Content Collections、Astro 內建 i18n。全文改寫，FR 重編為 FR-101 至 FR-109，補 Sprint 22 Task 處置表 | [ADR-001](../adr/ADR-001-astro-react-islands-hostinger.md) |
 | v1.0 | 2026-09-07 | **Locked**。業主接受 ADR-001；OQ-1 定為部署路徑 A、OQ-1b 定為暫時網域 staging；裁定視覺全面重做，故不移植舊色票，FR-106 閘在設計方向定案之後 | ADR-001 Accepted |
+| v1.1 | 2026-09-08 | 內文不動（Locked），僅記錄兩件事：**Phase A 已於分支 `feat/astro-rebuild` 實作完成**（7 commits、`npm run build` 產出 19 頁、`npm test` 25/25、內容頁零 client JS、191 個舊 key 遷移 0 未對應；`/en/` 標題暫掛 `[EN] ` 前綴、draft 頁輸出 `noindex, follow`、header 因無可用 logo 暫用文字「SynaiQ」）；**FR-104 驗收條件中的「不顯示切換器」由 PRD-004 FR-402 取代**（2026-09-08 業主裁定：切換器提前顯示、缺頁退到上層區段頁並標示，英文路由維持 `noindex` 且不入 sitemap），同日 OQ-4 由 [ADR-002](../adr/ADR-002-contact-form-php-endpoint.md) 定案為自架 PHP 端點，§2 islands 表的「`/contact` 表單」據此成立 | [ADR-002](../adr/ADR-002-contact-form-php-endpoint.md)、[PRD-004](PRD-004-uiux.md) v0.3 |

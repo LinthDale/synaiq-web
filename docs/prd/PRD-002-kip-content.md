@@ -2,10 +2,12 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.1 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 2026-09-07 |
+| v0.2 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 > 內容管線規則見 [`../../HANDOVER.md`](../../HANDOVER.md) §2，本文不複述。
+> KIP 文案的事實來源為 [`../design/kip-deck-extract.md`](../design/kip-deck-extract.md)（`S1`–`S6`）；
+> 逐頁的沿用／改寫／新寫分工見 [`../design/content-gap-list.md`](../design/content-gap-list.md)。
 
 ## 1. 問題與目標
 
@@ -15,7 +17,7 @@
 
 | 項目 | 內容 |
 |---|---|
-| Goal | 1. 9 條路由的文案皆以 KIP 產品線為敘事主軸；2. 全站零佔位文字、零空表格；3. 9 條路由皆有英文版且與中文版資訊等價 |
+| Goal | 1. 全部路由的文案皆以 KIP 產品線為敘事主軸；2. 全站零佔位文字、零空表格；3. 全部路由皆有英文版且與中文版資訊等價 |
 | Non-Goal | 不改版面與樣式（PRD-003／004）、不做部落格或新聞稿系統、不做第三語系 |
 | Constraints | KIP 定位與規格待行銷部簡報定稿（外部阻塞）；文案只能改 `## key` 標題底下的內容，標題本身是程式識別碼不得更動；改文案必須重新 build 才會生效 |
 | 角色 | 潛在客戶（找解決方案）、合作夥伴（評估技術能力）、求職者（看團隊與媒體） |
@@ -24,28 +26,28 @@
 
 | 項目 | 內容 |
 |---|---|
-| 涵蓋路由 | 全部 9 條 |
-| 涵蓋檔案 | `content/pages/` 全部 10 個 `.md`（含 `site.md` 的導覽標籤與 CTA 預設值） |
-| 不涵蓋 | `app/**/page.tsx` 的版面結構、CSS、路由新增（若 KIP 需新路由，由 M1 決策後轉交 PRD-004） |
-| 依賴 | 行銷部 KIP 簡報（外部阻塞）；M2 英文文案依賴 zh-Hant 文案定稿與 KIP 簡報 final；per-locale 檔案結構由 PRD-004 設計 |
+| 涵蓋路由 | M1 拍板後的 8 條：`/`、`/kip`、`/kip/security`、`/wally`、`/generative-ai`、`/cases`、`/about`、`/contact` |
+| 涵蓋檔案 | `src/content/pages/<locale>/*.md` 全部 8 頁（含新增的 `kip`、`kip/security`、`cases`）加 `src/content/site/<locale>.md` 的導覽標籤與 CTA 預設值 |
+| 不涵蓋 | 版面結構與 CSS、路由與導覽實作（PRD-004 FR-401）、301 設定 |
+| 依賴 | 行銷部 KIP 簡報（外部阻塞）；M2 英文文案依賴 zh-Hant 文案定稿與 KIP 簡報 final；per-locale 檔案結構已由 PRD-001 FR-103／FR-104 於 Phase A 落地 |
 
 ### 里程碑
 
 | 里程碑 | 內容 | 閘門條件 |
 |---|---|---|
-| M1 | KIP 資訊架構決策：KIP 是否需要新路由與新導覽項（目前 header 只露出 關於公司／產品／媒體中心／聯絡我們 4 項） | **必須在 PRD-004 開工前拍板**，否則 004 的導覽與 i18n 結構會做白工 |
-| M2 | 英文文案產出（9 條路由全數） | 需 zh-Hant 文案定稿（M1 之後的內容工作完成）**且** KIP 簡報 final；並需 PRD-004 的 per-locale 檔案結構先落地才能放檔 |
+| M1 | **已拍板（2026-09-08）**：KIP 即主軸，取代 `/products` 成為 `/kip`；`/knowledge-base` 併入 `/kip`、`/agi` 併入 `/kip#ika`、`/media` 併入 `/cases`；新增 `/kip/security` 與 `/cases`；主導覽 5 項加 1 CTA，**不新增第三個產品入口**。全表見 [wireframes §2](../design/wireframes-v1.md)，實作歸 PRD-004 FR-401 | 閘門解除，PRD-004 可開工 |
+| M2 | 英文文案產出（8 條路由全數） | 需 zh-Hant 文案定稿（M1 之後的內容工作完成）**且** KIP 簡報 final；per-locale 檔案結構已於 PRD-001 Phase A 落地，可直接放檔 |
 
 ## 3. 功能需求
 
 | FR | 需求 | 驗收條件 | ADO Task |
 |---|---|---|---|
-| FR-201 | 以 KIP 為主軸改寫 `home.md`、`products.md` 的產品敘事與 metadata | 首頁與 `/products` 皆可在 3 秒內看出 KIP 是什麼、解決什麼問題；`npm run build` 綠燈（`text(key)` 找不到 key 會在建置期 throw） | TBD |
-| FR-202 | 補齊 `wally.md` 的 `## models` 系列情境資料表 | `/wally` 的系列情境區塊有實際資料列，無空白區塊 | TBD |
-| FR-203 | 清除 `media.md` 的 5 處佔位文字（年份待補、地點待補、活動圖片待補等） | 全 `content/` 搜尋「待補」零命中；缺圖者改為移除該筆而非留空 | TBD |
-| FR-204 | 依 M1 決策調整 `site.md` 的 `header.navigation` 表與 `action.*` 預設 CTA | 導覽項與 KIP 定位一致；若 M1 決定新增路由，同步在 PRD-004 建立對應 FR | TBD |
-| FR-205 | 產出 9 條路由的英文文案（M2） | 每個 zh-Hant 的 `## key` 皆有對應英文內容，無漏 key；英文版 build 綠燈；專有名詞（KIP、Wally、公司全名）用詞表一致 | TBD |
-| FR-206 | 建立中英文對照用詞表（產品名、技術名詞、公司抬頭） | 用詞表存於 `docs/`，FR-205 全數依表；同一詞在 9 條路由無兩種譯法 | TBD |
+| FR-201 | 以 KIP 為主軸撰寫 `home` 與新頁 `kip`、`kip/security` 的產品敘事與 metadata，事實來源為 `kip-deck-extract.md` `S1`–`S6`；原 `products.md`、`knowledge-base.md`、`agi.md` 的可用文字併入 `kip` | 首頁與 `/kip` 皆可在 3 秒內看出 KIP 是什麼、解決什麼問題；三頁的區塊與 wireframes §3.1／§3.2／§3.3 對應表一致；`npm run build` 綠燈（缺欄位由 zod 在建置期失敗） | TBD |
+| FR-202 | 補齊 `wally` 的 `models` 區塊資料列，並補上 5 型號的實際尺寸數據（尺度比較圖所需） | `/wally` 的系列情境區塊有實際資料列，無空白區塊；5 型號皆有高／寬數據 | TBD |
+| FR-203 | 清除 `media` 的 5 處佔位文字並隨 M1 併入新頁 `cases`（活動與展會、媒體露出、主案例） | 全 `src/content/` 搜尋「待補」零命中；缺圖者移除該筆而非留空；`/cases` 無空區塊 | TBD |
+| FR-204 | 依 M1 決策調整 `src/content/site/<locale>.md` 的 `nav[]`（5 項加 CTA）與 `defaultAction` 預設 CTA | 導覽標籤與 wireframes §2.3 逐項一致；中英兩語系項數與順序相同（PRD-004 FR-407） | TBD |
+| FR-205 | 產出 8 條路由的英文文案（M2），並移除 Phase A 暫掛在 `/en/` 標題上的 `[EN] ` 前綴與 `draft` 標記 | 每個 zh-Hant frontmatter 欄位皆有對應英文內容，無漏欄位；英文版 build 綠燈；`dist/en/**` 搜尋 `[EN] ` 零命中；專有名詞（KIP、Wally、IKA、IKS、KC、公司全名）用詞表一致 | TBD |
+| FR-206 | 建立中英文對照用詞表（產品名、技術名詞、公司抬頭） | 用詞表存於 `docs/`，FR-205 全數依表；同一詞在全站無兩種譯法 | TBD |
 
 ## 4. NFR 差異
 
@@ -58,26 +60,26 @@
 | 風險 | 機率 | 衝擊 | 緩解 |
 |---|---|---|---|
 | 行銷部 KIP 簡報延遲，內容工作全線阻塞 | H | H | 先做不依賴 KIP 定位的 FR-202／FR-203；M1 只需資訊架構結論，不需完整文案 |
-| M1 拖過 PRD-004 開工時點 | M | H | M1 設為硬閘門並在 [`../README.md`](../README.md) 標示；逾期則由業主裁定暫用現有 4 項導覽 |
+| M1 拍板後新增 3 頁（`/kip`、`/kip/security`、`/cases`），新寫文案量（問答演示 3 組、主案例全文、IKA 定義段）壓在行銷部 | H | M | `S1`–`S3` 可直接上站的部分先行；新寫項目逐條列於 [`../design/content-gap-list.md`](../design/content-gap-list.md) 並標負責人 |
 | 英文文案由非母語者撰寫，品質不一 | M | M | FR-206 用詞表加母語者校對一輪，校對紀錄留存 |
-| 改 `## key` 標題導致建置期 throw | L | H | 文案編輯規則寫入 `content/pages/README.md`；`npm run build` 為每次文案 commit 的必過關卡 |
+| 改錯 frontmatter 欄位名導致建置期 zod 驗證失敗 | L | M | 錯誤訊息已含檔名與欄位路徑（PRD-001 FR-103）；`npm run build` 為每次文案 commit 的必過關卡 |
 
 ## 6. 驗收方式
 
 | # | 方式 | 通過條件 |
 |---|---|---|
 | 1 | `npm run build` | 綠燈（key 缺漏會在建置期失敗） |
-| 2 | 全 `content/` 搜尋「待補」、`TODO`、`Lorem` | 零命中 |
-| 3 | 9 條路由逐頁人工閱讀（中英各一輪） | 無空區塊、無空表格、專有名詞一致 |
-| 4 | 中英 key 對照檢查 | 兩個 locale 的 `## key` 集合完全相同 |
+| 2 | 全 `src/content/` 搜尋「待補」、`TODO`、`Lorem` | 零命中 |
+| 3 | 8 條路由逐頁人工閱讀（中英各一輪） | 無空區塊、無空表格、專有名詞一致 |
+| 4 | 中英 frontmatter 欄位對照檢查 | 兩個 locale 的欄位集合完全相同 |
 
 ## 7. Open Questions
 
 | # | 問題 | 待決者 | 期限 |
 |---|---|---|---|
 | OQ-1 | KIP 的定位、產品規格與命名（含是否含子產品線） | 行銷部 | M1 之前 |
-| OQ-2 | KIP 是否需要獨立路由與導覽項，或併入 `/products` | 業主 + 行銷部 | **PRD-004 開工前（M1）** |
-| OQ-3 | Wally 與 KIP 的關係：同一產品線或並列品牌 | 業主 | M1 之前 |
+| OQ-2 | **已決（2026-09-08）**：不併入 `/products`，而是 `/products` 併入 `/kip`；KIP 即主軸（見 M1） | 業主 + 行銷部 | 已決 |
+| OQ-3 | Wally 與 KIP 的關係：同一產品線或並列品牌。**2026-09-08 業主未給口頭裁定，改提供淨零展展位現場照（Wally 實機）為素材**；工作假設仍為 wireframes §9 的「Wally 是 KIP 的現場化身」，`/wally` Hero 定位句依此撰寫，若日後推翻則同步改 wireframes §9-1 與本欄 | 業主 | 仍待裁定；`/wally` 文案定稿前 |
 | OQ-4 | 英文版的目標市場與語調（正式／技術／行銷） | 行銷部 | M2 開工前 |
 | OQ-5 | `media.md` 的活動年份、地點、圖片由誰提供 | 行銷部 | 2026-09-21 |
 | OQ-6 | 成效指標為何（詢問數、停留時間），站上目前無任何 analytics | 業主 | 與 PRD-004 OQ 併案 |
@@ -87,3 +89,4 @@
 | 版本 | 日期 | 變更摘要 | commit / ADR |
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，建立 M1／M2 里程碑與 FR-201 至 FR-206 | |
+| v0.2 | 2026-09-08 | **M1 拍板**：KIP 取代 `/products` 成為 `/kip` 並吸收 `/knowledge-base`、`/agi`，`/media` 併入 `/cases`，新增 `/kip/security`；路由數由 9 改為 8，涵蓋檔案改為 `src/content/**`；文案事實來源明列為 `kip-deck-extract.md`；OQ-2 已決、OQ-3 補記展位照片事實仍待裁定；FR-201／203／204／205 依新架構調整 | [wireframes-v1](../design/wireframes-v1.md) §2、PRD-004 FR-401 |

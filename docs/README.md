@@ -13,11 +13,15 @@ Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
 
 | PRD | 標題 | 版本 | 狀態 | Owner | ADO Feature | 順序 |
 |---|---|---|---|---|---|---|
-| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整：Astro + React islands 換底重建 | v1.0 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
-| [PRD-002](prd/PRD-002-kip-content.md) | SYNAIQ KIP 產品線資訊更新 | v0.1 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 平行（M1 為 004 的前置閘門） |
-| [PRD-003](prd/PRD-003-visual-design.md) | 設計更新 | v0.1 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 4 |
-| [PRD-004](prd/PRD-004-uiux.md) | UIUX 更新與雙語資訊架構 | v0.1 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 3 |
-| [PRD-005](prd/PRD-005-brand-guide.md) | 對外統一視覺手冊（網站限定） | v0.1 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2 |
+| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整：Astro + React islands 換底重建 | v1.1 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
+| [PRD-002](prd/PRD-002-kip-content.md) | SYNAIQ KIP 產品線資訊更新 | v0.2 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 平行（M1 已於 2026-09-08 拍板） |
+| [PRD-003](prd/PRD-003-visual-design.md) | 設計更新（全新設計） | v0.2 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 4（FR-307 設計方向提前） |
+| [PRD-004](prd/PRD-004-uiux.md) | UIUX 更新與雙語資訊架構 | v0.3 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 3 |
+| [PRD-005](prd/PRD-005-brand-guide.md) | 對外統一視覺手冊（網站限定） | v0.3 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2 |
+
+**實作進度（2026-09-08）**：PRD-001 **Phase A 已在分支 `feat/astro-rebuild` 實作完成**（7 commits、`npm run build` 產出 19 頁、`npm test` 25/25、內容頁零 client JS、191 個舊 key 遷移 0 未對應）。
+同日業主裁定三案：資訊架構定案（`/kip` 為主軸，即 PRD-002 M1 閘門解除）、`/contact` 採自架 PHP 端點（[ADR-002](adr/ADR-002-contact-form-php-endpoint.md)）、語言切換器提前顯示。
+下一個閘門是 PRD-003 FR-307 設計方向 3 案，未擇定前 PRD-001 FR-105 元件重建不開工。
 
 ## 路線圖與依賴
 
@@ -75,3 +79,6 @@ Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐�
 | [`prd/_TEMPLATE.md`](prd/_TEMPLATE.md) | PRD 空白模板（固定 8 節） |
 | [`adr/README.md`](adr/README.md) | 何時必須開 ADR、編號規則與索引 |
 | [`adr/ADR-001-astro-react-islands-hostinger.md`](adr/ADR-001-astro-react-islands-hostinger.md) | 換底決策：Astro 加 React islands、Hostinger 託管、純 CSS token、Content Collections、Astro 內建 i18n |
+| [`adr/ADR-002-contact-form-php-endpoint.md`](adr/ADR-002-contact-form-php-endpoint.md) | `/contact` 採 Hostinger 自架 PHP 收信端點，ADR-001「純靜態」的明示例外 |
+| [`design/wireframes-v1.md`](design/wireframes-v1.md) | 資訊架構、新網站地圖、301 對照表、各頁線框與待裁定清單（PRD-002 M1 與 PRD-004 FR-401 的依據） |
+| [`design/kip-deck-extract.md`](design/kip-deck-extract.md)、[`design/content-gap-list.md`](design/content-gap-list.md) | KIP 簡報事實摘錄（`S1`–`S6`）；逐頁文案與素材缺口清單 |
