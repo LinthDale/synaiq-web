@@ -40,7 +40,8 @@ C:\Users\User\synaiq\synaiq-web
 本次本機整理結果：
 
 - `synaiq web` 已移除，原有子內容移入 Windows 回收筒，可復原。
-- `synaiq-web-astro` 的內容與 `.git` 指標已回收，舊 worktree 註冊已清除；它不再是 repo。空目錄仍由目前 Codex 工作階段鎖定，尚不能刪除，不應重新在其中建立檔案。
+- `synaiq-web-astro` 的內容與 `.git` 指標已回收，舊 worktree 註冊已清除；精確核對 PID、名稱、建立時間、cwd 與祖先鏈後，關閉只占用舊路徑的閒置 REPL／CUA 輔助程序，最後非遞迴刪除空目錄。Codex 主 host、視窗與瀏覽器未關閉。
+- `C:\Users\User\synaiq` 下的三個網站資料夾，現在只保留 `synaiq-web`，沒有 junction 或舊路徑別名。
 - Git worktree 清單只剩 `C:\Users\User\synaiq\synaiq-web`。
 - 舊 4317 Vite 預覽已關閉；需預覽時在新 repo 使用 `npm run dev:design`。
 - 部署 ZIP SHA-256 保持 `FEC769C9654371E45AF44A9B4D965697509A96D31DE0D3146C99D92BFA0C4545`；65 個本機檔案在回收前逐檔核對一致。4 張同名不同版本的 PNG 另存於 `out/repo-consolidation-20260908/bootstrap-local/`。
@@ -57,7 +58,9 @@ ADO YAML 改為人工觸發、建置／測試／artifact only。舊 FTP 部署�
 
 新增的 `.gitattributes` 固定 SVG 為 LF，避免 Windows checkout 改變 Logo 的原始 bytes，導致四張內嵌 Logo 的畫面與生成器不一致。Astro schema 改從 `astro/zod` 匯入，並修正兩處動態元件型別；核准設計的執行檔與品牌圖片未改。
 
-提交／推送前後仍需核對：
+Git 合併 commit 為 `ce0eb35026e1ffce74d47de7e9db67a54406c5b3`，已推送 Azure `main` 並以 `git ls-remote` 核對一致。`feat/astro-rebuild`、`codex/prd-wireframes-finish` 與 `docs/prd-bootstrap` 均驗證為 `main` 祖先；沒有重寫歷史。ADO #1302 已補入合併／驗證證據，保留 Sprint 22 與 Committed 狀態，因核准設計尚未轉入 Astro 執行層，不能把這次整併標成整站改版完成。
+
+後續複查方式：
 
 1. 主 repo 的 refs、物件完整性與 branch ancestry 能驗證兩個來源已保留；`main` 與遠端 commit 一致。
 2. Astro 檢查／測試及核准設計測試，記錄實際結果與任何略過原因。
