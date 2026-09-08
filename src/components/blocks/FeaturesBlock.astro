@@ -1,0 +1,12 @@
+---
+import ItemList from '../ItemList.astro';
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'features'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <ItemList items={block.items} />
+</Section>

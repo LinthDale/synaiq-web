@@ -1,0 +1,139 @@
+---
+/**
+ * 全站頁首：skip link、品牌連結、主要導覽、語言切換器。
+ *
+ * 行動選單以「checkbox + label」的純 CSS disclosure 實作（PRD-001 §2 明列
+ * 「先試純 CSS，不成立才升為 island」），因此本檔零 client JS。
+ * 正式的互動與外觀由 PRD-004 / PRD-003 定案後再評估是否升為 island。
+ */
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Locale, PageSlug } from '../config/site.ts';
+import { isCurrentNav, localizeHref, type LocaleLink, type SiteData } from '../lib/content.ts';
+
+interface Props {
+  site: SiteData;
+  locale: Locale;
+  currentSlug: PageSlug | null;
+  homeHref: string;
+  switcher: LocaleLink[];
+}
+
+const { site, locale, currentSlug, homeHref, switcher } = Astro.props;
+---
+
+<a class="skip-link" href="#main-content">{site.header.skipLink}</a>
+
+<header class="site-header">
+  <div class="container site-header-inner">
+    <a class="brand" href={homeHref} aria-label={site.header.homeLabel}>SynaiQ</a>
+
+    <input class="nav-toggle" type="checkbox" id="site-nav-toggle" />
+    <label class="nav-toggle-label nav-toggle-open" for="site-nav-toggle">
+      {site.header.menuOpen}
+    </label>
+    <label class="nav-toggle-label nav-toggle-close" for="site-nav-toggle">
+      {site.header.menuClose}
+    </label>
+
+    <nav id="site-navigation" aria-label={site.header.navigationLabel}>
+      <ul class="nav-list">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a
+                class:list={['nav-item', `nav-${item.style}`]}
+                href={localizeHref(item.href, locale)}
+                aria-current={isCurrentNav(item.href, currentSlug) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <LanguageSwitcher label={site.languageSwitcherLabel} links={switcher} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: var(--border-width) solid var(--color-border-subtle);
+  }
+
+  .site-header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+  }
+
+  .brand {
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-list li {
+    margin: 0;
+  }
+
+  /* 純 CSS disclosure：核取方塊本身不可見，兩個 label 依狀態互換。 */
+  .nav-toggle {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .nav-toggle-label {
+    cursor: pointer;
+    font-size: var(--text-sm);
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-toggle:focus-visible + .nav-toggle-label {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 47.99rem) {
+    .nav-toggle-close,
+    .nav-toggle:checked ~ .nav-toggle-open {
+      display: none;
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-close {
+      display: inline-block;
+    }
+
+    #site-navigation {
+      display: none;
+      flex-basis: 100%;
+    }
+
+    .nav-toggle:checked ~ #site-navigation {
+      display: block;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .nav-toggle-label {
+      display: none;
+    }
+  }
+</style>

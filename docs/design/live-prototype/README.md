@@ -2,11 +2,11 @@
 
 Last updated: 2026-09-08.
 
-The user-approved visual direction and current Chinese/English copy live here on `codex/prd-wireframes-finish`. This is a client-rendered design prototype, not the separate Phase A Astro implementation. The user's latest instruction limits this release to a Git commit/push to Azure and ADO board updates; Hostinger publication at `synaiq-ai.com` is deferred, not deployed. See the [release status and deferred cutover prerequisites](../../operations/release-status-2026-09-08.md).
+The user-approved visual direction and current Chinese/English copy live here. The `752008b` version was manually packaged and deployed at **synaiq.com** on 2026-09-08; see the [actual deployment record](../../operations/deployment-synaiq-com-2026-09-08.md). This is a client-rendered static runtime, not an Astro build. Phase A Astro now shares the consolidated repository but has not adopted this accepted design. The canonical local checkout is `C:\Users\User\synaiq\synaiq-web`; see the [root README](../../../README.md) and [consolidation record](../../operations/repository-consolidation-2026-09-08.md). The earlier Git/ADO-only [release checkpoint](../../operations/release-status-2026-09-08.md) is historical, not current deployment status.
 
 ## Preview
 
-Current public design review: [Cloudflared temporary preview](https://five-municipal-responsibility-buf.trycloudflare.com/live-prototype/). Home and KIP are both included. Refresh the public page to see saved revisions; it is served by a separate read-only allowlist server, not Vite. Public exposure and process/stop notes: [public-preview-notes.md](public-preview-notes.md).
+Home and KIP are both included in the local review shell. The former Cloudflared temporary preview was stopped during repository cleanup; its old URL is not a live review endpoint. Starting the local server below does not publish a new tunnel. Historical public exposure and process/stop notes: [public-preview-notes.md](public-preview-notes.md).
 
 Current design: KIP shares Home's paper/ink/olive palette, cotton-fibre transitions, hand-drawn diagrams and brand-matched animated demo. The four architecture cards use normal document flow without the rejected pinned-scroll gap. The CIS 5 black/gold transparent logo appears in light sections; the dark footer keeps the white/gold variant.
 
@@ -15,10 +15,10 @@ The KIP capability section's rejected simple SVG is now a dedicated detailed ink
 From the repository root:
 
 ```powershell
-node node_modules/vite/bin/vite.js docs/design --config docs/design/live-prototype/vite.config.mjs
+npm run dev:design
 ```
 
-Open http://127.0.0.1:4317/live-prototype/ on the same computer. The server binds to loopback only. CSS and source changes update through Vite. This config explicitly avoids the legacy root PostCSS configuration.
+Open http://127.0.0.1:4318/live-prototype/ on the same computer. The read-only allowlist server binds to loopback only; refresh after saving CSS or source changes. Use `npm run dev:design -- 4319` to choose another port. It uses Node's built-in HTTP server and does not require Vite or the legacy PostCSS configuration.
 
 The page selector switches Home / KIP. The 320–1600 px slider changes the iframe's actual layout viewport; an independent preview scale fits it into the available panel. A Windows scrollbar consumes 15 px of content width in the tested environment. The diagnostic line reports content and scroll widths. “獨立開啟” opens the page without the review shell.
 

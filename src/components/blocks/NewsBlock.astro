@@ -1,0 +1,31 @@
+---
+/** News list. Nothing is published yet, so only the empty state renders. */
+import Section from '../Section.astro';
+import { localizeHref } from '../../lib/content.ts';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'news'>;
+const { block, locale } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <div class="empty-state">
+    <p class="empty-state-title">{block.empty.title}</p>
+    <p>{block.empty.description}</p>
+    <p>
+      <a href={localizeHref(block.empty.action.href, locale)}>{block.empty.action.label}</a>
+    </p>
+  </div>
+</Section>
+
+<style>
+  .empty-state {
+    padding: var(--space-6);
+    border: var(--border-width) dashed var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .empty-state-title {
+    font-weight: var(--weight-bold);
+  }
+</style>

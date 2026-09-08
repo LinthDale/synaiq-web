@@ -1,0 +1,27 @@
+# Manual verification of the merged Astro foundation and accepted design.
+# This pipeline never deploys. The live Home/KIP release is documented in
+# docs/operations/deployment-synaiq-com-2026-09-08.md and is not Astro dist/.
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    displayName: Install Node.js
+    inputs:
+      versionSpec: '24.x'
+
+  - script: npm ci
+    displayName: Install locked dependencies
+
+  - script: npm run check
+    displayName: Check Astro and TypeScript
+
+  - script: npm run test:all
+    displayName: Build and test both source trees
+
+  - publish: dist
+    artifact: astro-foundation-not-production
+    displayName: Archive Phase A build (not the live design)

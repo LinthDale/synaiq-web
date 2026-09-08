@@ -1,0 +1,41 @@
+---
+/**
+ * 內容頁的唯一組裝點：給 locale 與 slug，其餘全部從 Content Collections 推導。
+ *
+ * 因此 `src/pages/**` 底下的檔案都只是四行的路由宣告，
+ * 新增語系不需要改動任何版面或元件程式碼。
+ */
+import BaseLayout from './BaseLayout.astro';
+import ContentPage from '../components/ContentPage.astro';
+import { pathFor, type Locale, type PageSlug } from '../config/site.ts';
+import { loadPage, loadSite, titleFor } from '../lib/content.ts';
+import { render } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  slug: PageSlug;
+}
+
+const { locale, slug } = Astro.props;
+
+const entry = await loadPage(locale, slug);
+const site = await loadSite(locale);
+const page = entry.data;
+
+/** 正文 markdown（`---` 之後）；目前所有頁面正文為空，保留機制供編輯者日後使用。 */
+const { Content } = await render(entry);
+---
+
+<BaseLayout
+  locale={locale}
+  slug={slug}
+  path={pathFor(locale, slug)}
+  title={titleFor(page, site)}
+  description={page.metadata.description}
+  robots={page.draft ? 'noindex, follow' : undefined}
+  ogImage={page.metadata.ogImage}
+>
+  <ContentPage page={page} site={site} locale={locale}>
+    <Content />
+  </ContentPage>
+</BaseLayout>

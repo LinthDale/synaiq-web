@@ -13,7 +13,7 @@ out/
 *.tsbuildinfo
 next-env.d.ts.bak
 
-# Cloudflare / Wrangler
+# Legacy local Cloudflare credentials and caches are never published.
 .wrangler/
 .dev.vars
 .dev.vars.*

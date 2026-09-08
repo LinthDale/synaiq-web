@@ -2,6 +2,8 @@
 
 Last updated: 2026-09-08. This records the pre-push checkpoint; it is not evidence of a completed deployment.
 
+> **Historical checkpoint — superseded later on 2026-09-08.** Commit `752008b` was subsequently pushed, and a separately authorized task deployed the accepted static Home/KIP runtime to **synaiq.com**, not synaiq-ai.com. Use the [actual deployment record](deployment-synaiq-com-2026-09-08.md) for publication facts and the [repository consolidation record](repository-consolidation-2026-09-08.md) for the current local source layout. The unmerged-branch, pending-push, deferred-deployment and old FTP-pipeline statements below describe this earlier checkpoint only; they are not current instructions. Current pipeline scope is manual build/test/artifact only.
+
 ## Requested release
 
 The user initially requested Azure DevOps publication, ADO board updates and Hostinger deployment at `synaiq-ai.com`, then narrowed the instruction to **「你推ado 還有 commit and push 就好」**. The current task is only the Git commit/push and ADO updates. Hostinger deployment is deferred by that latest instruction; no cutover is authorized in this turn.

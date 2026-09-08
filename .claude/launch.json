@@ -2,14 +2,17 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "synaiq-web-dev",
-      "url": "http://localhost:3002"
+      "name": "synaiq-web-astro-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--port", "4321"],
+      "port": 4321,
+      "autoPort": false
     },
     {
-      "name": "synaiq-web-dev-start",
+      "name": "synaiq-web-design",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "-p", "3002"],
-      "port": 3002,
+      "runtimeArgs": ["run", "dev:design"],
+      "port": 4318,
       "autoPort": false
     }
   ]

@@ -1,0 +1,72 @@
+---
+/**
+ * 每頁開頭的 hero：唯一的 `<h1>` 所在。
+ *
+ * `id="brand"` 沿用舊樹的區段錨點（首頁 `pageNav` 的第一個項目指向它）。
+ */
+import Figure from './Figure.astro';
+import type { Locale } from '../config/site.ts';
+import { localizeHref, type PageData } from '../lib/content.ts';
+
+interface Props {
+  hero: PageData['hero'];
+  locale: Locale;
+}
+
+const { hero, locale } = Astro.props;
+---
+
+<section id="brand" class="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    {hero.eyebrow && <p class="eyebrow">{hero.eyebrow}</p>}
+    <h1 id="hero-heading">{hero.title}</h1>
+    <p class="hero-description">{hero.description}</p>
+
+    {
+      (hero.primaryAction || hero.secondaryAction) && (
+        <p class="hero-actions">
+          {hero.primaryAction && (
+            <a class="hero-action" href={localizeHref(hero.primaryAction.href, locale)}>
+              {hero.primaryAction.label}
+            </a>
+          )}
+          {hero.secondaryAction && (
+            <a class="hero-action" href={localizeHref(hero.secondaryAction.href, locale)}>
+              {hero.secondaryAction.label}
+            </a>
+          )}
+        </p>
+      )
+    }
+
+    {
+      hero.imageSrc && hero.imageAlt && (
+        <Figure src={hero.imageSrc} alt={hero.imageAlt} caption={hero.caption} eager />
+      )
+    }
+
+    {hero.scrollHint && <p class="hero-scroll-hint">{hero.scrollHint}</p>}
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-12);
+  }
+
+  .hero-description {
+    max-width: 60ch;
+    font-size: var(--text-lg);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .hero-scroll-hint {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

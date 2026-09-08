@@ -1,0 +1,74 @@
+---
+/**
+ * 全站唯一的 HTML 外框（PRD-001 FR-101 / FR-106）。
+ *
+ * 負責：`<html lang>`、tokens.css + base.css、canonical、hreflang（含 x-default）、
+ * robots、header 與 footer。頁面本身只丟內容進 `<slot />`。
+ * 零 client JS：本檔與其子元件都不使用 `client:` 指令。
+ */
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { DEFAULT_LOCALE, LOCALE_TAGS, pathFor, type Locale, type PageSlug } from '../config/site.ts';
+import { absolute, loadSite, localeLinks, type LocaleLink } from '../lib/content.ts';
+
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  locale: Locale;
+  /** canonical 用的站內路徑，一律帶結尾斜線。 */
+  path: string;
+  title: string;
+  description: string;
+  /** 內容頁傳入 slug 才會輸出 hreflang 與語言切換器；`/styleguide` 不傳。 */
+  slug?: PageSlug;
+  /** 例如 `noindex`（手冊頁）或 `noindex, follow`（draft 頁）。 */
+  robots?: string;
+  ogImage?: string;
+}
+
+const { locale, path, title, description, slug, robots, ogImage } = Astro.props;
+
+const site = await loadSite(locale);
+const links: LocaleLink[] = slug ? await localeLinks(slug) : [];
+const defaultLink = links.find((link) => link.locale === DEFAULT_LOCALE);
+const switcher = links.filter((link) => link.locale !== locale && !link.draft);
+
+const canonical = absolute(path);
+const ogImageUrl = ogImage ? absolute(ogImage) : undefined;
+---
+
+<!doctype html>
+<html lang={LOCALE_TAGS[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {robots && <meta name="robots" content={robots} />}
+    {links.map((link) => <link rel="alternate" hreflang={link.tag} href={link.href} />)}
+    {defaultLink && <link rel="alternate" hreflang="x-default" href={defaultLink.href} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={LOCALE_TAGS[locale].replace(/-/g, '_')} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <SiteHeader
+      site={site}
+      locale={locale}
+      currentSlug={slug ?? null}
+      homeHref={pathFor(locale, 'home')}
+      switcher={switcher}
+    />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter site={site} />
+  </body>
+</html>

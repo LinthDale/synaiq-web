@@ -1,0 +1,39 @@
+---
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'selection'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <dl class="selection-list">
+    {
+      block.items.map((item) => (
+        <div class="selection-item">
+          <dt>{item.title}</dt>
+          <dd>{item.description}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>
+
+<style>
+  .selection-list {
+    margin: 0;
+  }
+
+  .selection-item {
+    margin-block-end: var(--space-4);
+  }
+
+  .selection-item dt {
+    font-weight: var(--weight-bold);
+  }
+
+  .selection-item dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

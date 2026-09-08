@@ -1,0 +1,3 @@
+# Screen illustrations embed the logo's exact SVG bytes as base64.
+# Keep them stable on Windows and on clean CI checkouts.
+*.svg text eol=lf

@@ -1,0 +1,49 @@
+---
+/**
+ * 語言切換器。
+ *
+ * 只列出「非本頁語系」且「非 draft」的對應頁（PRD-001 FR-104：draft 頁不顯示切換器）。
+ * 目標路徑在建置期即可算出，所以是純 `<a>`，不是 island（PRD-001 §2）。
+ * 沒有可切換的目標時整個元件不輸出，避免出現空的 landmark。
+ */
+import type { LocaleLink } from '../lib/content.ts';
+import { LOCALE_NAMES } from '../config/site.ts';
+
+interface Props {
+  label: string;
+  links: LocaleLink[];
+}
+
+const { label, links } = Astro.props;
+---
+
+{
+  links.length > 0 && (
+    <nav class="language-switcher" aria-label={label}>
+      <ul>
+        {links.map((link) => (
+          <li>
+            <a href={link.path} hreflang={link.tag} lang={link.tag}>
+              {LOCALE_NAMES[link.locale]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .language-switcher ul {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+  }
+
+  .language-switcher li {
+    margin: 0;
+  }
+</style>

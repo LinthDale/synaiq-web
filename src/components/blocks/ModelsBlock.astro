@@ -1,0 +1,98 @@
+---
+/**
+ * Wally model line-up: anchor nav, comparison table and one article per model.
+ * The comparison uses a real table element (the old tree faked one with roles).
+ */
+import Figure from '../Figure.astro';
+import ItemList from '../ItemList.astro';
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'models'>;
+const { block } = Astro.props;
+const [modelHeading, scenarioHeading, modeHeading] = block.comparisonHeadings;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  <nav class="model-nav" aria-label={block.navigationLabel}>
+    <ul>
+      {block.items.map((item) => <li><a href={`#${item.id}`}>{item.name}</a></li>)}
+    </ul>
+  </nav>
+
+  <div class="model-comparison">
+    <table>
+      <caption>{block.comparisonLabel}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{modelHeading}</th>
+          <th scope="col">{scenarioHeading}</th>
+          <th scope="col">{modeHeading}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          block.items.map((item) => (
+            <tr>
+              <th scope="row">{item.name}</th>
+              <td>{item.scenario}</td>
+              <td>{item.mode}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="model-grid">
+    {
+      block.items.map((item) => (
+        <article class="model-card" id={item.id}>
+          <Figure src={item.src} alt={item.alt} />
+          <h3>{item.name}</h3>
+          <p>{item.positioning}</p>
+          <ItemList items={item.features} />
+          <p class="model-scenario">
+            <span class="model-scenario-label">{block.scenarioLabel}</span>
+            <span>{item.scenario}</span>
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .model-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .model-comparison {
+    overflow-x: auto;
+    margin-block-end: var(--space-8);
+  }
+
+  .model-comparison caption {
+    text-align: start;
+    padding-block-end: var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  .model-grid {
+    display: grid;
+    gap: var(--space-8);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .model-scenario-label {
+    display: block;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+</style>

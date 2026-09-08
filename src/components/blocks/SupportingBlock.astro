@@ -1,0 +1,28 @@
+---
+import Figure from '../Figure.astro';
+import Section from '../Section.astro';
+import type { BlockProps } from './types.ts';
+
+type Props = BlockProps<'supporting'>;
+const { block } = Astro.props;
+---
+
+<Section id={block.id} eyebrow={block.eyebrow} title={block.title} description={block.description}>
+  {
+    block.photos.length > 0 && (
+      <div class="supporting-gallery">
+        {block.photos.map((photo) => (
+          <Figure src={photo.src} alt={photo.alt} caption={photo.caption} />
+        ))}
+      </div>
+    )
+  }
+</Section>
+
+<style>
+  .supporting-gallery {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+</style>

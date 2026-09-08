@@ -1,0 +1,34 @@
+---
+/** In-page section navigation (home only, from `pageNav` in the frontmatter). */
+import type { PageData } from '../lib/content.ts';
+
+interface Props {
+  nav: NonNullable<PageData['pageNav']>;
+}
+
+const { nav } = Astro.props;
+---
+
+<nav class="page-nav" aria-label={nav.label}>
+  <div class="container">
+    <ul>
+      {nav.items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .page-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+  }
+
+  .page-nav li {
+    margin: 0;
+  }
+</style>
