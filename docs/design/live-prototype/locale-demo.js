@@ -10,7 +10,7 @@ export const zhHant = {
   sourceLabel: '引用原文 / 第 12 頁', sourceTitle: '採購契約範例', sourceHeading: '第十二條　保固', sourceNote: '虛構文件，僅供動畫展示。',
   libraryLabel: 'KNOWLEDGE CENTER', libraryTitle: '每份文件，各有位置。', libraryIntro: '整理資料、確認狀態，讓知識可以被找到。',
   tableHeaders: ['文件名稱', '處理狀態'], tableRows: [['採購契約範例_2023.pdf', '✓ 已完成'], ['知識整理流程_範例.docx', '✓ 已完成'], ['資料目錄_範例.xlsx', '待處理']], libraryNote: '所有內容均為示例資料。',
-  chaptersLabel: '動畫依序呈現的流程', chapters: ['用自然語言提問', '沿著引用看原文', '讓文件各有位置'],
+  chaptersLabel: '動畫依序呈現的流程', chapters: ['用自然語言提問', '沿著引用看原文', '查詢文件所在位置'],
   note: '模擬滑鼠點擊與內容展開的情境動畫 · 示例資料 · 非實際連線操作',
   booth: {
     label: 'KIP 功能動畫展示', previous: '上一段動畫', next: '下一段動畫', select: '選擇功能動畫', nowShowing: '正在放映',

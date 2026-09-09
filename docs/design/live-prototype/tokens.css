@@ -172,7 +172,7 @@
   /* 01 用自然語言提問／02 沿著引用看原文／03 讓文件各有位置
      三段動畫下方的流程文字與數字；不是上方選片按鈕。 */
   --demo-step-font: var(--body);          /* 流程文字的字型 */
-  --demo-step-size: 13px;                 /* 流程文字大小 */
+  --demo-step-size: 22px;                 /* 流程文字大小 */
   --demo-step-color: var(--inverse);      /* 未播放到的文字顏色 */
   --demo-step-active-color: var(--paper); /* 當前步驟文字顏色 */
   --demo-step-number-font: var(--display); /* 01、02、03 數字字型 */
