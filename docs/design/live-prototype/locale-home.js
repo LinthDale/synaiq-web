@@ -36,6 +36,10 @@ export const zhHant = {
     eyebrow: 'ENTERPRISE AI / 產業觀察', dates: '2024 年調查 · 2027 年預期',
     title: ['AI 正在改變，', '企業分配預算的方式。'],
     intro: '據 Investing.com 轉述 J.P. Morgan 調查，受訪資訊長當時預期，AI 加速運算硬體將占更高比例的 IT 預算。',
+    reading: [
+      '2024 年的調查中，33% 的資訊長表示，會刪減其他 IT 專案的資金，支持新的 AI 投資；舊系統升級與基礎設施受到的影響最大。',
+      '不過，62% 的受訪者表示不會刪減其他專案。報導指出，多數 AI 投資可能來自新增預算，而不只是既有支出的重新分配。',
+    ],
     chartLabel: '受訪者預期 AI 運算硬體占 IT 預算的比例，從 2024 年的百分之五增至三年後的百分之十四點五',
     currentYear: '2024 年當時占比', futureYear: '2027 年預期占比',
     respondents: '166 位資訊長', spending: '受訪者合計負責每年 1,230 億美元企業 IT 支出。',
@@ -44,6 +48,8 @@ export const zhHant = {
     details: '報導以約 45% 的年複合成長率描述上述三年成長預期。33% 的受訪資訊長表示會刪減其他專案資金，舊系統／升級與基礎設施受影響較大；同時，62% 表示不會刪減其他專案。',
     sourceLabel: 'Investing.com · 2024 年 6 月 29 日報導 ↗',
     sourceCaveat: '資料為媒體轉述，未取得 J.P. Morgan 原始調查全文。',
+    clippingLabel: '閱讀 Investing.com 原報導（另開分頁）',
+    clippingAlt: 'Investing.com 2024 年 6 月 29 日報導截圖：CIO survey a massive boon for Microsoft - JP Morgan，含原圖與 Reuters 圖片署名',
   },
   showcase: {
     title: ['問一個問題，', '看見答案從哪裡來。'],
@@ -67,7 +73,7 @@ export const zhHant = {
     label: 'Synaiq CEO 引言', note: '留給每一個，需要答案的人。',
     artAlt: '依邱浩煒 Wilson 照片繪製的極簡演講情境素描，手持麥克風、以手勢分享理念；非活動紀實',
     quote: [
-      ['AI 的價值，是讓被落下的人', '迎頭趕上。'],
+      ['AI 的價值，是讓已落後的人', '迎頭趕上。'],
       ['我們用 AI，讓企業的知識找得到、用得上；再結合管理的智慧，突破既有框架，', '把答案變成行動。'],
     ],
     name: '邱浩煒 Wilson', role: 'CEO of Synaiq',
@@ -111,6 +117,10 @@ export const en = {
     eyebrow: 'ENTERPRISE AI / INDUSTRY OUTLOOK', dates: '2024 survey · 2027 expectations',
     title: ['AI is changing', 'how companies allocate budgets.'],
     intro: 'According to Investing.com’s account of a J.P. Morgan survey, the CIOs surveyed expected AI-accelerated computing hardware to take a larger share of IT budgets.',
+    reading: [
+      'In the 2024 survey, 33% of CIOs said they were cutting funding for other IT projects to support AI investment. Legacy systems, upgrades and infrastructure were most affected.',
+      'Yet 62% said they were not cutting other projects. The report suggested that most AI investment would be funded by additional budgets, rather than simply reallocating existing spending.',
+    ],
     chartLabel: 'Respondents expected AI computing hardware to rise from 5 percent of IT budgets in 2024 to 14.5 percent three years later',
     currentYear: 'Reported share in 2024', futureYear: 'Expected share in 2027',
     respondents: '166 CIOs', spending: 'Together, the respondents oversaw $123 billion in annual enterprise IT spending.',
@@ -119,6 +129,8 @@ export const en = {
     details: 'The report described the three-year growth expectation as a compound annual growth rate of about 45%. Some 33% of CIOs said they would cut funding for other projects, with legacy systems/upgrades and infrastructure particularly affected; 62% said they would not cut other projects.',
     sourceLabel: 'Investing.com · Reported June 29, 2024 ↗',
     sourceCaveat: 'Based on media reporting; the full original J.P. Morgan survey was not available for review.',
+    clippingLabel: 'Read the original Investing.com report (opens in a new tab)',
+    clippingAlt: 'Screenshot of the June 29, 2024 Investing.com report: CIO survey a massive boon for Microsoft - JP Morgan, including the original photo and Reuters credit',
   },
   showcase: {
     title: ['Ask a question.', 'See where the answer comes from.'],
@@ -143,7 +155,7 @@ export const en = {
     artAlt: 'A minimal speaking-scene sketch based on a photo of 邱浩煒 Wilson, holding a microphone and gesturing; not a record of an actual event',
     quote: [
       ['AI’s value lies in helping those left behind ', 'catch up.'],
-      ['We use AI to make enterprise knowledge easy to find and use, then combine it with management wisdom to move beyond established frameworks and turn answers ', 'into action.'],
+      ['We use AI to make knowledge easy to find and use, then combine it with wisdom to move beyond established frameworks to turn answers ', 'into action.'],
     ],
     name: '邱浩煒 Wilson', role: 'CEO of Synaiq',
   },

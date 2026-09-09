@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { renderKip } from './kip-design.js';
 import { renderAnimatedDemo, initAnimatedDemo } from './demo-animation.js';
 
@@ -20,20 +21,22 @@ test('English KIP and demo render English copy, labels and sample filenames thro
 });
 
 test('demo playback labels remain English after pause, replay and reduced-motion changes', t => {
-  const keys = ['document', 'matchMedia', 'IntersectionObserver', 'ResizeObserver', 'requestAnimationFrame', 'cancelAnimationFrame'];
+  const keys = ['document', 'matchMedia', 'getComputedStyle', 'IntersectionObserver', 'ResizeObserver', 'requestAnimationFrame', 'cancelAnimationFrame'];
   const originals = new Map(keys.map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
   t.after(() => { for (const [key, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key]; } });
   const control = () => ({ textContent: '', disabled: false, handlers: {}, addEventListener(type, callback) { this.handlers[type] = callback; } });
   const pause = control(), replay = control();
   const box = { getBoundingClientRect: () => ({ width: 800, height: 500, left: 0, top: 0 }) };
-  const root = { dataset: {}, style: { setProperty() {} }, classList: { toggle() {} }, querySelectorAll: () => [], querySelector(selector) { return selector === '[data-demo-pause]' ? pause : selector === '[data-demo-replay]' ? replay : box; } };
+  const root = { dataset: {}, style: { setProperty() {} }, classList: { toggle() {} }, querySelectorAll: () => [], querySelector(selector) { return selector === '[data-demo-pause]' ? pause : selector === '[data-demo-replay]' ? replay : selector.startsWith('[data-demo-') ? null : box; } };
   const preference = { matches: false, addEventListener(type, callback) { this.change = callback; }, removeEventListener() {} };
   const document = { hidden: false, querySelector: () => root, addEventListener() {}, removeEventListener() {} };
   let observe;
-  const mocks = { document, matchMedia: () => preference, IntersectionObserver: class { constructor(callback) { observe = callback; } observe() {} disconnect() {} }, ResizeObserver: class { observe() {} disconnect() {} }, requestAnimationFrame: () => 1, cancelAnimationFrame() {} };
+  const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');
+  const getComputedStyle = () => ({ getPropertyValue: name => css.match(new RegExp(`${name}:\\s*([^;]+);`))?.[1] ?? '' });
+  const mocks = { document, getComputedStyle, matchMedia: () => preference, IntersectionObserver: class { constructor(callback) { observe = callback; } observe() {} disconnect() {} }, ResizeObserver: class { observe() {} disconnect() {} }, requestAnimationFrame: () => 1, cancelAnimationFrame() {} };
   for (const [key, value] of Object.entries(mocks)) Object.defineProperty(globalThis, key, { configurable: true, value });
   const dispose = initAnimatedDemo({ locale: 'en' });
-  observe([{ isIntersecting: true }]);
+  observe([{ isIntersecting: true, intersectionRatio: 1 }]);
   assert.equal(pause.textContent, 'Pause animation');
   pause.handlers.click();
   assert.equal(pause.textContent, 'Play animation');

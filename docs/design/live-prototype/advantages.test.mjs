@@ -7,7 +7,7 @@ import { getMessages } from './i18n.js';
 const common = getMessages().common;
 const advantages = common.advantages.items;
 const html = renderAdvantageSection(common);
-const css = readFileSync(new URL('./prototype.css', import.meta.url), 'utf8');
+const css = readFileSync(new URL('./site.css', import.meta.url), 'utf8');
 
 const original = [
   ['準確回答，低 AI 幻覺', '有依據才回答', '找不到對應內容時，明確指出資料不足，讓使用者知道答案的邊界。'],
@@ -53,8 +53,8 @@ test('compact rows keep touch targets and paper-edge clearance without enlarging
   assert.match(css, /section\.advantages \.advantage-row summary\s*\{[^}]*min-height:\s*58px;[^}]*padding:\s*14px 0/);
   assert.match(css, /section\.advantages \.section-head\s*\{[^}]*margin-bottom:\s*28px/);
   assert.match(css, /body\[data-page\] section\.advantages\s*\{\s*padding-top:/);
-  const paperCss = readFileSync(new URL('./paper-material.css', import.meta.url), 'utf8');
-  const kipCss = readFileSync(new URL('./kip-design.css', import.meta.url), 'utf8');
-  assert.match(paperCss, /\.home-wally, \.advantages\)\s*\{\s*padding-bottom:\s*max\(126px, var\(--tear-height\)\)/);
-  assert.match(kipCss, /\.kip-capabilities, \.advantages\)\s*\{\s*padding:[^}]*max\(156px, var\(--kip-tear-height\)\)/);
+  const paperCss = readFileSync(new URL('./site.css', import.meta.url), 'utf8');
+  const kipCss = readFileSync(new URL('./site.css', import.meta.url), 'utf8');
+  assert.match(paperCss, /\.home-wally,\s*\.advantages\s*\)\s*\{\s*padding-bottom:\s*max\(126px, var\(--tear-height\)\)/);
+  assert.match(kipCss, /\.kip-capabilities,\s*\.advantages\s*\)\s*\{\s*padding:[^}]*max\(156px, var\(--kip-tear-height\)\)/);
 });

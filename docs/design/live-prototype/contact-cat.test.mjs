@@ -5,7 +5,7 @@ import { PUBLIC_FILES } from './share-preview.mjs';
 import { renderContact } from './shared-design.js';
 import { getMessages } from './i18n.js';
 
-const css = readFileSync(new URL('./prototype.css', import.meta.url), 'utf8');
+const css = readFileSync(new URL('./site.css', import.meta.url), 'utf8');
 
 test('shared consultation keeps its copy and places the decorative cat above its real email link', () => {
   const contact = renderContact(getMessages().common);

@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderHome } from './home-design.js';
+import { zhHant } from './locale-home.js';
+import { escapeHtml } from './i18n.js';
 
 const html = renderHome({ advantageSection: () => '', contact: () => '' });
 
@@ -28,7 +30,7 @@ test('CEO section preserves the supplied quote and uses the requested speaking s
   assert.doesNotMatch(ceoSection, /邱浩偉/);
   assert.match(text, /CEO of Synaiq/);
   const quote = ceoSection.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1].replace(/<[^>]*>/g, '');
-  assert.equal(quote, 'AI 的價值，是讓被落下的人迎頭趕上。我們用 AI，讓企業的知識找得到、用得上；再結合管理的智慧，突破既有框架，把答案變成行動。');
+  assert.equal(quote, zhHant.ceo.quote.flat().map(escapeHtml).join(''));
   assert.equal((ceoSection.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1].match(/<p>/g) || []).length, 2);
   assert.match(text, /留給每一個，需要答案的人。/);
   assert.doesNotMatch(text, /我們相信|用得上知識|向前的力量|理念稿|待確認/);

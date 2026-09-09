@@ -1,107 +1,62 @@
-# Live design prototype
+# 官網維護入口
 
-Last updated: 2026-09-09.
+網站的核准 Home／KIP 中英版在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。正式站使用另外封裝的版本，本機修改不會自動上架。
 
-The user-approved visual direction and current Chinese/English copy live here. The `752008b` version was manually packaged and deployed at **synaiq.com** on 2026-09-08; see the [actual deployment record](../../operations/deployment-synaiq-com-2026-09-08.md). This is a client-rendered static runtime, not an Astro build. Phase A Astro now shares the consolidated repository but has not adopted this accepted design. The canonical local checkout is `C:\Users\User\synaiq\synaiq-web`; see the [root README](../../../README.md) and [consolidation record](../../operations/repository-consolidation-2026-09-08.md). The earlier Git/ADO-only [release checkpoint](../../operations/release-status-2026-09-08.md) is historical, not current deployment status.
+## 要改什麼，去哪裡
 
-## Preview
+| 工作 | 入口 |
+|---|---|
+| 字型、字級、行高、文字顏色、常用留白 | [tokens.css](tokens.css)；[樣式維護指引](STYLE-GUIDE.md) |
+| 排版、RWD 幾何、撕紙邊界 | [site.css](site.css)；搜尋對應 BEGIN 區段 |
+| 首頁文字、CEO quote | [locale-home.js](locale-home.js)；搜尋 `ceo:`，中英文分別修改 |
+| KIP 文字／共用導覽、優勢、聯絡、頁尾 | [locale-kip.js](locale-kip.js)／[locale-common.js](locale-common.js) |
+| KIP 畫面＋信紙＋Wally 的秒數、延遲、出場次數 | [tokens.css](tokens.css) 搜尋「04 產品展示」；所有設定同一段 |
+| Demo 五段秒數、循環次數、滑鼠動作速度 | [tokens.css](tokens.css) 搜尋「06 Demo」；動畫文字在 [locale-demo.js](locale-demo.js) |
+| 修改動畫程式機制（不是調秒數） | [demo-animation.js](demo-animation.js)；操作方式見 [樣式維護指引](STYLE-GUIDE.md#動畫只改-tokenscss) |
+| 中英文、其他語言、統一更換 Logo | [語言與 Logo 指引](localization-and-brand-guide.md) |
+| 插畫、新聞小圖與引用來源 | [樣式指引：素材與引用維護](STYLE-GUIDE.md#素材與引用維護) |
+| 正式站上架、快取與還原 | [Hostinger 操作索引](../../operations/deploy-hostinger.md) |
 
-Home and KIP are both included in the local review shell. The former Cloudflared temporary preview was stopped during repository cleanup; its old URL is not a live review endpoint. Starting the local server below does not publish a new tunnel. Historical public exposure and process/stop notes: [public-preview-notes.md](public-preview-notes.md).
+## 本機預覽
 
-Current design: KIP shares Home's paper/ink/olive palette, cotton-fibre transitions, hand-drawn diagrams and brand-matched animated demo. The four architecture cards use normal document flow without the rejected pinned-scroll gap. The CIS 5 black/gold transparent logo appears in light sections; the dark footer keeps the white/gold variant.
-
-The KIP capability section's rejected simple SVG is now a dedicated detailed ink illustration of hands, paper, ledger and archive connected by olive thread. See [kip-illustration-notes.md](kip-illustration-notes.md) for the built-in imagegen prompt and selected asset.
-
-From the repository root:
+在 repo 根目錄執行：
 
 ```powershell
 npm run dev:design
 ```
 
-Open http://127.0.0.1:4318/live-prototype/ on the same computer. The read-only allowlist server binds to loopback only; refresh after saving CSS or source changes. Use `npm run dev:design -- 4319` to choose another port. It uses Node's built-in HTTP server and does not require Vite or the legacy PostCSS configuration.
+開啟 [本機預覽](http://127.0.0.1:4318/live-prototype/)，存檔後重新整理。預覽列可選頁面、語言並連續調整實際 iframe 寬度；「獨立開啟」可不經預覽外框檢視網站。
 
-The page selector switches Home / KIP. The 320–1600 px slider changes the iframe's actual layout viewport; an independent preview scale fits it into the available panel. A Windows scrollbar consumes 15 px of content width in the tested environment. The diagnostic line reports content and scroll widths. “獨立開啟” opens the page without the review shell.
+- 繁中首頁：`page.html?page=home&lang=zh-Hant`
+- 英文 KIP：`page.html?page=kip&lang=en`
+- 加上 `#proof`、`#contact` 等錨點可定位段落。
+- 4318 已被此預覽使用時不必再開；需要另一個埠可用 `npm run dev:design -- 4319`。
+- 同名檔案修改不必重啟。新增素材或模組時，先更新 `share-preview.mjs` 的明確白名單，確認程序身分後僅重新載入該預覽服務，再驗證新檔可取得。
 
-## Design scope
+## 安全預覽與分享
 
-- Paper/ink/olive, serif display, whitespace and alternating dark/light sections are defined by the CSS loaded in `page.html`. This approved runtime is the design baseline; see the [design maintenance index](../README.md).
-- Newsreader + Noto Serif TC is the selected display pairing. Google Fonts requires network access; fallback fonts are defined.
-- Fluid type, spacing and containers; responsive architecture layout with all four cards visible; mobile navigation; expandable advantages with explanations and scenarios.
-- Home plays a labeled pointer/content animation with pause and replay controls. No product backend is connected.
-- Traditional Chinese and English are implemented through four runtime catalogs: `locale-common.js`, `locale-home.js`, `locale-kip.js` and `locale-demo.js`. Shared rendering, locale registration and localized screen generation support adding languages. Follow the [language and shared-logo guide](localization-and-brand-guide.md).
-- Direct page URLs use `page.html?page=home&lang=zh-Hant` or `page.html?page=kip&lang=en`; these are client-rendered query routes, not production Astro routes.
-- A contact form, authorized customer cases, deployment metrics and commissioned final artwork are not implemented. Contact links open email instead of submitting a form. The prototype has no logo-upload administration interface.
+預覽只綁定 loopback，支援 GET／HEAD，沒有上傳、目錄瀏覽或產品後端連線。文件、測試、私人參考素材、`.git` 及 `.env.hostinger.local` 不得加入公開白名單。
 
-### Current CEO quote
-
-The current text is sourced verbatim from `locale-home.js`; earlier quotation notes below are historical, not the approved copy.
-
-> AI 的價值，是讓被落下的人迎頭趕上。
->
-> 我們用 AI，讓企業的知識找得到、用得上；再結合管理的智慧，突破既有框架，把答案變成行動。
-
-邱浩煒 Wilson — CEO of Synaiq
-
-## Verification — 2026-09-08
-
-- Latest complete prototype suite: **69 passed, 1 Windows file-symlink permission skip, 70 total**. Run `node --test docs/design/live-prototype/*.test.mjs` from the repository root. This is prototype verification, not production deployment acceptance.
-- Preview HTTP 200 after isolating PostCSS; JS syntax check passed.
-- Earlier sampled browser checks measured no horizontal document overflow on both pages at viewport widths 320, 390, 639, 640, 768, 899, 900, 1280, 1440 and 1600 px. Latest quote checks covered Chinese desktop at 1440 px and Chinese/English at 390 px without horizontal overflow.
-- Desktop Home/KIP first screens and narrow Home/KIP layouts were visually inspected; KIP mobile menu expansion was verified.
-- These checks do not constitute full-page visual acceptance, exhaustive interaction testing, or verification of every intermediate width / reduced-motion environment.
-
-On 2026-09-09, obsolete direction proposals, wireframes, typography comparisons and candidate token/copy drafts were removed at the user's request. They are no longer pending choices or implementation gates. This cleanup does not change the runtime, its assets, or the production deployment.
-
-## Historical iteration notes — Ellipsus + original color assets
-
-The following sections record earlier design and verification steps. Current scope, copy and test totals are stated above; individual iteration totals are not current release totals.
-
-Reference: https://ellipsus.com/#introduction. The corrected homepage follows its centered opening, large product-image stage, layered paper narrative, dark screenshot showcase and image-led product section. This is a composition translation for SynaiQ, not a reproduction of Ellipsus branding or artwork.
-
-Paper/ink describes interface surfaces, not a restriction on product photography. Product images retain full original color; the rejected grayscale wireframe derivatives have been removed.
-
-Image-led sections include the KIP overview and adjacent Wally devices, hand-drawn narrative, animated product-interface study, full Wally series and original-color character key visual. AI hand-drawn illustration drafts are now present; commissioned final artwork remains pending. The KIP visuals are the user-selected brand-matched interface studies with example data, not actual product screenshots. Preserve their paper/ink palette; do not replace them with the dark raw backend interface. Wally imagery retains original color.
-
-Verified source locations (read-only):
-
-- `\\192.168.0.97\行銷部\Morrison\官網\index.html` — original marketing page, references full-color online assets.
-- `\\192.168.0.97\行銷部\03.鑫揚相關\11.Wally Serise\2604_素材` — actual folder spelling; it is not nested `2604\_素材`.
-- `Wally 瓦力合照1.png` matches `public/brand/wally/wally-series.png` byte-for-byte: SHA-256 `27D8045903EF4813A365961A139168F01908CD8BDB263E577B0A3789D7F81432`.
-- Existing local color assets: `/brand/wally/wally-2.png`, `/brand/wally/wally-series.png`, `/brand/wally-mini.png`.
-- Character image: `https://synaiq.com/wp-content/uploads/2026/03/toutou-2.png`, as referenced in the supplied marketing source. This preview loads that public original directly; it requires network access.
-- Public source page: https://synaiq.com/home.html#success. Case authorization and factual/quantitative claims remain separate pending decisions; this revision does not introduce those claims.
-
-At this earlier iteration, Home was updated before KIP. KIP has since been aligned as described in the current design summary above.
-
-Historical correction verification: Home had no horizontal document overflow at the 12 sampled widths from 320–1600 px. Product image computed filters were `none`. The then-current gallery buttons and six assertions passed. That gallery has since been replaced by the animation described below. The review shell remains width-constrained. Full visual acceptance and reduced-motion device testing remain pending.
-
-## Historical content and product-reference update — 2026-09-08
-
-- Added the supplied enterprise-knowledge narrative and dated survey band. Sources and earlier editorial decisions are recorded in `content-sources.md`; use `locale-home.js` and the current CEO quote above for the latest quotation and attribution.
-- Use existing supplied copy and assets; do not invent customer stories, deployment metrics or product commitments.
-- A real empty product entrance was inspected read-only. No questions were submitted, conversations created, documents opened or settings changed.
-- `assets/kb-entry-redacted.png` is a **reference-only sanitized capture**, not displayed on the homepage. Opaque local masks remove enterprise branding, user information and internal timing. The raw temporary capture was removed. No product credentials are in this runtime; the project-root `.env.hostinger.local` is an ignored local deployment credential, excluded from Git and every public package.
-- The user clarified that the preferred product visuals are the original `kip-search-demo.svg` / `kip-library-demo.svg` studies. Both were restored, with accurate “品牌化示意” / example-data labeling.
-- Local capture masking is specific to the inspected empty entrance at 1280×720. It is not a general-purpose privacy filter. A different screen requires fresh inspection and new mask geometry.
-- Content/masking tests: `node --test docs/design/live-prototype/home-content.test.mjs docs/design/live-prototype/sanitize-capture.test.mjs`.
-- Post-copy-update width checks passed at the same 12 widths listed above. These are sampled checks, not proof of every intermediate width or full device acceptance.
-
-## Historical hand-drawn / motion correction
-
-The closing quotation received a dedicated minimal CEO speaking sketch, retained in the current design. Its signature is now 邱浩煒 Wilson / CEO of Synaiq, with no draft label; use the current quote above. See [ceo-sketch-notes.md](ceo-sketch-notes.md) for historical prompts, asset provenance and validation.
-
-Latest material revision: the repeated tiny SVG edge is superseded by a photographic cotton-paper texture with exposed fibres, irregular tear depth and a color-matched paper face. See [paper-material-notes.md](paper-material-notes.md) for the user reference, original AI prompt, asset provenance and 16-test/12-width validation. Clearance is reserved above each incoming tear so existing captions and the hero scroll cue stay visible. The older SVG is retained as iteration history, not the active homepage boundary.
-
-- The complete first-screen background carries the typewriter, scattered glyphs, fine threads, hand and simplified abstract brain. The illustration is behind the hero copy, not an image panel below it.
-- The existing screen collage contains Wally 2 / Wally 2 PLUS / Mini side by side, in original color, with full bases. No separate PLUS feature block.
-- The knowledge narrative precedes the animated product reveal. Section edges use a fine torn-letter-paper contour; the quotation uses a hand-drawn editorial layout.
-- Product motion cycles through question, simulated click, answer, source and knowledge center. Pause/replay are the only actual operations. Reduced-motion preference shows a static source state; offscreen/hidden-page motion pauses.
-- Fixed the intermediate-width illustration overflow, preserved illustration aspect ratios, and removed the empty sidebar grid track on narrow screens.
-- Latest sampled Home overflow check: 320, 390, 480, 639, 640, 768, 899, 900, 1024, 1280, 1440 and 1600 px passed. Narrow animation measured 335 × 609 px at a 390 px iframe viewport. This does not constitute exhaustive RWD or device acceptance.
-- Eleven content/animation/masking tests and both JS syntax checks passed. Desktop/mobile visual checks and playback checks are local prototype checks, not production acceptance. Reduced-motion OS/device testing remains pending.
-- The browser console exposed one unlocated `MutationObserver.observe` error. No prototype source uses `MutationObserver`; its origin is not established, so this run does not claim an error-free browser console. The demonstrated playback and responsive checks completed.
-- Original prompts, output paths and Wally PLUS provenance: [illustration-notes.md](illustration-notes.md).
+若另有核准的對外分享需求，先確認本機預覽正常，再使用官方 Cloudflared：
 
 ```powershell
-node --test docs/design/live-prototype/home-content.test.mjs docs/design/live-prototype/demo-animation.test.mjs docs/design/live-prototype/sanitize-capture.test.mjs
+cloudflared tunnel --no-autoupdate --url http://127.0.0.1:4318 --protocol http2
 ```
+
+使用當次輸出的網址，不沿用舊 quick-tunnel 網址。持有網址的人都可存取，`noindex` 不是登入保護；電腦、預覽服務與隧道需持續運作。結束分享時先驗證該程序的命令與目標，再停止它，不能一次關閉所有 Node／Cloudflared，也不能公開整個 repo 或 Vite docs 根目錄。
+
+## 檢查與維護原則
+
+```powershell
+npm run test:all
+npm run check
+node scripts/check-typography.mjs
+```
+
+前後畫面、RWD 與操作驗證方式見 [樣式維護指引](STYLE-GUIDE.md#修改後怎麼檢查)。測試輸出留在忽略的 `out/`，不另寫一份完成報告。
+
+- 新聞數字保留調查日期與預期／實績區分；不能改寫成 KIP 的績效或客戶背書。
+- Quote 以 `locale-home.js` 為唯一文字來源，不在維護文件複製一份容易過期的文案。
+- 產品示意圖保留品牌配色與示例標示；Wally 照片保留原色。Demo 是模擬滑鼠／內容動畫，沒有連接真實產品。
+- 聯絡按鈕目前是 mailto，不是已完成的表單 API；沒有 Logo 上傳後台。
+- 日常更新直接修改這份入口、樣式指引或語言／Logo 指引，不再新增 `*-notes.md`、日期驗證報告、製作流水帳或完成清單。

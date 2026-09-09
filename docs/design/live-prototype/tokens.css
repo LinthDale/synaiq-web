@@ -1,0 +1,1654 @@
+/* 常用樣式與動畫設定 — 在這份檔案按 Ctrl+F，搜尋畫面上看得到的字。
+   01 導覽 → 02 Banner → 03 敘事 → 04 產品 → 05 產業觀察 → 06 Demo → 07 Wally
+   08 優勢 → 09 CEO → 10 KIP → 11 聯絡／頁尾 → 12 全站
+   每段的手機／平板設定緊接在該段下方，不必翻到檔尾。
+   font = 字型、size = 大小、color = 顏色、weight = 粗細、leading = 行高、tracking = 字距。
+   clamp(最小值, 隨視窗縮放, 最大值) 保留連續 RWD；可改成 18px 這類固定值。
+   換字型可用 var(--display)〔襯線〕或 var(--body)〔無襯線〕，全站字型在 12。
+   新增未載入的字型／字重才需要改 page.html 的 Google Fonts 連結。
+   本檔包含所有網站文字：上方常用變數，下方完整文字 CSS（含小字、Demo、手機覆寫）。
+   動畫秒數、延遲、播放次數與觸發條件也在對應段落；修改後重新整理預覽。
+   site.css 只套用版型／動畫樣式，demo-animation.js 只執行播放，不在兩者另填秒數。
+   排版、換行規則仍在 site.css；圖片內文字需改原素材。 */
+
+/* ── 01 導覽列：「首頁」「KIP 平台」／本頁目錄：「Wally 數位人」「產品畫面」 ── */
+:root {
+  --nav-text-size: 22px;                 /* 上排主導覽字級 */
+  --nav-context-size: 18px;              /* 下排本頁目錄字級 */
+  --nav-context-label-size: 18px;        /* 「首頁內容／KIP 平台內容」標籤；各寬度共用 */
+  --language-size: 12px;                /* 右上角語言切換 ZH / EN */
+  --nav-height: 74px;                    /* 上排高度 */
+}
+@media (max-width: 899px) {               /* 此段的平板／手機設定 */
+  :root {
+    --nav-text-size: 14px;
+    --nav-context-size: 13px;
+    --nav-height: 64px;
+  }
+}
+
+@media (max-width: 359px) {
+  :root { --language-size: 11px; }       /* 極窄手機的 ZH / EN */
+}
+
+/* ── 02 首頁 Banner ── */
+:root {
+  /* 英文小標：KNOWLEDGE INTELLIGENCE PLATFORM */
+  --hero-eyebrow-font: var(--body);       /* 字型 */
+  --hero-eyebrow-size: 13px;              /* 大小 */
+  --hero-eyebrow-color: var(--inverse);   /* 顏色；只改這行可填 #ffffff */
+  --hero-eyebrow-weight: 400;             /* 粗細 */
+  --hero-eyebrow-tracking: 0.06em;        /* 字距 */
+  --hero-eyebrow-initial-increase: 4px;   /* K、I、P 首字母增量；手機沿用這個值 */
+  --hero-eyebrow-initial-color: #cca858;  /* K、I、P 首字母顏色，取自品牌 Logo 金色 */
+
+  /* 大標題：散落的企業文件，變成隨問隨答的知識中樞 */
+  --hero-title-font: var(--display);      /* 字型 */
+  --hero-title-size: clamp(36px, 5.1vw, 74px); /* 大小 */
+  --hero-title-color: var(--paper);       /* 顏色 */
+  --hero-title-weight: 300;               /* 粗細 */
+  --hero-title-leading: 1.45;             /* 行高 */
+  /* 只畫在中文「知識中樞」下方；不改文字、換行或另一個區塊 */
+  --hero-underline-color: #a9bc99;        /* 底線顏色 */
+  --hero-underline-thickness: 2px;        /* 底線粗細 */
+  --hero-underline-offset: 0.16em;        /* 底線與字的距離 */
+
+  /* 說明：從一個問題開始。每個答案，都有出處可以追溯。 */
+  --hero-intro-font: var(--body);         /* 字型 */
+  --hero-intro-size: clamp(16px, 1.4vw, 20px); /* 大小 */
+  --hero-intro-color: var(--inverse);     /* 顏色 */
+  --hero-intro-weight: 400;               /* 粗細 */
+
+  /* 背景散字出場動畫；每個字的序號由頁面提供，時間只改這裡 */
+  --hero-letters-duration: 1.8s;          /* 每個字淡入時間 */
+  --hero-letters-stagger: 0.16s;          /* 相鄰批次間隔，共五批 */
+  --hero-letters-count: 1;                /* 播放次數；可填 infinite */
+}
+@media (max-width: 639px) {               /* 首頁 Banner 的手機設定 */
+  :root {
+    --hero-eyebrow-size: 9px;
+    --hero-eyebrow-tracking: 0.02em;
+    --hero-title-size: clamp(31px, 7.6vw, 46px);
+    --hero-intro-size: 16px;
+  }
+}
+
+/* ── 03 敘事：「給每一份」「組織知識，一個被找到的機會。」 ── */
+:root {
+  --narrative-pretitle-size: clamp(28px, 3.3vw, 46px); /* 給每一份 */
+  --narrative-title-size: clamp(38px, 5.2vw, 72px);    /* 組織知識… */
+  --narrative-lead-size: clamp(29px, 3vw, 44px);      /* 企業獨有的知識，往往不在公開網路上 */
+  --narrative-body-size: clamp(16px, 1.35vw, 19px);   /* 電子郵件、備忘錄…及下一個機會… */
+  --narrative-title-color: var(--ink);
+  --narrative-body-color: var(--muted);
+}
+@media (max-width: 899px) {
+  :root { --narrative-lead-size: 32px; }
+}
+@media (max-width: 639px) {
+  :root {
+    --narrative-pretitle-size: 28px;
+    --narrative-title-size: clamp(34px, 8.4vw, 48px);
+    --narrative-lead-size: 28px;
+  }
+}
+
+/* ── 04 產品展示：「然後，散落的知識有了一個入口。」 ── */
+:root {
+  --product-title-size: clamp(34px, 4vw, 56px);
+  --product-title-color: var(--paper);
+
+  /* KIP 畫面＋信紙＋Wally：整組出場動畫，全部在這裡調整。
+     s = 秒；duration = 移動秒數、delay = 延後幾秒開始、fade = 淡入秒數。
+     設定三種裝置共用，不在手機 media 或 JavaScript 再覆寫。 */
+  --product-reveal-count: 0 ;             /* 捲入播放幾次：1 一次、2 兩次、0 每次捲入；不是原地循環 */
+  --product-reveal-threshold: 0.5;       /* 整段進入視窗的比例：0.5 = 50%；0～1，越小越早 */
+  --product-reveal-easing: cubic-bezier(0.12, 0.8, 0.18, 1); /* 移動曲線 */
+
+  /* ① KIP 畫面 */
+  --product-screen-duration: 2.2s;
+  --product-screen-delay: 0.8s;
+  --product-screen-fade: 1s;
+  --product-screen-fade-delay: 1s;
+  --product-screen-from: translateY(130px) rotateX(14deg) rotate(-7deg) scale(0.83);
+  /* ② 信紙 */
+  --product-paper-duration: 2.2s;
+  --product-paper-delay: 0.6s;
+  --product-paper-fade: 1s;
+  --product-paper-fade-delay: 0.15s;
+  --product-paper-from: translate(-45px, 70px) rotate(-18deg);
+  /* ③ Wally 三台一起 */
+  --product-wally-duration: 2.4s;
+  --product-wally-delay: 0.6s;
+  --product-wally-fade: 1s;
+  --product-wally-fade-delay: 0.28s;
+  --product-wally-from: translate(30px, 90px) rotate(3deg);
+}
+@media (max-width: 639px) {
+  :root { --product-title-size: 32px; }
+}
+
+/* ── 05 產業觀察：「AI 正在改變，企業分配預算的方式。」 ── */
+:root {
+  --outlook-title-size: clamp(32px, 3.3vw, 46px); /* 標題大小 */
+  --outlook-title-color: var(--ink);
+  --outlook-body-size: clamp(22px, 1.35vw, 26px); /* 「據 Investing.com 轉述…」 */
+  --outlook-body-color: var(--muted);
+  --outlook-reading-size: clamp(18px, 1.45vw, 20px); /* 左下文章補充：「2024 年的調查中…」兩段文字 */
+  --outlook-reading-color: var(--muted);           /* 文章補充文字顏色 */
+  --outlook-reading-leading: 1.9;                  /* 文章補充行高 */
+  --outlook-detail-size: 14px;            /* 「閱讀調查背景與出處」及展開內文 */
+  --outlook-note-size: 12px;              /* 「資料為媒體轉述…」註記 */
+  --outlook-current-size: clamp(48px, 6.5vw, 88px); /* 左邊 5 的大小；% 隨此值等比例縮放 */
+  --outlook-future-size: clamp(56px, 6.5vw, 100px);  /* 右邊 14.5 的大小；% 隨此值等比例縮放 */
+  --outlook-number-color: #345e40;        /* 14.5% 強調色 */
+  --outlook-arrow-color: #cca858;         /* 5% → 14.5% 的手繪箭頭，取自品牌 Logo 金色 */
+  --outlook-arrow-width: clamp(76px, 11vw, 164px); /* 箭頭整體寬度，窄版可再縮小 */
+  --outlook-arrow-stroke: 2.8px;          /* 箭頭筆觸粗細；縮放時仍保留線條份量 */
+  --outlook-surface: #e1e7dc;             /* 整段背景色 */
+  --outlook-clipping-width: 500px;        /* 右下角新聞剪報寬度；窄版自動縮小並保留旋轉空間 */
+  --outlook-clipping-tilt: 6deg;          /* 新聞剪報順時針傾斜；建議維持 -6deg 至 6deg */
+}
+@media (max-width: 899px) {               /* 產業觀察的平板設定 */
+  :root {
+    --outlook-current-size: clamp(64px, 10vw, 88px); /* 左邊 5 */
+    --outlook-future-size: clamp(64px, 10vw, 88px);  /* 右邊 14.5 */
+  }
+}
+@media (max-width: 639px) {               /* 產業觀察的手機設定 */
+  :root {
+    --outlook-current-size: clamp(56px, 15vw, 88px); /* 左邊 5 */
+    --outlook-future-size: clamp(56px, 15vw, 88px);  /* 右邊 14.5 */
+  }
+}
+
+/* ── 06 Demo 段落：「問一個問題，看見答案從哪裡來。」 ── */
+:root {
+  --showcase-title-size: clamp(34px, 4.5vw, 64px);
+  --showcase-title-color: var(--paper);
+  --showcase-body-size: var(--body-text-size); /* 智慧搜尋把問題連回文件… */
+  --showcase-body-color: var(--inverse);
+
+  /* 01 用自然語言提問／02 沿著引用看原文／03 讓文件各有位置
+     三段動畫下方的流程文字與數字；不是上方選片按鈕。 */
+  --demo-step-font: var(--body);          /* 流程文字的字型 */
+  --demo-step-size: 13px;                 /* 流程文字大小 */
+  --demo-step-color: var(--inverse);      /* 未播放到的文字顏色 */
+  --demo-step-active-color: var(--paper); /* 當前步驟文字顏色 */
+  --demo-step-number-font: var(--display); /* 01、02、03 數字字型 */
+  --demo-step-number-size: 22px;          /* 數字大小，與文字分開 */
+
+  /* 影院選片框：知識問答／以自然語言找圖／以圖搜圖 */
+  --demo-booth-title-font: var(--display);
+  --demo-booth-title-size: clamp(24px, 2.7vw, 38px);
+  --demo-booth-title-color: var(--paper);
+  --demo-booth-body-size: 14px;
+  --demo-booth-body-color: var(--inverse);
+  --demo-booth-choice-size: 14px;
+  --demo-booth-accent-color: #cca858;
+  --demo-booth-change-duration: 0.45s;     /* 左右換片時的入場時間，不控制自動換片 */
+
+  /* 圖片搜尋動畫介面內文 */
+  --demo-image-heading-size: clamp(23px, 2.4vw, 32px);
+  --demo-image-query-size: clamp(13px, 1.3vw, 18px);
+  --demo-image-label-size: 12px;
+  --demo-image-result-size: 15px;
+  --demo-image-results-duration: 0.55s;
+  --demo-image-results-stagger: 0.12s;
+  --demo-image-preview-duration: 0.6s;
+
+  /* 模擬滑鼠 Demo：首頁與 KIP 頁共用；每段停留秒數相加即一輪總長。
+     與上方「KIP 畫面＋信紙＋Wally」出場動畫是不同效果。 */
+  --demo-question-hold: 2.4s;             /* ① 輸入問題 */
+  --demo-click-hold: 1.4s;                /* ② 滑鼠點擊 */
+  --demo-answer-hold: 3.8s;               /* ③ 顯示回答 */
+  --demo-source-hold: 4.2s;               /* ④ 展開原文 */
+  --demo-library-hold: 4.2s;              /* ⑤ 知識庫；目前一輪共 16 秒 */
+  --demo-play-count: 0;                  /* 0 持續循環、1 一輪、2 兩輪；結束停在知識庫，可重播 */
+  --demo-view-threshold: 0.12;            /* 開始播放的可見比例；離開畫面／切換分頁自動暫停 */
+
+  /* 各動作的細節秒數；不改上面五段的停留時間 */
+  --demo-answer-duration: 0.55s;
+  --demo-citation-duration: 0.4s;
+  --demo-source-duration: 0.75s;
+  --demo-source-easing: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --demo-pointer-duration: 1s;
+  --demo-pointer-easing: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --demo-pointer-click-duration: 0.3s;
+  --demo-typing-duration: 2.1s;            /* 建議小於輸入問題的停留時間 */
+  --demo-library-duration: 0.6s;
+  --demo-chapter-duration: 0.3s;
+}
+/* 自然語言找圖：五段依序為輸入描述 → 點擊搜尋 → 結果 → 選中圖片 → 原始素材。 */
+.animated-product[data-demo-scene="text-image"] {
+  --demo-question-hold: 3s;
+  --demo-click-hold: 1.3s;
+  --demo-answer-hold: 3.2s;
+  --demo-source-hold: 2.5s;
+  --demo-library-hold: 4s;
+}
+/* 以圖搜圖：選入參考圖 → 點擊搜尋 → 相近圖片 → 選中圖片 → 原始素材。 */
+.animated-product[data-demo-scene="image-image"] {
+  --demo-question-hold: 2.5s;
+  --demo-click-hold: 1.5s;
+  --demo-answer-hold: 3.2s;
+  --demo-source-hold: 2.8s;
+  --demo-library-hold: 4s;
+}
+@media (max-width: 899px) {               /* Demo 步驟的平板／手機字級 */
+  :root { --demo-step-size: 12px; }
+}
+@media (max-width: 639px) {
+  :root {
+    --demo-step-number-size: 18px;
+    --demo-booth-body-size: 12px;
+    --demo-booth-choice-size: 12px;
+    --demo-image-result-size: 13px;
+    --demo-image-label-size: 11px;
+  }
+}
+
+/* ── 07 Wally：「同一套知識，走到現場。」 ── */
+:root {
+  --wally-title-size: clamp(34px, 4.5vw, 64px);
+  --wally-title-color: var(--ink);
+  --wally-body-size: var(--body-text-size); /* Wally 是 KIP 的現場化身… */
+  --wally-body-color: var(--muted);
+  --wally-detail-size: 22px;              /* 軟體與設備，在同一段故事裡 */
+  --persona-title-size: clamp(32px, 3.8vw, 52px); /* 讓知識，有個見面的方式 */
+  --persona-body-size: 16px;              /* 從螢幕裡的問答，到面前的互動 */
+}
+@media (max-width: 639px) {
+  :root { --persona-title-size: 34px; }
+}
+
+/* ── 08「八項核心優勢」；首頁與 KIP 共用 ── */
+:root {
+  --advantages-title-size: clamp(32px, 3.2vw, 46px); /* 區段標題 */
+  --advantages-title-color: var(--ink);
+  --advantages-summary-size: var(--body-text-size); /* 準確回答，低 AI 幻覺…八項名稱 */
+  --advantages-hint-size: 15px;           /* 有依據才回答…右側簡述 */
+  --advantages-detail-size: 16px;         /* 點開 + 後的說明 */
+  --advantages-detail-leading: 1.9;       /* 展開說明行高 */
+  --advantages-detail-color: var(--muted);
+}
+@media (max-width: 639px) {
+  :root { --advantages-hint-size: 13px; }
+}
+
+/* ── 09 CEO 引言：「AI 的價值…」／邱浩煒 Wilson；改文案請開 locale-home.js 的 ceo.quote ── */
+:root {
+  --ceo-quote-size: clamp(30px, 3vw, 43px); /* 引言大小 */
+  --ceo-quote-leading: 1.7;               /* 引言行高 */
+  --ceo-quote-color: var(--ink);
+  --ceo-name-size: 20px;                 /* 邱浩煒 Wilson 姓名大小 */
+}
+@media (max-width: 899px) {               /* CEO 引言的平板設定 */
+  :root { --ceo-quote-size: 29px; }
+}
+@media (max-width: 639px) {               /* CEO 引言的手機設定 */
+  :root { --ceo-quote-size: clamp(27px, 7.3vw, 33px); }
+}
+
+/* ── 10 KIP 平台（不是首頁；只影響 KIP 頁） ── */
+body[data-page="kip"] {
+  /* 英文小標：SYNAIQ KIP */
+  --kip-eyebrow-font: var(--body);        /* 字型 */
+  --kip-eyebrow-size: 12px;               /* 大小 */
+  --kip-eyebrow-color: var(--kip-olive);   /* 顏色 */
+  --kip-eyebrow-weight: 400;              /* 粗細 */
+  --kip-eyebrow-tracking: 0.14em;         /* 字距 */
+
+  /* 問得到、答得準、接得上。／把散落各處的企業文件… */
+  --kip-title-size: clamp(48px, 6.3vw, 90px); /* 標題大小 */
+  --kip-title-leading: 1.27;             /* 標題行高 */
+  --kip-intro-size: clamp(16px, 1.4vw, 19px); /* 說明大小 */
+  --kip-title-color: var(--ink);
+  --kip-body-color: var(--muted);          /* 淺底區段內文 */
+
+  /* 從文件，到可以使用的知識。／資料接入、自動解析、搜尋可用 */
+  --kip-process-title-size: var(--heading-2-size);
+  --kip-step-title-size: clamp(25px, 2.3vw, 32px);
+  --kip-step-body-size: clamp(15px, 1.2vw, 17px);
+  /* 四個層級，一套知識中樞。／使用者接入、大模型層、知識中心、平台功能 */
+  --kip-architecture-title-size: var(--heading-2-size);
+  --kip-layer-title-size: clamp(23px, 2.2vw, 30px);
+  --kip-layer-body-size: clamp(13px, 1.1vw, 15px);
+  --kip-layer-hover-duration: 0.45s;      /* 四層架構卡片滑鼠移入／移出動畫 */
+  /* 問完，順手看原文。／智慧知識搜尋 IKS… */
+  --kip-proof-title-size: var(--heading-2-size);
+  --kip-proof-body-size: var(--body-text-size);
+  /* 文件各有位置。／文件管理、解析狀態、分庫權限 */
+  --kip-library-title-size: clamp(26px, 2.4vw, 34px);
+  --kip-library-label-size: 15px;
+  --kip-library-body-size: 12px;
+  /* 把日常工作，一起接上。／系統介接 API / MCP… */
+  --kip-capabilities-title-size: var(--heading-2-size);
+  --kip-capability-title-size: clamp(23px, 2.2vw, 30px);
+  --kip-capability-body-size: 15px;
+
+  /* 平台配色與撕紙；調整幾何時需一起檢查窄版 */
+  --kip-paper: #f2f0e8;                  /* 紙色 */
+  --kip-soft: #e8e5da;                   /* 次要紙色 */
+  --kip-olive: #647956;                  /* 手繪與強調色 */
+  --kip-slate: #34383a;                  /* 深底色 */
+  --kip-light-ink: #d2d8ca;              /* 深底上的文字 */
+  --pencil: var(--kip-olive);
+  --kip-spacing: clamp(72px, 9vw, 132px); /* 區段留白 */
+  --kip-tear-height: clamp(118px, 13vw, 190px);
+  --kip-tear-width: max(980px, 100%);
+  --kip-tear-image: url("assets/torn-paper-cotton-v2.webp");
+}
+@media (max-width: 999px) {               /* KIP 平板設定 */
+  body[data-page="kip"] {
+    --kip-title-size: clamp(45px, 6.6vw, 64px);
+  }
+}
+@media (max-width: 699px) {               /* KIP 窄版設定 */
+  body[data-page="kip"] {
+    --kip-title-size: clamp(52px, 10vw, 70px);
+    --kip-tear-height: 126px;
+    --kip-tear-width: 980px;
+    --kip-step-title-size: 27px;
+    --kip-step-body-size: 15px;
+    --kip-layer-title-size: 27px;
+    --kip-layer-body-size: 14px;
+    --kip-proof-body-size: 16px;
+    --kip-capability-title-size: 25px;
+  }
+}
+@media (max-width: 639px) {
+  body[data-page="kip"] { --kip-eyebrow-size: 11px; }
+}
+@media (max-width: 359px) {
+  body[data-page="kip"] {
+    --kip-step-title-size: 24px;
+    --kip-capability-title-size: 23px;
+  }
+}
+html:lang(en) body[data-page="kip"] {     /* 英文 KIP 標題：各寬度共用 */
+  --kip-title-size: clamp(34px, 5.3vw, 76px);
+}
+
+/* ── 11 聯絡：「先講一個場景，我們回一個做法。」／頁尾公司資訊 ── */
+:root {
+  --contact-title-size: var(--heading-2-size);
+  --contact-title-color: var(--paper);
+  --contact-body-size: var(--body-text-size); /* 從資料來源、使用對象與查詢需求開始… */
+  --contact-body-color: var(--inverse);
+  --button-text-size: 15px;              /* 洽談導入／看 KIP 怎麼運作等一般按鈕 */
+  --button-small-size: 13px;             /* 導覽列的小按鈕 */
+  --footer-body-size: 14px;              /* 公司名稱、連結 */
+  --footer-body-color: var(--inverse);   /* 公司資訊文字 */
+  --footer-note-size: 12px;              /* 地址與版權 */
+  --footer-link-size: var(--footer-body-size);
+}
+@media (max-width: 639px) {
+  :root { --footer-link-size: 13px; }
+}
+
+/* ── 12 全站共用；修改會影響多個區段，局部調整請優先找上面的專屬設定 ── */
+:root {
+  /* 字型：前者為英文、後者為中文；以下皆已載入 */
+  --display: "Newsreader", "Noto Serif TC", "Songti TC", serif; /* 標題用襯線字 */
+  --body: "Manrope", "Noto Sans TC", sans-serif;               /* 內文用無襯線字 */
+  --body-text-size: clamp(16px, 0.2vw + 15px, 18px); /* 一般內文大小 */
+  --body-line-height: 1.75;              /* 一般內文行高 */
+  --heading-1-size: clamp(34px, 5.56vw, 80px); /* 未另設專屬值的一級標題 */
+  --heading-2-size: clamp(32px, 4vw, 58px);    /* 未另設專屬值的二級標題 */
+  --heading-3-size: clamp(32px, 2.5vw, 38px);  /* 未另設專屬值的三級標題 */
+
+  /* 文字顏色 */
+  --ink: #282825;                       /* 一般文字 */
+  --muted: #64645e;                     /* 次要內文與註記 */
+  --inverse: #c4c4be;                   /* 深色背景上的次要文字 */
+
+  /* 背景、點綴與留白 */
+  --paper: #f4f4f2;
+  --paper-light: #f8f8f7;
+  --dark: #292a2e;
+  --night: #020203;
+  --gutter: clamp(20px, 4vw, 100px);      /* 側邊留白 */
+  --content-width: 1240px;               /* 最大內容寬度 */
+  --section-padding: clamp(70px, 9vw, 132px); /* 一般區段上下留白 */
+  --button-hover-duration: 0.3s;         /* 全站按鈕滑鼠移入／移出 */
+  --motion-instant: 0s;                 /* 暫停／無障礙安全值，固定為 0s，不用調整 */
+}
+body[data-page="home"] {
+  --letter-paper: #f2f0e8;               /* 首頁信紙背景 */
+  --pencil: #647956;                     /* 首頁鉛筆／手繪線色 */
+}
+/* 完整文字細項：以下亦直接在本檔修改，不需回 site.css。保留原 selector 與 media 順序。
+   上方有 var(--...) 的設定改上方；其他 font-size／color 等直接改此處。
+   同一 selector 若有 media 覆寫，須一併檢查；圖片內文字不屬於 CSS。 */
+/* BEGIN TEXT BASE / 文件預設 */
+body {
+  color: var(--ink);
+  font: 400 var(--body-text-size)/var(--body-line-height) var(--body);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+h1 {
+  font-size: var(--heading-1-size);
+  line-height: 1.25;
+}
+h2 {
+  font-size: var(--heading-2-size);
+  line-height: 1.28;
+}
+h3 {
+  font-size: var(--heading-3-size);
+  line-height: 1.35;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+/* END TEXT BASE */
+/* BEGIN TEXT COMPONENTS / 導覽、優勢、聯絡與頁尾 */
+/* Logo 文字備援；目前 Logo 圖形由 SVG 素材提供 */
+.brand {
+  font: 400 32px/1 var(--display);
+  letter-spacing: -1.5px;
+}
+.brand span {
+  font-size: 25px;
+}
+/* 語言切換 ZH / EN（字級用上方 --language-size） */
+.language {
+  font-size: var(--language-size);
+  color: inherit;
+}
+/* 按鈕：洽談導入、看 KIP 怎麼運作、預約導入評估 */
+.button {
+  font: 500 15px/1.4 var(--body);
+  color: var(--paper);
+  font-size: var(--button-text-size);
+}
+.button:hover {
+  text-decoration: none;
+}
+.button.inverse {
+  color: var(--ink);
+}
+.button.small {
+  font-size: var(--button-small-size);
+}
+/* 手機選單按鈕：本頁目錄 */
+.menu {
+  color: inherit;
+}
+.section-head p {
+  color: var(--muted);
+}
+/* 區段英文小標：Built around your knowledge.／The architecture behind an answer. */
+.section-no {
+  font: 14px var(--display);
+  color: var(--muted);
+}
+/* Connected from source to answer. */
+.connector {
+  font: italic 22px var(--display);
+  color: var(--muted);
+}
+/* 共用素材註記（一般小字） */
+.note {
+  font-size: 12px;
+  color: var(--muted);
+}
+/* 八項核心優勢：標題、右側摘要、展開內文與加減符號 */
+.advantage-row summary:after {
+  font: 26px var(--display);
+}
+.advantage-row summary span {
+  font-size: var(--advantages-hint-size);
+  color: var(--muted);
+}
+.advantage-row summary strong {
+  font-weight: 400;
+  font-size: var(--advantages-summary-size);
+}
+.advantage-row > p {
+  color: var(--muted);
+}
+/* 先講一個場景，我們回一個做法。／從資料來源、使用對象與查詢需求開始 */
+.contact {
+  color: var(--paper);
+}
+.contact h2 {
+  font-size: var(--contact-title-size);
+  color: var(--contact-title-color);
+}
+.contact p {
+  color: var(--contact-body-color);
+  font-size: var(--contact-body-size);
+}
+/* 頁尾：鑫揚智能科技股份有限公司、公司地址、聯絡與版權 */
+footer {
+  color: var(--paper);
+  font-size: var(--footer-body-size);
+}
+.footer-grid p {
+  color: var(--footer-body-color);
+}
+.footer-grid .fine {
+  font-size: var(--footer-note-size);
+}
+.footer-links {
+  font-size: var(--footer-link-size);
+}
+.footer-bottom {
+  font-size: var(--footer-note-size);
+  color: var(--inverse);
+}
+@media (max-width: 899px) {
+  /* Logo 文字備援；目前 Logo 圖形由 SVG 素材提供 */
+  .brand {
+    font-size: 28px;
+  }
+}
+@media (max-width: 639px) {
+  /* 八項核心優勢：標題、右側摘要、展開內文與加減符號 */
+  .advantage-row summary span {
+    font-size: var(--advantages-hint-size);
+  }
+  /* 頁尾：鑫揚智能科技股份有限公司、公司地址、聯絡與版權 */
+  .footer-links {
+    font-size: var(--footer-link-size);
+  }
+}
+/* Logo 文字備援；目前 Logo 圖形由 SVG 素材提供 */
+.brand {
+  line-height: 1;
+}
+/* 八項核心優勢：標題、右側摘要、展開內文與加減符號 */
+section.advantages .section-head h2 {
+  font-size: var(--advantages-title-size);
+  color: var(--advantages-title-color);
+}
+section.advantages .advantage-detail {
+  font-size: var(--advantages-detail-size);
+  line-height: var(--advantages-detail-leading);
+  color: var(--advantages-detail-color);
+}
+/* 工作情境示例 */
+section.advantages .advantage-scenario span {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+/* 語言切換 ZH / EN（字級用上方 --language-size） */
+.language-select {
+  font-family: var(--body);
+}
+.language-select option {
+  color: var(--ink);
+}
+/* 主導覽：首頁、KIP 平台；含目前頁面狀態 */
+.page-navigation a {
+  font-size: var(--nav-text-size);
+  color: var(--muted);
+}
+.page-navigation a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 500;
+}
+/* 首頁內容／KIP 平台內容 */
+.page-context-label {
+  font-size: var(--nav-context-label-size);
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+.page-context-label::after {
+  color: #a7a79d;
+}
+/* 目錄連結：Wally 數位人、產品畫面、關於 SynaiQ */
+.page-context-links a {
+  font-size: var(--nav-context-size);
+}
+@media (max-width: 899px) {
+  /* 手機選單按鈕：本頁目錄 */
+  .site-header .menu {
+    font-size: 12px;
+  }
+  /* 主導覽：首頁、KIP 平台；含目前頁面狀態 */
+  .page-navigation a {
+    font-size: var(--nav-text-size);
+  }
+  /* 目錄連結：Wally 數位人、產品畫面、關於 SynaiQ */
+  .page-context-links a {
+    font-size: var(--nav-context-size);
+  }
+}
+@media (max-width: 359px) {
+  /* 語言切換 ZH / EN（字級用上方 --language-size） */
+  .site-header .language {
+    font-size: var(--language-size);
+  }
+}
+.marked {
+  text-decoration: underline;
+  text-decoration-color: #529a6a;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+/* 圖片標籤與素材說明：KIP 產品介面、產品系列圖、非實際部署案例 */
+.gallery-note {
+  font-size: 13px;
+  color: var(--inverse);
+}
+@media (max-width: 639px) {
+  .gallery-note {
+    font-size: 12px;
+  }
+}
+/* END TEXT COMPONENTS */
+/* BEGIN TEXT HOME / 首頁各區塊 */
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+@media (max-width: 639px) {
+  .eyebrow {
+    font-size: 11px;
+  }
+}
+/* 圖片標籤與素材說明：KIP 產品介面、產品系列圖、非實際部署案例 */
+.slot-caption {
+  font: 12px/1.5 var(--body);
+  color: var(--muted);
+}
+.slot-caption span {
+  font: 16px var(--display);
+  color: var(--ink);
+}
+/* 文字連結：了解 KIP 的四層架構 */
+.text-link {
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+@media (max-width: 639px) {
+  /* 圖片標籤與素材說明：KIP 產品介面、產品系列圖、非實際部署案例 */
+  .slot-caption {
+    font-size: 11px;
+  }
+}
+/* 共用手寫註記的字型與字色 */
+.handwritten-note {
+  font: 300 clamp(17px, 1.7vw, 24px)/1.7 var(--display);
+  font-style: italic;
+  color: var(--pencil);
+}
+/* 首頁 Banner：KNOWLEDGE INTELLIGENCE PLATFORM／散落的企業文件／知識中樞 */
+.hero {
+  color: var(--paper);
+}
+.hero .eyebrow {
+  color: var(--inverse);
+}
+.hero .intro {
+  color: var(--inverse);
+  font-size: clamp(16px, 1.4vw, 20px);
+}
+.home-opening h1 .title-knowledge {
+  text-decoration-line: underline;
+  text-decoration-color: var(--hero-underline-color);
+  text-decoration-thickness: var(--hero-underline-thickness);
+  text-underline-offset: var(--hero-underline-offset);
+}
+.home-opening .eyebrow {
+  font-family: var(--hero-eyebrow-font);
+  font-size: var(--hero-eyebrow-size);
+  font-weight: var(--hero-eyebrow-weight);
+  color: var(--hero-eyebrow-color);
+  letter-spacing: var(--hero-eyebrow-tracking);
+}
+.home-opening .eyebrow-initial {
+  font-size: calc(1em + var(--hero-eyebrow-initial-increase));
+  color: var(--hero-eyebrow-initial-color);
+  line-height: 1;
+}
+.home-opening .intro {
+  font-family: var(--hero-intro-font);
+  font-weight: var(--hero-intro-weight);
+  color: var(--hero-intro-color);
+  font-size: var(--hero-intro-size);
+  line-height: 1.8;
+}
+.hero-thread-art figcaption {
+  font: 300 clamp(17px, 1.6vw, 23px)/1.9 var(--display);
+  color: #dfdfd4;
+}
+.hero-thread-art figcaption span {
+  font-size: 0.7em;
+  color: var(--inverse);
+}
+/* 順著線索，往下看／向下箭頭 */
+.hero-scroll {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--inverse);
+}
+.hero-scroll span {
+  font-size: 26px;
+  font-family: var(--display);
+}
+/* 背景打字機文字：備忘錄、文件、字母等（裝飾文字） */
+.typed-fragments > span {
+  font:
+    clamp(12px, 1.5vw, 22px)/1.4 "Courier New",
+    monospace;
+  color: #c4c6bb;
+}
+@media (max-width: 899px) {
+  /* 首頁 Banner：KNOWLEDGE INTELLIGENCE PLATFORM／散落的企業文件／知識中樞 */
+  .hero-thread-art figcaption {
+    font-size: 17px;
+  }
+}
+@media (max-width: 639px) {
+  .hero-thread-art figcaption {
+    font-size: 16px;
+  }
+  /* 背景打字機文字：備忘錄、文件、字母等（裝飾文字） */
+  .typed-fragments > span {
+    font-size: 12px;
+  }
+}
+/* 首頁 Banner：KNOWLEDGE INTELLIGENCE PLATFORM／散落的企業文件／知識中樞 */
+.home-opening h1 {
+  font-family: var(--hero-title-font);
+  font-weight: var(--hero-title-weight);
+  color: var(--hero-title-color);
+  font-size: var(--hero-title-size);
+  line-height: var(--hero-title-leading);
+}
+@media (max-width: 639px) {
+  .home-opening h1 {
+    font-size: var(--hero-title-size);
+  }
+  .home-opening .intro {
+    font-size: var(--hero-intro-size);
+  }
+}
+/* 給每一份／組織知識／企業獨有的知識／電子郵件、備忘錄、內部文件與簡報 */
+.narrative-title > p {
+  font: 300 clamp(30px, 4.5vw, 64px)/1.3 var(--display);
+  color: var(--muted);
+}
+.narrative-title h2 {
+  line-height: 1.35;
+}
+.narrative-copy > p:first-child {
+  font: 300 clamp(30px, 3.7vw, 52px)/1.65 var(--display);
+  letter-spacing: -0.02em;
+}
+.narrative-small {
+  color: var(--narrative-body-color);
+}
+.narrative-title h2 {
+  font-size: var(--narrative-title-size);
+  color: var(--narrative-title-color);
+}
+.narrative-title > p {
+  font-size: var(--narrative-pretitle-size);
+}
+.narrative-copy > p:first-child {
+  font-size: var(--narrative-lead-size);
+  color: var(--narrative-title-color);
+}
+.narrative-small {
+  font-size: var(--narrative-body-size);
+  color: var(--narrative-body-color);
+}
+/* 手繪註記：讓經驗，接到下一雙手。 */
+.narrative-sketch .handwritten-note {
+  font-size: 18px;
+}
+@media (max-width: 899px) {
+  /* 給每一份／組織知識／企業獨有的知識／電子郵件、備忘錄、內部文件與簡報 */
+  .narrative-copy > p:first-child {
+    font-size: var(--narrative-lead-size);
+  }
+}
+@media (max-width: 639px) {
+  .narrative-title > p {
+    font-size: var(--narrative-pretitle-size);
+  }
+  .narrative-title h2 {
+    font-size: var(--narrative-title-size);
+  }
+  .narrative-copy > p:first-child {
+    font-size: var(--narrative-lead-size);
+  }
+  /* 手繪註記：讓經驗，接到下一雙手。 */
+  .narrative-sketch .handwritten-note {
+    font-size: 15px;
+  }
+}
+.product-stage {
+  color: var(--paper);
+}
+/* 信紙文字：YOUR KNOWLEDGE／答案背後，有一份原文。／備忘錄、內部文件 */
+.source-paper {
+  color: var(--ink);
+}
+.source-paper > span {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.source-paper h3 {
+  font-size: clamp(24px, 2.8vw, 38px);
+}
+.source-paper p {
+  font-size: clamp(14px, 1.7vw, 23px);
+  font-family: var(--display);
+  line-height: 1.8;
+}
+.source-paper small {
+  font-size: 10px;
+  color: var(--muted);
+}
+/* KIP 的軟體介面，與走到現場的 Wally。／設計示意，非實際部署案例。 */
+.stage-note {
+  font-size: 13px;
+  color: #deded8;
+}
+.stage-note span {
+  color: #bcbcc5;
+}
+@media (max-width: 899px) {
+  /* 信紙文字：YOUR KNOWLEDGE／答案背後，有一份原文。／備忘錄、內部文件 */
+  .source-paper h3 {
+    font-size: 24px;
+  }
+}
+@media (max-width: 639px) {
+  /* 圖片標籤與素材說明：KIP 產品介面、產品系列圖、非實際部署案例 */
+  .main-screen .slot-caption {
+    font-size: 9px;
+  }
+  .main-screen .slot-caption span {
+    font-size: 10px;
+  }
+  /* 信紙文字：YOUR KNOWLEDGE／答案背後，有一份原文。／備忘錄、內部文件 */
+  .source-paper h3 {
+    font-size: 22px;
+  }
+  .source-paper > span {
+    font-size: 8px;
+  }
+  /* KIP 的軟體介面，與走到現場的 Wally。／設計示意，非實際部署案例。 */
+  .stage-note {
+    font-size: 12px;
+  }
+}
+/* 線索，慢慢有了形狀。／然後，散落的知識有了一個入口。 */
+.reveal-heading .handwritten-note {
+  color: #b7c7a7;
+}
+.reveal-heading h2 {
+  font-size: var(--product-title-size);
+  line-height: 1.4;
+  color: var(--product-title-color);
+}
+@media (max-width: 639px) {
+  .reveal-heading .handwritten-note {
+    font-size: 18px;
+  }
+  .reveal-heading h2 {
+    font-size: var(--product-title-size);
+  }
+}
+/* 設備名稱：Wally 2、Wally 2 PLUS、Mini */
+.stage-devices figcaption {
+  font: 11px/1.5 var(--body);
+  color: #eee;
+}
+@media (max-width: 899px) {
+  .stage-devices figcaption {
+    font-size: 9px;
+  }
+}
+@media (max-width: 639px) {
+  .stage-devices figcaption {
+    font-size: 8px;
+  }
+  /* 信紙文字：YOUR KNOWLEDGE／答案背後，有一份原文。／備忘錄、內部文件 */
+  .product-reveal .source-paper h3 {
+    font-size: 18px;
+  }
+}
+/* AI 正在改變，企業分配預算的方式。／據 Investing.com 轉述… */
+.enterprise-outlook {
+  color: var(--ink);
+}
+/* ENTERPRISE AI / 產業觀察／2024 年調查 · 2027 年預期 */
+.outlook-heading {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+/* AI 正在改變，企業分配預算的方式。／據 Investing.com 轉述… */
+.outlook-layout h3 {
+  font-size: var(--outlook-title-size);
+  line-height: 1.45;
+  color: var(--outlook-title-color);
+}
+.outlook-layout p {
+  font-size: var(--outlook-body-size);
+  color: var(--outlook-body-color);
+}
+/* 調查數字：5%、14.5%、箭頭 */
+.budget-value {
+  font-family: var(--display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+.budget-value:not(.budget-future) {
+  font-size: var(--outlook-current-size);
+}
+.budget-value small {
+  font-size: 0.38em;
+  letter-spacing: 0;
+}
+.budget-future {
+  font-size: var(--outlook-future-size);
+  color: var(--outlook-number-color);
+}
+.budget-arrow {
+  color: var(--outlook-arrow-color);
+}
+/* 2024 年當時占比／2027 年預期占比 */
+.budget-year {
+  font-size: 12px;
+  color: var(--muted);
+}
+/* 左下文章補充：33% 調整其他預算／62% 不刪減其他專案 */
+.outlook-reading {
+  font-size: var(--outlook-reading-size);
+  color: var(--outlook-reading-color);
+  line-height: var(--outlook-reading-leading);
+}
+/* 展開區：166 位資訊長／每年 1,230 億美元企業 IT 支出 */
+.outlook-survey strong {
+  font-weight: 500;
+}
+.outlook-survey > span {
+  font-size: 13px;
+  color: var(--muted);
+}
+/* 資料為媒體轉述，未取得 J.P. Morgan 原始調查全文。／非實現成效註記 */
+.outlook-caveat {
+  color: var(--muted);
+  font-size: var(--outlook-note-size) !important;
+  line-height: 1.8;
+}
+/* 閱讀調查背景與出處／Investing.com 報導連結與展開內容 */
+.outlook-details {
+  font-size: var(--outlook-detail-size);
+}
+.outlook-details a {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  line-height: 1.8;
+}
+@media (max-width: 639px) {
+  /* ENTERPRISE AI / 產業觀察／2024 年調查 · 2027 年預期 */
+  .outlook-heading {
+    font-size: 11px;
+  }
+  /* 2024 年當時占比／2027 年預期占比 */
+  .budget-year {
+    font-size: 11px;
+  }
+}
+/* 問一個問題，看見答案從哪裡來。／智慧搜尋把問題連回文件 */
+.home-showcase {
+  color: var(--paper);
+}
+.showcase-heading h2 {
+  font-size: var(--showcase-title-size);
+  color: var(--showcase-title-color);
+}
+.showcase-heading p {
+  color: var(--showcase-body-color);
+  font-size: var(--showcase-body-size);
+}
+/* 同一套知識，走到現場。／Wally 是 KIP 的現場化身。 */
+.wally-heading h2 {
+  font-size: var(--wally-title-size);
+  color: var(--wally-title-color);
+}
+.wally-heading p {
+  color: var(--wally-body-color);
+  font-size: var(--wally-body-size);
+}
+.wally-detail {
+  font: 300 22px var(--display);
+  color: var(--muted);
+  font-size: var(--wally-detail-size);
+}
+/* 手機可左右滑動，查看完整設備系列。 */
+.panorama-hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+/* WALLY MINI／讓知識，有個見面的方式。／角色及設備為產品素材，非案場照片。 */
+.persona-context > span {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #6a287e;
+}
+.persona-context h3 {
+  font-size: var(--persona-title-size);
+}
+.persona-context > p {
+  font-size: var(--persona-body-size);
+  color: var(--muted);
+}
+.persona-context .note {
+  font-size: 12px;
+}
+@media (max-width: 639px) {
+  .persona-context h3 {
+    font-size: var(--persona-title-size);
+  }
+}
+/* 留給每一個，需要答案的人。 */
+.quote-art .handwritten-note {
+  font-size: 17px;
+}
+/* CEO 引言的大引號（裝飾符號） */
+.quote-glyph {
+  font: 160px/1 var(--display);
+  color: #657353;
+}
+/* CEO 引言：AI 的價值／我們用 AI／把答案變成行動 */
+.editorial-quote blockquote p {
+  font: 300 clamp(30px, 3.2vw, 47px)/1.65 var(--display);
+  letter-spacing: -0.025em;
+}
+.editorial-quote .marked {
+  text-decoration-thickness: 2px;
+  text-decoration-color: #6e825c;
+}
+.editorial-quote figcaption {
+  font-size: 16px;
+}
+.editorial-quote figcaption > span {
+  font-family: var(--display);
+}
+@media (max-width: 899px) {
+  .editorial-quote blockquote p {
+    font-size: 32px;
+  }
+  /* 留給每一個，需要答案的人。 */
+  .quote-art .handwritten-note {
+    font-size: 14px;
+  }
+}
+@media (max-width: 639px) {
+  .quote-art .handwritten-note {
+    font-size: 15px;
+  }
+  /* CEO 引言：AI 的價值／我們用 AI／把答案變成行動 */
+  .editorial-quote blockquote p {
+    font-size: clamp(28px, 7.4vw, 36px);
+    line-height: 1.8;
+  }
+  /* CEO 引言的大引號（裝飾符號） */
+  .quote-glyph {
+    font-size: 100px;
+  }
+}
+/* 留給每一個，需要答案的人。 */
+body[data-page="home"] .ceo-portrait .handwritten-note {
+  font-size: 16px;
+}
+/* CEO 引言：AI 的價值／我們用 AI／把答案變成行動 */
+body[data-page="home"] .ceo-message .editorial-quote blockquote p {
+  font-size: var(--ceo-quote-size);
+  line-height: var(--ceo-quote-leading);
+  color: var(--ceo-quote-color);
+}
+/* 邱浩煒 Wilson */
+body[data-page="home"] .ceo-attribution > span:first-child {
+  font-size: var(--ceo-name-size);
+}
+/* CEO of Synaiq */
+body[data-page="home"] .ceo-attribution .ceo-role {
+  font: 12px/1.5 var(--body);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+@media (max-width: 899px) {
+  /* CEO 引言：AI 的價值／我們用 AI／把答案變成行動 */
+  body[data-page="home"] .ceo-message .editorial-quote blockquote p {
+    font-size: var(--ceo-quote-size);
+  }
+}
+@media (max-width: 639px) {
+  /* 留給每一個，需要答案的人。 */
+  body[data-page="home"] .ceo-portrait .handwritten-note {
+    font-size: 14px;
+  }
+  /* CEO 引言：AI 的價值／我們用 AI／把答案變成行動 */
+  body[data-page="home"] .ceo-message .editorial-quote blockquote p {
+    font-size: var(--ceo-quote-size);
+  }
+}
+/* END TEXT HOME */
+/* BEGIN TEXT DEMO / 動態滑鼠與內容動畫 */
+/* Demo 配色：紙色、文字、側欄、註記與邊線 */
+.animated-product {
+  --film-paper: #f8f8f7;
+  --film-ink: #282825;
+  --film-side: #ecece8;
+  --film-muted: #64645e;
+  --film-line: #d5d5ce;
+}
+/* 自動播放的操作情境動畫／暫停、繼續、重播按鈕 */
+.demo-playback {
+  font-size: 11px;
+  color: var(--inverse);
+  letter-spacing: 0.04em;
+}
+.demo-playback button {
+  font-size: 12px;
+  color: var(--paper);
+}
+.demo-playback button:disabled {
+  color: var(--inverse);
+}
+/* Demo 介面的一般文字 */
+.demo-film {
+  color: var(--film-ink);
+  font-size: clamp(11px, 1.15vw, 16px);
+}
+/* Demo 上排：SynaiQ／KIP 智慧知識搜尋／概念示意・虛構資料 */
+.film-top {
+  font-size: 13px;
+}
+.film-top > small {
+  color: var(--film-muted);
+  font-size: 10px;
+}
+/* Demo 側欄：新的對話／最近的問題 */
+.film-sidebar {
+  font-size: 12px;
+}
+.film-sidebar > small {
+  color: var(--film-muted);
+}
+.film-new {
+  color: var(--film-paper);
+}
+/* Demo 路徑：組織知識庫／契約範例 */
+.film-breadcrumb {
+  font-size: 11px;
+  color: var(--film-muted);
+}
+/* Demo 問題：這份採購契約，第 12 頁寫了什麼？ */
+.film-question {
+  font-size: clamp(13px, 1.5vw, 20px);
+}
+/* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+.film-avatar {
+  color: var(--film-paper);
+}
+.film-answer p {
+  font-size: clamp(15px, 1.7vw, 23px);
+  line-height: 1.85;
+}
+.film-answer small {
+  font-size: 11px;
+  color: var(--film-muted);
+  line-height: 1.8;
+}
+/* Demo 引用來源：採購契約範例_2023.pdf／第 12 頁／開啟原文 */
+.film-citation small {
+  font-size: 10px;
+}
+.film-citation > span {
+  font-size: 13px;
+}
+.film-citation b {
+  font-size: 11px;
+  font-weight: 400;
+  color: #3b6746;
+}
+/* Demo 輸入框：問一個問題……／送出 */
+.film-input {
+  color: var(--film-muted);
+  font-size: 13px;
+}
+.film-send {
+  color: var(--film-paper);
+}
+/* Demo 處理提示：正在尋找資料來源 */
+.film-thinking {
+  font-size: 11px;
+  color: var(--film-muted);
+}
+/* Demo 原文：採購契約、保固條款、原文標記與資料註記 */
+.film-source {
+  font-size: 14px;
+}
+.film-source > div:first-child {
+  color: var(--film-muted);
+  font-size: 11px;
+}
+.film-source h4 {
+  font: 400 27px var(--display);
+}
+.film-source-label {
+  font-size: 13px;
+}
+.film-source p {
+  font-family: var(--display);
+  line-height: 2;
+}
+.film-source mark {
+  color: var(--film-ink);
+}
+.film-source > small {
+  font-size: 10px;
+  color: var(--film-muted);
+}
+/* Demo 知識中心：文件管理、解析狀態、分庫權限及文件清單 */
+.film-library {
+  font-size: 14px;
+}
+.film-library > small {
+  font-size: 11px;
+  color: var(--film-muted);
+}
+.film-library h4 {
+  font: 300 clamp(25px, 3vw, 38px) var(--display);
+}
+.film-library > p {
+  font-size: 13px;
+  color: var(--film-muted);
+}
+.film-table > div {
+  font-size: 13px;
+}
+.film-table > div:first-child {
+  font-size: 11px;
+}
+.film-table > div > span:last-child {
+  color: #426d4b;
+}
+/* 01 用自然語言提問／02 沿著引用看原文／03 讓文件各有位置 */
+.demo-chapters {
+  font-family: var(--demo-step-font);
+  color: var(--demo-step-color);
+  font-size: var(--demo-step-size);
+}
+.demo-chapters li > span {
+  font-family: var(--demo-step-number-font);
+  font-size: var(--demo-step-number-size);
+  font-weight: 400;
+  line-height: normal;
+}
+.demo-chapters li.is-active {
+  color: var(--demo-step-active-color);
+}
+@media (max-width: 639px) {
+  /* 自動播放的操作情境動畫／暫停、繼續、重播按鈕 */
+  .demo-playback {
+    font-size: 9px;
+  }
+  .demo-playback button {
+    font-size: 11px;
+  }
+  /* Demo 上排：SynaiQ／KIP 智慧知識搜尋／概念示意・虛構資料 */
+  .film-top {
+    font-size: 10px;
+  }
+  .film-logo {
+    font-size: 24px;
+  }
+  /* Demo 問題：這份採購契約，第 12 頁寫了什麼？ */
+  .film-question {
+    font-size: 14px;
+  }
+  /* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+  .film-avatar {
+    font-size: 13px;
+  }
+  .film-answer p {
+    font-size: 16px;
+  }
+  /* Demo 引用來源：採購契約範例_2023.pdf／第 12 頁／開啟原文 */
+  .film-citation > span {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  /* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+  .film-answer small {
+    font-size: 11px;
+  }
+  /* Demo 輸入框：問一個問題……／送出 */
+  .film-input {
+    font-size: 11px;
+  }
+  /* Demo 原文：採購契約、保固條款、原文標記與資料註記 */
+  .film-source h4 {
+    font-size: 25px;
+  }
+  /* Demo 知識中心：文件管理、解析狀態、分庫權限及文件清單 */
+  .film-table > div {
+    font-size: 12px;
+  }
+  /* Demo 問題：這份採購契約，第 12 頁寫了什麼？ */
+  .film-question > span {
+    line-height: 1.7;
+  }
+}
+/* 影院框及圖片搜尋：所有文字設定在 06 Demo，不在 site.css 寫字型。 */
+.demo-booth-heading h3 {
+  font-family: var(--demo-booth-title-font);
+  font-size: var(--demo-booth-title-size);
+  color: var(--demo-booth-title-color);
+  font-weight: 300;
+  line-height: 1.35;
+}
+.demo-booth-heading p {
+  font-size: var(--demo-booth-body-size);
+  color: var(--demo-booth-body-color);
+  line-height: 1.65;
+}
+.demo-booth-kicker {
+  font: 11px var(--body);
+  letter-spacing: 0.1em;
+  color: var(--demo-booth-accent-color);
+}
+.demo-booth-arrow { color: var(--demo-booth-accent-color); }
+.demo-booth-choices button {
+  font: 400 var(--demo-booth-choice-size)/1.5 var(--body);
+  color: var(--inverse);
+}
+.demo-booth-choices button[aria-pressed="true"] { color: var(--paper); }
+.demo-booth-choices button > span { color: var(--demo-booth-accent-color); }
+.image-search-preview h4 {
+  font: 300 var(--demo-image-heading-size)/1.4 var(--display);
+}
+.image-query-text { font-size: var(--demo-image-query-size); line-height: 1.6; }
+.image-result-heading, .image-search-note, .image-preview-kicker, .image-search-preview dt {
+  font-size: var(--demo-image-label-size);
+  color: var(--film-muted);
+}
+.image-preview-open {
+  font-size: var(--demo-image-label-size);
+  color: var(--film-paper);
+}
+.image-result figcaption strong { font-size: var(--demo-image-result-size); font-weight: 500; }
+.image-result figcaption span { font-size: var(--demo-image-label-size); color: var(--film-muted); }
+.image-search-film .film-answer .image-search-match, .image-search-preview dd { font-size: var(--demo-image-label-size); line-height: 1.7; }
+/* END TEXT DEMO */
+/* BEGIN TEXT HOME PAPER / 首頁手撕紙邊界 */
+/* END TEXT HOME PAPER */
+/* BEGIN TEXT KIP / 平台頁與 RWD */
+/* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+body[data-page="kip"] .kip-opening {
+  color: var(--ink);
+}
+body[data-page="kip"] .kip-opening .eyebrow {
+  font-family: var(--kip-eyebrow-font);
+  font-size: var(--kip-eyebrow-size);
+  font-weight: var(--kip-eyebrow-weight);
+  color: var(--kip-eyebrow-color);
+  letter-spacing: var(--kip-eyebrow-tracking);
+}
+body[data-page="kip"] .kip-opening h1 {
+  font-size: var(--kip-title-size);
+  line-height: var(--kip-title-leading);
+  color: var(--kip-title-color);
+}
+body[data-page="kip"] .kip-opening h1 .marked {
+  text-decoration-color: var(--kip-olive);
+  text-decoration-thickness: 2px;
+}
+body[data-page="kip"] .kip-opening .intro {
+  color: var(--kip-body-color);
+  font-size: var(--kip-intro-size);
+}
+body[data-page="kip"] .kip-pencil-trail {
+  color: var(--kip-olive);
+}
+/* 01 / KIP／互動介面概念示範 · 非實際產品截圖 */
+body[data-page="kip"] .kip-scene-caption {
+  color: var(--muted);
+  font-size: 10px;
+}
+body[data-page="kip"] .kip-scene-caption > span:first-child {
+  letter-spacing: 0.12em;
+}
+/* 可核對的出處／第 12 頁是保固條款／採購契約範例_2023.pdf */
+body[data-page="kip"] .kip-slip-label {
+  font: italic 17px/1.5 var(--display);
+  color: var(--kip-olive);
+}
+body[data-page="kip"] .kip-evidence-slip > p {
+  font-size: clamp(11px, 1vw, 14px);
+  color: var(--muted);
+}
+body[data-page="kip"] .kip-evidence-slip .kip-slip-answer {
+  font: 300 clamp(20px, 2vw, 28px)/1.65 var(--display);
+  color: var(--ink);
+}
+body[data-page="kip"] .kip-evidence-slip small {
+  font-size: 10px;
+  color: var(--muted);
+}
+/* 示範資料（KIP 首屏旁手寫註記） */
+body[data-page="kip"] .kip-scene-note {
+  font: italic 17px/1.5 var(--display);
+  color: var(--kip-olive);
+}
+/* 從文件，到可以使用的知識。／資料接入、自動解析、搜尋可用 */
+body[data-page="kip"] .kip-section-heading h2 {
+  font-size: var(--kip-process-title-size);
+}
+/* KIP 區段編號 01、05 */
+body[data-page="kip"] .kip-margin-label {
+  color: var(--kip-olive);
+  font: italic 18px/1.3 var(--display);
+}
+/* 從文件，到可以使用的知識。／資料接入、自動解析、搜尋可用 */
+body[data-page="kip"] .kip-step-drawing {
+  color: var(--ink);
+}
+body[data-page="kip"] .kip-step-heading > span {
+  color: var(--kip-olive);
+  font: 300 24px/1.4 var(--display);
+}
+body[data-page="kip"] .kip-step-heading h3 {
+  font-size: var(--kip-step-title-size);
+}
+body[data-page="kip"] .kip-steps p {
+  color: var(--kip-body-color);
+  font-size: var(--kip-step-body-size);
+}
+/* 四個層級，一套知識中樞。 */
+body[data-page="kip"] .kip-architecture {
+  color: var(--kip-paper);
+}
+/* 區段英文小標：Built around your knowledge.／The architecture behind an answer. */
+body[data-page="kip"] .kip-architecture .section-no {
+  color: var(--kip-light-ink);
+  font-size: 13px;
+}
+/* 四個層級，一套知識中樞。 */
+body[data-page="kip"] .kip-architecture h2 {
+  font-size: var(--kip-architecture-title-size);
+}
+/* Connected from source to answer. */
+body[data-page="kip"] .kip-architecture .connector {
+  font-size: clamp(18px, 1.8vw, 24px);
+  color: #afc0a1;
+  line-height: 1.6;
+}
+/* 四個層級，一套知識中樞。 */
+body[data-page="kip"] .kip-architecture-thread {
+  color: #a9bc99;
+}
+/* 四層卡片：使用者接入、大模型層、知識中心、平台功能 */
+body[data-page="kip"] .kip-layer-stack article {
+  color: var(--ink);
+}
+body[data-page="kip"] .kip-layer-stack .index {
+  font: 300 32px/1.3 var(--display);
+  color: var(--kip-olive);
+}
+body[data-page="kip"] .kip-layer-stack h3 {
+  font-size: var(--kip-layer-title-size);
+}
+body[data-page="kip"] .kip-layer-stack p {
+  font-size: var(--kip-layer-body-size);
+  color: var(--kip-body-color);
+}
+/* 八項核心優勢：標題、右側摘要、展開內文與加減符號 */
+body[data-page="kip"] .advantages .section-no {
+  color: var(--kip-olive);
+}
+body[data-page="kip"] .advantage-row summary::after {
+  color: var(--kip-olive);
+}
+/* 問完，順手看原文。／智慧知識搜尋 IKS、知識中心 KC */
+body[data-page="kip"] .kip-proof {
+  color: var(--kip-paper);
+}
+body[data-page="kip"] .kip-proof-heading h2 {
+  font-size: var(--kip-proof-title-size);
+}
+body[data-page="kip"] .kip-proof-heading p {
+  color: var(--kip-light-ink);
+  font-size: var(--kip-proof-body-size);
+}
+body[data-page="kip"] .kip-proof .marked {
+  text-decoration-color: #a9bc99;
+}
+/* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+body[data-page="kip"] .kip-proof .film-answer .marked {
+  text-decoration-color: var(--kip-olive);
+}
+/* 區段英文小標：Built around your knowledge.／The architecture behind an answer. */
+body[data-page="kip"] .kip-library-notes .section-no {
+  font: 10px/1.5 var(--body);
+  letter-spacing: 0.08em;
+  color: var(--kip-light-ink);
+}
+/* 文件各有位置。／文件管理、解析狀態、分庫權限 */
+body[data-page="kip"] .kip-library-notes h3 {
+  font-size: var(--kip-library-title-size);
+}
+body[data-page="kip"] .kip-library-notes dt {
+  font-size: var(--kip-library-label-size);
+}
+body[data-page="kip"] .kip-library-notes dd {
+  color: var(--kip-light-ink);
+  font-size: var(--kip-library-body-size);
+}
+/* 把日常工作，一起接上。／API、MCP、分庫權限、帳號記錄、影像檢索、報表 */
+body[data-page="kip"] .kip-capabilities-heading h2 {
+  font-size: var(--kip-capabilities-title-size);
+}
+body[data-page="kip"] .kip-capability-art {
+  color: var(--kip-olive);
+}
+body[data-page="kip"] .kip-capability-list dt {
+  font: 300 clamp(23px, 2.2vw, 30px)/1.5 var(--display);
+  font-size: var(--kip-capability-title-size);
+}
+body[data-page="kip"] .kip-capability-list dt > span {
+  color: var(--kip-olive);
+  font-size: 18px;
+}
+body[data-page="kip"] .kip-capability-list dd {
+  color: var(--kip-body-color);
+  font-size: var(--kip-capability-body-size);
+}
+@media (max-width: 999px) {
+  /* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+  body[data-page="kip"] .kip-opening h1 {
+    font-size: var(--kip-title-size);
+  }
+  /* 四層卡片：使用者接入、大模型層、知識中心、平台功能 */
+  body[data-page="kip"] .kip-layer-stack .index {
+    font-size: 27px;
+  }
+}
+@media (max-width: 699px) {
+  /* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+  body[data-page="kip"] .kip-opening h1 {
+    font-size: var(--kip-title-size);
+  }
+  /* 可核對的出處／第 12 頁是保固條款／採購契約範例_2023.pdf */
+  body[data-page="kip"] .kip-evidence-slip .kip-slip-answer {
+    font-size: clamp(20px, 4.7vw, 26px);
+  }
+  /* 01 / KIP／互動介面概念示範 · 非實際產品截圖 */
+  body[data-page="kip"] .kip-scene-caption {
+    font-size: 9px;
+  }
+  /* 從文件，到可以使用的知識。／資料接入、自動解析、搜尋可用 */
+  body[data-page="kip"] .kip-step-heading h3 {
+    font-size: var(--kip-step-title-size);
+  }
+  body[data-page="kip"] .kip-step-heading > span {
+    font-size: 18px;
+  }
+  body[data-page="kip"] .kip-steps p {
+    font-size: var(--kip-step-body-size);
+  }
+  /* 四層卡片：使用者接入、大模型層、知識中心、平台功能 */
+  body[data-page="kip"] .kip-layer-stack h3 {
+    font-size: var(--kip-layer-title-size);
+  }
+  body[data-page="kip"] .kip-layer-stack p {
+    font-size: var(--kip-layer-body-size);
+  }
+  /* 問完，順手看原文。／智慧知識搜尋 IKS、知識中心 KC */
+  body[data-page="kip"] .kip-proof-heading p {
+    font-size: var(--kip-proof-body-size);
+  }
+  /* 把日常工作，一起接上。／API、MCP、分庫權限、帳號記錄、影像檢索、報表 */
+  body[data-page="kip"] .kip-capability-list dt {
+    font-size: var(--kip-capability-title-size);
+  }
+}
+@media (max-width: 359px) {
+  /* 從文件，到可以使用的知識。／資料接入、自動解析、搜尋可用 */
+  body[data-page="kip"] .kip-step-heading h3 {
+    font-size: var(--kip-step-title-size);
+  }
+  /* 把日常工作，一起接上。／API、MCP、分庫權限、帳號記錄、影像檢索、報表 */
+  body[data-page="kip"] .kip-capability-list dt {
+    font-size: var(--kip-capability-title-size);
+  }
+}
+/* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+html:lang(en) body[data-page="kip"] .kip-opening h1 {
+  font-size: var(--kip-title-size);
+}
+/* END TEXT KIP */

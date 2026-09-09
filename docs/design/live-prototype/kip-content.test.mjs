@@ -8,7 +8,10 @@ const html = renderKip({
   contact: () => '<section data-shared-contact>SHARED_CONTACT</section>',
 });
 const text = html.replace(/<[^>]*>/g, '');
-const css = readFileSync(new URL('./kip-design.css', import.meta.url), 'utf8');
+const siteCss = readFileSync(new URL('./site.css', import.meta.url), 'utf8');
+const kipStart = siteCss.indexOf('/* BEGIN KIP /');
+assert.ok(kipStart >= 0, 'KIP layout section must exist');
+const css = siteCss.slice(kipStart);
 
 test('KIP editorial redesign preserves the existing 32 copy and shared-content blocks', () => {
   const expected = [
@@ -62,7 +65,7 @@ test('KIP retains its brand-matched screen and exactly one labeled animated demo
 });
 
 test('KIP paper retains its fibres while architecture stays in normal flow at every viewport', () => {
-  assert.match(css, /--kip-tear-image:\s*url\('assets\/torn-paper-cotton-v2\.webp'\)/);
+  assert.match(readFileSync(new URL('./tokens.css', import.meta.url), 'utf8'), /--kip-tear-image:\s*url\(["']assets\/torn-paper-cotton-v2\.webp["']\)/);
   assert.doesNotMatch(css, /torn-letter-edge\.svg|clip-path:\s*polygon/);
   assert.match(css, /body\[data-page="kip"\] \.kip-architecture-panel\s*\{[^}]*position:\s*static/);
   assert.doesNotMatch(css, /kip-can-pin|position:\s*sticky|min-height:\s*1450px/);

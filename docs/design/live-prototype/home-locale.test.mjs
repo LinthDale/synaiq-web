@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderHome } from './home-design.js';
 import { zhHant, en } from './locale-home.js';
-import { getMessages } from './i18n.js';
+import { getMessages, escapeHtml } from './i18n.js';
 
 const render = (locale, messages = getMessages(locale)) => renderHome({
   locale, messages, advantageSection: () => '<section data-shared-advantages></section>',
@@ -63,25 +63,36 @@ test('Home escapes translated content instead of treating catalogs as HTML', () 
   assert.doesNotMatch(html, /<img src=x|alt="" onerror=/);
 });
 
-test('Chinese Home remains the default and preserves the exact accepted CEO quote', () => {
+test('a different translated eyebrow remains plain escaped copy without KIP styling', () => {
+  const messages = structuredClone(getMessages('en'));
+  messages.home.hero.eyebrow = '<img src=x onerror=alert(1)>';
+  const label = render('en', messages).match(/<p class="eyebrow">(.*?)<\/p>/s)[1];
+  assert.equal(label, '&lt;img src=x onerror=alert(1)&gt;');
+  assert.doesNotMatch(label, /eyebrow-initial|<img/);
+});
+
+test('Chinese Home remains the default and renders the current catalog quote exactly', () => {
   const html = renderHome({ advantageSection: () => '', contact: () => '' });
   const quote = html.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1].replace(/<[^>]*>/g, '');
-  assert.equal(quote, 'AI 的價值，是讓被落下的人迎頭趕上。我們用 AI，讓企業的知識找得到、用得上；再結合管理的智慧，突破既有框架，把答案變成行動。');
+  assert.equal(quote, zhHant.ceo.quote.flat().map(escapeHtml).join(''));
   assert.match(html, /src="assets\/kip-search-demo\.svg"/);
 });
 
-test('approved two-paragraph CEO quote is translated without retaining the superseded wording', () => {
+test('the English CEO quote renders both catalog paragraphs and escapes edited copy', () => {
   const html = render('en');
   const quote = html.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1];
   const paragraphs = [...quote.matchAll(/<p>([\s\S]*?)<\/p>/g)].map(match => match[1].replace(/<[^>]*>/g, ''));
-  assert.deepEqual(paragraphs, [
-    'AI’s value lies in helping those left behind catch up.',
-    'We use AI to make enterprise knowledge easy to find and use, then combine it with management wisdom to move beyond established frameworks and turn answers into action.',
-  ]);
+  assert.equal(en.ceo.quote.length, 2);
+  assert.ok(en.ceo.quote.every(parts => parts.length === 2 && parts.every(part => typeof part === 'string')));
+  assert.deepEqual(paragraphs, en.ceo.quote.map(parts => parts.map(escapeHtml).join('')));
   assert.match(html, /邱浩煒 Wilson/);
   assert.doesNotMatch(html, /邱浩偉/);
   const messages = structuredClone(getMessages('en'));
-  assert.doesNotMatch(quote, /greatest contribution|every other problem|undefined/);
+  assert.doesNotMatch(quote, /undefined/);
   messages.home.ceo.quote[1][0] = '<script>bad</script>';
-  assert.match(render('en', messages), /&lt;script&gt;bad&lt;\/script&gt;/);
+  messages.home.ceo.quote[0][1] = 'Updated & emphasized';
+  const edited = render('en', messages);
+  assert.match(edited, /&lt;script&gt;bad&lt;\/script&gt;/);
+  assert.match(edited, /class="quote-phrase">Updated &amp; emphasized<\/span>/);
+  assert.doesNotMatch(edited, /<script>bad/);
 });

@@ -1,6 +1,9 @@
 # CSS 手冊（PRD-001 FR-102）
 
-本站不使用 Tailwind、不使用 CSS-in-JS。樣式只有三個地方：
+本手冊適用於 **Astro Phase A 的 `src/`**，不是已核准、已上線的 `docs/design/live-prototype/`。
+官網的集中字級／配色設定與分檔方式請看 [官網樣式維護指南](../design/live-prototype/STYLE-GUIDE.md)。
+
+Astro 基礎不使用 Tailwind、不使用 CSS-in-JS。樣式責任如下：
 
 | 放哪裡 | 寫什麼 | 誰能宣告 `--` 變數 |
 |---|---|---|

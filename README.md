@@ -40,6 +40,7 @@ npm run test:all    # 依序執行 Astro 與設計測試
 
 ## 修改核准設計、語言與 Logo
 
+- 官網只有兩份 CSS：所有文字的字型、字級、行高、字距與文字顏色（含 ZH/EN、圖片旁註記和 Demo 小字）都改 `docs/design/live-prototype/tokens.css`；排版、RWD 幾何與動畫樣式改同目錄 `site.css`。區塊索引、quote 修改位置與前後比對指令見 [官網樣式維護指南](docs/design/live-prototype/STYLE-GUIDE.md)。
 - 目前網站的中英文文案在 `docs/design/live-prototype/locale-*.js`，共用語言機制在 `i18n.js`。
 - Logo 的共用設定在 `docs/design/live-prototype/brand.js`；依 [語言擴充與 Logo 維護指南](docs/design/live-prototype/localization-and-brand-guide.md) 更換公開衍生素材，並檢查明暗底與兩個頁面。沒有 Logo 上傳 CMS。
 - 元件、配色與動畫仍以 [核准設計 README](docs/design/live-prototype/README.md) 為準；不要用 Phase A 的中性 token 或英文佔位內容覆蓋它。

@@ -4,14 +4,18 @@ import { readFile, stat } from 'node:fs/promises';
 import postcss from 'postcss';
 import sharp from 'sharp';
 
-const stylesheetName = 'paper-material.css';
+const stylesheetName = 'site.css';
 const assetName = 'torn-paper-cotton-v2.webp';
 const stylesheetUrl = new URL(stylesheetName, import.meta.url);
 const assetUrl = new URL(`assets/${assetName}`, import.meta.url);
 const homeScope = /\[\s*data-page\s*=\s*(?:"home"|'home'|home)\s*\]/i;
 
 async function readStylesheet() {
-  return postcss.parse(await readFile(stylesheetUrl, 'utf8'), { from: stylesheetUrl.pathname });
+  const source = await readFile(stylesheetUrl, 'utf8');
+  const start = source.indexOf('/* BEGIN HOME PAPER /');
+  const end = source.indexOf('/* END HOME PAPER */');
+  assert.ok(start >= 0 && end > start, 'The Home paper section remains identifiable in site.css');
+  return postcss.parse(source.slice(start, end), { from: stylesheetUrl.pathname });
 }
 
 function isKeyframeStep(rule) {
@@ -25,18 +29,21 @@ function declarations(rule, property) {
   return rule.nodes.filter(node => node.type === 'decl' && node.prop === property);
 }
 
-test('the preview loads the paper material stylesheet after its existing design layers', async () => {
+test('the paper material section follows Home and precedes KIP within site.css', async () => {
   const html = await readFile(new URL('page.html', import.meta.url), 'utf8');
   const links = [...html.matchAll(/<link\b[^>]*>/gi)]
     .map(([tag]) => Object.fromEntries([...tag.matchAll(/([\w-]+)\s*=\s*(["'])(.*?)\2/g)].map(([, key, , value]) => [key.toLowerCase(), value])))
     .filter(link => link.rel?.split(/\s+/).includes('stylesheet'))
     .map(link => link.href?.split(/[?#]/)[0]);
-  const materialIndex = links.findIndex(href => href?.endsWith(stylesheetName));
-  assert.ok(materialIndex >= 0, 'The material stylesheet must be linked from page.html');
-  for (const previous of ['home-design.css', 'editorial-design.css']) {
-    const previousIndex = links.findIndex(href => href?.endsWith(previous));
+  assert.ok(links.includes('site.css'), 'page.html loads the single CSS entry');
+  const entry = await readFile(new URL('site.css', import.meta.url), 'utf8');
+  const materialIndex = entry.indexOf('/* BEGIN HOME PAPER /');
+  assert.ok(materialIndex >= 0, 'The material section must exist');
+  for (const previous of ['BASE', 'COMPONENTS', 'HOME', 'DEMO']) {
+    const previousIndex = entry.indexOf(`/* BEGIN ${previous} /`);
     assert.ok(previousIndex >= 0 && previousIndex < materialIndex, `${previous} must precede the material overrides`);
   }
+  assert.ok(materialIndex < entry.indexOf('/* BEGIN KIP /'), 'KIP styling follows the Home-only paper layer');
 });
 
 test('paper material selectors remain scoped to the homepage, including responsive overrides', async () => {

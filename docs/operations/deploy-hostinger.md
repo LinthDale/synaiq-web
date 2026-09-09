@@ -10,6 +10,8 @@
 
 實際上架、已執行的 smoke checks、備份限制與路由內容，見 [2026-09-08 部署紀錄](deployment-synaiq-com-2026-09-08.md)。這份部署紀錄保持原始操作事實；repo 整併不會重新執行上架。
 
+**2026-09-09 12:13 已依使用者要求下架舊 WordPress 網站入口並刪除實體 `home.html`。** 現行路由、36 個舊路徑的 410 驗證與本次精確備份，見 [舊站下架紀錄](legacy-retirement-2026-09-09.md)。核准靜態 release 的 41 個頁面／資產維持原 hash。兩檔 CSS 收斂仍是本機變更，未部署。
+
 | 位置 | 用途 |
 |---|---|
 | `C:\Users\User\synaiq\synaiq-web\docs\design\live-prototype\` | 現行核准設計來源 |
@@ -19,17 +21,19 @@
 | `C:\Users\User\Documents\synaiq-web\SynaiQ-網站上架與還原操作手冊-20260908.md` | 使用者保留的上架／還原手冊；歷史舊 repo 路徑須對照新的唯一工作目錄 |
 | Hostinger `public_html/synaiq-release-20260908/` | 已上架的版本目錄 |
 | Hostinger `backup-synaiq-20260908/.htaccess` | 上架前的路由備份，位於公開目錄外 |
+| `out/site-consolidation-20260909/remote-before/` | 9 月 9 日舊站下架前的精確路由與已刪除 home.html 備份；不進 Git |
 
-正式站透過 `public_html/.htaccess` 的標記區塊，把 `/` 與 `/home.html` 內部轉交到上述版本。既有 WordPress 檔案、`home.html` 及 `wp-content` 均保留；部分公開圖片仍依賴舊素材路徑。`synaiq-ai.com` 與其產品服務不在這次上架／整併範圍。
+正式站透過 `public_html/.htaccess` 把 `/` 內部轉交到上述版本；`/home.html` 現在 301 到 root，實體檔已刪除。舊 WordPress 頁面、API、登入及其餘非白名單路徑回傳 410，不再 fallback 到 `index.php`。WordPress 程式、資料庫及 `wp-content` 仍在，但除了新版依賴的 `wp-content/uploads/2026/03/toutou-2.png`，不再公開舊素材路徑。`synaiq-ai.com` 與其產品服務不在這次範圍。
 
 ## 還原與後續發布
 
 完整人工操作步驟見上表的本機手冊，以及 [部署紀錄的 Routing and rollback](deployment-synaiq-com-2026-09-08.md#routing-and-rollback)。本次 repo 整併沒有執行還原演練，也沒有建立新的整站或資料庫備份。
 
-- 還原此次入口切換時，只處理 `BEGIN SynaiQ release 20260908`／`END SynaiQ release 20260908` 的標記路由；保留原有及後來新增的其他設定。
+- 目前有效路由標記為 `BEGIN SynaiQ static site 20260909`／`END SynaiQ static site 20260909`；若要還原舊站下架，請走 [9 月 9 日的還原界線](legacy-retirement-2026-09-09.md#還原界線)，不可直接套用第一次上架前的舊路由。
 - 若要整份還原 `.htaccess`，先確認上架後沒有其他需要保留的變更。
 - 路由仍指向新版時，不可移除其版本目錄。保留舊站檔案不等於已完成可還原的全站備份。
 - 下次發布需另行核准，使用新的版本目錄、重新封裝對應資源路徑，先驗證直接網址及回退方案，再切換入口。
+- 現行路由只開放 `synaiq-release-20260908` 的核准檔案型別、必要單張舊圖和憑證驗證路徑。新 release 的直接預覽 URL、額外頁面、robots／sitemap 等需先加入經審核的路由；否則會 410。不要為了發布而恢復 WordPress fallback。
 - 不可將整個 repo、測試、設計文件、私人參考素材或本機工具公開上傳。
 
 ## Hostinger API 使用界線

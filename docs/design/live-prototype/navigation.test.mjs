@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { hasDeclaration } from './css-test-helpers.mjs';
 import { getMessages, escapeHtml as esc } from './i18n.js';
 
 const html = readFileSync(new URL('./page.html', import.meta.url), 'utf8');
-const css = readFileSync(new URL('./prototype.css', import.meta.url), 'utf8');
 const source = readFileSync(new URL('./prototype.js', import.meta.url), 'utf8');
 const navigationSource = source.slice(source.indexOf('export function initPageNavigation')).replace('export function', 'function');
 
@@ -54,9 +54,11 @@ test('only Home and KIP are primary page switches; context directory is outside 
   assert.doesNotMatch(primary, /Wally|產品畫面|關於/);
   assert.doesNotMatch(primary, /目前所在|<small/);
   assert.ok(html.indexOf('id="mobile-nav"') > html.indexOf('</header>'));
-  assert.match(css, /\.page-navigation\{grid-column:1 \/ -1;grid-row:2/);
-  assert.match(css, /scroll-padding-top:calc\(var\(--header-height,74px\) \+ 18px\)/);
-  assert.match(css, /\.page-context\{position:fixed;inset:var\(--header-height,112px\) 0 auto/);
+  assert.ok(hasDeclaration('site.css', '.page-navigation', 'grid-column', '1 / -1', '(max-width:899px)'));
+  assert.ok(hasDeclaration('site.css', '.page-navigation', 'grid-row', '2', '(max-width:899px)'));
+  assert.ok(hasDeclaration('site.css', 'html', 'scroll-padding-top', 'calc(var(--header-height,74px) + 18px)'));
+  assert.ok(hasDeclaration('site.css', '.page-context', 'position', 'fixed', '(max-width:899px)'));
+  assert.ok(hasDeclaration('site.css', '.page-context', 'inset', 'var(--header-height,112px) 0 auto', '(max-width:899px)'));
 });
 
 test('Home and KIP each expose one visible and accessible current page and only local section links', () => {

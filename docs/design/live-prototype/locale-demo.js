@@ -12,6 +12,27 @@ export const zhHant = {
   tableHeaders: ['文件名稱', '處理狀態'], tableRows: [['採購契約範例_2023.pdf', '✓ 已完成'], ['知識整理流程_範例.docx', '✓ 已完成'], ['資料目錄_範例.xlsx', '待處理']], libraryNote: '所有內容均為示例資料。',
   chaptersLabel: '動畫依序呈現的流程', chapters: ['用自然語言提問', '沿著引用看原文', '讓文件各有位置'],
   note: '模擬滑鼠點擊與內容展開的情境動畫 · 示例資料 · 非實際連線操作',
+  booth: {
+    label: 'KIP 功能動畫展示', previous: '上一段動畫', next: '下一段動畫', select: '選擇功能動畫', nowShowing: '正在放映',
+    titles: ['知識問答', '以自然語言找圖', '以圖搜圖'],
+    descriptions: ['問一個問題，沿著答案回到原文。', '不用記住檔名，用一句描述找回需要的圖片。', '從一張參考圖片出發，查看外觀相近的素材。'],
+    collection: '示例圖庫 / 產品素材',
+    resultLabel: '搜尋結果', resultCount: '3 張示例圖片', candidate: '查看素材 ↗',
+    original: '原始素材', fileLabel: '檔案名稱', folderLabel: '素材位置', folder: '示例圖庫 / Wally 系列',
+    example: '情境示意，非即時搜尋結果', imageAlt: 'Wally 產品示例圖片', open: '檢視原圖 ↗',
+    textImage: {
+      query: '找有大螢幕、可移動底座的接待機器人',
+      loading: '理解描述，尋找圖片中的線索…',
+      matching: '從描述找到圖片，再確認素材出處。',
+      chapters: ['描述你想找的圖', '查看相關圖片', '找到原始素材'],
+    },
+    imageImage: {
+      query: '找外觀相近的產品圖片',
+      loading: '比對外觀，尋找相近的圖片…',
+      matching: '從參考圖片延伸，查看相似外觀的素材。',
+      chapters: ['選入參考圖片', '比對相近外觀', '查看圖片出處'],
+    },
+  },
 };
 
 export const en = {
@@ -27,4 +48,25 @@ export const en = {
   tableHeaders: ['Document name', 'Status'], tableRows: [['Procurement_Contract_2023.pdf', '✓ Complete'], ['Knowledge_Workflow_Sample.docx', '✓ Complete'], ['Data_Index_Sample.xlsx', 'Pending']], libraryNote: 'All content is sample data.',
   chaptersLabel: 'Steps shown in the animation', chapters: ['Ask in your own words', 'Follow the source', 'Organize your documents'],
   note: 'Animated clicks and content reveals · Sample data · Not a live product session',
+  booth: {
+    label: 'KIP feature screening room', previous: 'Previous animation', next: 'Next animation', select: 'Choose a feature animation', nowShowing: 'NOW SHOWING',
+    titles: ['Knowledge Q&A', 'Find images with words', 'Search by image'],
+    descriptions: ['Ask a question. Follow the answer back to its source.', 'Describe the image you need, without remembering its filename.', 'Start with a reference image to discover visually related assets.'],
+    collection: 'Sample library / Product assets',
+    resultLabel: 'SEARCH RESULTS', resultCount: '3 sample images', candidate: 'View asset ↗',
+    original: 'ORIGINAL ASSET', fileLabel: 'Filename', folderLabel: 'Location', folder: 'Sample library / Wally series',
+    example: 'Illustrative workflow, not live search results', imageAlt: 'Wally sample product image', open: 'View original ↗',
+    textImage: {
+      query: 'A reception robot with a large screen and a mobile base',
+      loading: 'Connecting your description to visual clues…',
+      matching: 'From a description to an image, with its source in reach.',
+      chapters: ['Describe an image', 'Explore matching images', 'Find the original asset'],
+    },
+    imageImage: {
+      query: 'Find product images with a similar appearance',
+      loading: 'Looking for images with a similar appearance…',
+      matching: 'Explore visually related assets from a reference image.',
+      chapters: ['Choose a reference', 'Compare similar images', 'Trace the image source'],
+    },
+  },
 };

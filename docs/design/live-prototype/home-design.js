@@ -1,6 +1,10 @@
-import { renderAnimatedDemo, initAnimatedDemo } from './demo-animation.js';
+import { renderAnimatedDemo, initAnimatedDemo, initProductReveal } from './demo-animation.js';
 import { getMessages, escapeHtml, pageHref } from './i18n.js';
 const h = escapeHtml;
+// Style only this English phrase; future translated labels stay plain, escaped text.
+const renderHeroEyebrow = text => text === 'KNOWLEDGE INTELLIGENCE PLATFORM'
+  ? text.split(' ').map(word => `<span class="eyebrow-initial">${h(word[0])}</span>${h(word.slice(1))}`).join(' ')
+  : h(text);
 const slotLabel = (id, text) => `<figcaption class="slot-caption"><span>${h(id)}</span> ${h(text)}</figcaption>`;
 
 export function renderHome({ advantageSection, contact, locale = 'zh-Hant', messages = getMessages(locale) }) {
@@ -11,10 +15,10 @@ export function renderHome({ advantageSection, contact, locale = 'zh-Hant', mess
   const kipHref = h(pageHref({ page: 'kip', locale }));
   return `
   <section class="hero home-opening">
-    <div class="typed-fragments" aria-hidden="true">${looseLetters.map((text, i) => `<span style="--x:${(i * 37 + 7) % 94}%;--y:${(i * 17 + 3) % 88}%;--turn:${(i % 7 - 3) * 8}deg;--delay:${i % 5 * 0.16}s">${h(text)}</span>`).join('')}</div>
+    <div class="typed-fragments" aria-hidden="true">${looseLetters.map((text, i) => `<span style="--x:${(i * 37 + 7) % 94}%;--y:${(i * 17 + 3) % 88}%;--turn:${(i % 7 - 3) * 8}deg;--letter-order:${i % 5}">${h(text)}</span>`).join('')}</div>
     <div class="wrap hero-copy">
-      <p class="eyebrow">${h(hero.eyebrow)}</p>
-      <h1><span>${h(hero.title[0])}</span><span><span class="title-phrase">${h(hero.title[1])}</span><span class="title-phrase">${h(hero.title[2])}</span></span></h1>
+      <p class="eyebrow">${renderHeroEyebrow(hero.eyebrow)}</p>
+      <h1><span>${h(hero.title[0])}</span><span><span class="title-phrase">${h(hero.title[1])}</span><span class="title-phrase${locale === 'zh-Hant' ? ' title-knowledge' : ''}">${h(hero.title[2])}</span></span></h1>
       <p class="intro">${lines(hero.intro)}</p>
       <a class="button inverse" href="${kipHref}">${h(hero.action)}</a>
     </div>
@@ -60,11 +64,24 @@ export function renderHome({ advantageSection, contact, locale = 'zh-Hant', mess
         <div class="outlook-layout">
           <div><h3 id="outlook-heading">${lines(outlook.title)}</h3><p>${h(outlook.intro)}</p></div>
           <div class="budget-comparison" aria-label="${h(outlook.chartLabel)}">
-            <div><span class="budget-value">5<small>%</small></span><span class="budget-year">${h(outlook.currentYear)}</span></div><span class="budget-arrow" aria-hidden="true">↗</span><div><span class="budget-value budget-future">14.5<small>%</small></span><span class="budget-year">${h(outlook.futureYear)}</span></div>
+            <div><span class="budget-value">5<small>%</small></span><span class="budget-year">${h(outlook.currentYear)}</span></div>
+            <svg class="budget-arrow" viewBox="0 0 240 140" width="240" height="140" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M17 101C51 119 84 121 117 108S190 62 221 18"/>
+              <path class="budget-arrow-echo" d="M27 110C62 126 95 122 128 106S184 69 211 34"/>
+              <path d="M179 30C195 31 208 25 222 17 216 33 215 47 217 62"/>
+            </svg>
+            <div><span class="budget-value budget-future">14.5<small>%</small></span><span class="budget-year">${h(outlook.futureYear)}</span></div>
           </div>
         </div>
-        <div class="outlook-context"><p><strong>${h(outlook.respondents)}</strong><span>${h(outlook.spending)}</span></p><p class="outlook-caveat">${h(outlook.caveat)}</p></div>
-        <details class="outlook-details"><summary>${h(outlook.detailsLabel)}</summary><div><p>${h(outlook.details)}</p><a href="https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358" target="_blank" rel="noopener noreferrer">${h(outlook.sourceLabel)}</a><p class="outlook-caveat">${h(outlook.sourceCaveat)}</p></div></details>
+        <div class="outlook-context">
+          <div class="outlook-reading">${outlook.reading.map(copy => `<p>${h(copy)}</p>`).join('')}</div>
+            <figure class="outlook-clipping">
+              <a class="outlook-clipping-link" href="https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358" target="_blank" rel="noopener noreferrer" aria-label="${h(outlook.clippingLabel)}">
+                <span class="outlook-clipping-frame"><img class="outlook-clipping-image" src="assets/investing-cio-20240629.png" width="905" height="577" alt="${h(outlook.clippingAlt)}" loading="lazy"></span>
+              </a>
+            </figure>
+        </div>
+        <details class="outlook-details"><summary>${h(outlook.detailsLabel)}</summary><div><p class="outlook-survey"><strong>${h(outlook.respondents)}</strong><span>${h(outlook.spending)}</span></p><p class="outlook-caveat">${h(outlook.caveat)}</p><p>${h(outlook.details)}</p><a href="https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358" target="_blank" rel="noopener noreferrer">${h(outlook.sourceLabel)}</a><p class="outlook-caveat">${h(outlook.sourceCaveat)}</p></div></details>
       </div>
     </aside>
   </section>
@@ -102,23 +119,5 @@ export function renderHome({ advantageSection, contact, locale = 'zh-Hant', mess
 
 export function initHome({ locale = 'zh-Hant', messages = getMessages(locale) } = {}) {
   initAnimatedDemo({ locale, messages });
-  const reveal = document.querySelector('[data-product-reveal]');
-  if (!reveal) return;
-  const preference = matchMedia('(prefers-reduced-motion: reduce)');
-  let observer;
-  function configureReveal() {
-    observer?.disconnect();
-    if (preference.matches) {
-      reveal.classList.remove('reveal-motion');
-      reveal.classList.add('is-visible');
-      return;
-    }
-    reveal.classList.add('reveal-motion');
-    observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) { reveal.classList.add('is-visible'); observer.disconnect(); }
-    }, { threshold: 0.14 });
-    observer.observe(reveal);
-  }
-  configureReveal();
-  preference.addEventListener('change', configureReveal);
+  initProductReveal();
 }

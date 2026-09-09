@@ -15,7 +15,7 @@
 | 公司地址與快取更新 | [2026-09-09 更新紀錄](operations/address-update-2026-09-08.md) |
 | 初次上架事實 | [2026-09-08 部署紀錄](operations/deployment-synaiq-com-2026-09-08.md) |
 | Repo 整併、Astro 與正式設計的差異 | [整併紀錄](operations/repository-consolidation-2026-09-08.md) |
-| 產品資料與文案出處 | [KIP 簡報摘錄](design/kip-deck-extract.md)、[內容來源](design/live-prototype/content-sources.md) |
+| 產品資料與文案出處 | [KIP 簡報摘錄](design/kip-deck-extract.md)、[素材與引用維護](design/live-prototype/STYLE-GUIDE.md#素材與引用維護) |
 
 舊三案風格、首頁 A／B、wireframe、字型比較與候選文案已依業主要求移除，不再列為待選方向或實作閘門。目前風格以 `docs/design/live-prototype/` 為唯一依據。
 

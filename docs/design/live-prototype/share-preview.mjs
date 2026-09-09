@@ -7,10 +7,11 @@ import { fileURLToPath } from 'node:url';
 // This is a public design-only allowlist, not a general repository file server.
 // New assets must be reviewed and explicitly named before they can be shared.
 const runtimeFiles = [
-  'index.html', 'page.html', 'prototype.js', 'prototype.css',
-  'home-design.js', 'home-design.css', 'editorial-design.css',
-  'demo-animation.js', 'demo-animation.css', 'paper-material.css',
-  'kip-design.js', 'kip-design.css',
+  'index.html', 'page.html', 'prototype.js',
+  'site.css', 'tokens.css',
+  'home-design.js',
+  'demo-animation.js',
+  'kip-design.js',
   'i18n.js', 'brand.js', 'shared-design.js', 'preview.js',
   'locale-common.js', 'locale-home.js', 'locale-kip.js', 'locale-demo.js',
   'assets/knowledge-threads-v2.png', 'assets/shared-knowledge-hands-v1.png',
@@ -21,6 +22,7 @@ const runtimeFiles = [
   'assets/synaiq-logo-ink.svg',
   'assets/kip-connected-work-v1.webp',
   'assets/contact-cat-yarn-v1.webp',
+  'assets/investing-cio-20240629.png', 'assets/news-sketch-frame-v2.webp',
 ];
 const productFiles = ['synaiq-logo-light.svg', 'wally/wally-2.png', 'wally/wally-series.png', 'wally-2-plus.png', 'wally-mini.png'];
 
