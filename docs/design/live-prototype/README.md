@@ -1,6 +1,6 @@
 # Live design prototype
 
-Last updated: 2026-09-08.
+Last updated: 2026-09-09.
 
 The user-approved visual direction and current Chinese/English copy live here. The `752008b` version was manually packaged and deployed at **synaiq.com** on 2026-09-08; see the [actual deployment record](../../operations/deployment-synaiq-com-2026-09-08.md). This is a client-rendered static runtime, not an Astro build. Phase A Astro now shares the consolidated repository but has not adopted this accepted design. The canonical local checkout is `C:\Users\User\synaiq\synaiq-web`; see the [root README](../../../README.md) and [consolidation record](../../operations/repository-consolidation-2026-09-08.md). The earlier Git/ADO-only [release checkpoint](../../operations/release-status-2026-09-08.md) is historical, not current deployment status.
 
@@ -24,7 +24,7 @@ The page selector switches Home / KIP. The 320–1600 px slider changes the ifra
 
 ## Design scope
 
-- Paper/ink, serif display, whitespace and alternating dark/light sections follow `../style-language-v1.md`.
+- Paper/ink/olive, serif display, whitespace and alternating dark/light sections are defined by the CSS loaded in `page.html`. This approved runtime is the design baseline; see the [design maintenance index](../README.md).
 - Newsreader + Noto Serif TC is the selected display pairing. Google Fonts requires network access; fallback fonts are defined.
 - Fluid type, spacing and containers; responsive architecture layout with all four cards visible; mobile navigation; expandable advantages with explanations and scenarios.
 - Home plays a labeled pointer/content animation with pause and replay controls. No product backend is connected.
@@ -50,7 +50,7 @@ The current text is sourced verbatim from `locale-home.js`; earlier quotation no
 - Desktop Home/KIP first screens and narrow Home/KIP layouts were visually inspected; KIP mobile menu expansion was verified.
 - These checks do not constitute full-page visual acceptance, exhaustive interaction testing, or verification of every intermediate width / reduced-motion environment.
 
-The existing wireframe/token/document draft changes elsewhere are independent of this live prototype.
+On 2026-09-09, obsolete direction proposals, wireframes, typography comparisons and candidate token/copy drafts were removed at the user's request. They are no longer pending choices or implementation gates. This cleanup does not change the runtime, its assets, or the production deployment.
 
 ## Historical iteration notes — Ellipsus + original color assets
 
@@ -58,7 +58,7 @@ The following sections record earlier design and verification steps. Current sco
 
 Reference: https://ellipsus.com/#introduction. The corrected homepage follows its centered opening, large product-image stage, layered paper narrative, dark screenshot showcase and image-led product section. This is a composition translation for SynaiQ, not a reproduction of Ellipsus branding or artwork.
 
-Paper/ink describes interface surfaces, not a restriction on product photography. Product images retain full original color. Do not use the grayscale `wireframes-v2/img` derivatives in this homepage.
+Paper/ink describes interface surfaces, not a restriction on product photography. Product images retain full original color; the rejected grayscale wireframe derivatives have been removed.
 
 Image-led sections include the KIP overview and adjacent Wally devices, hand-drawn narrative, animated product-interface study, full Wally series and original-color character key visual. AI hand-drawn illustration drafts are now present; commissioned final artwork remains pending. The KIP visuals are the user-selected brand-matched interface studies with example data, not actual product screenshots. Preserve their paper/ink palette; do not replace them with the dark raw backend interface. Wally imagery retains original color.
 
@@ -80,7 +80,7 @@ Historical correction verification: Home had no horizontal document overflow at 
 - Added the supplied enterprise-knowledge narrative and dated survey band. Sources and earlier editorial decisions are recorded in `content-sources.md`; use `locale-home.js` and the current CEO quote above for the latest quotation and attribution.
 - Use existing supplied copy and assets; do not invent customer stories, deployment metrics or product commitments.
 - A real empty product entrance was inspected read-only. No questions were submitted, conversations created, documents opened or settings changed.
-- `assets/kb-entry-redacted.png` is a **reference-only sanitized capture**, not displayed on the homepage. Opaque local masks remove enterprise branding, user information and internal timing. The raw temporary capture was removed. No credentials are stored in this project.
+- `assets/kb-entry-redacted.png` is a **reference-only sanitized capture**, not displayed on the homepage. Opaque local masks remove enterprise branding, user information and internal timing. The raw temporary capture was removed. No product credentials are in this runtime; the project-root `.env.hostinger.local` is an ignored local deployment credential, excluded from Git and every public package.
 - The user clarified that the preferred product visuals are the original `kip-search-demo.svg` / `kip-library-demo.svg` studies. Both were restored, with accurate “品牌化示意” / example-data labeling.
 - Local capture masking is specific to the inspected empty entrance at 1280×720. It is not a general-purpose privacy filter. A different screen requires fresh inspection and new mask geometry.
 - Content/masking tests: `node --test docs/design/live-prototype/home-content.test.mjs docs/design/live-prototype/sanitize-capture.test.mjs`.

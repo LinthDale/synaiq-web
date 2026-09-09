@@ -47,13 +47,6 @@ desktop.ini
 # vinext dev cache
 .vinext/
 
-# design canvas seeded bundle (3 MB, regenerable)
-docs/design/directions-v1/synaiq-website-directions.html
-
-# wireframe per-board renders are regenerable via docs/design/wireframes-v2/_render.ps1
-docs/design/wireframes-v2/*.png
-!docs/design/wireframes-v2/contact-sheet.png
-
 # Local-only design references; public derivatives are tracked separately.
 docs/design/live-prototype/assets/kb-entry-redacted.png
 docs/design/live-prototype/assets/synaiq-logo-cis-5.jpg

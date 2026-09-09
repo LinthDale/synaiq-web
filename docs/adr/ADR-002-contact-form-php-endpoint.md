@@ -9,7 +9,9 @@
 
 ## Status
 
-Accepted（2026-09-08 業主裁定，採 [`../design/wireframes-v1.md`](../design/wireframes-v1.md) §5 的**選項 B**）。
+Accepted（2026-09-08 業主裁定，採 **Hostinger 自架 PHP 收信端點**）。
+
+> 2026-09-09 整理註：本決策保持 Accepted；目前核准官網仍使用 `mailto:`，PHP 表單尚未實作。刪除舊線框不代表完成表單或授權部署。
 本 ADR 是 [ADR-001](ADR-001-astro-react-islands-hostinger.md)「純靜態託管」的**明示例外**：除 `dist/` 之外
 額外部署一支 PHP 檔，站台其餘部分維持純靜態。觸發 [`README.md`](README.md) 的「引入外部服務或後端」開立條件。
 
@@ -18,7 +20,7 @@ Accepted（2026-09-08 業主裁定，採 [`../design/wireframes-v1.md`](../desig
 `/contact` 現況為 `mailto:` 連結、無表單也無後端。三項事實使 `mailto:` 不成立：使用 webmail、
 公務電腦未設預設郵件程式、或在展場用平板的訪客點下去沒有反應也不會回報，直接漏單；`mailto:`
 收不齊「資料在哪／誰會用／想先改善哪一段」三個必問欄位，只會收到一行「請問報價」；公務單位
-傾向留下可追蹤的表單紀錄。選項比較見 wireframes-v1 §5。
+傾向留下可追蹤的表單紀錄。選項比較保留於下表，無需引用已刪除的線框。
 
 | 被否決的選項 | 否決理由 |
 |---|---|
@@ -32,7 +34,7 @@ Accepted（2026-09-08 業主裁定，採 [`../design/wireframes-v1.md`](../desig
 | 面向 | 決策 |
 |---|---|
 | 檔案 | 單一 PHP 檔置於 `public/api/contact.php`（Astro 原樣複製為 `dist/api/contact.php`）；全站唯一的伺服器端程式碼 |
-| 欄位 | 姓名／單位／聯絡方式，加 wireframes §3.7 的三問；不蒐集非必要欄位 |
+| 欄位 | 姓名／單位／聯絡方式，加「你的資料在哪些地方？」「誰會用、誰會維護？」「最想先改善哪一段？」三問；不蒐集非必要欄位 |
 | 驗證 | 伺服器端逐欄驗證（必填、長度上限、Email 格式、過濾郵件標頭注入字元）；前端驗證僅為輔助，關閉 JS 仍可送出 |
 | 防濫用 | honeypot 隱藏欄位加同來源速率限制（檔案計數器）；不使用 CAPTCHA（可及性與第三方追蹤考量） |
 | 收件 | 寄至 `service@synaiq.com`；**不落地資料庫、不寫入任何持久儲存**、不轉送任何第三方 |
@@ -48,7 +50,7 @@ Accepted（2026-09-08 業主裁定，採 [`../design/wireframes-v1.md`](../desig
 | 負面 | 站台不再是 100% 靜態，部署多一個物件；`mail()` 送達率與 PHP 版本依賴 Hostinger；此檔為全站唯一伺服器端攻擊面，**go-live 前必須經 security-reviewer 審過**；垃圾訊息需人工觀察並調整速率上限 |
 | 變難 | 部署步驟（PRD-001 FR-109）需同時處理 `dist/` 與 PHP 檔的路徑與權限；本機 `astro dev` 無法執行 PHP，端點行為只能在 staging 驗證 |
 | 變易 | 表單欄位調整只動一支檔案；無資料庫即無備份、遷移與保存期限的額外義務 |
-| 後續動作 | PRD-004 FR-406 與 OQ-5 改為已決並連結本 ADR；PRD-001 §2 islands 表「`/contact` 表單」由待定改為成立（Locked，以 §8 一列記錄）；[`../design/content-gap-list.md`](../design/content-gap-list.md) 的「個資蒐集告知全文」不再阻塞於端點選型 |
+| 後續動作 | PRD-004 FR-406 與 OQ-5 改為已決並連結本 ADR；PRD-001 §2 islands 表「`/contact` 表單」由待定改為成立（Locked，以 §8 一列記錄）；PRD-002 的「個資蒐集告知全文」不再阻塞於端點選型 |
 
 ## 驗收
 

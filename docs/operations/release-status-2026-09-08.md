@@ -17,7 +17,7 @@ The user initially requested Azure DevOps publication, ADO board updates and Hos
 
 ## Source and artifact boundaries
 
-- Current approved visual direction is `live-prototype`. Earlier `wireframes-v2`, `content-gap-list`, `PRD-003` and `tokens-v1` documents record the A/B design stage; their older A/B decisions, pin/wipe behavior or English-pending conditions must not override the current runtime. They remain historical records, not the current release baseline.
+- Current approved visual direction is `live-prototype`. **2026-09-09 cleanup note:** obsolete wireframes, content-gap lists and candidate style/token documents were removed; their versions remain in Git history at `428c053`. PRD-003/005 now point to the approved baseline. Older A/B, pin/wipe and English-pending conditions no longer apply; see the [design maintenance index](../design/README.md).
 - Preserve the unmerged Phase A work on `feat/astro-rebuild`; it is separate from the accepted prototype. The pipeline on that branch builds the earlier unstyled Astro artifact and uses `clean: true` for deployment. **Do not execute it against the production target as-is.**
 - Exclude `.astro/` and these local reference assets from the pending Git commit and public release: `docs/design/live-prototype/assets/kb-entry-redacted.png`, `docs/design/live-prototype/assets/synaiq-logo-cis-5.jpg`, and `docs/design/live-prototype/assets/synaiq-logo-cis-6.jpg`.
 - Publish only approved runtime files and assets, not the repository, design documents, tests, capture references or local tools. The review server's allowlist is documented in [`public-preview-notes.md`](../design/live-prototype/public-preview-notes.md); a production artifact still needs an explicit manifest and verification.

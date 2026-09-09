@@ -1,6 +1,6 @@
 # SynaiQ Website
 
-最後更新：2026-09-08。
+最後更新：2026-09-09。
 
 唯一日常工作目錄：`C:\Users\User\synaiq\synaiq-web`。Azure DevOps 遠端為 `SynaiqDev/_git/synaiq-web`。
 
@@ -12,7 +12,9 @@
 | Astro Phase A | `src/`、`astro.config.mjs` | Content Collections、schema、18 個語系內容頁及語意 HTML 基礎；尚未套入核准設計 |
 | 當次上架包 | `out/synaiq-deploy-20260908/`（本機保留、不進 Git） | 已上傳到 `synaiq.com` 的版本目錄、ZIP、manifest 與操作手冊 |
 
-上架事實以 [2026-09-08 部署紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md) 為準。正式站是 `synaiq.com`，不是 `synaiq-ai.com`；歷史文件中的 `synaiq-web-astro` 是當時的本機資料夾名稱，不代表其上架產物是 Astro build。
+初次上架事實見 [2026-09-08 部署紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md)，後續地址與快取修補見 [2026-09-09 更新紀錄](docs/operations/address-update-2026-09-08.md)。正式站是 `synaiq.com`，不是 `synaiq-ai.com`；歷史文件中的 `synaiq-web-astro` 是當時的本機資料夾名稱，不代表其上架產物是 Astro build。
+
+舊三案風格、首頁 A／B、wireframe、字型比較及候選稿已清理。目前唯一採用的設計為 `docs/design/live-prototype/`；保留範圍與復原方式見 [設計維護入口](docs/design/README.md)。
 
 ## 啟動與驗證
 

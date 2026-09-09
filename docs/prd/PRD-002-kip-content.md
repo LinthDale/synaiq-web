@@ -1,5 +1,7 @@
 # PRD-002：SYNAIQ KIP 產品線資訊更新
 
+> **歷史需求快照（2026-09-09 整理註）**：以下保留早期路由、需求與決策沿革，不是目前網站現況或待選風格清單。舊線框及缺口稿已刪除，僅存 Git `428c053` 歷史；目前 Home／KIP 中英雙語見 [設計維護入口](../design/README.md)，正式站與 Astro 界線見 [專案 README](../../README.md)。本次不更改需求或 ADO 狀態。
+
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
 | v0.3 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 2026-09-08 |
@@ -7,7 +9,7 @@
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
 > 內容管線規則見 [`../../HANDOVER.md`](../../HANDOVER.md) §2，本文不複述。
 > KIP 文案的事實來源為 [`../design/kip-deck-extract.md`](../design/kip-deck-extract.md)（`S1`–`S6`）；
-> 逐頁的沿用／改寫／新寫分工見 [`../design/content-gap-list.md`](../design/content-gap-list.md)。
+> 逐頁的沿用／改寫／新寫分工見 `../design/content-gap-list.md`（已移除，僅存 Git `428c053` 歷史）。
 
 ## 1. 問題與目標
 
@@ -35,7 +37,7 @@
 
 | 里程碑 | 內容 | 閘門條件 |
 |---|---|---|
-| M1 | **已拍板（2026-09-08）**：KIP 即主軸，取代 `/products` 成為 `/kip`；`/knowledge-base` 併入 `/kip`、`/agi` 併入 `/kip#ika`、`/media` 併入 `/cases`；新增 `/kip/security` 與 `/cases`；主導覽 5 項加 1 CTA，**不新增第三個產品入口**。全表見 [wireframes §2](../design/wireframes-v1.md)，實作歸 PRD-004 FR-401 | 閘門解除，PRD-004 可開工 |
+| M1 | **已拍板（2026-09-08）**：KIP 即主軸，取代 `/products` 成為 `/kip`；`/knowledge-base` 併入 `/kip`、`/agi` 併入 `/kip#ika`、`/media` 併入 `/cases`；新增 `/kip/security` 與 `/cases`；主導覽 5 項加 1 CTA，**不新增第三個產品入口**。全表見 wireframes §2（已移除，僅存 Git `428c053` 歷史），實作歸 PRD-004 FR-401 | 閘門解除，PRD-004 可開工 |
 | M2 | 英文文案產出（8 條路由全數） | 需 zh-Hant 文案定稿（M1 之後的內容工作完成）**且** KIP 簡報 final；per-locale 檔案結構已於 PRD-001 Phase A 落地，可直接放檔 |
 
 ## 3. 功能需求
@@ -60,7 +62,7 @@
 | 風險 | 機率 | 衝擊 | 緩解 |
 |---|---|---|---|
 | 行銷部 KIP 簡報延遲，內容工作全線阻塞 | H | H | 先做不依賴 KIP 定位的 FR-202／FR-203；M1 只需資訊架構結論，不需完整文案 |
-| M1 拍板後新增 3 頁（`/kip`、`/kip/security`、`/cases`），新寫文案量（問答演示 3 組、主案例全文、IKA 定義段）壓在行銷部 | H | M | `S1`–`S3` 可直接上站的部分先行；新寫項目逐條列於 [`../design/content-gap-list.md`](../design/content-gap-list.md) 並標負責人 |
+| M1 拍板後新增 3 頁（`/kip`、`/kip/security`、`/cases`），新寫文案量（問答演示 3 組、主案例全文、IKA 定義段）壓在行銷部 | H | M | `S1`–`S3` 可直接上站的部分先行；新寫項目逐條列於 `../design/content-gap-list.md`（已移除，僅存 Git `428c053` 歷史） 並標負責人 |
 | 英文文案由非母語者撰寫，品質不一 | M | M | FR-206 用詞表加母語者校對一輪，校對紀錄留存 |
 | 改錯 frontmatter 欄位名導致建置期 zod 驗證失敗 | L | M | 錯誤訊息已含檔名與欄位路徑（PRD-001 FR-103）；`npm run build` 為每次文案 commit 的必過關卡 |
 
@@ -89,5 +91,5 @@
 | 版本 | 日期 | 變更摘要 | commit / ADR |
 |---|---|---|---|
 | v0.1 | 2026-09-07 | 初版，建立 M1／M2 里程碑與 FR-201 至 FR-206 | |
-| v0.2 | 2026-09-08 | **M1 拍板**：KIP 取代 `/products` 成為 `/kip` 並吸收 `/knowledge-base`、`/agi`，`/media` 併入 `/cases`，新增 `/kip/security`；路由數由 9 改為 8，涵蓋檔案改為 `src/content/**`；文案事實來源明列為 `kip-deck-extract.md`；OQ-2 已決、OQ-3 補記展位照片事實仍待裁定；FR-201／203／204／205 依新架構調整 | [wireframes-v1](../design/wireframes-v1.md) §2、PRD-004 FR-401 |
-| v0.3 | 2026-09-08 | 業主裁定：Wally 是 KIP 的現場化身（OQ-3 已決）；對外優勢採 `S2` 八項而非 `S1` 十項。文案結構以 [wireframes-v2](../design/wireframes-v2.md) 為準 | wireframes-v2 |
+| v0.2 | 2026-09-08 | **M1 拍板**：KIP 取代 `/products` 成為 `/kip` 並吸收 `/knowledge-base`、`/agi`，`/media` 併入 `/cases`，新增 `/kip/security`；路由數由 9 改為 8，涵蓋檔案改為 `src/content/**`；文案事實來源明列為 `kip-deck-extract.md`；OQ-2 已決、OQ-3 補記展位照片事實仍待裁定；FR-201／203／204／205 依新架構調整 | wireframes-v1（已移除，僅存 Git `428c053` 歷史） §2、PRD-004 FR-401 |
+| v0.3 | 2026-09-08 | 業主裁定：Wally 是 KIP 的現場化身（OQ-3 已決）；對外優勢採 `S2` 八項而非 `S1` 十項。文案結構以 wireframes-v2（已移除，僅存 Git `428c053` 歷史） 為準 | wireframes-v2 |

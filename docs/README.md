@@ -1,84 +1,42 @@
 # synaiq-web 文件索引
 
-本目錄是 SynaiQ 官網（repo `synaiq-web`，branch `main`）的規格入口，共 5 份 PRD、1 份精簡
-guideline、1 份 PRD 模板與 ADR 流程。
+最後更新：2026-09-09。
 
-**怎麼用**：先讀 [`HANDOVER.md`](../HANDOVER.md)（接手時的技術現況與已知缺陷，唯一技術事實
-來源），再讀 [`guidelines/PRD-Guideline-Web.md`](guidelines/PRD-Guideline-Web.md)（本專案的 PRD
-寫法、全站 NFR 基準線、不適用章節對照），最後依下表順序讀對應 PRD。每份 PRD 只寫該工作線的
-差異，共通資訊一律連結、不複製。新增 PRD 複製 [`prd/_TEMPLATE.md`](prd/_TEMPLATE.md)；PRD
-Locked 之後的範圍或架構變更一律開 [ADR](adr/README.md)。
+目前網站已採用核准的 Home／KIP 中英雙語設計。唯一工作目錄是 `C:\Users\User\synaiq\synaiq-web`；指令及執行層界線見 [專案 README](../README.md)。
 
-## 狀態總表
+## 日常維護入口
 
-| PRD | 標題 | 版本 | 狀態 | Owner | ADO Feature | 順序 |
-|---|---|---|---|---|---|---|
-| [PRD-001](prd/PRD-001-architecture-refactor.md) | 架構重整：Astro + React islands 換底重建 | v1.1 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 1 |
-| [PRD-002](prd/PRD-002-kip-content.md) | SYNAIQ KIP 產品線資訊更新 | v0.2 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 平行（M1 已於 2026-09-08 拍板） |
-| [PRD-003](prd/PRD-003-visual-design.md) | 設計更新（全新設計） | v0.2 | Draft | Dale | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) | 4（FR-307 設計方向提前） |
-| [PRD-004](prd/PRD-004-uiux.md) | UIUX 更新與雙語資訊架構 | v0.3 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 3 |
-| [PRD-005](prd/PRD-005-brand-guide.md) | 對外統一視覺手冊（網站限定） | v0.3 | Draft | Dale | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) | 2 |
-
-**實作進度（2026-09-08）**：PRD-001 **Phase A 已在分支 `feat/astro-rebuild` 實作完成**（7 commits、`npm run build` 產出 19 頁、`npm test` 25/25、內容頁零 client JS、191 個舊 key 遷移 0 未對應）。
-同日業主裁定三案：資訊架構定案（`/kip` 為主軸，即 PRD-002 M1 閘門解除）、`/contact` 採自架 PHP 端點（[ADR-002](adr/ADR-002-contact-form-php-endpoint.md)）、語言切換器提前顯示。
-下一個閘門是 PRD-003 FR-307 設計方向 3 案，未擇定前 PRD-001 FR-105 元件重建不開工。
-
-## 路線圖與依賴
-
-執行順序為 **001 → 005 → 004 → 003**，PRD-002 全程平行進行。唯一硬閘門：PRD-002 的
-里程碑 M1（KIP 是否需要新路由／新導覽項的資訊架構決策）必須在 PRD-004 開工前拍板，否則
-004 的導覽與 i18n 結構會做白工。PRD-004 先於 PRD-003 是業主明示決定：資訊架構與雙語結構
-定案前不動視覺。2026-09-07 起 PRD-001 依 [ADR-001](adr/ADR-001-astro-react-islands-hostinger.md)
-改為 Astro 換底重建（非原地清理），且 PRD-005 視覺手冊的 token **機制**（`src/styles/tokens.css`
-加 `/styleguide` 路由）在 PRD-001 落地，PRD-005 只負責 token 的數值與用法。同日業主裁定**視覺全面重做**：
-PRD-003 由「套用手冊樣式」升級為「全新設計」，且設計方向（PRD-005 token 加 PRD-003 概念）必須在 PRD-001
-的 FR-106 元件重建之前定案；PRD-001 其餘機制類 FR 不受影響，先行。
-
-```mermaid
-flowchart LR
-  P1["PRD-001<br/>架構重整"] --> P5["PRD-005<br/>視覺手冊"]
-  P5 --> P4["PRD-004<br/>UIUX 與雙語 IA"]
-  P4 --> P3["PRD-003<br/>設計更新"]
-  P2["PRD-002 內容更新<br/>（全程平行）"] --> M1{"M1 閘門<br/>KIP 資訊架構決策"}
-  M1 --> P4
-  P2 -.->|"M2 英文文案<br/>依賴 zh-Hant 定稿"| P4
-```
-
-| 依賴 | 說明 |
+| 工作 | 文件／來源 |
 |---|---|
-| 001 → 005 | 資產清冊（`public/brand/**`）與字型瘦身結果確定後，手冊才有可寫的實體 |
-| 005 → 004 | 色票與字級階層定案後，UIUX 才能做可驗收的版面與對比度規範 |
-| 002-M1 → 004 | KIP 是否新增路由／導覽項，決定 004 的資訊架構起點 |
-| 005 + 004 → 003 | 視覺樣式套用需同時有手冊與最終版面 |
-| 外部 → 002 | 行銷部 KIP 簡報未定稿前，002 的文案內容為阻塞狀態 |
+| 修改版型、配色、動畫 | [核准設計](design/live-prototype/README.md) |
+| 中英文、其他語言與統一更新 Logo | [語言與 Logo 維護指南](design/live-prototype/localization-and-brand-guide.md) |
+| 設計檔保留範圍與舊稿清理 | [設計維護入口](design/README.md) |
+| 正式站上架與還原 | [Hostinger 操作索引](operations/deploy-hostinger.md) |
+| 公司地址與快取更新 | [2026-09-09 更新紀錄](operations/address-update-2026-09-08.md) |
+| 初次上架事實 | [2026-09-08 部署紀錄](operations/deployment-synaiq-com-2026-09-08.md) |
+| Repo 整併、Astro 與正式設計的差異 | [整併紀錄](operations/repository-consolidation-2026-09-08.md) |
+| 產品資料與文案出處 | [KIP 簡報摘錄](design/kip-deck-extract.md)、[內容來源](design/live-prototype/content-sources.md) |
 
-## ADO 對照表
+舊三案風格、首頁 A／B、wireframe、字型比較與候選文案已依業主要求移除，不再列為待選方向或實作閘門。目前風格以 `docs/design/live-prototype/` 為唯一依據。
 
-Process: Scrum。Epic 與 6 個 Feature 已建立，Task 於各 FR 開工前逐條開立。Sprint 22（2026-08-31 至 09-11）已排入 PRD-001 的五條不需裁定即可動工的 FR。
+## 規格與決策
 
-| 類型 | ADO 標題 | 連結 |
+保留 PRD／ADR 的需求編號與決策脈絡，不因清理設計草稿而宣稱所有需求都已完成。PRD-001／002／004 的早期架構、路由及待辦記錄不是正式站現況；Astro Phase A 尚未套用核准設計。ADO 連結供追蹤使用，下表不宣稱已重新核對遠端狀態。
+
+| 文件 | 定位 | ADO Feature |
 |---|---|---|
-| Epic | `公司網頁前端畫面 — SYNAIQ 官網重整（synaiq-web）` | [#1295](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1295) |
-| Feature | `[官網] PRD-001 架構重整 — 移除外洩 token 腳本、清死碼、重寫測試、建立 build 基線` | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) |
-| Feature | `[官網] PRD-002 內容更新 — 圍繞 SYNAIQ KIP 產品線改寫 content/pages` | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) |
-| Feature | `[官網] PRD-003 設計更新 — 依視覺手冊套用品牌樣式` | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) |
-| Feature | `[官網] PRD-004 UIUX 更新 — 資訊架構、導覽、RWD 與 WCAG 2.2 AA` | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) |
-| Feature | `[官網] PRD-005 統一視覺手冊 — 色票、字級、logo 用法與禁則` | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) |
-| Feature | `[官網] PRD 規範 — 網站專案精簡 guideline、模板與 ADR 流程` | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) |
-| PBI（Sprint 22） | `[官網] PRD-001 架構重整 — Sprint 22 啟動（FR-106/101/102/103/107）` | [#1302](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1302) |
-| PBI（Sprint 22，Done） | `[官網] PRD 規範 — 文件組建立（guideline、5 份 PRD、模板、ADR）` | [#1308](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1308) |
-| Task × 5（Sprint 22） | 換底後處置見 PRD-001 §3「Sprint 22 既有 Task 處置」：[#1303](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1303) **擬改題**（→ FR-107 測試改為對 dist/ HTML 斷言）、[#1304](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1304) **擬關閉（換底後不存在）**、[#1305](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1305) **擬關閉（換底後不存在）**、[#1306](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1306) **擬關閉（換底後不存在）**、[#1307](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1307) **擬改題**（→ FR-109 Hostinger 部署基線）。ID 不變更 | 見左欄 |
+| [PRD-001](prd/PRD-001-architecture-refactor.md) | Astro 換底需求；Phase A 已合併，正式設計移植另需驗收 | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) |
+| [PRD-002](prd/PRD-002-kip-content.md) | 產品內容需求沿革；對外文案以核准版語系檔為準 | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) |
+| [PRD-003](prd/PRD-003-visual-design.md) | 核准視覺基線與後續維護；舊擇案閘門已移除 | [#1298](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1298) |
+| [PRD-004](prd/PRD-004-uiux.md) | 早期 UIUX／路由需求；非目前 query routes 的說明 | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) |
+| [PRD-005](prd/PRD-005-brand-guide.md) | 核准字型、品牌素材與維護界線 | [#1300](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1300) |
+| [ADR-001](adr/ADR-001-astro-react-islands-hostinger.md) | Astro＋React islands／Hostinger 架構決策，不等同已切換正式站 | — |
+| [ADR-002](adr/ADR-002-contact-form-php-endpoint.md) | PHP 聯絡表單端點決策；目前正式站仍為 mailto | — |
 
-## 相關文件
+Epic：[公司網頁前端畫面 — SYNAIQ 官網重整 #1295](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1295)。
 
-| 文件 | 用途 |
-|---|---|
-| [`../HANDOVER.md`](../HANDOVER.md) | 已驗證的技術現況、9 條路由表、上線前必修缺陷、待釐清清單 |
-| [`guidelines/PRD-Guideline-Web.md`](guidelines/PRD-Guideline-Web.md) | 本專案 PRD 規範與全站 NFR 基準線 |
-| `~/.claude/guidelines/PRD-Architecture-Guideline.md`（不在本 repo，位於公司全域設定） | 公司全域 PRD guideline，衝突時以其為準 |
-| [`prd/_TEMPLATE.md`](prd/_TEMPLATE.md) | PRD 空白模板（固定 8 節） |
-| [`adr/README.md`](adr/README.md) | 何時必須開 ADR、編號規則與索引 |
-| [`adr/ADR-001-astro-react-islands-hostinger.md`](adr/ADR-001-astro-react-islands-hostinger.md) | 換底決策：Astro 加 React islands、Hostinger 託管、純 CSS token、Content Collections、Astro 內建 i18n |
-| [`adr/ADR-002-contact-form-php-endpoint.md`](adr/ADR-002-contact-form-php-endpoint.md) | `/contact` 採 Hostinger 自架 PHP 收信端點，ADR-001「純靜態」的明示例外 |
-| [`design/wireframes-v1.md`](design/wireframes-v1.md) | 資訊架構、新網站地圖、301 對照表、各頁線框與待裁定清單（PRD-002 M1 與 PRD-004 FR-401 的依據） |
-| [`design/kip-deck-extract.md`](design/kip-deck-extract.md)、[`design/content-gap-list.md`](design/content-gap-list.md) | KIP 簡報事實摘錄（`S1`–`S6`）；逐頁文案與素材缺口清單 |
+## 文件規則
+
+- 保留 [PRD Guideline](guidelines/PRD-Guideline-Web.md)、[PRD 模板](prd/_TEMPLATE.md) 與 [ADR 索引](adr/README.md)。
+- [HANDOVER](../HANDOVER.md) 是 2026-09-07 接手快照，不是目前技術現況或待修清單。
+- 保留 [Phase A 遷移紀錄](migration/phaseA-log.md)、[內容 key 對照](migration/content-key-map.md) 與測試 fixture。
