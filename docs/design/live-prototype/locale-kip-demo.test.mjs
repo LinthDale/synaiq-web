@@ -11,7 +11,7 @@ test('English KIP and demo render English copy, labels and sample filenames thro
   assert.match(kip, /Four layers,/);
   assert.doesNotMatch(kip, /\p{Script=Han}/u);
   const demo = renderAnimatedDemo({ locale: 'en' });
-  assert.match(demo, /Procurement_Contract_2023\.pdf/);
+  assert.match(demo, /Equipment_Purchasing_Sample\.pdf/);
   assert.match(demo, /Knowledge_Workflow_Sample\.docx/);
   assert.match(demo, /Data_Index_Sample\.xlsx/);
   assert.match(kip, /Procurement_Contract_2023\.pdf · Page 12/);

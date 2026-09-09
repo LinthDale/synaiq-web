@@ -3,6 +3,22 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { demoFrameAt, renderAnimatedDemo, readDemoTiming } from './demo-animation.js';
 import { hasDeclaration } from './css-test-helpers.mjs';
+import { getMessages } from './i18n.js';
+
+test('knowledge demo explains a sample purchasing process without claiming page-number retrieval', () => {
+  for (const locale of ['zh-Hant', 'en']) {
+    const messages = getMessages(locale);
+    const m = messages.demo;
+    const html = renderAnimatedDemo({ locale, messages });
+    assert.doesNotMatch(html, /第\s*12\s*頁|page\s*12|第十二條|保固|warranty|Procurement_Contract/i);
+    assert.match(m.question, locale === 'en' ? /laptop/i : /筆電/);
+    assert.match(m.answer, locale === 'en' ? /purpose.*specs.*budget/i : /用途.*規格.*預算/);
+    assert.match(m.answerHighlight, locale === 'en' ? /approval.*Purchasing.*quotes.*orders.*Inspect/i : /核准.*採購.*詢價.*下單.*驗收/);
+    assert.match(m.citationPage, locale === 'en' ? /source/i : /原文/);
+    assert.equal(m.tableRows[0][0], m.citationFilename);
+    assert.match(m.sourceNote, locale === 'en' ? /fictional/i : /虛構/);
+  }
+});
 
 test('animation progresses from pointer click to answer and original source', () => {
   const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');

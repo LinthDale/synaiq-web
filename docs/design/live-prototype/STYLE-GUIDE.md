@@ -3,13 +3,27 @@
 本文件對應已核准的 Home／KIP 中英文網站：`docs/design/live-prototype/`。
 **不是** Astro Phase A 的 `src/styles/`。修改這裡後需重新整理預覽；Git push 不會自動更新 Hostinger。
 
+## 先分清楚：改內容，還是改外觀
+
+下表檔名皆相對於本指引所在的 `docs/design/live-prototype/`。
+
+| 想修改 | 開哪個檔案、搜尋什麼 |
+|---|---|
+| 電話號碼與點擊撥號 | `page.html` 搜尋 `tel:`；顯示文字與 `href` 要一起改，詳見下方「修改電話號碼」 |
+| 頁尾電話、Email、連結的字級 | `tokens.css` 搜尋 `--footer-link-size`；這是整組頁尾連結的共用設定 |
+| CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
+| 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
+| 另外兩段動畫的查詢、片名與步驟 | `locale-demo.js` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
+| 字型、字級、文字顏色 | `tokens.css`；不會修改文字內容或電話號碼 |
+| 動畫秒數、延遲、次數 | `tokens.css` 對應區段；不必改 JavaScript |
+
 ## 平常先改這一個檔案
 
 **所有網站文字的字型、字級、行高、字距與文字顏色，都在 `tokens.css`。**
 官網只保留兩份 CSS：`tokens.css` 改文字、常用視覺與動畫播放設定；`site.css` 改排版並套用動畫樣式，不再另填秒數。
 本檔上半部是按畫面順序編排的常用變數；下半部「完整文字細項」包含所有文字 CSS，也包含語言選單、手機選單、Demo 小字與圖片旁註記。不是每個細項都有專屬變數，但不用再跨 CSS 找文字。
 
-**直接在 `tokens.css` 按 Ctrl+F，貼上畫面看得到的字。** 例如搜尋 `KNOWLEDGE INTELLIGENCE PLATFORM`，就會找到：
+**調外觀時，在 `tokens.css` 按 Ctrl+F，搜尋對應區塊的中文提示或下表變數。** 例如搜尋 `KNOWLEDGE INTELLIGENCE PLATFORM`，就會找到：
 
 ```css
 --hero-eyebrow-font: var(--body);      /* 字型；改 var(--display) 就用已載入的襯線字 */
@@ -69,6 +83,7 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | KIP 把日常工作，一起接上 | `--kip-capabilities-title-size`／`--kip-capability-title-size`／`--kip-capability-body-size` |
 | 先講一個場景，我們回一個做法 | `--contact-title-size`、`--contact-body-size`，各有對應 `color` |
 | 洽談導入等按鈕／頁尾公司資訊及地址 | `--button-text-size`／`--footer-body-size`／`--footer-note-size` |
+| 頁尾電話、Email 與導覽連結 | `--footer-link-size`；639px 以下的手機覆寫緊接在同段下方 |
 
 `--muted` 等共用色會同時影響多個區域；只想改某段時，在該段樣式使用專屬變數，不要改全站色。
 各段已有自己的展示字級，一般內文字級不會強制蓋過這些局部設定。
@@ -103,7 +118,25 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 中英文文案仍在 `locale-*.js`；Logo 更換方式見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 不要把文案寫進 CSS，也不要直接修改圖片中的字來替代語言檔。
 
-## 動畫：只改 tokens.css
+## 修改電話號碼
+
+**開 `page.html`，按 Ctrl+F 搜尋 `tel:` 或 `2393`。** 電話在 `<footer id="footer">` 中，目前是：
+
+```html
+<a href="tel:+886423931368">+886 4 2393 1368</a>
+```
+
+- `href="tel:+886423931368"` 是點擊後交給電話程式的撥號號碼；沿用 `+`、國碼與數字、不加排版空格的寫法。
+- `>+886 4 2393 1368<` 是網站顯示文字，可以保留空格方便閱讀。
+- 更換號碼時兩處一起改；只改顯示文字，點擊仍會撥舊號碼。
+- 這一個共用頁尾供首頁／KIP、中英文使用；電話目前不在 `locale-common.js`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
+- 調整字級，開 `tokens.css` 搜尋 `--footer-link-size`；會一起影響同組 Email 與導覽連結，並要檢查 639px 以下的覆寫。`--footer-body-color` 控制頁尾段落文字，不是電話連結的獨立色彩設定。
+
+修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；首頁／KIP 與中英文都要確認。
+
+**手動上架要分清楚兩個 HTML 入口：** 本機 `index.html` 是預覽外框，不要上傳它替代官網。正式封裝將 `page.html` 另存成版本目錄中的 `index.html`，根網址 `/` 讀的是後者。如果只在 Hostinger 手動更改電話，需先下載備份，再於目前版本目錄的 `index.html`、`page.html` 同步修改上述電話連結，保留兩檔既有的 CSS、JS、圖片路徑。不要直接拿本機未封裝的 `page.html` 蓋掉線上 `index.html`。正式版本位置以 [Hostinger 操作索引](../../operations/deploy-hostinger.md) 及實際入口為準。
+
+## 動畫：播放設定改 tokens.css，文案改 locale-demo.js
 
 所有可調秒數、延遲、次數與觸發比例只在 `tokens.css` 對應段落定義。儲存後重新整理本機預覽；JavaScript 在載入時讀取 CSS 設定，不會在背景即時重讀編輯器內容。
 
@@ -132,12 +165,30 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 **三段影片共用同一個 KIP 對話介面**：知識問答、以自然語言找圖、以圖搜圖。使用左右箭頭或片名切換；不會自動換片。切片會從頭播放，但保留手動暫停狀態；按重播才恢復播放。同一時間只渲染一段、只使用一個播放時鐘。鍵盤可在片名按鈕上用左右鍵切換。
 
+網站實際播放的是 HTML／CSS／JavaScript 動畫，不是 MP4、GIF 或影片播放器。另行錄製匯出的 MP4 是獨立檔案；修改網站文案或秒數不會更新既有 MP4，需要重新錄製。
+
 兩段圖片動畫只更換聊天內容、輸入框內的文字／圖片附件與回傳結果，不能再另造一套搜尋頁。動畫不是實際上傳、搜尋或連線產品；使用 `public/brand/` 中既有的公開 Wally 素材，沒有私有帳戶畫面。
 
 - 步驟「01 用自然語言提問」的文字字型／大小用 `--demo-step-font`／`--demo-step-size`；前方數字用 `--demo-step-number-font`／`--demo-step-number-size`，都在同一段。
 - 三段共用播放次數、滑鼠與介面效果。兩個新片的五段停留時間，在同一「06 Demo」內搜尋 `data-demo-scene="text-image"`／`data-demo-scene="image-image"`，各自修改，不要在檔尾再覆寫。
 - 圖片回覆的進場／逐張延遲／原圖展開時間用 `--demo-image-results-duration`／`--demo-image-results-stagger`／`--demo-image-preview-duration`。
-- 片名、說明、查詢內容與章節文字在 `locale-demo.js` 的 `booth`；中英各一份。只有新增場景或改動作順序才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字與播放設定仍只在 `tokens.css`。
+- 文案都在 `locale-demo.js`，但第一段問答與圖片查詢不在同一層；請依下表修改 `zhHant`／`en` 兩份。只有新增場景或改動作順序才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字外觀與播放設定仍只在 `tokens.css`。
+
+| 要改的動畫文字 | `locale-demo.js` 的位置 |
+|---|---|
+| 第一段提問、回答、底線重點、補充說明 | 最外層 `question`、`answer`、`answerHighlight`、`answerNote` |
+| 第一段側欄最近問題、上方路徑、搜尋中提示 | 最外層 `warrantyTopic`、`breadcrumb`、`thinking`；`warrantyTopic` 是保留的舊欄位名，目前內容是採購筆電申請，不是保固問題 |
+| 第一段引用檔名與「查看原文」 | 最外層 `citationFilename`、`citationPage`；`citationPage` 是保留的舊欄位名，目前顯示查看原文，不是頁碼 |
+| 展開的引用原文 | 最外層 `sourceLabel`、`sourceTitle`、`sourceHeading`、`sourceNote`；原文的標記段落共用 `answerHighlight`，改它也會同步改回答的底線重點 |
+| 最後一幕知識中心的文件列表 | 最外層 `tableRows`；第一筆檔名需與 `citationFilename` 相同 |
+| 第一段下方 01／02／03 的步驟文字 | 最外層 `chapters`；不是 `booth` 裡的章節 |
+| 三段片名、說明 | `booth.titles`、`booth.descriptions`，依知識問答／自然語言找圖／以圖搜圖排序 |
+| 自然語言找圖的提問、提示與步驟 | `booth.textImage.query`／`loading`／`matching`／`chapters` |
+| 以圖搜圖的提問、提示與步驟 | `booth.imageImage.query`／`loading`／`matching`／`chapters` |
+
+第一段目前以「為新進同仁採購筆電，該如何申請」示範查找制度流程：填寫用途、規格與預算，主管核准後由採購詢價、下單，到貨後驗收。這是虛構示例，不是企業實際制度；保留示例標示，不要改回目前未支援的「指定第 12 頁寫了什麼」問答。修改時一起核對問題、回答、引用原文、側欄與文件列表，不能只換一句提問。
+
+這裡只控制動畫；首頁組圖中的靜態介面另由 `locale-screens.js` 與生成素材維護，KIP 頁的紙條問答在 `locale-kip.js`。改 `locale-demo.js` 不會同步替換它們，也不代表其他示例已校正。
 
 - 首屏散字：「02 首頁 Banner」的 `--hero-letters-duration`／`stagger`／`count`。這個 CSS 次數用 `infinite` 表示循環，不用 `0`。
 - KIP 四層卡片移入效果：「10 KIP 平台」的 `--kip-layer-hover-duration`。
