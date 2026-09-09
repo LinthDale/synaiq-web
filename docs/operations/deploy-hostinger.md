@@ -4,13 +4,13 @@
 
 ## 目前線上版本
 
-`synaiq.com` 使用 commit `752008b` 的 `docs/design/live-prototype/` 封裝版本，包含核准的 Home／KIP 中英雙語設計；2026-09-09 已透過 Hostinger API 套用 `6e437d2` 的中英文地址更新。它是客戶端渲染的靜態網站，**不是** `src/` 的 Astro Phase A `dist/`。
+`synaiq.com` 目前使用 commit `a3a8376` 的 `docs/design/live-prototype/` 封裝版本，2026-09-09 16:05（Asia/Taipei）完成切換。內容包含核准的 Home／KIP 中英雙語、地址與 quote 調整、兩份 CSS、集中字型／動畫設定、新聞剪報，以及共用 KIP 對話介面的三段動畫。它是客戶端渲染的靜態網站，**不是** `src/` 的 Astro Phase A `dist/`。
 
 地址更新的上傳、公開 HTTP／JavaScript VM 驗證與三檔還原資訊，見 [地址更新紀錄](address-update-2026-09-08.md)。後續載入鏈快取版本修正也已上架，通過 origin 核對及七個公開網址的 HTTP、位元組數與 SHA-256 驗證；新中英文地址均可從公開目錄取得。沒有完成瀏覽器視覺驗證。
 
 實際上架、已執行的 smoke checks、備份限制與路由內容，見 [2026-09-08 部署紀錄](deployment-synaiq-com-2026-09-08.md)。這份部署紀錄保持原始操作事實；repo 整併不會重新執行上架。
 
-**2026-09-09 12:13 已依使用者要求下架舊 WordPress 網站入口並刪除實體 `home.html`。** 現行路由、36 個舊路徑的 410 驗證與本次精確備份，見 [舊站下架紀錄](legacy-retirement-2026-09-09.md)。核准靜態 release 的 41 個頁面／資產維持原 hash。兩檔 CSS 收斂仍是本機變更，未部署。
+**2026-09-09 12:13 已依使用者要求下架舊 WordPress 網站入口並刪除實體 `home.html`。** 當次路由、36 個舊路徑的 410 驗證與精確備份，見 [舊站下架紀錄](legacy-retirement-2026-09-09.md)。本次設計發布保留這個退役界線；兩檔 CSS 與新動畫現已上線。
 
 | 位置 | 用途 |
 |---|---|
@@ -19,11 +19,37 @@
 | `C:\Users\User\synaiq\synaiq-web\out\synaiq-address-20260908\` | 已上架地址修正的三檔更新／還原包；不進 Git |
 | `C:\Users\User\synaiq\synaiq-web\out\synaiq-address-20260909-cache\` | 已上架並驗證的四檔載入鏈快取修正與還原副本；不進 Git |
 | `C:\Users\User\Documents\synaiq-web\SynaiQ-網站上架與還原操作手冊-20260908.md` | 使用者保留的上架／還原手冊；歷史舊 repo 路徑須對照新的唯一工作目錄 |
-| Hostinger `public_html/synaiq-release-20260908/` | 已上架的版本目錄 |
+| `out/synaiq-release-20260909-design/` | 本次 artifact、逐檔 SHA-256 manifest、路由備份與本機／主機／正式站瀏覽器驗證；不進 Git、不上傳 |
+| Hostinger `public_html/synaiq-release-20260909-design/` | 目前正式站版本；34 個核准公開檔案 |
+| Hostinger `public_html/synaiq-release-20260908/` | 上一版保留供還原及既有快取資源使用，不原地覆寫 |
 | Hostinger `backup-synaiq-20260908/.htaccess` | 上架前的路由備份，位於公開目錄外 |
 | `out/site-consolidation-20260909/remote-before/` | 9 月 9 日舊站下架前的精確路由與已刪除 home.html 備份；不進 Git |
 
-正式站透過 `public_html/.htaccess` 把 `/` 內部轉交到上述版本；`/home.html` 現在 301 到 root，實體檔已刪除。舊 WordPress 頁面、API、登入及其餘非白名單路徑回傳 410，不再 fallback 到 `index.php`。WordPress 程式、資料庫及 `wp-content` 仍在，但除了新版依賴的 `wp-content/uploads/2026/03/toutou-2.png`，不再公開舊素材路徑。`synaiq-ai.com` 與其產品服務不在這次範圍。
+正式站透過 `public_html/.htaccess` 把 `/` 內部轉交到 `synaiq-release-20260909-design/index.html`；`/home.html` 仍 301 到 root，實體檔已刪除。舊 WordPress 頁面、API、登入及其餘非白名單路徑回傳 410，不再 fallback 到 `index.php`。WordPress 程式、資料庫及 `wp-content` 仍在，但除了新版依賴的 `wp-content/uploads/2026/03/toutou-2.png`，不再公開舊素材路徑。`synaiq-ai.com` 與其產品服務不在這次範圍。
+
+## 現行版本的发布與還原
+
+本次先將 34 個核准公開檔案上傳至獨立新目錄，逐檔核對公開 SHA-256，再以不改首頁的白名單路由開放直接驗證。主機直接網址通過 Home／KIP × 中英 × 390／1440px 瀏覽器檢查後才切換 `/`；切換後重驗相同八組、圖片、兩份 CSS、三段動畫、手機導覽、無水平溢出與 JavaScript 錯誤。原 Wally 角色圖 hash 不變；指定舊產品／媒體頁、WordPress 管理／API 仍 410，`home.html?lang=en` 仍 301 並保留 query。
+
+CSS、JS 與素材 URL 已改寫為本次版本前綴，避免舊七天快取混入。公開包不含預覽 iframe 外框、測試、文件、部署腳本、憑證或私人參考圖。操作腳本與 API session 不對外公開，session 也不落檔。
+
+精確還原資訊位於 `out/synaiq-release-20260909-design/`：
+
+| 檔案 | 用途／SHA-256 |
+|---|---|
+| `manifest.json` | source commit、34 個公開檔案的位元組數／hash，與三種路由 hash |
+| `routing-before.htaccess` | 本次切換前、已下架舊站的路由；`e8a7aa53fa884e3061b26f155f2938bb6a8ba7e8f4005ad0d3efc5c5a594c7e3` |
+| `routing-live.htaccess` | 目前路由；`3513cf188fc10c0b37c79d529f4fe3874ddce799faf598b30313d7f20cd72a97` |
+| `staged.json`／`activated.json` | 主機驗證與入口切換後的逐檔公開結果 |
+| `browser-local.json`／`browser-staged.json`／`browser-live.json` | 本機封裝、主機直接網址與正式入口的瀏覽器檢查 |
+
+要回到上一版設計（**不重新開放 WordPress**）：
+
+1. 在唯一 repo 目錄確認 `routing-before.htaccess` 與 `manifest.json` 齊全，以及主機上一版目錄仍存在；不要使用更早的「第一次上架前」路由。
+2. 取得還原授權後執行 `node out/synaiq-release-20260909-design/release.mjs rollback`。腳本先核對三份本機路由 hash 與主機目前 hash，經暫存檔驗證後 rename；遇到未知外部路由變更會停止、不覆寫。
+3. 確認 root hash 回到 `preflight.json` 記錄的上一版，重新檢查中英文頁面／素材及舊站仍 410。新版本目錄可以保留，不需要刪除。
+
+`stage`／`activate` 已完成，不要重跑。其失敗流程會辨識遠端實際路由，已知新路由驗證失敗時退回切換前版本；未知外部變更則停止。回應逾時時先讀取 `failure-*.json` 及實際遠端狀態，不能盲目重試。失敗回退通過本機模擬驗證；未實際對正式站演練回退。
 
 ## 還原與後續發布
 
@@ -33,14 +59,14 @@
 - 若要整份還原 `.htaccess`，先確認上架後沒有其他需要保留的變更。
 - 路由仍指向新版時，不可移除其版本目錄。保留舊站檔案不等於已完成可還原的全站備份。
 - 下次發布需另行核准，使用新的版本目錄、重新封裝對應資源路徑，先驗證直接網址及回退方案，再切換入口。
-- 現行路由只開放 `synaiq-release-20260908` 的核准檔案型別、必要單張舊圖和憑證驗證路徑。新 release 的直接預覽 URL、額外頁面、robots／sitemap 等需先加入經審核的路由；否則會 410。不要為了發布而恢復 WordPress fallback。
+- 現行路由只開放 `synaiq-release-20260909-design` 與保留上一版的核准檔案型別、必要單張舊圖和憑證驗證路徑。未來新 release 的直接預覽 URL、額外頁面、robots／sitemap 等需先加入經審核的路由；否則會 410。不要為了發布而恢復 WordPress fallback。
 - 不可將整個 repo、測試、設計文件、私人參考素材或本機工具公開上傳。
 
 ## Hostinger API 使用界線
 
 2026-09-09 的地址更新使用 API 檔案上傳，僅替換帳戶 `u235694681` 下 `public_html/synaiq-release-20260908/` 的指定檔案，不使用會部署整份壓縮檔的 Deploy 端點，也不改動路由或既有 WordPress。每次替換前須核對遠端雜湊並保留對應還原副本，完成後驗證公開檔案。
 
-公開 JavaScript 有七天瀏覽器快取。之後修改語言目錄或還原時，須同步更新三段載入鏈的版本參數與兩個 HTML 入口，再驗證新網址；只覆蓋回舊檔案不會清除瀏覽器快取。
+公開 JavaScript 有七天瀏覽器快取。正常發布使用全新版本目錄，並改寫 HTML、CSS、JS、品牌與素材引用；不要原地覆蓋已封存的 release。如果另外核准原地修補，須同步更新載入鏈版本參數與 HTML 入口，再驗證新網址；只覆蓋回舊檔案不會清除瀏覽器快取。
 
 API token 依使用者要求保留在 repo 根目錄的 `.env.hostinger.local`；該檔由 Git 忽略，只供本機授權使用，不能列印值、提交或包入網站上傳檔。API 可用不代表 Git push 會自動部署。
 
