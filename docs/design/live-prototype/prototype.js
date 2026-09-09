@@ -1,7 +1,7 @@
 import { renderHome, initHome } from './home-design.js';
 import { renderKip, initKip } from './kip-design.js';
 import { renderAdvantageSection, renderContact } from './shared-design.js';
-import { SUPPORTED_LOCALES, resolveLocale, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js';
+import { SUPPORTED_LOCALES, resolveLocale, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260909-address';
 const query = new URLSearchParams(location.search);
 const isKip = query.get('page') === 'kip';
 const locale = resolveLocale(query.get('lang'));

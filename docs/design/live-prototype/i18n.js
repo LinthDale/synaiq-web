@@ -1,7 +1,7 @@
 import { zhHant as homeZh, en as homeEn } from './locale-home.js';
 import { zhHant as kipZh, en as kipEn } from './locale-kip.js';
 import { zhHant as demoZh, en as demoEn } from './locale-demo.js';
-import { zhHant as commonZh, en as commonEn } from './locale-common.js';
+import { zhHant as commonZh, en as commonEn } from './locale-common.js?v=20260909-address';
 import { BRAND } from './brand.js';
 
 // Add a reviewed language bundle here; no language parameter is used as a file path.

@@ -1,10 +1,12 @@
 # Hostinger 操作索引與部署界線
 
-最後更新：2026-09-08。
+最後更新：2026-09-09。
 
 ## 目前線上版本
 
-`synaiq.com` 已使用 commit `752008b` 的 `docs/design/live-prototype/` 封裝版本，包含核准的 Home／KIP 中英雙語設計。它是客戶端渲染的靜態網站，**不是** `src/` 的 Astro Phase A `dist/`。
+`synaiq.com` 使用 commit `752008b` 的 `docs/design/live-prototype/` 封裝版本，包含核准的 Home／KIP 中英雙語設計；2026-09-09 已透過 Hostinger API 套用 `6e437d2` 的中英文地址更新。它是客戶端渲染的靜態網站，**不是** `src/` 的 Astro Phase A `dist/`。
+
+地址更新的上傳、公開 HTTP／JavaScript VM 驗證與三檔還原資訊，見 [地址更新紀錄](address-update-2026-09-08.md)。後續載入鏈快取版本修正也已上架，通過 origin 核對及七個公開網址的 HTTP、位元組數與 SHA-256 驗證；新中英文地址均可從公開目錄取得。沒有完成瀏覽器視覺驗證。
 
 實際上架、已執行的 smoke checks、備份限制與路由內容，見 [2026-09-08 部署紀錄](deployment-synaiq-com-2026-09-08.md)。這份部署紀錄保持原始操作事實；repo 整併不會重新執行上架。
 
@@ -12,6 +14,8 @@
 |---|---|
 | `C:\Users\User\synaiq\synaiq-web\docs\design\live-prototype\` | 現行核准設計來源 |
 | `C:\Users\User\synaiq\synaiq-web\out\synaiq-deploy-20260908\` | 本機 release 目錄、ZIP、SHA-256 manifest 與完整操作手冊；不進 Git |
+| `C:\Users\User\synaiq\synaiq-web\out\synaiq-address-20260908\` | 已上架地址修正的三檔更新／還原包；不進 Git |
+| `C:\Users\User\synaiq\synaiq-web\out\synaiq-address-20260909-cache\` | 已上架並驗證的四檔載入鏈快取修正與還原副本；不進 Git |
 | `C:\Users\User\Documents\synaiq-web\SynaiQ-網站上架與還原操作手冊-20260908.md` | 使用者保留的上架／還原手冊；歷史舊 repo 路徑須對照新的唯一工作目錄 |
 | Hostinger `public_html/synaiq-release-20260908/` | 已上架的版本目錄 |
 | Hostinger `backup-synaiq-20260908/.htaccess` | 上架前的路由備份，位於公開目錄外 |
@@ -27,6 +31,14 @@
 - 路由仍指向新版時，不可移除其版本目錄。保留舊站檔案不等於已完成可還原的全站備份。
 - 下次發布需另行核准，使用新的版本目錄、重新封裝對應資源路徑，先驗證直接網址及回退方案，再切換入口。
 - 不可將整個 repo、測試、設計文件、私人參考素材或本機工具公開上傳。
+
+## Hostinger API 使用界線
+
+2026-09-09 的地址更新使用 API 檔案上傳，僅替換帳戶 `u235694681` 下 `public_html/synaiq-release-20260908/` 的指定檔案，不使用會部署整份壓縮檔的 Deploy 端點，也不改動路由或既有 WordPress。每次替換前須核對遠端雜湊並保留對應還原副本，完成後驗證公開檔案。
+
+公開 JavaScript 有七天瀏覽器快取。之後修改語言目錄或還原時，須同步更新三段載入鏈的版本參數與兩個 HTML 入口，再驗證新網址；只覆蓋回舊檔案不會清除瀏覽器快取。
+
+API token 依使用者要求保留在 repo 根目錄的 `.env.hostinger.local`；該檔由 Git 忽略，只供本機授權使用，不能列印值、提交或包入網站上傳檔。API 可用不代表 Git push 會自動部署。
 
 ## ADO 管線現在只做驗證
 
