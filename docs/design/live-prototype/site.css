@@ -2971,24 +2971,6 @@ body[data-page="kip"] .kip-proof .animated-product {
   max-width: none;
   margin-top: 54px;
 }
-body[data-page="kip"] .kip-library-notes {
-  margin-top: 72px;
-  padding-top: 32px;
-  border-top: 1px solid #70776b;
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 8%;
-  align-items: start;
-}
-body[data-page="kip"] .kip-library-notes dl {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  margin: 0;
-}
-body[data-page="kip"] .kip-library-notes dd {
-  margin: 12px 0 0;
-}
 body[data-page="kip"] .kip-capabilities {
   background: var(--kip-soft);
   --kip-tear-surface: var(--kip-soft);
@@ -3061,10 +3043,6 @@ body[data-page="kip"] .kip-capability-list dd {
     gap: 14px;
     grid-template-columns: 28px minmax(0, 1fr) 6px;
     padding-inline: 20px;
-  }
-  body[data-page="kip"] .kip-library-notes {
-    grid-template-columns: 1fr;
-    gap: 32px;
   }
 }
 @media (max-width: 699px) {
@@ -3142,18 +3120,6 @@ body[data-page="kip"] .kip-capability-list dd {
   body[data-page="kip"] .kip-proof-heading {
     grid-template-columns: 1fr;
     gap: 18px;
-  }
-  body[data-page="kip"] .kip-library-notes dl {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-  body[data-page="kip"] .kip-library-notes dl > div {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 18px;
-  }
-  body[data-page="kip"] .kip-library-notes dd {
-    margin: 2px 0 0;
   }
   body[data-page="kip"] .kip-capabilities-layout {
     grid-template-columns: 1fr;

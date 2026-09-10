@@ -47,7 +47,7 @@ test('only the knowledge-hub phrase is marked in the Home title', () => {
 test('main text in every Home and KIP section has a named size setting', async () => {
   const tokens = await read('tokens.css');
   const typography = await read('tokens.css');
-  for (const prefix of ['narrative-pretitle', 'narrative-title', 'narrative-lead', 'narrative-body', 'product-title', 'showcase-title', 'showcase-body', 'wally-title', 'wally-body', 'persona-title', 'persona-body', 'advantages-summary', 'contact-title', 'contact-body', 'footer-body', 'kip-process-title', 'kip-step-title', 'kip-step-body', 'kip-architecture-title', 'kip-layer-title', 'kip-layer-body', 'kip-proof-title', 'kip-proof-body', 'kip-library-title', 'kip-capabilities-title', 'kip-capability-title', 'kip-capability-body']) {
+  for (const prefix of ['narrative-pretitle', 'narrative-title', 'narrative-lead', 'narrative-body', 'product-title', 'showcase-title', 'showcase-body', 'wally-title', 'wally-body', 'persona-title', 'persona-body', 'advantages-summary', 'contact-title', 'contact-body', 'footer-body', 'kip-process-title', 'kip-step-title', 'kip-step-body', 'kip-architecture-title', 'kip-layer-title', 'kip-layer-body', 'kip-proof-title', 'kip-proof-body', 'kip-capabilities-title', 'kip-capability-title', 'kip-capability-body']) {
     assert.ok(tokens.includes(`--${prefix}-size:`), `Missing ${prefix}`);
     assert.ok(typography.includes(`var(--${prefix}-size)`), `Unused ${prefix}`);
   }

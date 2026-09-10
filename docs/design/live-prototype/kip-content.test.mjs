@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { renderKip, initKip } from './kip-design.js';
+import { getMessages } from './i18n.js';
 
 const html = renderKip({
   advantageSection: () => '<section data-shared-advantages>SHARED_ADVANTAGES</section>',
@@ -13,7 +14,7 @@ const kipStart = siteCss.indexOf('/* BEGIN KIP /');
 assert.ok(kipStart >= 0, 'KIP layout section must exist');
 const css = siteCss.slice(kipStart);
 
-test('KIP editorial redesign preserves the existing 32 copy and shared-content blocks', () => {
+test('KIP preserves the retained copy and shared-content blocks', () => {
   const expected = [
     '問得到、答得準、接得上。',
     '把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。',
@@ -28,13 +29,6 @@ test('KIP editorial redesign preserves the existing 32 copy and shared-content b
     '權限、紀錄、影像檢索與報表，支援日常使用。',
     '智慧知識搜尋 IKS 讓問題連回文件；知識中心 KC 管理接入、解析與分庫。',
     '來源與答案一起出現，讓查詢成為可以確認的工作。',
-    '文件各有位置。',
-    '文件管理',
-    '集中整理組織資料',
-    '解析狀態',
-    '掌握接入進度',
-    '分庫權限',
-    '依使用範圍開放',
     '系統介接 API / MCP',
     '與企業既有系統連接。',
     '分庫與權限控管',
@@ -53,6 +47,22 @@ test('KIP editorial redesign preserves the existing 32 copy and shared-content b
   assert.equal((html.match(/data-shared-contact/g) || []).length, 1);
   assert.ok(html.indexOf('data-shared-advantages') < html.indexOf('id="proof"'));
   assert.ok(html.indexOf('data-shared-contact') > html.indexOf('kip-capability-list'));
+});
+
+test('KIP removes the standalone knowledge-center notes in both languages without removing the demo', () => {
+  for (const locale of ['zh-Hant', 'en']) {
+    const messages = getMessages(locale);
+    const page = renderKip({ advantageSection: () => '', contact: () => '', locale, messages });
+    assert.doesNotMatch(page, /kip-library-notes|KNOWLEDGE CENTER \/ (?:概念示意|CONCEPT)/);
+    for (const key of ['libraryLabel', 'libraryTitle', 'libraryNotes']) {
+      assert.equal(Object.hasOwn(messages.kip, key), false, `Unused KIP dictionary key: ${locale}.${key}`);
+    }
+    assert.equal((page.match(/data-demo-animation\s/g) || []).length, 1);
+    assert.equal((page.match(/class="film-library"/g) || []).length, 1);
+    assert.match(page, /kip-capability-list/);
+  }
+  assert.doesNotMatch(siteCss, /kip-library-notes/);
+  assert.doesNotMatch(readFileSync(new URL('./tokens.css', import.meta.url), 'utf8'), /kip-library-/);
 });
 
 test('KIP retains its brand-matched screen and exactly one labeled animated demo', () => {

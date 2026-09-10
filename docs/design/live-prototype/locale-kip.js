@@ -29,9 +29,6 @@ export const zhHant = {
   ],
   proofTitle: ['問完，', '順手看原文。'],
   proofCopy: ['智慧知識搜尋 IKS 讓問題連回文件；知識中心 KC 管理接入、解析與分庫。', '來源與答案一起出現，讓查詢成為可以確認的工作。'],
-  libraryLabel: 'KNOWLEDGE CENTER / 概念示意',
-  libraryTitle: '文件各有位置。',
-  libraryNotes: [['文件管理', '集中整理組織資料'], ['解析狀態', '掌握接入進度'], ['分庫權限', '依使用範圍開放']],
   capabilitiesTitle: ['把日常工作，', '一起接上。'],
   capabilities: [
     ['系統介接 API / MCP', '與企業既有系統連接。'],
@@ -72,9 +69,6 @@ export const en = {
   ],
   proofTitle: ['Ask a question.', 'Go straight to the source.'],
   proofCopy: ['Intelligent Knowledge Search (IKS) links questions to documents. Knowledge Center (KC) handles ingestion, parsing and collections.', 'Answers and sources appear together, so every search can be checked.'],
-  libraryLabel: 'KNOWLEDGE CENTER / CONCEPT',
-  libraryTitle: 'A place for every document.',
-  libraryNotes: [['Document management', 'Organize company information'], ['Processing status', 'Follow ingestion progress'], ['Collection permissions', 'Control who can access what']],
   capabilitiesTitle: ['Connect it all', 'to everyday work.'],
   capabilities: [
     ['API / MCP integration', 'Connect to your existing enterprise systems.'],

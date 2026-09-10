@@ -318,10 +318,6 @@ body[data-page="kip"] {
   /* 問完，順手看原文。／智慧知識搜尋 IKS… */
   --kip-proof-title-size: var(--heading-2-size);
   --kip-proof-body-size: var(--body-text-size);
-  /* 文件各有位置。／文件管理、解析狀態、分庫權限 */
-  --kip-library-title-size: clamp(26px, 2.4vw, 34px);
-  --kip-library-label-size: 15px;
-  --kip-library-body-size: 12px;
   /* 把日常工作，一起接上。／系統介接 API / MCP… */
   --kip-capabilities-title-size: var(--heading-2-size);
   --kip-capability-title-size: clamp(23px, 2.2vw, 30px);
@@ -1551,23 +1547,6 @@ body[data-page="kip"] .kip-proof .marked {
 /* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
 body[data-page="kip"] .kip-proof .film-answer .marked {
   text-decoration-color: var(--kip-olive);
-}
-/* 區段英文小標：Built around your knowledge.／The architecture behind an answer. */
-body[data-page="kip"] .kip-library-notes .section-no {
-  font: 10px/1.5 var(--body);
-  letter-spacing: 0.08em;
-  color: var(--kip-light-ink);
-}
-/* 文件各有位置。／文件管理、解析狀態、分庫權限 */
-body[data-page="kip"] .kip-library-notes h3 {
-  font-size: var(--kip-library-title-size);
-}
-body[data-page="kip"] .kip-library-notes dt {
-  font-size: var(--kip-library-label-size);
-}
-body[data-page="kip"] .kip-library-notes dd {
-  color: var(--kip-light-ink);
-  font-size: var(--kip-library-body-size);
 }
 /* 把日常工作，一起接上。／API、MCP、分庫權限、帳號記錄、影像檢索、報表 */
 body[data-page="kip"] .kip-capabilities-heading h2 {

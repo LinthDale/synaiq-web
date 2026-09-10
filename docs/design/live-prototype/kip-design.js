@@ -50,7 +50,6 @@ export function renderKip({ advantageSection, contact, locale = 'zh-Hant', messa
   <section class="kip-proof kip-torn" id="proof" aria-labelledby="kip-proof-title"><div class="wrap">
     <div class="kip-proof-heading"><h2 id="kip-proof-title">${e(m.proofTitle[0])}<br><span class="marked">${e(m.proofTitle[1])}</span></h2><div>${m.proofCopy.map(copy => `<p>${e(copy)}</p>`).join('')}</div></div>
     ${renderAnimatedDemo({ locale, messages })}
-    <div class="kip-library-notes"><div><span class="section-no">${e(m.libraryLabel)}</span><h3>${e(m.libraryTitle)}</h3></div><dl>${m.libraryNotes.map(([title, copy]) => `<div><dt>${e(title)}</dt><dd>${e(copy)}</dd></div>`).join('')}</dl></div>
   </div></section>
 
   <section class="kip-capabilities kip-torn" aria-labelledby="kip-capabilities-title"><div class="wrap kip-capabilities-layout">

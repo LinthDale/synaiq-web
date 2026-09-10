@@ -1,7 +1,8 @@
 # 官網樣式維護指南
 
-本文件對應已核准的 Home／KIP 中英文網站：`docs/design/live-prototype/`。
-**不是** Astro Phase A 的 `src/styles/`。修改這裡後需重新整理預覽；Git push 不會自動更新 Hostinger。
+改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引是目前 Home／KIP 中英文網站的維護入口，不是每輪修改的完成紀錄。
+
+唯一工作目錄：`C:\Users\User\synaiq\synaiq-web`。核准網站來源在 `docs/design/live-prototype/`，**不是** Astro Phase A 的 `src/styles/`。儲存後重新整理本機預覽；Git push 不會自動更新 Hostinger。
 
 ## 先分清楚：改內容，還是改外觀
 
@@ -9,19 +10,36 @@
 
 | 想修改 | 開哪個檔案、搜尋什麼 |
 |---|---|
-| 電話號碼與點擊撥號 | `page.html` 搜尋 `tel:`；顯示文字與 `href` 要一起改，詳見下方「修改電話號碼」 |
-| 頁尾電話、Email、連結的字級 | `tokens.css` 搜尋 `--footer-link-size`；這是整組頁尾連結的共用設定 |
+| 首頁 Banner、敘事、產業觀察、Wally 文案 | `locale-home.js` 的 `hero`／`narrative`／`outlook`／`wally` |
+| KIP 頁的標題、流程、四層架構與說明 | `locale-kip.js` |
+| 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
 | CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
 | 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
 | 另外兩段動畫的查詢、片名與步驟 | `locale-demo.js` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
+| 靜態產品示意圖裡的文字 | `locale-screens.js`；改完需重新生成 SVG，與動畫文案不同 |
 | 字型、字級、文字顏色 | `tokens.css`；不會修改文字內容或電話號碼 |
 | 動畫秒數、延遲、次數 | `tokens.css` 對應區段；不必改 JavaScript |
+| 間距、寬度、並排、撕紙與手機排列 | `site.css`；已有常用留白、剪報寬度等變數時，先改 `tokens.css` |
+| Logo、其他語言 | `brand.js`／`i18n.js`，操作見「Logo 與靜態產品示意圖」及語言指引 |
+| 電話號碼、Email 與點擊連結 | `page.html`；聯絡區的 Email 另在 `shared-design.js`，詳見「共用聯絡資料」 |
+| 頁尾電話、Email、連結的字級 | `tokens.css` 搜尋 `--footer-link-size`；整組頁尾連結共用 |
+
+文案分別匯出 `zhHant` 和 `en`，兩份都要修改，不會自動翻譯。保留原有 key、陣列長度與純文字格式，不要在語言檔塞 HTML。
+
+### 容易漏掉的文案位置
+
+- 首頁標題在 `locale-home.js` 的 `hero.title`，依序是「散落的企業文件，」「變成隨問隨答的」「知識中樞」三個字串；第三個字串才是中文底線區塊。英文不套這條底線。
+- 首頁 K／I／P 的首字母效果由 `home-design.js` 的 `renderHeroEyebrow` 套用，僅針對完整的 `KNOWLEDGE INTELLIGENCE PLATFORM`；更換整句後不會自動替任意新文案的首字母加色。
+- 八項優勢在 `locale-common.js` 的 `advantages.items`。每項依序為「名稱、右側簡述、展開首段、展開補充、情境示例」，不是只改列表上的標題。
+- 上排「首頁／KIP 平台」是換頁，下排是當前頁的段落目錄。文字在 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。
+- 語言切換顯示的 `ZH／EN` 在 `i18n.js` 的 `catalog.shortLabel`；選單字級在 `tokens.css` 的 `--language-size`。新增語言需完整詞典與靜態圖，不能只新增一個選項，步驟見 [語言與 Logo 指南](localization-and-brand-guide.md)。
+- 產業觀察的標題、兩段文章補充、年份、圖表朗讀說明與展開出處都在 `locale-home.js` 的 `outlook`；**圖表的 5 與 14.5 數值目前直接在 `home-design.js` 的 `budget-comparison`**，不是 CSS。若改數據，這些位置與原始來源必須一起核對。
 
 ## 平常先改這一個檔案
 
-**所有網站文字的字型、字級、行高、字距與文字顏色，都在 `tokens.css`。**
+**網站 DOM 文字的字型、字級、行高、字距與文字顏色，都在 `tokens.css`；圖片內的字不受它控制。**
 官網只保留兩份 CSS：`tokens.css` 改文字、常用視覺與動畫播放設定；`site.css` 改排版並套用動畫樣式，不再另填秒數。
-本檔上半部是按畫面順序編排的常用變數；下半部「完整文字細項」包含所有文字 CSS，也包含語言選單、手機選單、Demo 小字與圖片旁註記。不是每個細項都有專屬變數，但不用再跨 CSS 找文字。
+`tokens.css` 上半部是按畫面順序編排的常用變數；下半部「完整文字細項」包含文字 CSS，也包含語言選單、手機選單、Demo 小字與圖片旁註記。不是每個細項都有專屬變數，但不用再跨 CSS 找文字。
 
 **調外觀時，在 `tokens.css` 按 Ctrl+F，搜尋對應區塊的中文提示或下表變數。** 例如搜尋 `KNOWLEDGE INTELLIGENCE PLATFORM`，就會找到：
 
@@ -48,7 +66,7 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | 然後，散落的知識有了一個入口 | `--product-title-size`、`--product-title-color` |
 | 問一個問題，看見答案從哪裡來 | `--showcase-title-size`、`--showcase-body-size`，各有對應 `color` |
 | 動畫下方「01 用自然語言提問」等三步文字 | 「06 Demo」的 `--demo-step-font`／`--demo-step-size`／`--demo-step-color`；數字獨立用 `--demo-step-number-font`／`--demo-step-number-size`，手機覆寫緊接在同段下方 |
-| 動畫影院的片名／說明／選片按鈕 | 「06 Demo」的 `--demo-booth-title-size`／`--demo-booth-body-size`／`--demo-booth-choice-size`，各自字型與顏色亦在同段 |
+| 動畫影院的片名／說明／選片按鈕 | 「06 Demo」的 `--demo-booth-title-size`／`--demo-booth-body-size`／`--demo-booth-choice-size`；只有片名有獨立 `--demo-booth-title-font`，其餘字型沿用 `--body`，選片狀態色見下半部 `.demo-booth-choices button` |
 | 同一套知識，走到現場／Wally 是 KIP 的現場化身 | `--wally-title-size`、`--wally-body-size`，各有對應 `color` |
 | 讓知識，有個見面的方式／從螢幕裡的問答… | `--persona-title-size`、`--persona-body-size` |
 | 展示字型／內文字型 | `--display`／`--body` |
@@ -79,7 +97,6 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | KIP 資料接入、自動解析、搜尋可用 | `--kip-step-title-size`、`--kip-step-body-size` |
 | KIP 四層架構卡片 | `--kip-layer-title-size`、`--kip-layer-body-size` |
 | KIP 問完，順手看原文 | `--kip-proof-title-size`、`--kip-proof-body-size` |
-| KIP 文件各有位置 | `--kip-library-title-size`／`--kip-library-label-size`／`--kip-library-body-size` |
 | KIP 把日常工作，一起接上 | `--kip-capabilities-title-size`／`--kip-capability-title-size`／`--kip-capability-body-size` |
 | 先講一個場景，我們回一個做法 | `--contact-title-size`、`--contact-body-size`，各有對應 `color` |
 | 洽談導入等按鈕／頁尾公司資訊及地址 | `--button-text-size`／`--footer-body-size`／`--footer-note-size` |
@@ -109,8 +126,8 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `BEGIN HOME PAPER` | 首頁手撕紙邊界與防遮字留白 |
 | `BEGIN KIP` | KIP 平台的區塊與 RWD |
 
-動畫播放設定見下節；`demo-animation.js` 只執行捲動觸發、五段播放、暫停與重播，日常不用修改它。`home-design.js` 只負責組合首頁與啟動動畫。
-手繪註記 `handwritten-note`、信紙 `source-paper`、圖片標籤 `slot-caption`、Demo 介面 `film-*` 的文字已全部放在 `tokens.css` 下半部，旁邊有中文提示。版型尺寸與座標在 `site.css`。
+`home-design.js`／`kip-design.js` 組合各頁 HTML、指定圖片並啟動互動；`shared-design.js` 組合八項優勢與聯絡區；`demo-animation.js` 同時產生三片共用的聊天介面、設定示例圖片，並執行出場、切片與五段播放。這些檔案不是日常字級或秒數的設定入口。
+手繪註記 `handwritten-note`、信紙 `source-paper`、圖片標籤 `slot-caption`、Demo 介面 `film-*` 的**文字樣式**在 `tokens.css` 下半部；文字內容仍在語言檔。版型尺寸與座標在 `site.css`。
 
 `--persona-body-size` 不控制其下方 `.note` 的素材註記；要改該註記，在 `tokens.css` 搜尋「共用素材註記」。小按鈕另用 `--button-small-size`。保留你在 `.outlook-caveat` 加上的 `!important`，其字級亦由 `--outlook-note-size` 控制。
 圖片本身的字（Logo、產品照片、素材內文字）不屬於網頁文字，需改原素材；預覽工具外框 `index.html` 也不是正式網站的一部分。
@@ -118,7 +135,13 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 中英文文案仍在 `locale-*.js`；Logo 更換方式見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 不要把文案寫進 CSS，也不要直接修改圖片中的字來替代語言檔。
 
-## 修改電話號碼
+## 共用聯絡資料
+
+公司名稱與地址改 `locale-common.js` 的 `footer.company`／`footer.address`，中英文各一份；`page.html` 中對應 `data-i18n` 的預設文字也應同步。聯絡區標題、說明與按鈕文字改 `contact.heading`／`description`／`cta`。
+
+Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入」寄信目標另在 `shared-design.js` 的 `renderContact`。更換信箱時兩處一起改。目前按鈕開啟郵件程式，沒有連接表單 API。
+
+### 電話號碼
 
 **開 `page.html`，按 Ctrl+F 搜尋 `tel:` 或 `2393`。** 電話在 `<footer id="footer">` 中，目前是：
 
@@ -134,7 +157,9 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；首頁／KIP 與中英文都要確認。
 
-**手動上架要分清楚兩個 HTML 入口：** 本機 `index.html` 是預覽外框，不要上傳它替代官網。正式封裝將 `page.html` 另存成版本目錄中的 `index.html`，根網址 `/` 讀的是後者。如果只在 Hostinger 手動更改電話，需先下載備份，再於目前版本目錄的 `index.html`、`page.html` 同步修改上述電話連結，保留兩檔既有的 CSS、JS、圖片路徑。不要直接拿本機未封裝的 `page.html` 蓋掉線上 `index.html`。正式版本位置以 [Hostinger 操作索引](../../operations/deploy-hostinger.md) 及實際入口為準。
+若手動修改主機上的共用 HTML，需同步版本目錄的 `index.html`、`page.html`，並保留封裝後路徑；詳見「Hostinger 手動更新與發布界線」，不要用本機預覽外框覆蓋官網。
+
+<a id="動畫只改-tokenscss"></a>
 
 ## 動畫：播放設定改 tokens.css，文案改 locale-demo.js
 
@@ -161,18 +186,28 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 ### 模擬滑鼠 Demo 與其他效果
 
-搜尋「06 Demo」：`--demo-question-hold`／`click-hold`／`answer-hold`／`source-hold`／`library-hold` 是五段各自停留時間，相加是一輪總長，不用另算 JavaScript 累積毫秒。`--demo-play-count`：`0` 持續循環、`1` 一輪、`2` 兩輪，結束停在最後一幕（知識問答的知識庫，或圖片搜尋的原始素材）；「重播」重新計數。下面同段可改滑鼠移動、打字、側欄滑入等細節時間。
+搜尋「06 Demo」，以下五段停留時間相加就是一輪總長。第一片使用 `:root` 設定；另兩片的覆寫緊接在同段下方，以 `data-demo-scene="text-image"`／`data-demo-scene="image-image"` 區分。只改 `:root` 不會蓋過另兩片的設定。
 
-**三段影片共用同一個 KIP 對話介面**：知識問答、以自然語言找圖、以圖搜圖。使用左右箭頭或片名切換；不會自動換片。切片會從頭播放，但保留手動暫停狀態；按重播才恢復播放。同一時間只渲染一段、只使用一個播放時鐘。鍵盤可在片名按鈕上用左右鍵切換。
+| 設定 | 第一片：知識問答 | 第二／三片：圖片搜尋 |
+|---|---|---|
+| `--demo-question-hold` | 顯示提問、打字 | 輸入描述／選入參考圖 |
+| `--demo-click-hold` | 點擊送出、查找資料 | 點擊送出、比對圖片 |
+| `--demo-answer-hold` | 顯示採購流程回答 | 顯示三張結果 |
+| `--demo-source-hold` | 打開引用原文 | 選中第一張結果 |
+| `--demo-library-hold` | 顯示知識中心文件列表 | 打開原始素材面板 |
+
+`--demo-play-count`：`0` 持續循環、`1` 一輪、`2` 兩輪，結束停在最後一幕；「重播」重新計數。`--demo-view-threshold` 決定可見多少才播放，不是秒數。`--demo-typing-duration`、`--demo-pointer-duration`、`--demo-source-duration` 控制動作速度，不會加長該幕停留時間；動作時間應小於所屬幕的停留時間。文案變長時，需實看回答與原文是否有足夠閱讀時間。
+
+**三段動畫共用同一個 KIP 對話介面**：知識問答、以自然語言找圖、以圖搜圖。使用左右箭頭或片名切換，不會自動換片。切片重設時間與次數，但保留手動暫停狀態；可按「播放動畫」繼續，或按「重新播放」從頭播放。同一時間只渲染一段、只使用一個播放時鐘。鍵盤可在片名按鈕上用左右鍵切換。
 
 網站實際播放的是 HTML／CSS／JavaScript 動畫，不是 MP4、GIF 或影片播放器。另行錄製匯出的 MP4 是獨立檔案；修改網站文案或秒數不會更新既有 MP4，需要重新錄製。
 
 兩段圖片動畫只更換聊天內容、輸入框內的文字／圖片附件與回傳結果，不能再另造一套搜尋頁。動畫不是實際上傳、搜尋或連線產品；使用 `public/brand/` 中既有的公開 Wally 素材，沒有私有帳戶畫面。
 
-- 步驟「01 用自然語言提問」的文字字型／大小用 `--demo-step-font`／`--demo-step-size`；前方數字用 `--demo-step-number-font`／`--demo-step-number-size`，都在同一段。
+- 步驟「01 用自然語言提問」的文字字型／大小用 `--demo-step-font`／`--demo-step-size`；前方數字用 `--demo-step-number-font`／`--demo-step-number-size`，都在同一段。目前桌機文字與數字各為 22px；899px 以下文字覆寫為 12px，639px 以下數字為 18px。改桌機字級不會自動取消這些窄版覆寫。
 - 三段共用播放次數、滑鼠與介面效果。兩個新片的五段停留時間，在同一「06 Demo」內搜尋 `data-demo-scene="text-image"`／`data-demo-scene="image-image"`，各自修改，不要在檔尾再覆寫。
 - 圖片回覆的進場／逐張延遲／原圖展開時間用 `--demo-image-results-duration`／`--demo-image-results-stagger`／`--demo-image-preview-duration`。
-- 文案都在 `locale-demo.js`，但第一段問答與圖片查詢不在同一層；請依下表修改 `zhHant`／`en` 兩份。只有新增場景或改動作順序才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字外觀與播放設定仍只在 `tokens.css`。
+- 問答、提示與步驟文案在 `locale-demo.js`，但第一段與圖片查詢不在同一層；請依下表修改 `zhHant`／`en` 兩份。新增場景、改動作順序、介面結構或示例圖片時才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字外觀與播放設定仍只在 `tokens.css`。
 
 | 要改的動畫文字 | `locale-demo.js` 的位置 |
 |---|---|
@@ -185,16 +220,49 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | 三段片名、說明 | `booth.titles`、`booth.descriptions`，依知識問答／自然語言找圖／以圖搜圖排序 |
 | 自然語言找圖的提問、提示與步驟 | `booth.textImage.query`／`loading`／`matching`／`chapters` |
 | 以圖搜圖的提問、提示與步驟 | `booth.imageImage.query`／`loading`／`matching`／`chapters` |
+| 圖片結果數、素材位置與示意說明 | `booth.resultCount`／`folder`／`example` 等共用欄位；改圖片數量時要同步結果數文字 |
+| 暫停、播放、重播與示例聲明 | 最外層 `pause`／`play`／`replay`／`note`／`groupLabel` |
 
 第一段目前以「為新進同仁採購筆電，該如何申請」示範查找制度流程：填寫用途、規格與預算，主管核准後由採購詢價、下單，到貨後驗收。這是虛構示例，不是企業實際制度；保留示例標示，不要改回目前未支援的「指定第 12 頁寫了什麼」問答。修改時一起核對問題、回答、引用原文、側欄與文件列表，不能只換一句提問。
 
-這裡只控制動畫；首頁組圖中的靜態介面另由 `locale-screens.js` 與生成素材維護，KIP 頁的紙條問答在 `locale-kip.js`。改 `locale-demo.js` 不會同步替換它們，也不代表其他示例已校正。
+**動畫已換成採購流程，不代表全站所有示例已換。** `locale-screens.js` 的靜態搜尋畫面，以及 `locale-kip.js` 的 `sampleQuestion`／`sampleAnswer`／`sampleHighlight`／`sampleCitation` 仍有原本的第 12 頁／保固示例。這些不是新動畫的來源；若要統一文案，需另行同步修改並重新生成靜態圖，不能只換動畫詞典就視為全站完成。
+
+### 動畫介面內的字型與圖片
+
+動畫下方三個步驟、上方選片文字、介面內問答是不同區域。介面內字型直接在 `tokens.css` 搜尋下表 selector，全部在 `BEGIN TEXT DEMO`，不必改另一份 CSS。
+
+| 畫面上的字 | 在 `tokens.css` 搜尋 |
+|---|---|
+| 上排產品名稱／右側註記 | `.film-top`／`.film-top > small` |
+| 左側最近問題／知識中心 | `.film-sidebar` |
+| 提問／回答／回答補充 | `.film-question`／`.film-answer p`／`.film-answer small` |
+| 引用檔名／查看原文 | `.film-citation > span`／`.film-citation b` |
+| 原文標題／小標／內文 | `.film-source h4`／`.film-source-label`／`.film-source p` |
+| 知識中心標題／文件清單 | `.film-library h4`／`.film-table > div` |
+| 圖片搜尋輸入文字／結果名稱／小標 | `--demo-image-query-size`／`--demo-image-result-size`／`--demo-image-label-size` |
+| 圖片原始素材面板標題 | `--demo-image-heading-size` |
+
+部分 CSS 註解仍沿用「第 12 頁／保固條款」作為舊標籤，不是實際顯示文案。定位以 selector 為準，內容以 `locale-demo.js` 為準；不要照註解把文案改回去。下半部亦有 639px 以下的 `.film-*` 覆寫，調整前先確認 DevTools 的生效規則。
+
+示例圖片清單在 `demo-animation.js` 的 `imageAssets`：`src` 是實際圖檔路徑，`name` 是產品名稱，`file` 是畫面顯示的示例檔名。三者不在 `locale-demo.js`。目前使用 `public/brand/wally-2-plus.png`、`public/brand/wally/wally-2.png`、`public/brand/wally-mini.png`；自然語言找圖先選 Wally 2 PLUS，以圖搜圖先選 Wally Mini。改清單順序也會改首張選取結果；改名或路徑時需核對輸入縮圖、三張結果、原始素材面板及公開白名單。
+
+### 其他動態與暫停規則
 
 - 首屏散字：「02 首頁 Banner」的 `--hero-letters-duration`／`stagger`／`count`。這個 CSS 次數用 `infinite` 表示循環，不用 `0`。
 - KIP 四層卡片移入效果：「10 KIP 平台」的 `--kip-layer-hover-duration`。
 - 全站按鈕移入效果：「12 全站共用」的 `--button-hover-duration`。
-- 系統開啟「減少動態」時，組圖直接展示、Demo 停在原文，不播放；離開 Demo 可見範圍或切換分頁時自動暫停。
-- 播放次數填非負整數，時間填 `s`／`ms`；Demo 各段停留需大於 0。JavaScript 設定缺漏或格式錯誤時顯示靜態內容，不讓介面消失。
+- 系統開啟「減少動態」時，組圖直接展示，Demo 停在 `source` 靜態幕：知識問答顯示原文，圖片搜尋顯示已選取的結果，不自動展開下一幕。一般播放時離開 Demo 可見範圍或切換分頁會自動暫停。
+- 組圖／Demo 播放次數填非負整數，時間填 `s`／`ms`；Demo 各段停留需大於 0。JavaScript 讀取的播放設定缺漏或格式錯誤時顯示靜態內容，不讓介面消失。
+
+### 匯出 MP4 的維護界線
+
+已匯出的三個 MP4 是另外錄製的 H.264、1920×1080、30fps、無聲影片，不是網站載入的素材，也不會隨 CSS／詞典或 Git push 更新。目前三片已依 commit `1af91b7` 重新錄製為中文版；第一片使用「新進同仁採購筆電」問答、設備採購流程引用與虛構示範標示，不再是詢問第 12 頁內容。
+
+最新輸出與錄製腳本位於本機 `out/kip-demo-mp4-20260909-purchasing/`，不進 Git。交付檔為 `01-knowledge-qa.mp4`、`02-text-to-image.mp4`、`03-image-to-image.mp4`，合併下載包為 `KIP-3-demo-animations-updated.zip`；舊的 `out/kip-demo-mp4-20260909/` 保留，但不再作為最新影片交付。
+
+`record.mjs`／`recording.html` 是該次錄製工具，不是 npm 通用匯出指令。再次使用前先確認本機 Chromium、FFmpeg 路徑，將工具與新輸出放到獨立目錄並核對引用，避免覆蓋原影片。錄製共用網站的 `renderDemoFilm` 與 `tokens.css`／`site.css`，不要另寫一套可能失真的動畫。
+
+錄製時每片選定語言、完整播放一輪並保留末幕，再檢查滑鼠點擊位置、字型、原文面板、邊界與片長。不要用 CSS `transform: scale()` 放大整個錄製舞台，否則滑鼠定位可能偏移；需轉成 1080p 時在影片編碼階段縮放。錄製頁、原始影格及驗證工具都不放進公開網站包。
 
 ## 修改 CEO quote 的文字
 
@@ -207,10 +275,10 @@ quote: [
 ],
 ```
 
-一個內層陣列是一段，兩個字串會直接接起來。第一段收尾保持在一起；第二段的第二個字串會畫強調底線。保留引號、逗號和括號；英文兩段字串交界要留需要的空格。
+一個內層陣列是一段，兩個字串會直接接起來。第一段收尾保持在一起；第二段的第二個字串會畫強調底線。保留引號、逗號和括號；英文兩段字串交界要留需要的空格。`home-design.js` 目前固定渲染兩段，直接多加第三個陣列不會顯示；要增加段落須同步 renderer 與測試。
 字級、行高、顏色不在這個 JS 檔：在 `tokens.css` 搜尋「09 CEO 引言」。
 
-### 維護規則
+## 維護規則
 
 - 在對應段落修改既有規則，不要持續在檔尾追加同名 selector 補丁。
 - 新增文字規則放 `tokens.css`；不要把字型或文字顏色寫回 `site.css`、HTML inline style 或 JavaScript。
@@ -225,38 +293,94 @@ quote: [
 
 ## 修改後怎麼檢查
 
+### 先看本機，不用先 build 或上架
+
+在 repo 根目錄開終端 A：
+
 ```powershell
-npm ci
+Set-Location 'C:\Users\User\synaiq\synaiq-web'
 npm run dev:design
-npm run test:all
-npm run check
 ```
 
-另開終端，首次安裝測試瀏覽器：
+第一次安裝或 lockfile 更新時，先執行 `npm ci`；日常改字不需要反覆安裝。預覽服務會持續占用終端 A，檢查指令請在另一個終端執行。4318 已有這個預覽服務時沿用即可，不必重開；不要雙擊 HTML 用 `file://` 開網頁。
+
+- [連續縮放預覽](http://127.0.0.1:4318/live-prototype/?page=home&lang=zh-Hant)：選首頁／KIP、中英與寬度；外框可縮小整張頁面以配合視窗。
+- [獨立網站頁面](http://127.0.0.1:4318/live-prototype/page.html?page=home&lang=zh-Hant)：看真實字級及用 DevTools 找 CSS 時優先使用，不受預覽外框縮放影響。
+- 存檔後重新整理；這個伺服器沒有自動熱更新。DevTools 裡直接調整只作用於當次瀏覽器，必須寫回來源檔才會保留。
+- 字沒變：先確認改的是目前 repo、正確語言與生效的 media 規則，再確認選到的是網站 iframe 而非預覽外框。圖片裡的字則依靜態圖生成流程處理。
+- 修改同名 CSS／JS／圖片不必重啟服務；新增公開檔名須更新 `share-preview.mjs` 白名單，確認程序身分後僅重載這個預覽服務。不可停止所有 Node 程序或把整個 repo 公開。
+
+### 文字、樣式與動畫的基本檢查
+
+終端 B 也先切到 repo 根目錄，再執行：
+
+```powershell
+npm run test:design
+node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
+git diff --check
+```
+
+`test:design` 包含中英詞典結構、內容、CSS 所屬檔案、動畫時序與靜態圖一致性檢查。第一段採購流程的回歸測試在 `demo-animation.test.mjs`、`locale-kip-demo.test.mjs`；前者防止重新出現頁碼／保固問答，並核對引用檔名與文件列表。刻意換內容時要同步相關預期值，不要整段刪掉測試；原文與回答的語意仍需人工核對。
+
+瀏覽器互動測試需要另設定執行檔。首次安裝 Chromium，並在同一個終端 B 指定路徑：
 
 ```powershell
 npx playwright install chromium
-npm run test:design:visual -- --before=cfe62f6
+$env:PLAYWRIGHT_EXECUTABLE_PATH = node --input-type=module -e "import { chromium } from 'playwright'; console.log(chromium.executablePath())"
+npm run test:design
 ```
 
-此工具只啟動獨立 headless Chromium 與 loopback 預覽，不操作使用者登入中的 Chrome，也不建立公開隧道。
-若要用已安裝的相容 Chromium，可設定 `PLAYWRIGHT_EXECUTABLE_PATH` 為它的完整執行檔路徑。
-設定後執行 `npm run test:design` 也會執行 `motion-browser.test.mjs` 的組圖／Demo 互動測試，以及 `demo-booth-browser.test.mjs` 的三片切換、手機版、暫停與鍵盤測試；未設定時瀏覽器測試會明確標記 skipped，不能當作已驗證互動。
-真正字型與既有線上人物素材仍需網路；載入失敗時不應接受比較結果。
+也可把 `PLAYWRIGHT_EXECUTABLE_PATH` 設為已安裝相容 Chromium 的完整路徑。只安裝瀏覽器但未設定此變數，`motion-browser.test.mjs`、`demo-booth-browser.test.mjs` 仍會跳過；看到 skipped 不能當作互動已通過。這些測試使用獨立 headless 瀏覽器及 loopback 服務，不操作使用者登入中的 Chrome，也不開公開隧道。
 
-- `--before=<本機 Git revision>`：整理前的基準。之後改為你當次修改前的 commit。
-- `--before-dir=<本機快照目錄>`：若要保留尚未 commit 的調整，先複製當時的 `page.html`、`site.css`、`tokens.css` 到獨立目錄，再用這個參數比對；缺檔會停止，不會偷用目前 CSS 作為基準。
-- `--mode=visual`：只做前後外觀比對；`--mode=interactions`：只跑操作檢查；預設兩者都跑。
-- `--widths=390,768,1440`：快速檢查；預設包含 17 個寬度及斷點兩側，320–1920px。
-- 預設輸出：`out/css-refactor-20260909/`，包含 `report.json`、前後截圖與差異 JSON；可用 `--output=out/<新名稱>` 保存另一輪結果。
-- 首頁／KIP × 中英 × 17 寬度 × 全部 details 關閉／打開，共 136 組幾何與 computed-style 比對。
-- 390／768／1440 的 12 組整頁截圖逐像素比對；動態另檢查實際揭示、五個 Demo 階段、暫停／重播與 reduced-motion。
+人工檢查首頁／KIP × 中英 × 390／768／1440px，並拖曳經過斷點，而不只看三張截圖：
 
-結果只涵蓋指定 Chromium、寬度與狀態，不等於 Safari／Firefox 或每一種真實裝置已驗收。
+1. 導覽所在頁底線、語言切換保留頁面／錨點、手機目錄與 Escape 關閉正常。
+2. Banner 中文底線只在第三段，英文換行正常；大字、小字與按鈕沒有被撕紙遮住。
+3. 金色箭頭、左右獨立百分比與剪報傾斜不溢出；左下補充與展開來源都能閱讀。
+4. 產品組圖捲入／捲出、次數用盡、短視窗與 reduced-motion 都正常。
+5. 三片全部切換，逐幕看提問、回覆、引用／素材面板與末幕；檢查滑鼠點擊位置、暫停、重播、切片保持暫停及分頁切走後恢復。
+6. 長回答與檔名不壓住輸入框、不被裁切；八項優勢展開後不產生水平捲動。
+
+### 改 CSS 時的進階比較
+
+修改尚未 commit 時，`HEAD` 可作為本次修改前的 CSS 基準；若已 commit，請替換成真正修改前的本機 commit。輸出目錄名稱自行更換，保留上一輪結果：
+
+```powershell
+npm run test:design:visual -- --before=HEAD --output=out/style-check-current
+node scripts/check-typography.mjs --output=out/typography-check-current
+```
+
+視覺比較工具目前仍有舊版預設基準與輸出目錄，請每次明確傳 `--before`、`--output`，不要不帶參數就當成當次比較。
+
+- `--before-dir=<本機快照目錄>`：改用修改前的 HTML／CSS 快照；當時 `page.html` 與它載入、import 的 CSS 必須齊全。現行兩檔結構就是 `page.html`、`site.css`、`tokens.css`，缺檔會停止。
+- `--mode=visual` 只做前後外觀比對；`--mode=interactions` 只做操作檢查；預設兩者都跑。程式仍會讀取基準檔，所以 interactions 模式也要指定有效基準。
+- `--widths=390,768,1440` 可縮小外觀比較範圍；預設包含 320–1920px 的 17 個寬度與斷點兩側，逐頁、逐語言比較 details 開／關。390／768／1440px 另有整頁截圖。
+- `report.json`、截圖與差異 JSON 留在指定的 `out/`，不要加到公開白名單或再整理成日期報告。
+
+**這是 HTML／CSS 基準比較，不是整個舊網站的回放。** 基準與目前頁面都使用工作目錄裡的 JS、詞典及圖片，因此不能用它證明文案、動畫程式或圖片前後沒有改變。這些改動需另看 Git 差異、對應測試與人工畫面。
+
+`check-typography.mjs` 盤點每頁 DOM 文字的實際樣式，檢查文字 CSS 來自 `tokens.css`；暫時在瀏覽器裡改具名設定，確認生效後還原，亦檢查繁中底線、英文及多寬度溢出，不修改來源檔或正式站。這不涵蓋圖片內文字，也不取代三片動畫各狀態的人工檢查。
+
+真正字型與線上人物素材仍需網路；載入失敗、以替代字型渲染時不能接受視覺比較。結果只涵蓋指定 Chromium、寬度與狀態，不等於 Safari／Firefox 或每一種實機都已驗收。
+
 外觀調整若本來就有意改變，先確認差異是預期的，再選新的基準；不要用關掉測試來通過。
 
-文字設定的生效檢查：`node scripts/check-typography.mjs`。它先盤點每頁全部 DOM 文字的實際樣式、檢查已載入的文字 CSS 都來自 `tokens.css`，再暫改每個具名設定並逐一確認生效，最後還原；同時檢查繁中底線、英文不變及 17 寬度溢出。不修改來源檔或正式站。圖片內文字與瀏覽器內建預設不是作者 CSS；Google Fonts 僅提供字型檔。
-單元測試另禁止 `site.css` 遺留任何字型、字級、行高、字距、文字顏色宣告，以及公開頁面／腳本夾帶文字 inline style，避免只驗證已列出的設定卻漏掉其他文字。
+若同時修改 Astro 基礎或要驗整個 repo，再執行 `npm run test:all`、`npm run check`。`test:all` 會先建置 Astro；它產生的 `dist/` 不是這份核准設計的上架包。
+
+## Logo 與靜態產品示意圖
+
+頁首與動畫的淺底 Logo 使用 `assets/synaiq-logo-ink.svg`；深底頁尾使用 repo 的 `public/brand/synaiq-logo-light.svg`。`brand.js` 統一指向這兩個版本，沒有 Logo 上傳後台。換固定原檔後仍需同步四張靜態產品 SVG：
+
+```powershell
+node docs/design/live-prototype/scripts/sync-brand-screens.mjs
+node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
+```
+
+以上在 repo 根目錄執行；第一行會更新生成圖，第二行只檢查是否一致。詳細品牌審查與其他語言登錄方式見 [語言與 Logo 指南](localization-and-brand-guide.md)。
+
+靜態圖裡的文案在 `locale-screens.js` 的 `screenMessages`，版型與圖片內的文字樣式在 `screen-templates/search.svg`／`library.svg`。生成器會輸出 `assets/kip-search-demo.svg`、`kip-search-demo-en.svg`、`kip-library-demo.svg`、`kip-library-demo-en.svg`；頁面透過 `locale-common.js` 的 `assets.searchScreen`／`libraryScreen` 選用語言版本。
+
+不要直接改生成 SVG 作為長期來源，下次生成會被覆蓋；也不要以為修改 `tokens.css` 會改到 `<img>` 裡的 SVG 字級。照片中已印好的 Logo 不會跟著更新。公開發布要包含改過的原檔與重新生成的四圖，不能只上傳 `brand.js`。
 
 ## 素材與引用維護
 
@@ -287,12 +411,41 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 私有產品畫面不得含帳密、公司識別、帳號、對話、文件名或內部時間。若另有授權需截圖，先人工確認，再使用本機不可逆實色遮罩；`sanitize-capture.mjs` 的既有遮罩只適用原先 1280×720 的空白入口，不是通用去識別化工具。網站目前使用品牌化示例介面，不使用私有原始截圖。
 
-## 發布界線
+## Hostinger 手動更新與發布界線
 
-修改本機指引、文案、CSS 或素材都不會自動部署，也不代表正式站已同步。
-未來封裝 CSS 只需 `site.css`、`tokens.css`，與 `page.html` 保持同目錄及現有素材路徑。
-原本的六份版面 CSS 已合併並刪除，不要在部署時重新帶入舊檔案。
-既有 `out/synaiq-deploy-*`／`out/synaiq-address-*` 是已發布／還原紀錄，不要原地覆寫。
-依 [上架／還原操作索引](../../operations/deploy-hostinger.md) 建立新版本包後才切換正式站。
+**儲存本機檔案、測試通過、commit／push，都不等於正式站已更新。** `npm run build` 產生的 Astro `dist/` 也不是目前核准設計的上架包。沒有可直接重跑來發布任意改動的通用 npm 指令。
+
+### 先確認主機正在使用哪一版
+
+在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260909-purchasing/`；`synaiq-release-20260909-design/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
+
+| 本機來源 | 正式包對應位置／限制 |
+|---|---|
+| `docs/design/live-prototype/page.html` | 封裝成版本目錄中的 `page.html` 與 `index.html`；根網址讀後者 |
+| `docs/design/live-prototype/index.html`、`preview.js` | 本機連續縮放預覽外框，不上傳成正式首頁 |
+| `site.css`、`tokens.css` | 正式版本目錄內的兩份 CSS；不帶回舊 `prototype.css` 或已刪的分頁 CSS |
+| renderer、詞典、`brand.js`、圖片 | 僅封裝需要的公開檔案；HTML、CSS、JS 及素材引用需對齊版本前綴 |
+| `STYLE-GUIDE.md`、測試、生成／錄製／部署工具、`.env.hostinger.local` | 留在本機，不上傳到公開網站 |
+
+本機 `page.html` 使用的相對資源路徑，在根網址 `/` 下不一定成立。不能把原始 `page.html` 改名為 `index.html` 就直接蓋上線；也不能把任意原始 JS 都當成免封裝檔案上傳。
+
+### 只手動更新少數既有檔案
+
+這是另外確認範圍後的原地小修，不取代正常的新版本發布：
+
+1. 確認要修改的檔案清單與目前正式版本。在檔案管理員先下載**主機現有檔案**到獨立備份目錄，記下原路徑；不要下載覆蓋正在編輯的本機來源。涉及 HTML／快取引用時，一併備份載入鏈相關檔案。
+2. 本機修改、預覽及測試後，只上傳核對過的檔案到當前版本目錄並確認覆蓋。純文案的 `locale-demo.js` 與無路徑改動的 `tokens.css` 可作為這類小修；涉及新增素材、路徑、版型或多檔模組關係時，使用完整新版本流程。
+3. HTML 小修需在封裝後的 `index.html`、`page.html` 同步修改，保留原有版本化 CSS／JS／圖片 URL。不拿本機預覽外框覆蓋，不改 `/` 路由，不刪其他目錄。
+4. 重新下載／讀取剛上傳的公開檔案，核對內容；再從根網址檢查首頁／KIP、中英、手機與動畫。遇到異常，用這次下載的主機備份還原相同檔案，不使用更早的原始碼猜測還原內容。
+
+**快取要另外處理。** 正式站既有 JS 可能被瀏覽器快取七天；Ctrl+Shift+R 只能幫你自己的瀏覽器重新取得，不能保證其他訪客拿到新版。若原地修改 JS，必須檢查從 `index.html`／`page.html`、`prototype.js`、`i18n.js` 到詞典的完整載入鏈與版本參數；只在首頁網址加參數，不會更新所有被 import 的模組。CSS 也需檢查 `site.css` 到 `tokens.css` 的引用及實際回應。沒有完成訪客快取切換驗證前，不要宣布已全面更新；不熟悉載入鏈時改走新版本封裝。
+
+### 完整新版本發布
+
+依 [上架／還原操作索引](../../operations/deploy-hostinger.md) 另建版本目錄，封裝核准公開檔案並重寫資源 URL，核對清單與 hash，再上傳。先讓新版本的直接網址通過經審核的 `.htaccess` 白名單與頁面驗證，備妥精確還原路由，最後才切換根網址 `/`；不能先切入口再補素材。
+
+既有 `out/synaiq-release-*/release.mjs` 固定了當次版本名與主機預期 hash，是一次發布的工具，不是日常通用部署器。已完成的 `package`／`stage`／`activate` 不要重跑，也不要覆寫既有 `out/synaiq-deploy-*`、`out/synaiq-address-*`、`out/synaiq-release-*` 的封存與還原資料。
+
+發布後驗證根網址、四組頁面／語言、素材與動畫；同時確認 `/home.html` 仍導向根網址，舊 WordPress 路徑仍下架。不能為了發布恢復 `index.php` fallback，不能刪掉新版仍使用的 Wally 角色圖，也不觸碰 `synaiq-ai.com` 的產品服務。還原使用當次已核對的備份；不要把更早的 WordPress 路由當成新版回退。
 
 日常更新直接維護本指引，不再新增日期驗證報告或製作紀錄；不要在指引中累加每輪測試通過數、歷史 PID、過期網址或舊 quote。
