@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 import postcss from 'postcss';
 import { chromium } from 'playwright';
 import { createPreviewServer } from '../docs/design/live-prototype/share-preview.mjs';
+import { SUPPORTED_PAGES } from '../docs/design/live-prototype/i18n.js';
 
 const directory = 'docs/design/live-prototype/';
 const tokens = postcss.parse(readFileSync(`${directory}tokens.css`, 'utf8'));
@@ -31,11 +32,12 @@ css.walkRules(rule => {
 for (const definition of definitions.values()) assert.ok(definition.rules.length, `Unused setting: ${definition.name}`);
 
 const output = resolve(process.argv.find(arg => arg.startsWith('--output='))?.slice(9) ?? 'out/typography-controls-20260909/audit');
-// These smaller variants deliberately override their parent setting. Test them
-// through the dedicated token (small button) or leave them as documented notes.
+// These variants deliberately override their parent setting. Exercise their
+// dedicated control separately instead of treating the parent override as broken.
 const overrides = {
   '--button-text-size': '.button.small',
   '--persona-body-size': '.persona-context .note',
+  '--editorial-title-size': '.about-title',
 };
 await mkdir(output, { recursive: true });
 const server = createPreviewServer();
@@ -48,12 +50,17 @@ try {
   report.browser = browser.version();
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   page.on('pageerror', error => report.errors.push(error.message));
-  for (const name of ['home', 'kip']) for (const language of ['zh-Hant', 'en']) {
+  for (const name of SUPPORTED_PAGES) for (const language of ['zh-Hant', 'en']) {
     await page.goto(`${origin}/live-prototype/page.html?page=${name}&lang=${language}`, { waitUntil: 'networkidle' });
     await page.locator('main h1').waitFor();
     await page.evaluate(() => document.fonts.ready);
-    for (const width of [320, 359, 360, 390, 639, 640, 699, 700, 768, 899, 900, 999, 1000, 1100, 1101, 1440, 1920]) {
+    const scenes = await page.locator('[data-demo-select]').evaluateAll(buttons => buttons.map(button => button.dataset.demoSelect));
+    for (const scene of scenes.length ? scenes : [null]) for (const width of [320, 359, 360, 390, 639, 640, 699, 700, 768, 899, 900, 999, 1000, 1100, 1101, 1440, 1920]) {
       await page.setViewportSize({ width, height: 900 });
+      if (scene) {
+        await page.locator(`[data-demo-select="${scene}"]`).click();
+        await page.waitForFunction(value => document.querySelector('[data-demo-animation]').dataset.demoScene === value, scene);
+      }
       const result = await page.evaluate(({ definitions, overrides }) => {
         document.querySelectorAll('details').forEach(el => { el.open = true; });
         // Inventory every text-bearing DOM element, including collapsed/demo
@@ -152,13 +159,14 @@ try {
         }
         return { checked, failures, overflow, underline, eyebrowInitials, ownership, textInventory };
       }, { definitions: [...definitions.values()], overrides });
-      report.cases.push({ name, language, width, ...result });
+      report.cases.push({ name, language, scene, width, ...result });
       assert.deepEqual(result.ownership.misplaced, [], 'Authored typography found outside tokens.css');
       assert.deepEqual(result.ownership.inline, [], 'Inline typography bypasses the editing file');
       assert.deepEqual(result.ownership.unexpectedSheets, [], 'Unaudited external stylesheet');
-      assert.ok(result.ownership.textElements > 100, 'Text inventory must cover the rendered page, not only known settings');
-      assert.deepEqual(result.failures, [], `Inactive settings at ${name}/${language}/${width}`);
-      assert.equal(result.overflow, false, `Overflow at ${name}/${language}/${width}`);
+      const minimumTextElements = ['home', 'kip'].includes(name) ? 100 : 50;
+      assert.ok(result.ownership.textElements > minimumTextElements, 'Text inventory must cover the rendered page, not only known settings');
+      assert.deepEqual(result.failures, [], `Inactive settings at ${name}/${language}/${scene}/${width}`);
+      assert.equal(result.overflow, false, `Overflow at ${name}/${language}/${scene}/${width}`);
       if (name === 'home' && language === 'zh-Hant') assert.deepEqual(result.underline, { text: '知識中樞', other: '變成隨問隨答的', decorated: 'underline', firstDecoration: 'none', stableGeometry: true });
       else assert.equal(result.underline, null, 'Do not underline unrelated or translated copy');
       if (name === 'home') assert.deepEqual(result.eyebrowInitials, {

@@ -3,12 +3,23 @@ export const zhHant = {
   "navigation": {
     "home": "首頁",
     "kip": "KIP 平台",
+    "casesPage": "實績展示",
+    "aboutPage": "關於我們",
     "site": "網站頁面",
     "homeLabel": "SynaiQ 首頁",
     "homeContext": "首頁內容",
     "kipContext": "KIP 平台內容",
+    "casesContext": "實績展示內容",
+    "aboutContext": "關於我們內容",
     "homeSections": "首頁段落",
     "kipSections": "KIP 平台段落",
+    "casesSections": "實績展示段落",
+    "aboutSections": "關於我們段落",
+    "story": "東京食品展",
+    "fieldnotes": "現場筆記",
+    "approach": "我們的理念",
+    "leadership": "經營團隊",
+    "technical": "技術團隊",
     "wally": "Wally 數位人",
     "proof": "產品畫面",
     "about": "關於 SynaiQ",
@@ -22,7 +33,9 @@ export const zhHant = {
   },
   "title": {
     "home": "SynaiQ — 設計原型",
-    "kip": "KIP 平台 — SynaiQ 設計原型"
+    "kip": "KIP 平台 — SynaiQ 設計原型",
+    "cases": "實績展示 — SynaiQ",
+    "about": "關於我們 — SynaiQ"
   },
   "contact": {
     "heading": [
@@ -130,12 +143,23 @@ export const en = {
   "navigation": {
     "home": "Home",
     "kip": "KIP Platform",
+    "casesPage": "Our Work",
+    "aboutPage": "About Us",
     "site": "Website pages",
     "homeLabel": "SynaiQ home",
     "homeContext": "On this page",
     "kipContext": "Inside KIP",
+    "casesContext": "Our work contents",
+    "aboutContext": "About us contents",
     "homeSections": "Home sections",
     "kipSections": "KIP sections",
+    "casesSections": "Our work sections",
+    "aboutSections": "About us sections",
+    "story": "FOODEX Japan",
+    "fieldnotes": "Field notes",
+    "approach": "Our approach",
+    "leadership": "Leadership",
+    "technical": "Technical team",
     "wally": "Wally",
     "proof": "Product tour",
     "about": "About SynaiQ",
@@ -149,7 +173,9 @@ export const en = {
   },
   "title": {
     "home": "SynaiQ — Design prototype",
-    "kip": "KIP Platform — SynaiQ design prototype"
+    "kip": "KIP Platform — SynaiQ design prototype",
+    "cases": "Our Work — SynaiQ",
+    "about": "About Us — SynaiQ"
   },
   "contact": {
     "heading": [

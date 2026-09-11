@@ -1,6 +1,6 @@
 /* 官網排版：只保留 site.css + tokens.css。
    所有文字的字型、字級、行高、字距與文字顏色都改 tokens.css。
-   此檔依序：BASE、COMPONENTS、HOME、DEMO、HOME PAPER、KIP。
+   此檔依序：BASE、COMPONENTS、HOME、DEMO、HOME PAPER、KIP、EDITORIAL。
    搜尋 BEGIN 或區塊名稱；保留各區既有 RWD 順序，避免重排造成畫面變形。
    所有動畫時間與播放設定只改 tokens.css 的對應段落，此檔不另填時間常數。 */
 @import url("tokens.css");
@@ -444,7 +444,7 @@ section.advantages .advantage-scenario span {
 .page-navigation {
   display: flex;
   align-items: stretch;
-  gap: clamp(20px, 3vw, 44px);
+  gap: clamp(16px, 2vw, 30px);
   align-self: stretch;
 }
 .page-navigation a {
@@ -499,6 +499,10 @@ section.advantages .advantage-scenario span {
   align-items: center;
   min-height: 44px;
 }
+@media (min-width: 900px) and (max-width: 1150px) {
+  .site-header .nav { gap: 18px; }
+  .site-header .nav-actions .small { display: none; }
+}
 @media (max-width: 899px) {
   .site-header .nav {
     display: grid;
@@ -529,8 +533,8 @@ section.advantages .advantage-scenario span {
   .page-navigation {
     grid-column: 1 / -1;
     grid-row: 2;
-    justify-content: flex-start;
-    gap: 32px;
+    justify-content: space-between;
+    gap: clamp(16px, 4vw, 32px);
     min-height: 48px;
   }
   .page-navigation a {
@@ -565,9 +569,17 @@ section.advantages .advantage-scenario span {
   .site-header .nav-actions {
     gap: 10px;
   }
-  .page-navigation {
-    gap: 24px;
-  }
+}
+@media (max-width: 379px) {
+  .page-navigation { gap: 8px; }
+}
+/* 中型視窗：主導覽放在 Logo 與語言選單之間；窄手機保留可讀的換行。 */
+@media (min-width: 700px) and (max-width: 899px) {
+  .site-header .nav { display: flex; align-items: center; gap: 16px; min-height: 74px; }
+  .site-header .brand { flex-shrink: 0; }
+  .site-header .brand img { width: 150px; }
+  .site-header .page-navigation { align-self: stretch; justify-content: center; flex: 1; gap: 14px; }
+  .site-header .nav-actions { gap: 12px; min-height: 74px; }
 }
 .marked {
   position: relative;
@@ -3230,3 +3242,158 @@ body[data-page="kip"] .kip-capability-list dd {
 }
 /* English phrases need a smaller fluid minimum than the short Chinese title. */
 /* END KIP */
+
+/* BEGIN EDITORIAL / 實績展示、關於我們。文字與秒數在 tokens.css。 */
+/* 01 共用標題、連結與區段 */
+.editorial-hero { padding: var(--editorial-space) 0; overflow: hidden; }
+.editorial-kicker { margin: 0 0 28px; }
+.editorial-hero h1 { margin: 0; }
+.editorial-hero h1 > span { display: block; }
+.editorial-intro { max-width: 32em; margin: 30px 0; }
+.editorial-link { display: inline-flex; align-items: center; gap: 28px; min-height: 44px; border-bottom: 1px solid var(--editorial-rule); padding: 6px 0; }
+.editorial-link > span { transition: transform var(--editorial-hover-duration) ease; }
+.editorial-link:hover > span { transform: translate(4px, 3px); }
+.editorial-section { padding: var(--editorial-space) 0; scroll-margin-top: calc(var(--header-height, 74px) + 20px); }
+.editorial-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 48px; margin-bottom: 56px; }
+.editorial-section-heading h2 { margin: 0; }
+.editorial-section-heading > p { max-width: 32em; margin: 0; }
+.editorial-underline { position: relative; width: fit-content; }
+.editorial-underline::after { content: ''; position: absolute; left: 0; bottom: -.07em; width: 95%; height: .09em; border-bottom: 2px solid var(--editorial-olive); border-radius: 50%; transform: rotate(-2deg); }
+/* 02 實績展示 */
+.cases-hero-layout { display: grid; grid-template-columns: 1.12fr 1fr; gap: 6%; align-items: center; }
+.cases-hero-copy { min-width: 0; padding-bottom: 24px; }
+.cases-hero-copy .editorial-intro { max-width: 25em; }
+.case-identifier { display: flex; flex-wrap: wrap; gap: 10px 30px; margin-top: 76px; }
+.cases-hero-art { width: 100%; max-width: 480px; margin: -20px 0 0 auto; }
+.cases-hero-art figcaption, .case-field-art figcaption { margin-top: 16px; }
+.case-story { padding-top: 0; }
+.case-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; padding: 34px 0; border-top: 1px solid var(--editorial-rule); border-bottom: 1px solid var(--editorial-rule); }
+.case-facts h3 { margin: 12px 0 7px; }
+.case-facts p { margin: 0; }
+.case-story-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 12%; padding-top: var(--editorial-space); }
+.case-story-layout .editorial-section-heading { display: block; margin: 0; }
+.case-story-copy p { margin: 0 0 24px; }
+.case-field { background: var(--editorial-wash); }
+.case-field-layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: 10%; align-items: center; }
+.case-field-art { margin: 0; min-width: 0; }
+.case-field-copy h2 { margin: 0; }
+.case-notes { list-style: none; padding: 0; margin: 40px 0 0; }
+.case-notes li { display: grid; grid-template-columns: 32px 1fr; gap: 18px; margin-top: 28px; }
+.case-notes h3 { margin: 0 0 10px; }
+.case-notes p { margin: 0; }
+.case-press h2 { margin: 0 0 36px; }
+.case-press-links { border-top: 1px solid var(--editorial-rule); }
+.case-press-links a { display: grid; grid-template-columns: 180px 1fr 32px; gap: 24px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--editorial-rule); }
+.case-press-links a > :last-child { transition: transform var(--editorial-hover-duration) ease; }
+.case-press-links a:hover > :last-child { transform: translate(4px,-4px); }
+.editorial-closing { display: flex; justify-content: space-between; align-items: center; gap: 32px; padding-bottom: var(--editorial-space); }
+.editorial-closing p { margin: 0; }
+.editorial-paper-plane { width: clamp(100px, 13vw, 170px); height: auto; flex-shrink: 0; }
+
+/* 03 共用水墨顯影：照片保持清晰，只柔化輪廓與顯影邊界。 */
+.ink-photo { display: block; position: relative; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ink-photo:focus-visible { outline: 2px solid var(--editorial-olive); outline-offset: 8px; border-radius: 6px; }
+.ink-photo__art { position: relative; display: block; aspect-ratio: var(--ink-photo-aspect); }
+.ink-photo__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.ink-photo__canvas:not(.ink-photo__canvas--companion) { mask-image: radial-gradient(ellipse at 50% 45%, black 38%, #000e 52%, #0006 65%, transparent 77%); }
+.ink-photo__drawing { mix-blend-mode: multiply; }
+.ink-photo--scene .ink-photo__canvas:not(.ink-photo__canvas--companion) { mask-image: radial-gradient(ellipse at 50% 53%, black 42%, #000d 60%, transparent 81%); }
+#portrait-celestine .ink-photo__canvas:not(.ink-photo__canvas--companion) {
+  mask-image: linear-gradient(to right, transparent 13%, black 30%, black 70%, transparent 87%), radial-gradient(ellipse at 50% 42%, black 30%, #000d 51%, transparent 78%);
+  mask-composite: intersect;
+}
+.ink-photo__ripple { position: absolute; pointer-events: none; left: var(--ink-origin-x,50%); top: var(--ink-origin-y,45%); width: 50px; height: 50px; border: 1px solid var(--editorial-olive); border-radius: 48% 52% 43% 57%; opacity: 0; transform: translate(-50%,-50%) scale(.3); }
+.ink-photo.is-locked .ink-photo__ripple { animation: ink-click var(--ink-ripple-duration) ease-out both; }
+@keyframes ink-click { 0% { opacity: .55; transform: translate(-50%,-50%) scale(.3) rotate(0); } 100% { opacity: 0; transform: translate(-50%,-50%) scale(3) rotate(24deg); } }
+
+/* 04 關於我們與團隊 */
+.about-hero { position: relative; padding-bottom: calc(var(--editorial-space) * .85); }
+.about-title { max-width: 1100px; position: relative; z-index: 1; }
+.about-title span:last-child { padding-left: 15%; }
+.about-title span:last-child::after { content: ''; display: inline-block; width: clamp(40px, 9vw, 120px); height: .45em; margin-left: 24px; border-top: 1px solid var(--editorial-olive); border-radius: 50%; transform: rotate(-12deg); }
+.about-hero-bottom { display: flex; align-items: end; justify-content: space-between; gap: 48px; margin-top: 48px; }
+.about-intro { max-width: 39em; margin: 0; }
+.about-hero-bottom .editorial-link { flex-shrink: 0; }
+.about-handnote { width: fit-content; margin: 40px 0 0 auto; padding-right: 14%; transform: rotate(-3deg); }
+.about-approach { background: var(--editorial-wash); }
+.about-principles { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 64px; }
+.about-principle { position: relative; padding-top: 28px; border-top: 1px solid var(--editorial-rule); }
+.about-principle h3 { margin: 18px 0; }
+.about-principle p { margin: 0; }
+.team-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 68px 8%; }
+.team-profile { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0,1.03fr); gap: 24px; align-items: center; }
+.team-profile:nth-child(even) { transform: translateY(56px); }
+.team-portrait { position: relative; margin: 0; min-width: 0; }
+.ink-photo__canvas--companion { inset: auto -6px -8px auto; width: 36%; max-width: 120px; height: auto; aspect-ratio: 1; z-index: 1; user-select: none; }
+.ink-photo__canvas--companion .ink-photo__drawing { mix-blend-mode: normal; }
+.team-copy { min-width: 0; }
+.team-role { margin: 0 0 10px; }
+.team-name { margin: 0; }
+.team-native-name { display: block; margin-top: 6px; }
+.team-credentials { list-style: none; padding: 0; margin: 22px 0 0; }
+.team-credentials li + li { margin-top: 8px; }
+.about-team { padding-bottom: calc(var(--editorial-space) + 56px); }
+.about-team--technical { padding-top: 0; }
+.about-team--technical .editorial-section-heading { padding-top: 64px; border-top: 1px solid var(--editorial-rule); }
+/* 05 新頁面 RWD 與減少動態 */
+@media (min-width: 900px) and (max-width: 1150px) {
+  .team-profile { grid-template-columns: 1fr; gap: 18px; }
+  .team-portrait { width: 78%; }
+}
+@media (max-width: 899px) {
+  .cases-hero-layout { gap: 3%; }
+  .cases-hero-art { margin-top: 0; }
+  .case-identifier { margin-top: 42px; }
+  .case-story-layout, .case-field-layout { gap: 6%; }
+  .editorial-section-heading { gap: 28px; }
+  .about-principles { gap: 30px; }
+  .team-profile { grid-template-columns: 1fr; gap: 18px; }
+  .team-portrait { max-width: 330px; }
+  .team-grid { gap: 56px 8%; }
+  .about-hero-bottom { align-items: start; gap: 30px; }
+}
+@media (max-width: 639px) {
+  .editorial-kicker { margin-bottom: 24px; }
+  .cases-hero-layout, .case-story-layout, .case-field-layout { grid-template-columns: 1fr; }
+  .cases-hero-copy { padding-bottom: 0; }
+  .cases-hero-art { max-width: 420px; margin: 30px auto 0; }
+  .cases-hero-art figcaption, .case-field-art figcaption { margin-top: 10px; }
+  .case-identifier { margin-top: 32px; }
+  .case-facts { grid-template-columns: 1fr; gap: 24px; padding-block: 28px; }
+  .case-facts > div { display: grid; grid-template-columns: 60px 1fr; column-gap: 12px; align-items: baseline; }
+  .case-facts h3 { margin: 0 0 8px; }
+  .case-facts p { grid-column: 2; }
+  .case-story-layout { gap: 30px; }
+  .case-field-copy { grid-row: 1; }
+  .case-field-art { margin-top: 32px; }
+  .case-press-links a { grid-template-columns: 1fr 24px; gap: 12px; padding-block: 24px; }
+  .case-press-links a > :first-child { grid-column: 1/-1; }
+  .editorial-closing { display: block; }
+  .editorial-paper-plane { display: block; margin: 24px 0 0 auto; }
+  .editorial-section-heading { display: block; margin-bottom: 32px; }
+  .editorial-section-heading > p { margin-top: 20px; }
+  .about-title span:last-child { padding-left: 0; }
+  .about-title span:last-child::after { display: none; }
+  .about-hero-bottom { display: block; margin-top: 30px; }
+  .about-hero-bottom .editorial-link { margin-top: 20px; }
+  .about-handnote { padding-right: 0; margin-top: 24px; }
+  .about-principles { grid-template-columns: 1fr; gap: 30px; }
+  .about-principle { display: grid; grid-template-columns: 40px 1fr; gap: 12px 16px; padding-top: 20px; }
+  .about-principle h3 { margin: 0; }
+  .about-principle p { grid-column: 2; }
+  .team-grid { grid-template-columns: 1fr; gap: 44px; }
+  .team-profile { grid-template-columns: minmax(0,.95fr) minmax(0,1fr); gap: 20px; }
+  .team-profile:nth-child(even) { transform: none; }
+  .team-credentials { margin-top: 16px; }
+  .about-team { padding-bottom: var(--editorial-space); }
+  .about-team--technical .editorial-section-heading { padding-top: 36px; }
+}
+@media (max-width: 379px) {
+  .team-profile { grid-template-columns: 1fr; }
+  .team-portrait { width: 80%; max-width: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-photo__ripple { display: none; }
+  .editorial-link > span, .case-press-links a > :last-child { transition: none; }
+}
+/* END EDITORIAL */

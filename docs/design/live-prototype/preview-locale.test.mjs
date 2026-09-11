@@ -6,6 +6,11 @@ test('preview routes normalize locale and page while preserving the fragment', (
   const route = readPreviewRoute('https://example.test/live-prototype/?page=kip&lang=en#proof');
   assert.deepEqual(route, { page: 'kip', locale: 'en', hash: 'proof' });
   assert.equal(previewPageHref(route), 'page.html?page=kip&lang=en#proof');
+  for (const [page, hash] of [['cases', 'story'], ['about', 'leadership']]) {
+    const route = readPreviewRoute(`?page=${page}&lang=en#${hash}`);
+    assert.deepEqual(route, { page, locale: 'en', hash });
+    assert.equal(previewPageHref(route), `page.html?page=${page}&lang=en#${hash}`);
+  }
   assert.deepEqual(readPreviewRoute('?page=oops&lang=missing#contact'), { page: 'home', locale: 'zh-Hant', hash: 'contact' });
   assert.equal(previewPageHref(readPreviewRoute('?lang=en#%E8%B3%87%E6%96%99')), 'page.html?page=home&lang=en#%E8%B3%87%E6%96%99');
   assert.equal(previewPageHref(readPreviewRoute('?lang=en#%broken')), 'page.html?page=home&lang=en#%25broken');
@@ -17,7 +22,7 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   ids.width.value = '1440';
   Object.assign(ids.stage, { clientWidth: 1000, clientHeight: 800 });
   const labels = ['title', 'page', 'language', 'width', 'fit', 'direct'].map(key => ({ dataset: { previewLabel: key }, textContent: '' }));
-  const options = [{ value: 'home', textContent: '' }, { value: 'kip', textContent: '' }];
+  const options = ['home', 'kip', 'cases', 'about'].map(value => ({ value, textContent: '' }));
   ids.page.options = options;
   const document = { title: '', documentElement: {}, getElementById: id => ids[id], querySelectorAll: () => labels };
   const window = { location: new URL('https://example.test/live-prototype/?page=kip&lang=en#proof'), handlers: {}, addEventListener(type, callback) { this.handlers[type] = callback; }, removeEventListener() {}, requestAnimationFrame(callback) { callback(); }, setInterval: () => 1, clearInterval() {} };
@@ -30,6 +35,8 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   assert.equal(document.documentElement.lang, 'en');
   assert.equal(document.title, 'SynaiQ / Design prototype');
   assert.equal(options[1].textContent, 'KIP Platform');
+  assert.equal(options[2].textContent, 'Our Work');
+  assert.equal(options[3].textContent, 'About Us');
   assert.match(ids.status.textContent, /Page width 1440px/);
   ids.preview.handlers.load();
   iframeWindow.location.hash = '#architecture';
@@ -40,6 +47,22 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   ids.language.handlers.change();
   assert.equal(ids.preview.src, 'page.html?page=kip&lang=zh-Hant#architecture');
   assert.equal(document.documentElement.lang, 'zh-Hant');
+  assert.equal(options[2].textContent, '實績展示');
+  assert.equal(options[3].textContent, '關於我們');
+  for (const page of ['cases', 'about']) {
+    ids.page.value = page;
+    ids.page.handlers.change();
+    assert.equal(ids.preview.src, `page.html?page=${page}&lang=zh-Hant`);
+    assert.equal(window.location.search, `?page=${page}&lang=zh-Hant`);
+  }
+  iframeWindow.location = new URL('https://example.test/live-prototype/page.html?page=about&lang=en#leadership');
+  ids.preview.handlers.load();
+  assert.equal(ids.page.value, 'about');
+  assert.equal(ids.language.value, 'en');
+  assert.match(ids.direct.href, /page=about&lang=en#leadership$/);
+  ids.language.value = 'zh-Hant';
+  ids.language.handlers.change();
+  assert.equal(ids.preview.src, 'page.html?page=about&lang=zh-Hant#leadership');
   ids.page.value = 'home';
   ids.page.handlers.change();
   assert.equal(ids.preview.src, 'page.html?page=home&lang=zh-Hant');

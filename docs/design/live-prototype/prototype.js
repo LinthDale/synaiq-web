@@ -1,17 +1,25 @@
 import { renderHome, initHome } from './home-design.js';
 import { renderKip, initKip } from './kip-design.js';
+import { renderCases, initCases } from './cases-design.js';
+import { renderAbout, initAbout } from './about-design.js';
 import { renderAdvantageSection, renderContact } from './shared-design.js';
-import { SUPPORTED_LOCALES, resolveLocale, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260909-address';
+import { SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260909-address';
 const query = new URLSearchParams(location.search);
-const isKip = query.get('page') === 'kip';
+const page = resolvePage(query.get('page'));
+const pages = {
+  home: { render: renderHome, init: initHome },
+  kip: { render: renderKip, init: initKip },
+  cases: { render: renderCases, init: initCases },
+  about: { render: renderAbout, init: initAbout },
+};
 const locale = resolveLocale(query.get('lang'));
 const messages = getMessages(locale);
 const common = messages.common;
 const metadata = SUPPORTED_LOCALES.find(item => item.code === locale);
 document.documentElement.lang = locale;
 document.documentElement.dir = metadata.dir;
-document.title = isKip ? common.title.kip : common.title.home;
-document.body.dataset.page = isKip ? 'kip' : 'home';
+document.title = common.title[page];
+document.body.dataset.page = page;
 
 // Static shell labels use the same catalog as the page content.
 function shellMessage(key) { return key.split('.').reduce((value, part) => value[part], common); }
@@ -22,18 +30,18 @@ const language = document.getElementById('language');
 language.innerHTML = SUPPORTED_LOCALES.map(item => `<option value="${esc(item.code)}" lang="${esc(item.code)}" ${item.code === locale ? 'selected' : ''}>${esc(item.shortLabel)}</option>`).join('');
 language.addEventListener('change', () => { location.href = localeHref(location.href, language.value); });
 const sections = { advantageSection: () => renderAdvantageSection(common), contact: () => renderContact(common), locale, messages };
-document.getElementById('main').innerHTML = isKip ? renderKip(sections) : renderHome(sections);
+document.getElementById('main').innerHTML = pages[page].render(sections);
 for (const link of document.querySelectorAll('a[href^="?page="]')) {
   const target = new URL(link.getAttribute('href'), location.href);
   link.setAttribute('href', pageHref({ page: target.searchParams.get('page'), locale, hash: target.hash }));
 }
-if (isKip) initKip({ locale, messages }); else initHome({ locale, messages });
+pages[page].init({ locale, messages });
 if (location.hash) {
   const destination = document.getElementById(location.hash.slice(1));
   if (destination) requestAnimationFrame(() => destination.scrollIntoView({ behavior: 'instant' }));
 }
-export function initPageNavigation(onKipPage, navigation = getMessages().common.navigation) {
-  const page = onKipPage ? 'kip' : 'home';
+export function initPageNavigation(pageName, navigation = getMessages().common.navigation) {
+  const page = resolvePage(pageName);
   for (const link of document.querySelectorAll('[data-page-link]')) {
     const current = link.dataset.pageLink === page;
     if (current) link.setAttribute('aria-current', 'page');
@@ -44,11 +52,14 @@ export function initPageNavigation(onKipPage, navigation = getMessages().common.
   const contextNav = document.getElementById('mobile-nav');
   const contextLabel = document.getElementById('page-context-label');
   const contextLinks = document.getElementById('page-context-links');
-  contextLabel.textContent = onKipPage ? navigation.kipContext : navigation.homeContext;
-  contextNav.setAttribute('aria-label', onKipPage ? navigation.kipSections : navigation.homeSections);
-  const sections = onKipPage
-    ? [['process', navigation.process], ['architecture', navigation.architecture], ['advantages', navigation.advantages], ['proof', navigation.demo]]
-    : [['wally', navigation.wally], ['proof', navigation.proof], ['footer', navigation.about]];
+  contextLabel.textContent = navigation[`${page}Context`];
+  contextNav.setAttribute('aria-label', navigation[`${page}Sections`]);
+  const sections = {
+    home: [['wally', navigation.wally], ['proof', navigation.proof], ['footer', navigation.about]],
+    kip: [['process', navigation.process], ['architecture', navigation.architecture], ['advantages', navigation.advantages], ['proof', navigation.demo]],
+    cases: [['story', navigation.story], ['fieldnotes', navigation.fieldnotes]],
+    about: [['approach', navigation.approach], ['leadership', navigation.leadership], ['technical', navigation.technical]],
+  }[page];
   contextLinks.innerHTML = sections.map(([id, label]) => `<a href="#${id}">${esc(label)}</a>`).join('');
 
   const compact = matchMedia('(max-width: 899px)');
@@ -78,4 +89,4 @@ export function initPageNavigation(onKipPage, navigation = getMessages().common.
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncHeaderHeight).observe(header);
   else addEventListener('resize', syncHeaderHeight, { passive: true });
 }
-initPageNavigation(isKip, common.navigation);
+initPageNavigation(page, common.navigation);

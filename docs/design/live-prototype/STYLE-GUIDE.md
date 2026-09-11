@@ -1,6 +1,8 @@
 # 官網樣式維護指南
 
-改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引是目前 Home／KIP 中英文網站的維護入口，不是每輪修改的完成紀錄。
+最後更新：2026-09-11。
+
+改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引涵蓋 Home／KIP，以及本機審閱中的實績展示／關於我們中英版；兩個新增頁面尚未發布，不是每輪修改的完成紀錄。
 
 唯一工作目錄：`C:\Users\User\synaiq\synaiq-web`。核准網站來源在 `docs/design/live-prototype/`，**不是** Astro Phase A 的 `src/styles/`。儲存後重新整理本機預覽；Git push 不會自動更新 Hostinger。
 
@@ -12,6 +14,8 @@
 |---|---|
 | 首頁 Banner、敘事、產業觀察、Wally 文案 | `locale-home.js` 的 `hero`／`narrative`／`outlook`／`wally` |
 | KIP 頁的標題、流程、四層架構與說明 | `locale-kip.js` |
+| 實績展示的故事、場域筆記、照片圖說與報導標題 | `locale-cases.js`；報導 URL 與素材路徑在 `cases-design.js` |
+| 關於我們的理念、團隊名單、職稱及學經歷 | `locale-about.js` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
 | 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
 | CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
 | 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
@@ -31,7 +35,7 @@
 - 首頁標題在 `locale-home.js` 的 `hero.title`，依序是「散落的企業文件，」「變成隨問隨答的」「知識中樞」三個字串；第三個字串才是中文底線區塊。英文不套這條底線。
 - 首頁 K／I／P 的首字母效果由 `home-design.js` 的 `renderHeroEyebrow` 套用，僅針對完整的 `KNOWLEDGE INTELLIGENCE PLATFORM`；更換整句後不會自動替任意新文案的首字母加色。
 - 八項優勢在 `locale-common.js` 的 `advantages.items`。每項依序為「名稱、右側簡述、展開首段、展開補充、情境示例」，不是只改列表上的標題。
-- 上排「首頁／KIP 平台」是換頁，下排是當前頁的段落目錄。文字在 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。
+- 「首頁／KIP 平台／實績展示／關於我們」是換頁，段落目錄依當前頁改變。文字在 `locale-common.js` 的 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。700px 以上主導覽排在 Logo 與語言選單之間；更窄的手機版可換行，保持連結可讀。
 - 語言切換顯示的 `ZH／EN` 在 `i18n.js` 的 `catalog.shortLabel`；選單字級在 `tokens.css` 的 `--language-size`。新增語言需完整詞典與靜態圖，不能只新增一個選項，步驟見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 - 產業觀察的標題、兩段文章補充、年份、圖表朗讀說明與展開出處都在 `locale-home.js` 的 `outlook`；**圖表的 5 與 14.5 數值目前直接在 `home-design.js` 的 `budget-comparison`**，不是 CSS。若改數據，這些位置與原始來源必須一起核對。
 
@@ -94,6 +98,8 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | KIP 首屏標題／行高／說明文字 | `--kip-title-size`／`--kip-title-leading`／`--kip-intro-size` |
 | KIP 紙色／深底色／手繪強調色 | `--kip-paper`／`--kip-slate`／`--kip-olive` |
 | KIP 區段留白 | `--kip-spacing` |
+| 實績／關於我們的大標、段落標題、內文與留白 | 「13 實績展示／關於我們」的 `--editorial-title-size`／`--editorial-about-title-size`／`--editorial-section-title-size`／`--editorial-body-size`／`--editorial-space` |
+| 手繪逐漸顯影為真照的時間／點擊水紋 | 「13 實績展示／關於我們」的 `--ink-reveal-duration`／`--ink-ripple-duration` |
 | KIP 資料接入、自動解析、搜尋可用 | `--kip-step-title-size`、`--kip-step-body-size` |
 | KIP 四層架構卡片 | `--kip-layer-title-size`、`--kip-layer-body-size` |
 | KIP 問完，順手看原文 | `--kip-proof-title-size`、`--kip-proof-body-size` |
@@ -125,8 +131,10 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `BEGIN DEMO` | 模擬滑鼠與內容動畫的外觀 |
 | `BEGIN HOME PAPER` | 首頁手撕紙邊界與防遮字留白 |
 | `BEGIN KIP` | KIP 平台的區塊與 RWD |
+| `BEGIN EDITORIAL` | 實績展示、關於我們、人物／場域水墨顯影與 RWD |
 
 `home-design.js`／`kip-design.js` 組合各頁 HTML、指定圖片並啟動互動；`shared-design.js` 組合八項優勢與聯絡區；`demo-animation.js` 同時產生三片共用的聊天介面、設定示例圖片，並執行出場、切片與五段播放。這些檔案不是日常字級或秒數的設定入口。
+`cases-design.js`／`about-design.js` 組合兩個新增頁面，共用 `ink-photo.js` 的 `renderInkPhoto`／`initInkPhotos`。頁面登錄在 `prototype.js`，詞典登錄與合法頁名在 `i18n.js`；預覽外框由 `index.html`／`preview.js` 控制。
 手繪註記 `handwritten-note`、信紙 `source-paper`、圖片標籤 `slot-caption`、Demo 介面 `film-*` 的**文字樣式**在 `tokens.css` 下半部；文字內容仍在語言檔。版型尺寸與座標在 `site.css`。
 
 `--persona-body-size` 不控制其下方 `.note` 的素材註記；要改該註記，在 `tokens.css` 搜尋「共用素材註記」。小按鈕另用 `--button-small-size`。保留你在 `.outlook-caveat` 加上的 `!important`，其字級亦由 `--outlook-note-size` 控制。
@@ -134,6 +142,35 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 中英文文案仍在 `locale-*.js`；Logo 更換方式見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 不要把文案寫進 CSS，也不要直接修改圖片中的字來替代語言檔。
+
+## 實績與團隊頁
+
+兩頁沿用首頁的暖紙色、襯線大字、橄欖綠與手繪筆觸，並使用共用頁首、聯絡區及頁尾。Home／KIP 的既有頁面內容維持原基準；新增頁面仍在本機審閱。
+
+| 頁面 | 內容與段落 ID | 渲染入口 |
+|---|---|---|
+| `page=cases` | 東京食品展故事 `story`、現場筆記 `fieldnotes`；報導來源接在筆記後 | `cases-design.js`／`locale-cases.js` |
+| `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locale-about.js` |
+
+兩頁都支援 `lang=zh-Hant`／`lang=en`。實績目前是一則東京食品展案例，四語導覽與裝置整合是故事內容；不要把展會整體業績寫成 AI 帶來的績效。團隊名單的唯一文字來源是 `locale-about.js`；Daniel 已依使用者提供的人像與履歷換成李昱儒 Celestine，職稱為業務總監，放在 `leadership.members`。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
+
+### 手繪與真照互動
+
+`ink-photo.js` 先顯示手繪，滑鼠移入後用水墨遮罩逐漸顯出真照；`tokens.css`「13 實績展示／關於我們」的 `--ink-reveal-duration` 目前為 `2600ms`。**點擊會保留點擊當下的顯影比例，再點一次才繼續**；不是第一次點擊就直接跳成完整真照。未暫停時離開圖片會逐漸回到手繪。鍵盤焦點也可顯影，Enter／Space 操作按鈕，Escape 返回手繪。觸控第一次輕點啟動顯影，過程中再次輕點可暫停／繼續；停在完整手繪或真照時，輕點開始反向轉場。reduced-motion 直接切換狀態，保留操作能力。
+
+圖片不顯示「移入顯影：點擊暫停」或其他操作提示；保留按鈕語意、無障礙名稱與焦點外框。`--ink-ripple-duration` 控制點擊水紋，`--editorial-hover-duration` 控制新頁面連結的小幅動作。所有時間都從 `tokens.css` 讀取。
+
+SVG 的噪聲、位移與模糊只作用於顯影遮罩，真照人物保持清晰；永久柔邊在 `site.css` 的 `.ink-photo__canvas`，場域另用 `.ink-photo--scene`。不要用整張真照模糊或調色濾鏡替代柔邊，也不要用照片濾鏡冒充手繪素材。
+
+昱儒的 `assets/team/celestine-photo.webp` 保留使用者提供的完整 `864×1184` 構圖，僅轉成網頁格式。`about-design.js` 的 `photoCrop` 以 SVG 視窗取景，目前為 `x: 265, y: 58, width: 310, height: 310`，由 `ink-photo.js` 套用；不需破壞原圖。調整時比較手繪／真照的臉部大小與位置，維持一比一比例，並一起檢查 `#portrait-celestine .ink-photo__canvas` 的柔邊。
+
+Dale、Steve 的真照改用使用者提供的 `20260624公司簡介_不含影片.pptx` 第 4 頁素材，分別為簡報內的 `ppt/media/image11.png`（1045×1567）與 `image12.png`（1004×1236）；本機來源保留於 `out/team-deck-20260911/`，不加入公開白名單。兩張完整原照轉為 `assets/team/{dale,steve}-20260624-photo.webp`，並配對同名前綴的 `-sketch.webp`。`about-design.js` 明確列出每個人的真照、手繪與 `photoCrop`：Dale 為 `310,76,435,435`，Steve 為 `0,0,1004,1004`；取景順序為 x、y、width、height，不修改原始人物比例。
+
+Steve 是新增的技術成員，放在 Lou 與 Dale 之間；Lou 仍保留。Steve 的「博士班」英文使用 `Doctoral Program`，不能改成已取得博士學位。Dale 的學經歷以使用者最新更正為準，覆蓋簡報中的舊資料；修改 `locale-about.js` 時須同步中英。
+
+Dale 右下角的小貓由 `about-design.js` 的 `companion` 配對 `assets/team/dale-tuxedo-kitten-ink.webp`（簡潔線條手繪）與 `dale-tuxedo-kitten-photo.webp`（照片風格）。兩者都是 AI 生成素材，並非使用者提供的寵物實拍。`companion.silhouette` 指向原本含透明輪廓的 `dale-tuxedo-kitten.webp`；`ink-photo.js` 以獨立的 SVG `mask-type:alpha` 形狀遮罩包住小貓的兩個顯影圖層，去掉白底方塊並保留白胸。小貓 canvas 與手繪層使用正常合成，不能使用 multiply，否則白色毛髮會被後方深色衣服染暗。
+
+`renderInkPhoto` 把小貓的 SVG 放在 Dale 的同一個按鈕內，沒有新增焦點或獨立按鈕；移入人物或小貓時兩者同步顯影，點擊共同暫停／繼續，移出後一起回到手繪。各自的顯影與擦除遮罩共用進度及按比例換算的起點，由同一組動畫更新；不要另外啟動小貓的計時器。位置和尺寸在 `.ink-photo__canvas--companion`，維持在人物圖層上方，小貓不套用人物的大範圍永久柔邊，以保留耳朵和尾巴。
 
 ## 共用聯絡資料
 
@@ -152,10 +189,10 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 - `href="tel:+886423931368"` 是點擊後交給電話程式的撥號號碼；沿用 `+`、國碼與數字、不加排版空格的寫法。
 - `>+886 4 2393 1368<` 是網站顯示文字，可以保留空格方便閱讀。
 - 更換號碼時兩處一起改；只改顯示文字，點擊仍會撥舊號碼。
-- 這一個共用頁尾供首頁／KIP、中英文使用；電話目前不在 `locale-common.js`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
+- 這一個共用頁尾供四頁、中英文使用；電話目前不在 `locale-common.js`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
 - 調整字級，開 `tokens.css` 搜尋 `--footer-link-size`；會一起影響同組 Email 與導覽連結，並要檢查 639px 以下的覆寫。`--footer-body-color` 控制頁尾段落文字，不是電話連結的獨立色彩設定。
 
-修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；首頁／KIP 與中英文都要確認。
+修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；四頁與中英文都要確認。
 
 若手動修改主機上的共用 HTML，需同步版本目錄的 `index.html`、`page.html`，並保留封裝後路徑；詳見「Hostinger 手動更新與發布界線」，不要用本機預覽外框覆蓋官網。
 
@@ -303,7 +340,7 @@ quote: [
 - 在對應段落修改既有規則，不要持續在檔尾追加同名 selector 補丁。
 - 新增文字規則放 `tokens.css`；不要把字型或文字顏色寫回 `site.css`、HTML inline style 或 JavaScript。
 - 新增動畫時間、延遲、次數、觸發條件放 `tokens.css` 對應段落；`site.css` 的 animation／transition 不可硬寫秒數，JS 也不可另外保留一份時間設定。`motion.test.mjs` 會檢查這項界線。
-- 六個 BEGIN 區段保留原樣式套用順序；不要把所有同名 selector 或 media 擅自搬到一起。
+- 各個 BEGIN 區段保留原樣式套用順序；不要把所有同名 selector 或 media 擅自搬到一起。
 - 保留區塊內既有 media 順序；少數 desktop 宣告原本就晚於 mobile 宣告，不能把所有 media 一次搬到底。
 - `body[data-page] section.advantages` 的權重，以及 `.hero .wrap` 的層級有現行用途；不要只看最後一條宣告判斷結果。
 - 首屏背景是整個 section 的背景層；不要將手繪圖移回文字下方的普通圖片區塊。
@@ -324,8 +361,9 @@ npm run dev:design
 
 第一次安裝或 lockfile 更新時，先執行 `npm ci`；日常改字不需要反覆安裝。預覽服務會持續占用終端 A，檢查指令請在另一個終端執行。4318 已有這個預覽服務時沿用即可，不必重開；不要雙擊 HTML 用 `file://` 開網頁。
 
-- [連續縮放預覽](http://127.0.0.1:4318/live-prototype/?page=home&lang=zh-Hant)：選首頁／KIP、中英與寬度；外框可縮小整張頁面以配合視窗。
+- [連續縮放預覽](http://127.0.0.1:4318/live-prototype/?page=home&lang=zh-Hant)：選四頁、中英與寬度；外框可縮小整張頁面以配合視窗。
 - [獨立網站頁面](http://127.0.0.1:4318/live-prototype/page.html?page=home&lang=zh-Hant)：看真實字級及用 DevTools 找 CSS 時優先使用，不受預覽外框縮放影響。
+- [實績展示](http://127.0.0.1:4318/live-prototype/page.html?page=cases&lang=zh-Hant)／[關於我們](http://127.0.0.1:4318/live-prototype/page.html?page=about&lang=zh-Hant)：新增頁面；可附上前述段落 ID，語言改為 `en` 可檢查英文版。
 - 存檔後重新整理；這個伺服器沒有自動熱更新。DevTools 裡直接調整只作用於當次瀏覽器，必須寫回來源檔才會保留。
 - 字沒變：先確認改的是目前 repo、正確語言與生效的 media 規則，再確認選到的是網站 iframe 而非預覽外框。圖片裡的字則依靜態圖生成流程處理。
 - 修改同名 CSS／JS／圖片不必重啟服務；新增公開檔名須更新 `share-preview.mjs` 白名單，確認程序身分後僅重載這個預覽服務。不可停止所有 Node 程序或把整個 repo 公開。
@@ -352,7 +390,7 @@ npm run test:design
 
 也可把 `PLAYWRIGHT_EXECUTABLE_PATH` 設為已安裝相容 Chromium 的完整路徑。只安裝瀏覽器但未設定此變數，`motion-browser.test.mjs`、`demo-booth-browser.test.mjs` 仍會跳過；看到 skipped 不能當作互動已通過。這些測試使用獨立 headless 瀏覽器及 loopback 服務，不操作使用者登入中的 Chrome，也不開公開隧道。
 
-人工檢查首頁／KIP × 中英 × 390／768／1440px，並拖曳經過斷點，而不只看三張截圖：
+人工檢查四頁 × 中英 × 390／768／1440px，並拖曳經過斷點，而不只看三張截圖；頁首另檢查 700px 斷點兩側與 835px 中型視窗：
 
 1. 導覽所在頁底線、語言切換保留頁面／錨點、手機目錄與 Escape 關閉正常。
 2. Banner 中文底線只在第三段，英文換行正常；大字、小字與按鈕沒有被撕紙遮住。
@@ -360,6 +398,8 @@ npm run test:design
 4. 產品組圖捲入／捲出、次數用盡、短視窗與 reduced-motion 都正常。
 5. 三片全部切換，逐幕看提問、回覆、引用／素材面板與末幕；檢查滑鼠點擊位置、暫停、重播、切片保持暫停及分頁切走後恢復。
 6. 長回答與檔名不壓住輸入框、不被裁切；八項優勢展開後不產生水平捲動。
+7. 實績與團隊圖片的移入／移出、顯影中途點擊暫停、再次點擊繼續、鍵盤與 reduced-motion 都正常；暫停後離開圖片仍保留比例，人物清晰且柔邊，頁面沒有圖片操作提示文字。
+8. 昱儒姓名、職稱、學經歷與所供資料一致；手繪／真照切換時臉部比例接近，取景不拉伸、不突然跳成較大的臉。
 
 ### 改 CSS 時的進階比較
 
@@ -415,6 +455,11 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 首屏打字機、手與抽象大腦 | `knowledge-threads-v2.png`；整個首屏的背景層，不要放回標題下方普通圖片 |
 | 傳遞知識的雙手 | `shared-knowledge-hands-v1.png`；敘事插畫，不重複用作 CEO 肖像 |
 | CEO 演講素描 | `ceo-speaking-sketch-v1.webp`；依提供的 Wilson 照片生成，白底以 multiply 融合紙色，不是實際演講紀錄 |
+| 團隊手繪肖像 | `team/{wilson,sunny,leef,celestine,lou}-sketch.webp`、`team/{dale,steve}-20260624-sketch.webp`；各人物獨立素材，與原照配對，姓名映射在 `about-design.js` |
+| 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
+| Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
+| Dale 旁的黑白小貓 | `team/dale-tuxedo-kitten-ink.webp`／`dale-tuxedo-kitten-photo.webp`；手繪與寫實生成素材，以 `dale-tuxedo-kitten.webp` 的 alpha 作形狀遮罩；位置在 `.ink-photo__canvas--companion`，與 Dale 同步顯影及暫停 |
+| 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`／`tokyo-2-sketch.webp`、`cases/tokyo-5.jpg`／`tokyo-5-sketch.webp`；來源為舊官網回收的活動照片，配對用於顯影 |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |
 | 手撕信紙邊界 | `torn-paper-cotton-v2.webp`；真實 alpha 邊緣，窄版採裁切寬紙帶，不把整條纖維壓縮到手機寬度 |
@@ -422,6 +467,10 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 新聞手繪外框 | `news-sketch-frame-v2.webp`；獨立透明簡線外框，紙墊避免筆觸遮住原圖文字 |
 
 上述手繪素材是 AI 生成插畫，不是產品現場照或委製作品證明。Wally 原色設備圖在 repo 的 `public/brand/`；設備照片中印好的 Logo 不會隨 `brand.js` 自動更換。線上角色圖 `https://synaiq.com/wp-content/uploads/2026/03/toutou-2.png` 仍是網站依賴，下架舊素材時不能誤刪它。
+
+新增團隊／場域手繪使用內建 `imagegen`：每張原照分別作為人物或構圖參考，再以首頁 `ceo-speaking-sketch-v1.webp` 作筆觸參考，生成白底、淡褐色疏線與少量排線的獨立插畫。保留人物辨識特徵與場域配置，不能把 CEO 參考圖的麥克風或其他人物帶入新圖。生成後只作網頁尺寸與格式最佳化；人物與場域 hover 顯示的是原照，不是 AI 重建的真照。裝飾小貓的寫實版本另由手繪素材生成，不能視為實拍來源。
+
+Wilson、Sunny、Leef、Lou 的真照分別在 repo 的 `public/brand/team/`，網址前綴為 `/brand/team/`；檔名以 `about-design.js` 的 `portraits` 映射為準，例如 Leef 對應舊檔 `leff-web-1.jpg`。Dale、Steve 與昱儒使用上述 `assets/team/` 素材。保留舊圖不代表仍在現行團隊頁使用，Daniel 的舊檔與舊 Dale 照片／手繪未列入公開白名單。新增公開素材須逐一加入 `share-preview.mjs`，不得整包公開舊素材回收目錄或公司簡報。
 
 新聞小圖在 `home-design.js` 搜尋 `outlook-clipping`；中英無障礙說明在 `locale-home.js` 的 `outlook.clippingLabel`／`clippingAlt`。寬度改 `--outlook-clipping-width`，傾斜改 `--outlook-clipping-tilt`（建議 -6deg 至 6deg，放大角度需重驗手機邊界）。外面不顯示圖說、調查人數或提醒字，調查背景與限制保留在 `outlook-details` 展開區；原截圖內標題與署名不刪。原圖與外框分開維護，不必每次修改文字都重新生圖。
 
@@ -460,7 +509,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 1. 確認要修改的檔案清單與目前正式版本。在檔案管理員先下載**主機現有檔案**到獨立備份目錄，記下原路徑；不要下載覆蓋正在編輯的本機來源。涉及 HTML／快取引用時，一併備份載入鏈相關檔案。
 2. 本機修改、預覽及測試後，只上傳核對過的檔案到當前版本目錄並確認覆蓋。純文案的 `locale-demo.js` 與無路徑改動的 `tokens.css` 可作為這類小修；涉及新增素材、路徑、版型或多檔模組關係時，使用完整新版本流程。
 3. HTML 小修需在封裝後的 `index.html`、`page.html` 同步修改，保留原有版本化 CSS／JS／圖片 URL。不拿本機預覽外框覆蓋，不改 `/` 路由，不刪其他目錄。
-4. 重新下載／讀取剛上傳的公開檔案，核對內容；再從根網址檢查首頁／KIP、中英、手機與動畫。遇到異常，用這次下載的主機備份還原相同檔案，不使用更早的原始碼猜測還原內容。
+4. 重新下載／讀取剛上傳的公開檔案，核對內容；再從根網址檢查已發布頁面的中英、手機與動畫。遇到異常，用這次下載的主機備份還原相同檔案，不使用更早的原始碼猜測還原內容。
 
 **快取要另外處理。** 正式站既有 JS 可能被瀏覽器快取七天；Ctrl+Shift+R 只能幫你自己的瀏覽器重新取得，不能保證其他訪客拿到新版。若原地修改 JS，必須檢查從 `index.html`／`page.html`、`prototype.js`、`i18n.js` 到詞典的完整載入鏈與版本參數；只在首頁網址加參數，不會更新所有被 import 的模組。CSS 也需檢查 `site.css` 到 `tokens.css` 的引用及實際回應。沒有完成訪客快取切換驗證前，不要宣布已全面更新；不熟悉載入鏈時改走新版本封裝。
 
@@ -470,6 +519,6 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 既有 `out/synaiq-release-*/release.mjs` 固定了當次版本名與主機預期 hash，是一次發布的工具，不是日常通用部署器。已完成的 `package`／`stage`／`activate` 不要重跑，也不要覆寫既有 `out/synaiq-deploy-*`、`out/synaiq-address-*`、`out/synaiq-release-*` 的封存與還原資料。
 
-發布後驗證根網址、四組頁面／語言、素材與動畫；同時確認 `/home.html` 仍導向根網址，舊 WordPress 路徑仍下架。不能為了發布恢復 `index.php` fallback，不能刪掉新版仍使用的 Wally 角色圖，也不觸碰 `synaiq-ai.com` 的產品服務。還原使用當次已核對的備份；不要把更早的 WordPress 路由當成新版回退。
+發布後驗證根網址、當次核准發布的所有頁面／語言組合、素材與動畫；同時確認 `/home.html` 仍導向根網址，舊 WordPress 路徑仍下架。若兩個新增頁面納入發布，需完整驗證四頁 × 中英共八組，不能只驗首頁／KIP。不能為了發布恢復 `index.php` fallback，不能刪掉新版仍使用的 Wally 角色圖，也不觸碰 `synaiq-ai.com` 的產品服務。還原使用當次已核對的備份；不要把更早的 WordPress 路由當成新版回退。
 
 日常更新直接維護本指引，不再新增日期驗證報告或製作紀錄；不要在指引中累加每輪測試通過數、歷史 PID、過期網址或舊 quote。

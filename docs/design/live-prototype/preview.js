@@ -1,10 +1,10 @@
-import { SUPPORTED_LOCALES, getMessages, resolveLocale, pageHref, escapeHtml } from './i18n.js';
+import { SUPPORTED_LOCALES, getMessages, resolveLocale, resolvePage, pageHref, escapeHtml } from './i18n.js';
 
 export function readPreviewRoute(href) {
   const url = new URL(href, 'https://preview.invalid/');
   let hash = url.hash.slice(1);
   try { hash = decodeURIComponent(hash); } catch { /* Keep a malformed fragment as literal text. */ }
-  return { page: url.searchParams.get('page') === 'kip' ? 'kip' : 'home', locale: resolveLocale(url.searchParams.get('lang')), hash };
+  return { page: resolvePage(url.searchParams.get('page')), locale: resolveLocale(url.searchParams.get('lang')), hash };
 }
 
 export function previewPageHref(route) { return `page.html${pageHref(route)}`; }
@@ -59,7 +59,7 @@ export function initPreview({ document = globalThis.document, window = globalThi
     document.documentElement.dir = SUPPORTED_LOCALES.find(item => item.code === route.locale).dir;
     document.title = copy.title;
     document.querySelectorAll('[data-preview-label]').forEach(node => { node.textContent = copy[node.dataset.previewLabel]; });
-    for (const option of page.options) option.textContent = common.navigation[option.value];
+    for (const option of page.options) option.textContent = common.navigation[`${option.value}Page`] ?? common.navigation[option.value];
     page.value = route.page;
     language.value = route.locale;
     frame.title = copy.frame;
@@ -97,7 +97,7 @@ export function initPreview({ document = globalThis.document, window = globalThi
 
   const resizeAndInspect = () => { resize(); window.requestAnimationFrame(inspect); };
   const fit = () => { width.value = String(Math.max(320, Math.min(1600, stage.clientWidth - 32))); resizeAndInspect(); };
-  const changePage = () => navigate({ page: page.value === 'kip' ? 'kip' : 'home', locale: route.locale, hash: '' });
+  const changePage = () => navigate({ page: resolvePage(page.value), locale: route.locale, hash: '' });
   const changeLanguage = () => navigate({ ...route, locale: resolveLocale(language.value) });
   const restoreRoute = () => navigate(readPreviewRoute(window.location.href));
   width.addEventListener('input', resizeAndInspect);

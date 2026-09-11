@@ -12,8 +12,10 @@ const runtimeFiles = [
   'home-design.js',
   'demo-animation.js',
   'kip-design.js',
+  'cases-design.js', 'about-design.js', 'ink-photo.js',
   'i18n.js', 'brand.js', 'shared-design.js', 'preview.js',
   'locale-common.js', 'locale-home.js', 'locale-kip.js', 'locale-demo.js',
+  'locale-cases.js', 'locale-about.js',
   'assets/knowledge-threads-v2.png', 'assets/shared-knowledge-hands-v1.png',
   'assets/kip-search-demo.svg', 'assets/kip-library-demo.svg',
   'assets/kip-search-demo-en.svg', 'assets/kip-library-demo-en.svg',
@@ -25,12 +27,25 @@ const runtimeFiles = [
   'assets/investing-cio-20240629.png', 'assets/news-sketch-frame-v2.webp',
   'assets/kip-wordmark.png', 'assets/demo-paper-edge.webp',
   'assets/demo-sidebar-dialogues.webp', 'assets/demo-send-pen.webp',
+  'assets/team/wilson-sketch.webp', 'assets/team/sunny-sketch.webp',
+  'assets/team/leef-sketch.webp', 'assets/team/lou-sketch.webp',
+  'assets/team/celestine-sketch.webp',
+  'assets/team/celestine-photo.webp',
+  'assets/team/dale-20260624-photo.webp', 'assets/team/dale-20260624-sketch.webp',
+  'assets/team/steve-20260624-photo.webp', 'assets/team/steve-20260624-sketch.webp',
+  'assets/team/dale-tuxedo-kitten.webp',
+  'assets/team/dale-tuxedo-kitten-photo.webp',
+  'assets/team/dale-tuxedo-kitten-ink.webp',
+  'assets/cases/tokyo-2-scaled.jpg', 'assets/cases/tokyo-5.jpg',
+  'assets/cases/tokyo-2-sketch.webp', 'assets/cases/tokyo-5-sketch.webp',
 ];
 const productFiles = ['synaiq-logo-light.svg', 'wally/wally-2.png', 'wally/wally-series.png', 'wally-2-plus.png', 'wally-mini.png'];
+const teamFiles = ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg'];
 
 export const PUBLIC_FILES = Object.freeze([
   ...runtimeFiles.map(file => Object.freeze({ url: `/live-prototype/${file}`, root: 'prototype', file })),
   ...productFiles.map(file => Object.freeze({ url: `/brand/${file}`, root: 'brand', file })),
+  ...teamFiles.map(file => Object.freeze({ url: `/brand/${file}`, root: 'brand', file })),
 ]);
 
 const defaultRoots = Object.freeze({

@@ -1419,7 +1419,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   font: 300 var(--demo-image-heading-size)/1.4 var(--display);
 }
 .image-query-text { font-size: var(--demo-image-query-size); line-height: 1.6; }
-.image-result-heading, .image-search-note, .image-preview-kicker, .image-search-preview dt {
+.image-search-film .image-result-heading, .image-search-film .image-search-note, .image-preview-kicker, .image-search-preview dt {
   font-size: var(--demo-image-label-size);
   color: var(--film-muted);
 }
@@ -1661,3 +1661,63 @@ html:lang(en) body[data-page="kip"] .kip-opening h1 {
   font-size: var(--kip-title-size);
 }
 /* END TEXT KIP */
+
+/* ── 13 實績展示／關於我們：編輯式紙感版面與水墨顯影 ── */
+:root {
+  --editorial-space: clamp(64px, 7vw, 108px);
+  --editorial-title-size: clamp(42px, 4.6vw, 66px);
+  --editorial-about-title-size: clamp(44px, 5.6vw, 82px);
+  --editorial-section-title-size: clamp(30px, 3.2vw, 46px);
+  --editorial-body-size: clamp(16px, 1.3vw, 18px);
+  --editorial-olive: #667655;
+  --editorial-wash: #e9ece4;
+  --editorial-rule: #777a6b40;
+  --editorial-hover-duration: 240ms;
+  --ink-reveal-duration: 2600ms; /* 滑鼠停留後逐漸顯現真照；點擊暫停當前比例 */
+  --ink-ripple-duration: 800ms; /* 點擊的水紋擴散 */
+}
+.editorial-kicker { font: 500 12px/1.5 var(--body); letter-spacing: .12em; color: var(--editorial-olive); }
+.editorial-hero h1 { font: 300 var(--editorial-title-size)/1.45 var(--display); letter-spacing: -.035em; }
+.editorial-hero .about-title { font-size: var(--editorial-about-title-size); }
+.editorial-intro, .about-intro { font: 400 var(--editorial-body-size)/1.95 var(--body); color: var(--muted); }
+.editorial-link { font: 500 15px/1.6 var(--body); }
+.editorial-link:hover { text-decoration: none; }
+.editorial-section h2 { font: 300 var(--editorial-section-title-size)/1.55 var(--display); letter-spacing: -.025em; }
+.editorial-section-heading > p, .case-story-copy { font: 400 var(--editorial-body-size)/1.95 var(--body); color: var(--muted); }
+.case-identifier { font: 500 11px/1.6 var(--body); letter-spacing: .08em; color: var(--muted); }
+.cases-hero-art figcaption, .case-field-art figcaption { font: 400 11px/1.7 var(--body); color: var(--muted); letter-spacing: .04em; text-align: center; }
+.case-facts > div > span { font: 500 12px/1.5 var(--body); color: var(--editorial-olive); letter-spacing: .1em; }
+.case-facts h3 { font: 400 clamp(22px,2vw,28px)/1.5 var(--display); }
+.case-facts p { font: 400 13px/1.8 var(--body); color: var(--muted); }
+.case-notes li > span { font: 400 17px/1.7 var(--display); color: var(--editorial-olive); }
+.case-notes h3 { font: 500 18px/1.6 var(--body); }
+.case-notes p { font: 400 15px/1.85 var(--body); color: var(--muted); }
+.case-press-links a { font: 400 17px/1.7 var(--body); }
+.case-press-links a > :first-child { font-size: 12px; color: var(--editorial-olive); }
+.case-press-links a:hover { text-decoration: none; color: var(--editorial-olive); }
+.editorial-closing p { font: 300 clamp(26px,3vw,40px)/1.5 var(--display); }
+.editorial-paper-plane { color: var(--editorial-olive); }
+.ink-photo { color: var(--muted); text-align: left; }
+.about-handnote { font: italic 400 17px/1.6 var(--display); color: var(--editorial-olive); }
+.about-principle-number { font: italic 300 28px/1.25 var(--display); color: var(--editorial-olive); }
+.about-principle h3 { font: 400 24px/1.4 var(--display); }
+.about-principle p { font: 400 16px/1.9 var(--body); color: var(--muted); }
+.team-role { font: 500 12px/1.7 var(--body); color: var(--editorial-olive); }
+.team-name { font: 400 clamp(25px,2.3vw,33px)/1.25 var(--display); }
+.team-native-name { font: 400 22px/1.4 var(--display); letter-spacing: .1em; }
+.team-credentials { font: 400 13px/1.85 var(--body); color: var(--muted); }
+html:lang(en) .editorial-hero h1 { line-height: 1.14; }
+html:lang(en) .editorial-hero .about-title { line-height: 1.28; }
+html:lang(en) .editorial-section h2 { line-height: 1.25; }
+@media (max-width: 899px) {
+  :root { --editorial-title-size: clamp(30px,4.7vw,42px); --editorial-section-title-size: 30px; }
+  .team-name { font-size: 30px; }
+}
+@media (max-width: 639px) {
+  :root { --editorial-title-size: clamp(37px,9.3vw,52px); --editorial-about-title-size: clamp(36px,9vw,54px); --editorial-space: 60px; }
+  .team-name { font-size: 26px; }
+  .team-credentials { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --ink-reveal-duration: 0ms; --ink-ripple-duration: 0ms; }
+}

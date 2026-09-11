@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SUPPORTED_LOCALES, resolveLocale, getMessages, pageHref, localeHref, escapeHtml, messageShape } from './i18n.js';
+import { SUPPORTED_LOCALES, SUPPORTED_PAGES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml, messageShape } from './i18n.js';
 
 test('locale selection is explicit, canonical and safely falls back to Traditional Chinese', () => {
   for (const value of ['', undefined, 'de', '../../private', '<script>', 'zh', 'zh-TW']) assert.equal(resolveLocale(value), 'zh-Hant');
@@ -19,6 +19,17 @@ test('each supplied language has every semantic message key and array entry', ()
 });
 
 test('page links and language changes preserve page and section without choosing arbitrary resources', () => {
+  assert.deepEqual(SUPPORTED_PAGES, ['home', 'kip', 'cases', 'about']);
+  for (const page of SUPPORTED_PAGES) {
+    assert.equal(resolvePage(page), page);
+    assert.equal(pageHref({ page, locale: 'en', hash: 'contact' }), `?page=${page}&lang=en#contact`);
+    assert.equal(localeHref(`https://example.com/page.html?page=${page}&lang=en#contact`, 'zh-Hant'), `/page.html?page=${page}&lang=zh-Hant#contact`);
+    for (const locale of ['zh-Hant', 'en']) {
+      assert.ok(getMessages(locale)[page]);
+      assert.ok(getMessages(locale).common.title[page]);
+    }
+  }
+  for (const value of [undefined, '', 'constructor', '__proto__', '../../private']) assert.equal(resolvePage(value), 'home');
   assert.equal(pageHref({page:'kip',locale:'en',hash:'architecture'}), '?page=kip&lang=en#architecture');
   assert.equal(pageHref({page:'unknown',locale:'unknown'}), '?page=home&lang=zh-Hant');
   assert.equal(localeHref('https://example.com/live-prototype/page.html?page=kip&lang=en#proof','zh-Hant'), '/live-prototype/page.html?page=kip&lang=zh-Hant#proof');
