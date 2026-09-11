@@ -24,7 +24,7 @@ export const zhHant = {
     title: '一起把想法，帶到現場的人。',
     intro: '從營運、財務到業務，讓每一份技術投入，都能回到真實需求。',
     members: [
-      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: '鉅瀚綠能總經理', credentials: ['國立交通大學工業工程與管理研究所'] },
+      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: '鑫揚智能科技CEO', credentials: ['國立交通大學工業工程與管理研究所'] },
       { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: '鑫揚智能科技執行長', credentials: ['鉅詢永續策略總經理', '鑫揚智能科技營運長'] },
       { id: 'leef', name: 'Leef Lee', nativeName: '', role: '財務長', credentials: ['國立成功大學會計系', '財會協理'] },
       { id: 'celestine', name: 'Celestine', nativeName: '李昱儒', role: '業務總監', credentials: ['國立嘉義大學', '中華民國太陽光電技術士乙級', '工研院太陽能節能建築工程師', 'ISO9001:2015 品質管理系統主任稽核員'] },
@@ -35,7 +35,7 @@ export const zhHant = {
     title: '把複雜，做得好用。',
     intro: '跨越資訊管理、軟體與韌體，串起知識、系統和現場的每一個環節。',
     members: [
-      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: '總經理特助', credentials: ['國立中央大學資訊管理研究所博士'] },
+      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: '鑫揚智能科技協理', credentials: ['國立中央大學資訊管理研究所博士', 'ISO27001:2022 資訊安全管理系統主任稽核員'] },
       { id: 'steve', name: 'Steve Chiang', nativeName: '', role: '全端系統架構師', credentials: ['逢甲大學資訊工程研究所博士班'] },
       { id: 'dale', name: 'Dale Lin', nativeName: '', role: '全端暨韌體總工程師', credentials: ['中央大學永續與綠能科技研究所'] },
     ],
