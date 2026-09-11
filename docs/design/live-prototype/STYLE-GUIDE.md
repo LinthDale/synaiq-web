@@ -441,7 +441,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 ### 先確認主機正在使用哪一版
 
-在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260910-a4c0924/`；`synaiq-release-20260910-kip-cleanup/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
+在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260911-paper-products/`；`synaiq-release-20260910-a4c0924/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
 
 | 本機來源 | 正式包對應位置／限制 |
 |---|---|
