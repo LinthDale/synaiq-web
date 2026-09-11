@@ -2,7 +2,7 @@
 
 最後更新：2026-09-11。
 
-改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引涵蓋 Home／KIP，以及本機審閱中的實績展示／關於我們中英版；兩個新增頁面尚未發布，不是每輪修改的完成紀錄。
+改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引涵蓋已上線的 Home／KIP／實績展示／關於我們中英版，供日常維護使用。
 
 唯一工作目錄：`C:\Users\User\synaiq\synaiq-web`。核准網站來源在 `docs/design/live-prototype/`，**不是** Astro Phase A 的 `src/styles/`。儲存後重新整理本機預覽；Git push 不會自動更新 Hostinger。
 
@@ -490,7 +490,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 ### 先確認主機正在使用哪一版
 
-在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260911-paper-products/`；`synaiq-release-20260910-a4c0924/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
+在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260911-team-pages/`；`synaiq-release-20260911-paper-products/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
 
 | 本機來源 | 正式包對應位置／限制 |
 |---|---|
@@ -519,6 +519,6 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 既有 `out/synaiq-release-*/release.mjs` 固定了當次版本名與主機預期 hash，是一次發布的工具，不是日常通用部署器。已完成的 `package`／`stage`／`activate` 不要重跑，也不要覆寫既有 `out/synaiq-deploy-*`、`out/synaiq-address-*`、`out/synaiq-release-*` 的封存與還原資料。
 
-發布後驗證根網址、當次核准發布的所有頁面／語言組合、素材與動畫；同時確認 `/home.html` 仍導向根網址，舊 WordPress 路徑仍下架。若兩個新增頁面納入發布，需完整驗證四頁 × 中英共八組，不能只驗首頁／KIP。不能為了發布恢復 `index.php` fallback，不能刪掉新版仍使用的 Wally 角色圖，也不觸碰 `synaiq-ai.com` 的產品服務。還原使用當次已核對的備份；不要把更早的 WordPress 路由當成新版回退。
+發布後驗證根網址、當次核准發布的所有頁面／語言組合、素材與動畫；同時確認 `/home.html` 仍導向根網址，舊 WordPress 路徑仍下架。每次發布需完整驗證四頁 × 中英共八組，不能只驗首頁／KIP。不能為了發布恢復 `index.php` fallback，不能刪掉新版仍使用的 Wally 角色圖，也不觸碰 `synaiq-ai.com` 的產品服務。還原使用當次已核對的備份；不要把更早的 WordPress 路由當成新版回退。
 
 日常更新直接維護本指引，不再新增日期驗證報告或製作紀錄；不要在指引中累加每輪測試通過數、歷史 PID、過期網址或舊 quote。

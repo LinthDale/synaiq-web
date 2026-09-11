@@ -1,6 +1,6 @@
 # SynaiQ Website
 
-最後更新：2026-09-09。
+最後更新：2026-09-11。
 
 唯一日常工作目錄：`C:\Users\User\synaiq\synaiq-web`。Azure DevOps 遠端為 `SynaiqDev/_git/synaiq-web`。
 
@@ -8,9 +8,9 @@
 
 | 範圍 | 來源 | 狀態與用途 |
 |---|---|---|
-| 已核准、已上線的 Home／KIP 中英雙語設計 | `docs/design/live-prototype/`；上架來源 commit `a3a8376` | 客戶端渲染的靜態 HTML／CSS／JavaScript，含兩份 CSS、集中設定與三段共用 KIP 介面動畫 |
+| 已核准、已上線的 Home／KIP／實績展示／關於我們中英雙語設計 | `docs/design/live-prototype/`；上架來源 commit `5aba844` | 客戶端渲染的靜態 HTML／CSS／JavaScript，含兩份 CSS、集中設定、三段共用 KIP 介面動畫及手繪顯影互動 |
 | Astro Phase A | `src/`、`astro.config.mjs` | Content Collections、schema、18 個語系內容頁及語意 HTML 基礎；尚未套入核准設計 |
-| 當次上架包 | `out/synaiq-release-20260909-design/`（本機保留、不進 Git） | 正式網站的 artifact、manifest、切換前路由與驗證結果；上一版保留供還原 |
+| 當次上架包 | `out/synaiq-release-20260911-team-pages/`（本機保留、不進 Git） | 正式網站的 artifact、manifest、切換前路由與驗證結果；上一版保留供還原 |
 
 現行版本與還原步驟見 [Hostinger 操作索引](docs/operations/deploy-hostinger.md)。初次上架事實見 [2026-09-08 部署紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md)，地址與快取修補見 [地址更新紀錄](docs/operations/address-update-2026-09-08.md)。正式站是 `synaiq.com`，不是 `synaiq-ai.com`；歷史文件中的 `synaiq-web-astro` 是當時的本機資料夾名稱，不代表其上架產物是 Astro build。
 
@@ -42,7 +42,7 @@ npm run test:all    # 依序執行 Astro 與設計測試
 
 - 官網只有兩份 CSS：所有文字的字型、字級、行高、字距與文字顏色（含 ZH/EN、圖片旁註記和 Demo 小字）都改 `docs/design/live-prototype/tokens.css`；排版、RWD 幾何與動畫樣式改同目錄 `site.css`。區塊索引、quote 修改位置與前後比對指令見 [官網樣式維護指南](docs/design/live-prototype/STYLE-GUIDE.md)。
 - 目前網站的中英文文案在 `docs/design/live-prototype/locale-*.js`，共用語言機制在 `i18n.js`。
-- Logo 的共用設定在 `docs/design/live-prototype/brand.js`；依 [語言擴充與 Logo 維護指南](docs/design/live-prototype/localization-and-brand-guide.md) 更換公開衍生素材，並檢查明暗底與兩個頁面。沒有 Logo 上傳 CMS。
+- Logo 的共用設定在 `docs/design/live-prototype/brand.js`；依 [語言擴充與 Logo 維護指南](docs/design/live-prototype/localization-and-brand-guide.md) 更換公開衍生素材，並檢查明暗底與四個頁面。沒有 Logo 上傳 CMS。
 - 元件、配色與動畫仍以 [核准設計 README](docs/design/live-prototype/README.md) 為準；不要用 Phase A 的中性 token 或英文佔位內容覆蓋它。
 - 修改本機或推送 Git，不會自動改變目前線上網站。日後發布需重新封裝並核對素材路徑。
 
@@ -68,7 +68,7 @@ Astro 的 `zh-Hant` 無 URL 前綴，`en` 走 `/en/`。其英文內容仍為 `dr
 ## 文件
 
 - [Repo 整併範圍與保留項目](docs/operations/repository-consolidation-2026-09-08.md)
-- [本次正式站上架紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md)
+- [2026-09-08 初次上架紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md)
 - [Astro Phase A 換底紀錄](docs/migration/phaseA-log.md) 與 [內容 key 對照](docs/migration/content-key-map.md)
 - [PRD-001](docs/prd/PRD-001-architecture-refactor.md) 與 [ADR-001](docs/adr/ADR-001-astro-react-islands-hostinger.md)
 - [CSS Handbook](docs/guidelines/CSS-Handbook.md)

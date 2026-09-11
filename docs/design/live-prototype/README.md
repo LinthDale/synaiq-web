@@ -2,7 +2,7 @@
 
 最後更新：2026-09-11。
 
-網站的核准 Home／KIP 中英版，以及本機審閱中的「實績展示／關於我們」中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。兩個新增頁面尚未發布；正式站使用另外封裝的版本，本機修改不會自動上架。
+已上線的 Home／KIP／實績展示／關於我們中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。正式站使用另外封裝的版本，本機修改不會自動上架；現行版本與還原方式見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
 
 ## 要改什麼，去哪裡
 
