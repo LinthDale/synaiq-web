@@ -1,20 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmdirSync, symlinkSync, unlinkSync } from 'node:fs';
-import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildScreens, renderScreen, resolveBrandAsset, syncBrandScreens } from './scripts/sync-brand-screens.mjs';
 import { screenLocaleSuffixes, screenMessages } from './locale-screens.js';
 import { BRAND } from './brand.js';
+import { zhHant, en } from './locale-demo.js';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
-const baselineHashes = {
-  search: 'b958fc2186b2ac7ed5c6e13654f54cd0bbfa56eed2eec1e5d1207409ac16d206',
-  library: 'e5904c70a3e6cbc078f9dff3df775540623dbff9e3bec88283308ec9d0a57882',
-};
-const expectedScreenCount = Object.keys(screenLocaleSuffixes).length * Object.keys(baselineHashes).length;
+const screenNames = ['search', 'library'];
+const expectedScreenCount = Object.keys(screenLocaleSuffixes).length * screenNames.length;
 
 test('every screen locale supplies the same semantic text keys as Chinese', () => {
   assert.deepEqual(Object.keys(screenMessages).sort(), Object.keys(screenLocaleSuffixes).sort());
@@ -27,18 +24,30 @@ test('every screen locale supplies the same semantic text keys as Chinese', () =
   }
 });
 
-test('generated Chinese screens retain every original word, coordinate, and color', () => {
+test('all static product screens use the approved shared paper chrome and current purchasing copy', () => {
   for (const { locale, screen, source } of buildScreens()) {
-    if (locale !== 'zh-Hant') continue;
-    const baseline = source.replaceAll('\r\n', '\n').replace(/data:image\/svg\+xml;base64,[^"]+/, 'LOGO');
-    assert.equal(createHash('sha256').update(baseline).digest('hex'), baselineHashes[screen], screen);
+    const demo = locale === 'en' ? en : zhHant;
+    assert.match(source, /id="paper-header"/);
+    assert.match(source, /id="sidebar-dialogues"/);
+    assert.match(source, /id="kip-wordmark"/);
+    assert.match(source, /fill="#e9e6dc"/);
+    assert.doesNotMatch(source, /第\s*12\s*頁|page\s*12|保固|warranty|Procurement_Contract/i);
+    assert.ok(source.includes(demo.citationFilename));
+    if (screen === 'search') {
+      assert.equal(screenMessages[locale].search.question, demo.question);
+      assert.equal(screenMessages[locale].search.answerHeading, demo.answer);
+      assert.equal(screenMessages[locale].search.answerClause, demo.answerHighlight);
+      assert.equal(screenMessages[locale].search.send, demo.send);
+      assert.match(source, /id="send-pen"/);
+      assert.match(source, /fill="#dfe5d9"/);
+    }
   }
 });
 
 test('every configured locale generates both screen assets with the current single logo master', () => {
   const generated = buildScreens();
   assert.equal(generated.length, expectedScreenCount);
-  const expectedPairs = Object.keys(screenLocaleSuffixes).flatMap(locale => Object.keys(baselineHashes).map(screen => `${locale}/${screen}`));
+  const expectedPairs = Object.keys(screenLocaleSuffixes).flatMap(locale => screenNames.map(screen => `${locale}/${screen}`));
   assert.deepEqual(generated.map(({ locale, screen }) => `${locale}/${screen}`).sort(), expectedPairs.sort());
   const master = readFileSync(new URL(BRAND.ink, import.meta.url));
   for (const { relativePath, source } of generated) {
@@ -93,7 +102,7 @@ test('English screenshots translate all visible and accessible text, including e
   for (const { locale, source } of buildScreens()) {
     if (locale !== 'en') continue;
     assert.doesNotMatch(source, /\p{Script=Han}/u);
-    assert.match(source, /Procurement_Contract_2023\.pdf/);
+    assert.match(source, /Equipment_Purchasing_Sample\.pdf/);
     assert.match(source, /sample|Sample|fictional/);
   }
 });

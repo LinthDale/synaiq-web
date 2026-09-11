@@ -1469,7 +1469,7 @@ body[data-page="kip"] .kip-scene-caption {
 body[data-page="kip"] .kip-scene-caption > span:first-child {
   letter-spacing: 0.12em;
 }
-/* 可核對的出處／第 12 頁是保固條款／採購契約範例_2023.pdf */
+/* 可核對的出處／設備採購流程／設備採購流程_範例.pdf */
 body[data-page="kip"] .kip-slip-label {
   font: italic 17px/1.5 var(--display);
   color: var(--kip-olive);
@@ -1612,7 +1612,7 @@ body[data-page="kip"] .kip-capability-list dd {
   body[data-page="kip"] .kip-opening h1 {
     font-size: var(--kip-title-size);
   }
-  /* 可核對的出處／第 12 頁是保固條款／採購契約範例_2023.pdf */
+  /* 可核對的出處／設備採購流程／設備採購流程_範例.pdf */
   body[data-page="kip"] .kip-evidence-slip .kip-slip-answer {
     font-size: clamp(20px, 4.7vw, 26px);
   }

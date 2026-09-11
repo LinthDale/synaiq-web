@@ -14,7 +14,8 @@ test('English KIP and demo render English copy, labels and sample filenames thro
   assert.match(demo, /Equipment_Purchasing_Sample\.pdf/);
   assert.match(demo, /Knowledge_Workflow_Sample\.docx/);
   assert.match(demo, /Data_Index_Sample\.xlsx/);
-  assert.match(kip, /Procurement_Contract_2023\.pdf · Page 12/);
+  assert.match(kip, /Equipment_Purchasing_Sample\.pdf/);
+  assert.doesNotMatch(kip, /page\s*12|warranty|Procurement_Contract/i);
   assert.match(demo, />Replay<\/button>/);
   assert.match(demo, />Pause animation<\/button>/);
   assert.doesNotMatch(demo, /\p{Script=Han}/u);

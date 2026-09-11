@@ -1,118 +1,38 @@
-// Editable text for generated static product illustrations. No HTML in these values.
-// Add a locale's complete search/library dictionary and an explicit output suffix below.
-export const screenLocaleSuffixes = Object.freeze({ 'zh-Hant': '', en: '-en' });
+// Static illustrations share purchasing copy with the animated interface.
+// Edit locale-demo.js for questions, answers, source filenames and send labels.
+import { zhHant, en } from './locale-demo.js';
 
-export const screenMessages = {
-  "zh-Hant": {
-    "search": {
-      "title": "KIP 智慧搜尋介面構圖示意",
-      "description": "非產品實際截圖。以虛構採購契約展示提問、答案與來源並列的圖片版位。",
-      "appTitle": "KIP / 智慧知識搜尋",
-      "sampleBadge": "概念示意 · 虛構資料",
-      "newChat": "＋ 新的對話",
-      "recentQuestions": "最近的問題",
-      "warrantyQuestion": "採購契約的保固條款",
-      "processingQuestion": "查詢文件處理狀態",
-      "sourcesQuestion": "如何找到引用來源",
-      "workspace": "示範工作空間",
-      "breadcrumb": "組織知識庫 / 契約範例",
-      "question": "這份採購契約，第 12 頁寫了什麼？",
-      "avatar": "知",
-      "answerHeading": "第 12 頁是保固條款。",
-      "answerClause": "驗收後兩年內，提供免費更換。",
-      "answerNote": "答案與出處一起保留，方便回到文件核對。",
-      "sourceLabel": "引用來源 / 01",
-      "sourceFilename": "採購契約範例_2023.pdf",
-      "sourcePage": "第 12 頁",
-      "sourceDisclaimer": "此文件與條款僅供視覺原型示範，並非客戶資料。",
-      "followup": "接著問一個問題……",
-      "send": "送出",
-      "footer": "品牌化介面示意 · 示例資料，非客戶文件"
-    },
-    "library": {
-      "title": "KIP 知識中心介面構圖示意",
-      "description": "非產品實際截圖。用虚構文件呈現知識管理圖片版位。",
-      "appTitle": "KIP / 知識中心",
-      "sampleBadge": "概念示意 · 虛構資料",
-      "backToChat": "返回對話",
-      "documents": "文件管理",
-      "knowledgeBases": "知識庫",
-      "permissions": "角色與權限",
-      "activity": "使用紀錄",
-      "heading": "每份文件，各有位置。",
-      "intro": "集中管理接入的資料，確認版本、狀態與使用範圍。",
-      "searchPlaceholder": "搜尋文件名稱",
-      "addDocument": "＋ 接入文件",
-      "columnName": "文件名稱",
-      "columnFormat": "格式",
-      "columnStatus": "處理狀態",
-      "contractFilename": "採購契約範例_2023.pdf",
-      "workflowFilename": "知識整理流程_範例.docx",
-      "indexFilename": "資料目錄_範例.xlsx",
-      "pdfFormat": "PDF",
-      "wordFormat": "Word",
-      "excelFormat": "Excel",
-      "contractStatus": "已完成",
-      "workflowStatus": "已完成",
-      "indexStatus": "待處理",
-      "disclaimer": "所有文件名稱與狀態均為示範資料，不代表正式產品畫面。",
-      "footer": "畫面構圖示意 · 待換成去識別化的正式介面截圖"
-    }
-  },
-  "en": {
-    "search": {
-      "title": "KIP knowledge search interface concept",
-      "description": "Not an actual product screenshot. A fictional contract demonstrates a question, answer, and source together.",
-      "appTitle": "KIP / Knowledge Search",
-      "sampleBadge": "Concept · Sample data",
-      "newChat": "＋ New chat",
-      "recentQuestions": "Recent questions",
-      "warrantyQuestion": "Contract warranty",
-      "processingQuestion": "Document status",
-      "sourcesQuestion": "Find cited sources",
-      "workspace": "Demo workspace",
-      "breadcrumb": "Knowledge base / Sample contract",
-      "question": "What does page 12 of this contract say?",
-      "avatar": "K",
-      "answerHeading": "Page 12 covers the warranty.",
-      "answerClause": "Free replacement for two years after acceptance.",
-      "answerNote": "Keep the answer and its source together for verification.",
-      "sourceLabel": "SOURCE / 01",
-      "sourceFilename": "Procurement_Contract_2023.pdf",
-      "sourcePage": "Page 12",
-      "sourceDisclaimer": "Fictional terms for this design prototype. Not customer data.",
-      "followup": "Ask a follow-up question…",
-      "send": "Send",
-      "footer": "Branded interface · Sample data, not customer documents"
-    },
-    "library": {
-      "title": "KIP knowledge center interface concept",
-      "description": "Not an actual product screenshot. Fictional documents demonstrate a knowledge-management screen.",
-      "appTitle": "KIP / Knowledge Center",
-      "sampleBadge": "Concept · Sample data",
-      "backToChat": "Back to chat",
-      "documents": "Documents",
-      "knowledgeBases": "Knowledge bases",
-      "permissions": "Roles & permissions",
-      "activity": "Usage history",
-      "heading": "A place for every document.",
-      "intro": "Manage connected files, versions, status, and access.",
-      "searchPlaceholder": "Search document names",
-      "addDocument": "＋ Add files",
-      "columnName": "Document name",
-      "columnFormat": "Format",
-      "columnStatus": "Status",
-      "contractFilename": "Procurement_Contract_2023.pdf",
-      "workflowFilename": "Knowledge_Workflow_Sample.docx",
-      "indexFilename": "Data_Index_Sample.xlsx",
-      "pdfFormat": "PDF",
-      "wordFormat": "Word",
-      "excelFormat": "Excel",
-      "contractStatus": "Complete",
-      "workflowStatus": "Complete",
-      "indexStatus": "Pending",
-      "disclaimer": "All filenames and statuses are examples, not a live product screen.",
-      "footer": "Screen concept · Redacted product screenshot to follow"
-    }
-  }
+export const screenLocaleSuffixes = Object.freeze({ 'zh-Hant': '', en: '-en' });
+const captions = {
+  'zh-Hant': { searchTitle: 'KIP 智慧搜尋介面示意', libraryTitle: 'KIP 知識中心介面示意', description: '品牌化介面與虛構採購流程示意，並非真實產品截圖或客戶資料。', format: '格式', search: '搜尋文件名稱', add: '＋ 接入文件', pdf: 'PDF', word: 'Word', excel: 'Excel' },
+  en: { searchTitle: 'KIP knowledge search interface concept', libraryTitle: 'KIP knowledge center interface concept', description: 'Branded interface and fictional purchasing process, not a live product screenshot or customer data.', format: 'Format', search: 'Search document names', add: '＋ Add files', pdf: 'PDF', word: 'Word', excel: 'Excel' },
 };
+
+export const screenMessages = Object.fromEntries(Object.entries({ 'zh-Hant': zhHant, en }).map(([locale, demo]) => {
+  const c = captions[locale];
+  const common = {
+    description: c.description, productLabel: demo.productLabel,
+    newChat: demo.newChat, recentQuestions: demo.recentQuestions,
+    conversationTopic: demo.warrantyTopic, knowledgeCenter: demo.knowledgeCenter,
+    sourcesQuestion: demo.sourceTopic, workspace: demo.workspace, footer: demo.productNote,
+  };
+  return [locale, {
+    search: {
+      ...common, title: c.searchTitle, breadcrumb: demo.breadcrumb,
+      question: demo.question, avatar: demo.avatar, answerHeading: demo.answer,
+      answerClause: demo.answerHighlight, answerNote: demo.answerNote,
+      sourceLabel: demo.citationLabel, sourceFilename: demo.citationFilename,
+      sourcePage: demo.citationPage, sourceDisclaimer: demo.libraryNote,
+      followup: demo.followUp, send: demo.send,
+    },
+    library: {
+      ...common, title: c.libraryTitle, heading: demo.libraryTitle, intro: demo.libraryIntro,
+      searchPlaceholder: c.search, addDocument: c.add,
+      columnName: demo.tableHeaders[0], columnFormat: c.format, columnStatus: demo.tableHeaders[1],
+      contractFilename: demo.tableRows[0][0], workflowFilename: demo.tableRows[1][0], indexFilename: demo.tableRows[2][0],
+      pdfFormat: c.pdf, wordFormat: c.word, excelFormat: c.excel,
+      contractStatus: demo.tableRows[0][1], workflowStatus: demo.tableRows[1][1], indexStatus: demo.tableRows[2][1],
+      disclaimer: demo.libraryNote,
+    },
+  }];
+}));

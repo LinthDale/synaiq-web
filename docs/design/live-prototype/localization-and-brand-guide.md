@@ -22,13 +22,13 @@
 | `locale-home.js` | 首頁文案 |
 | `locale-kip.js` | KIP 文案 |
 | `locale-demo.js` | 動畫內文案和播放狀態 |
-| `locale-screens.js` | 靜態產品示意圖的文字與輸出檔名後綴；只在本機生成時使用 |
+| `locale-screens.js` | 將 `locale-demo.js` 映射為靜態圖文字，另維護圖說及輸出檔名後綴；只在本機生成時使用 |
 
 新增語言（例如日文）的方式：
 
 1. 為上述四份 runtime 詞典各新增完整的 `ja` 匯出，沿用相同語意 key 及陣列結構。只放純文字，HTML 由共用 renderer 處理。
 2. 在 `i18n.js` 匯入四份 `ja` 詞典，於 `catalog` 登錄 `ja`：`label: '日本語'`、`shortLabel: 'JA'`、`dir: 'ltr'`，組成 `{home, kip, demo, common}`。兩個語言選單會從登錄表自動建立，不用另外加按鈕。
-3. 在 `locale-screens.js` 的 `screenMessages` 加入 `ja`，在 `screenLocaleSuffixes` 加 `ja: '-ja'`；對應 common 詞典的 `assets` 指向 `assets/kip-search-demo-ja.svg` 與 `assets/kip-library-demo-ja.svg`。
+3. 在 `locale-screens.js` 匯入 demo 的 `ja` 並加入產生 `screenMessages` 的語言對照表，在 `captions` 補齊 `ja` 圖說，在 `screenLocaleSuffixes` 加 `ja: '-ja'`；對應 common 詞典的 `assets` 指向 `assets/kip-search-demo-ja.svg` 與 `assets/kip-library-demo-ja.svg`。不另抄一份採購問答。
 4. 執行下方生成指令、完整測試，並人工檢查新語言的長字詞及 RWD。語意 key / 陣列項目不一致會令測試失敗；目前不做逐字串回退，避免同一頁中英混雜。
 5. 若有新增公開檔案，先把確切檔名加進 `share-preview.mjs` allowlist，同步 `share-preview.test.mjs` 的核准數量。先備妥尚未被線上入口引用的檔案、測試通過，重載 **4318 的設計伺服器** 並確認新增檔案能取得後，才切換線上入口的引用；不可先讓線上入口引用尚未允許公開的模組。不要重啟 Cloudflared，也不要公開整個 docs 目錄。
 

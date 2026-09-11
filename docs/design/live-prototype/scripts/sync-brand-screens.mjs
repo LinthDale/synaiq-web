@@ -33,10 +33,15 @@ export function resolveBrandAsset(assetPath) {
   return target;
 }
 
-export function renderScreen(template, messages, logo) {
+export function renderScreen(template, messages, logo, art = {}) {
   const used = new Set();
   const source = template.replace(/\{\{([a-zA-Z][a-zA-Z0-9.]*)\}\}/g, (placeholder, key) => {
     if (key === 'brand.logoDataUrl') return `data:image/svg+xml;base64,${logo.toString('base64')}`;
+    if (key.startsWith('art.')) {
+      const value = art[key.slice(4)];
+      if (typeof value !== 'string' || !/^data:image\/(png|webp);base64,[A-Za-z0-9+/=]+$/.test(value)) throw new Error(`Invalid approved screen artwork: ${key}`);
+      return value;
+    }
     if (!Object.hasOwn(messages, key)) throw new Error(`Missing screen text: ${key}`);
     if (typeof messages[key] !== 'string') throw new TypeError(`Screen text ${key} must be a string`);
     used.add(key);
@@ -52,8 +57,16 @@ export function renderScreen(template, messages, logo) {
 export function buildScreens() {
   const logo = readFileSync(resolveBrandAsset(BRAND.ink));
   if (!/<svg\b/.test(logo.toString('utf8'))) throw new Error('The approved ink logo master must be an SVG');
+  // Fixed approved local assets only. No remote references or private image paths.
+  const art = Object.fromEntries(Object.entries({ edge: 'demo-paper-edge.webp', kip: 'kip-wordmark.png', dialogues: 'demo-sidebar-dialogues.webp', pen: 'demo-send-pen.webp' }).map(([key, name]) => {
+    const path = new URL(`assets/${name}`, root);
+    const metadata = lstatSync(path);
+    if (!metadata.isFile() || metadata.isSymbolicLink()) throw new Error(`Invalid approved artwork file: ${name}`);
+    return [key, `data:image/${name.endsWith('.png') ? 'png' : 'webp'};base64,${readFileSync(path).toString('base64')}`];
+  }));
+  const chrome = normalize(readFileSync(new URL('screen-templates/chrome.svg', root), 'utf8'));
   const templates = Object.fromEntries(screenNames.map(screen => [
-    screen, normalize(readFileSync(new URL(`screen-templates/${screen}.svg`, root), 'utf8')),
+    screen, normalize(readFileSync(new URL(`screen-templates/${screen}.svg`, root), 'utf8')).replace('{{chrome}}', chrome),
   ]));
   const outputs = [];
   const paths = new Set();
@@ -66,7 +79,7 @@ export function buildScreens() {
       const relativePath = `assets/kip-${screen}-demo${suffix}.svg`;
       if (paths.has(relativePath)) throw new Error(`Duplicate screen output: ${relativePath}`);
       paths.add(relativePath);
-      outputs.push({ locale, screen, relativePath, source: renderScreen(templates[screen], messages, logo) });
+      outputs.push({ locale, screen, relativePath, source: renderScreen(templates[screen], messages, logo, art) });
     }
   }
   return outputs;

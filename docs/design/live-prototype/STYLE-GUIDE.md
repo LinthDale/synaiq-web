@@ -16,7 +16,7 @@
 | CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
 | 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
 | 另外兩段動畫的查詢、片名與步驟 | `locale-demo.js` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
-| 靜態產品示意圖裡的文字 | `locale-screens.js`；改完需重新生成 SVG，與動畫文案不同 |
+| 靜態產品示意圖裡的文字 | 問答與介面文字共用 `locale-demo.js`；`locale-screens.js` 負責映射與圖說，改完需重新生成 SVG |
 | 字型、字級、文字顏色 | `tokens.css`；不會修改文字內容或電話號碼 |
 | 動畫秒數、延遲、次數 | `tokens.css` 對應區段；不必改 JavaScript |
 | 間距、寬度、並排、撕紙與手機排列 | `site.css`；已有常用留白、剪報寬度等變數時，先改 `tokens.css` |
@@ -398,7 +398,11 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 
 以上在 repo 根目錄執行；第一行會更新生成圖，第二行只檢查是否一致。詳細品牌審查與其他語言登錄方式見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 
-靜態圖裡的文案在 `locale-screens.js` 的 `screenMessages`，版型與圖片內的文字樣式在 `screen-templates/search.svg`／`library.svg`。生成器會輸出 `assets/kip-search-demo.svg`、`kip-search-demo-en.svg`、`kip-library-demo.svg`、`kip-library-demo-en.svg`；頁面透過 `locale-common.js` 的 `assets.searchScreen`／`libraryScreen` 選用語言版本。
+首頁「KIP 畫面＋信紙＋Wally」與 KIP 頁首使用的是生成 SVG，不是下方的動畫 DOM。兩者的採購問答、引用檔名、側欄與「寄出」文字現在都讀 `locale-demo.js`；`locale-screens.js` 只負責映射及靜態圖說。KIP 頁首的引文紙條也共用同一份採購示例，不再保留舊的指定頁碼問答。
+
+靜態圖共用的標頭撕邊、KIP 字標、紙質側欄與小對話線稿在 `screen-templates/chrome.svg`；聊天／知識中心內容的座標及圖內字級在 `search.svg`／`library.svg`。使用與動畫相同的四個核准素材，由生成器內嵌至圖片，不依賴圖片外的 CSS。這是固定比例的產品插圖，維持 1440×900；外層組圖仍由 `site.css`／`tokens.css` 控制。
+
+生成器輸出 `assets/kip-search-demo.svg`、`kip-search-demo-en.svg`、`kip-library-demo.svg`、`kip-library-demo-en.svg`；頁面透過 `locale-common.js` 的 `assets.searchScreen`／`libraryScreen` 選用語言版本。修改問答或共用紙質素材後，除了檢查動畫，也要執行上述生成指令並查看首頁組圖／KIP 頁首的中英文版本。
 
 不要直接改生成 SVG 作為長期來源，下次生成會被覆蓋；也不要以為修改 `tokens.css` 會改到 `<img>` 裡的 SVG 字級。照片中已印好的 Logo 不會跟著更新。公開發布要包含改過的原檔與重新生成的四圖，不能只上傳 `brand.js`。
 
