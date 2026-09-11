@@ -23,6 +23,8 @@ const runtimeFiles = [
   'assets/kip-connected-work-v1.webp',
   'assets/contact-cat-yarn-v1.webp',
   'assets/investing-cio-20240629.png', 'assets/news-sketch-frame-v2.webp',
+  'assets/kip-wordmark.png', 'assets/demo-paper-edge.webp',
+  'assets/demo-sidebar-dialogues.webp', 'assets/demo-send-pen.webp',
 ];
 const productFiles = ['synaiq-logo-light.svg', 'wally/wally-2.png', 'wally/wally-series.png', 'wally-2-plus.png', 'wally-mini.png'];
 

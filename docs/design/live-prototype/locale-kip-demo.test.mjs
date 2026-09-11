@@ -26,8 +26,8 @@ test('demo playback labels remain English after pause, replay and reduced-motion
   t.after(() => { for (const [key, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key]; } });
   const control = () => ({ textContent: '', disabled: false, handlers: {}, addEventListener(type, callback) { this.handlers[type] = callback; } });
   const pause = control(), replay = control();
-  const box = { getBoundingClientRect: () => ({ width: 800, height: 500, left: 0, top: 0 }) };
-  const root = { dataset: {}, style: { setProperty() {} }, classList: { toggle() {} }, querySelectorAll: () => [], querySelector(selector) { return selector === '[data-demo-pause]' ? pause : selector === '[data-demo-replay]' ? replay : selector.startsWith('[data-demo-') ? null : box; } };
+  const box = { toggleAttribute() {}, setAttribute() {}, getBoundingClientRect: () => ({ width: 800, height: 500, left: 0, top: 0 }) };
+  const root = { addEventListener() {}, removeEventListener() {}, dataset: {}, style: { setProperty() {} }, classList: { toggle() {} }, querySelectorAll: () => [], querySelector(selector) { return selector === '[data-demo-pause]' ? pause : selector === '[data-demo-replay]' ? replay : selector.startsWith('[data-demo-') ? null : box; } };
   const preference = { matches: false, addEventListener(type, callback) { this.change = callback; }, removeEventListener() {} };
   const document = { hidden: false, querySelector: () => root, addEventListener() {}, removeEventListener() {} };
   let observe;

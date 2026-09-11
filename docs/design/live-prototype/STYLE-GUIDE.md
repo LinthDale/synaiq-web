@@ -191,7 +191,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 | 設定 | 第一片：知識問答 | 第二／三片：圖片搜尋 |
 |---|---|---|
 | `--demo-question-hold` | 顯示提問、打字 | 輸入描述／選入參考圖 |
-| `--demo-click-hold` | 點擊送出、查找資料 | 點擊送出、比對圖片 |
+| `--demo-click-hold` | 點擊寄出、查找資料 | 點擊寄出、比對圖片 |
 | `--demo-answer-hold` | 顯示採購流程回答 | 顯示三張結果 |
 | `--demo-source-hold` | 打開引用原文 | 選中第一張結果 |
 | `--demo-library-hold` | 顯示知識中心文件列表 | 打開原始素材面板 |
@@ -214,7 +214,8 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 | 第一段提問、回答、底線重點、補充說明 | 最外層 `question`、`answer`、`answerHighlight`、`answerNote` |
 | 第一段側欄最近問題、上方路徑、搜尋中提示 | 最外層 `warrantyTopic`、`breadcrumb`、`thinking`；`warrantyTopic` 是保留的舊欄位名，目前內容是採購筆電申請，不是保固問題 |
 | 第一段引用檔名與「查看原文」 | 最外層 `citationFilename`、`citationPage`；`citationPage` 是保留的舊欄位名，目前顯示查看原文，不是頁碼 |
-| 展開的引用原文 | 最外層 `sourceLabel`、`sourceTitle`、`sourceHeading`、`sourceNote`；原文的標記段落共用 `answerHighlight`，改它也會同步改回答的底線重點 |
+| 展開的引用原文 | 最外層 `sourceLabel`、`sourceTitle`、`sourceHeading`、`sourceNote`、`sourceScribble`（手繪圈註）；原文的標記段落共用 `answerHighlight` |
+| 寄出／Send、右上智慧知識搜尋、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locale-demo.js`，不要把圖示字元加回 `send` |
 | 最後一幕知識中心的文件列表 | 最外層 `tableRows`；第一筆檔名需與 `citationFilename` 相同 |
 | 第一段下方 01／02／03 的步驟文字 | 最外層 `chapters`；不是 `booth` 裡的章節 |
 | 三段片名、說明 | `booth.titles`、`booth.descriptions`，依知識問答／自然語言找圖／以圖搜圖排序 |
@@ -233,16 +234,35 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 | 畫面上的字 | 在 `tokens.css` 搜尋 |
 |---|---|
-| 上排產品名稱／右側註記 | `.film-top`／`.film-top > small` |
-| 左側最近問題／知識中心 | `.film-sidebar` |
+| 上排右側智慧知識搜尋 | `.film-wordmark-label`；左側仍使用品牌原版 SynaiQ，KIP 為獨立字標 |
+| 左側最近問題／知識中心 | `.film-sidebar`／`.film-sidebar > button` |
+| 手機對話紀錄／收合 | `.film-mobilebar button`／`.film-sidebar-heading button` |
+| 寄出文字／手繪筆 | `.film-input`／`.film-send`；筆寬 `--demo-send-pen-width` |
 | 提問／回答／回答補充 | `.film-question`／`.film-answer p`／`.film-answer small` |
 | 引用檔名／查看原文 | `.film-citation > span`／`.film-citation b` |
-| 原文標題／小標／內文 | `.film-source h4`／`.film-source-label`／`.film-source p` |
+| 原文筆記標題／小標／內文／圈註 | `.film-note h4`／`.film-note-body .film-source-label`／`.film-note-body p`／`.film-note-scribble` |
 | 知識中心標題／文件清單 | `.film-library h4`／`.film-table > div` |
 | 圖片搜尋輸入文字／結果名稱／小標 | `--demo-image-query-size`／`--demo-image-result-size`／`--demo-image-label-size` |
 | 圖片原始素材面板標題 | `--demo-image-heading-size` |
 
-部分 CSS 註解仍沿用「第 12 頁／保固條款」作為舊標籤，不是實際顯示文案。定位以 selector 為準，內容以 `locale-demo.js` 為準；不要照註解把文案改回去。下半部亦有 639px 以下的 `.film-*` 覆寫，調整前先確認 DevTools 的生效規則。
+`tokens.css` 的 `BEGIN TEXT DEMO` 集中這組介面的文字與配色；下半部有 639px／359px 以下的文字覆寫。`site.css` 的 `BEGIN DEMO` 集中版型，未新增第三份 CSS。播放仍由同一 `demo-animation.js` 時鐘控制，秒數與次數不從樣稿複製另一份。
+
+### 紙質 Demo 的維護位置
+
+2026-09-11 核准樣稿：黑金外部框架不變；原版 SynaiQ 在左上，KIP 字標與智慧知識搜尋在右上。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
+
+| 調整項目 | 位置 |
+|---|---|
+| 紙面／文字／側欄／對話框／筆記紙顏色 | `tokens.css` 的 `.animated-product`：`--film-paper`／`--film-ink`／`--film-side`／`--film-question-paper`／`--film-note-paper` |
+| 撕痕深度／側欄纖維濃度 | 同段的 `--demo-tear-depth`／`--demo-sidebar-grain` |
+| 頂部與筆記紙的撕邊素材 | `assets/demo-paper-edge.webp`；以遮罩套用紙面顏色，不另疊米色圖片 |
+| KIP 字標／側欄線稿／寄出筆 | `assets/kip-wordmark.png`／`assets/demo-sidebar-dialogues.webp`／`assets/demo-send-pen.webp` |
+| 圖像顯示、裁切與排列 | `site.css` 的 `.film-kip`／`.film-sidebar-art`／`.film-send-pen`；改大小需一起核對完整圖案，不只改裁切框 |
+| 頂部分隔、側欄、原文面板結構 | `demo-animation.js` 的 `renderChatFilm`／`renderKnowledgeFilm` |
+
+桌機及平板 700px 以上顯示側欄；699px 以下使用「對話紀錄」抽屜，保留同一份內容。可用 Escape 關閉，鍵盤焦點回到入口。英文平板預留額外高度，避免原文註記超出紙面。手動查看原文／文件會暫停動畫，不會送出實際搜尋或寄送請求；按播放／重播可回到原本時鐘，系統減少動態時仍可手動開關筆記。
+
+素材只加入公開白名單中的四個核准檔案；樣稿 HTML、私人原始截圖、生成紀錄不隨網站發布。獨立 MP4 尚未因此重新錄製，不能把既有 MP4 當成本次紙質介面的影片。
 
 示例圖片清單在 `demo-animation.js` 的 `imageAssets`：`src` 是實際圖檔路徑，`name` 是產品名稱，`file` 是畫面顯示的示例檔名。三者不在 `locale-demo.js`。目前使用 `public/brand/wally-2-plus.png`、`public/brand/wally/wally-2.png`、`public/brand/wally-mini.png`；自然語言找圖先選 Wally 2 PLUS，以圖搜圖先選 Wally Mini。改清單順序也會改首張選取結果；改名或路徑時需核對輸入縮圖、三張結果、原始素材面板及公開白名單。
 
@@ -417,7 +437,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 ### 先確認主機正在使用哪一版
 
-在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260910-kip-cleanup/`；`synaiq-release-20260909-purchasing/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
+在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260910-a4c0924/`；`synaiq-release-20260910-kip-cleanup/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
 
 | 本機來源 | 正式包對應位置／限制 |
 |---|---|

@@ -40,7 +40,7 @@ function fetchRaw(port, path, method = 'GET') {
 
 test('serves the review shell at both public entry points and resolves its relative dependencies', async t => {
   const { port } = await fixture(t);
-  assert.equal(PUBLIC_FILES.length, 35);
+  assert.equal(PUBLIC_FILES.length, 39);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
   for (const path of ['/', '/live-prototype/', '/live-prototype/index.html', '/page.html?page=kip', '/live-prototype/page.html?page=kip']) {

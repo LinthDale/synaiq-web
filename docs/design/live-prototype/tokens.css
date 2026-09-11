@@ -1157,9 +1157,18 @@ body[data-page="home"] .ceo-attribution .ceo-role {
 .animated-product {
   --film-paper: #f8f8f7;
   --film-ink: #282825;
-  --film-side: #ecece8;
+  --film-side: #e9e6dc;             /* 紙質側欄 */
   --film-muted: #64645e;
   --film-line: #d5d5ce;
+  --film-question-paper: #dfe5d9;  /* 對話框的淡綠提示 */
+  --film-note-paper: #f5f4ef;      /* 查看原文：筆記紙與撕邊共用 */
+  --film-note-pen: #637859;
+  --demo-paper-edge: url("assets/demo-paper-edge.webp");
+  --demo-tear-depth: 20px;         /* 標題下方撕痕深度 */
+  --demo-sidebar-grain: .22;       /* 紙張纖維濃度 */
+  --demo-sidebar-art-width: 104px; /* 左下手繪對話框的外框寬度 */
+  --demo-sidebar-art-height: 82px;
+  --demo-send-pen-width: 18px;     /* 寄出旁的小手繪筆 */
 }
 /* 自動播放的操作情境動畫／暫停、繼續、重播按鈕 */
 .demo-playback {
@@ -1179,10 +1188,12 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   color: var(--film-ink);
   font-size: clamp(11px, 1.15vw, 16px);
 }
-/* Demo 上排：SynaiQ／KIP 智慧知識搜尋／概念示意・虛構資料 */
+/* Demo 上排：SynaiQ／右上 KIP 字標、智慧知識搜尋 */
 .film-top {
   font-size: 13px;
 }
+.film-wordmark { color: var(--film-ink); }
+.film-wordmark-label { font: 400 12px var(--body); letter-spacing: .04em; }
 .film-top > small {
   color: var(--film-muted);
   font-size: 10px;
@@ -1191,6 +1202,10 @@ body[data-page="home"] .ceo-attribution .ceo-role {
 .film-sidebar {
   font-size: 12px;
 }
+.film-sidebar > button { font: 400 12px/1.7 var(--body); color: var(--film-ink); }
+.film-sidebar > .film-new { color: var(--film-paper); }
+.film-mobilebar button, .film-sidebar-heading button { font: 400 12px var(--body); color: var(--film-ink); }
+.film-sidebar-heading { font: 400 13px var(--body); color: var(--film-ink); }
 .film-sidebar > small {
   color: var(--film-muted);
 }
@@ -1202,11 +1217,11 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   font-size: 11px;
   color: var(--film-muted);
 }
-/* Demo 問題：這份採購契約，第 12 頁寫了什麼？ */
+/* Demo 問題：我想為新進同仁採購一台筆電，該如何申請？ */
 .film-question {
   font-size: clamp(13px, 1.5vw, 20px);
 }
-/* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+/* Demo 回答：用途、規格與預算／主管核准後詢價下單、到貨驗收 */
 .film-avatar {
   color: var(--film-paper);
 }
@@ -1219,7 +1234,8 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   color: var(--film-muted);
   line-height: 1.8;
 }
-/* Demo 引用來源：採購契約範例_2023.pdf／第 12 頁／開啟原文 */
+/* Demo 引用來源：設備採購流程_範例.pdf／查看原文 */
+.film-citation { font-family: var(--body); color: var(--film-ink); }
 .film-citation small {
   font-size: 10px;
 }
@@ -1231,7 +1247,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   font-weight: 400;
   color: #3b6746;
 }
-/* Demo 輸入框：問一個問題……／送出 */
+/* Demo 輸入框：接著問一個問題……／寄出（英文 Send） */
 .film-input {
   color: var(--film-muted);
   font-size: 13px;
@@ -1244,7 +1260,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   font-size: 11px;
   color: var(--film-muted);
 }
-/* Demo 原文：採購契約、保固條款、原文標記與資料註記 */
+/* Demo 原文：設備採購流程／筆記紙、手繪註記 */
 .film-source {
   font-size: 14px;
 }
@@ -1269,6 +1285,15 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   font-size: 10px;
   color: var(--film-muted);
 }
+.film-note { color: var(--film-ink); }
+.film-note-top { font-family: var(--body); }
+.film-note-top small { font-size: 11px; letter-spacing: .07em; }
+.film-note-top button { color: var(--film-ink); font: 400 12px var(--body); }
+.film-note h4 { font: 400 27px/1.5 var(--display); }
+.film-note-body p { font: 400 17px/32px var(--display); }
+.film-note-body .film-source-label { font: 400 13px/32px var(--body); }
+.film-note-scribble { color: var(--film-note-pen); font: 400 14px/1.7 var(--display); }
+.film-note > .film-note-disclaimer { font: 400 11px/1.8 var(--body); color: var(--film-muted); }
 /* Demo 知識中心：文件管理、解析狀態、分庫權限及文件清單 */
 .film-library {
   font-size: 14px;
@@ -1316,38 +1341,39 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   .demo-playback button {
     font-size: 11px;
   }
-  /* Demo 上排：SynaiQ／KIP 智慧知識搜尋／概念示意・虛構資料 */
+  /* Demo 上排：SynaiQ／右上 KIP 字標、智慧知識搜尋 */
   .film-top {
     font-size: 10px;
   }
+  .film-wordmark-label { font-size: 11px; letter-spacing: 0; }
   .film-logo {
     font-size: 24px;
   }
-  /* Demo 問題：這份採購契約，第 12 頁寫了什麼？ */
+  /* Demo 問題：我想為新進同仁採購一台筆電，該如何申請？ */
   .film-question {
     font-size: 14px;
   }
-  /* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+  /* Demo 回答：用途、規格與預算／主管核准後詢價下單、到貨驗收 */
   .film-avatar {
     font-size: 13px;
   }
   .film-answer p {
     font-size: 16px;
   }
-  /* Demo 引用來源：採購契約範例_2023.pdf／第 12 頁／開啟原文 */
+  /* Demo 引用來源：設備採購流程_範例.pdf／查看原文 */
   .film-citation > span {
     font-size: 12px;
     line-height: 1.8;
   }
-  /* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+  /* Demo 回答：用途、規格與預算／主管核准後詢價下單、到貨驗收 */
   .film-answer small {
     font-size: 11px;
   }
-  /* Demo 輸入框：問一個問題……／送出 */
+  /* Demo 輸入框：接著問一個問題……／寄出（英文 Send） */
   .film-input {
     font-size: 11px;
   }
-  /* Demo 原文：採購契約、保固條款、原文標記與資料註記 */
+  /* Demo 原文：設備採購流程／筆記紙、手繪註記 */
   .film-source h4 {
     font-size: 25px;
   }
@@ -1355,10 +1381,14 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   .film-table > div {
     font-size: 12px;
   }
-  /* Demo 問題：這份採購契約，第 12 頁寫了什麼？ */
+  /* Demo 問題：我想為新進同仁採購一台筆電，該如何申請？ */
   .film-question > span {
     line-height: 1.7;
   }
+}
+@media (max-width: 359px) {
+  .film-wordmark-label { font-size: 10px; }
+  .film-note h4 { font-size: 23px; }
 }
 /* 影院框及圖片搜尋：所有文字設定在 06 Demo，不在 site.css 寫字型。 */
 .demo-booth-heading h3 {
@@ -1544,7 +1574,7 @@ body[data-page="kip"] .kip-proof-heading p {
 body[data-page="kip"] .kip-proof .marked {
   text-decoration-color: #a9bc99;
 }
-/* Demo 回答：第 12 頁是保固條款。驗收後兩年內，提供免費更換。 */
+/* Demo 回答：用途、規格與預算／主管核准後詢價下單、到貨驗收 */
 body[data-page="kip"] .kip-proof .film-answer .marked {
   text-decoration-color: var(--kip-olive);
 }

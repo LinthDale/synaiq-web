@@ -78,13 +78,15 @@ export function initProductReveal() {
 function renderChatFilm(messages, { question, answer, panels, draft = '', thinking = messages.demo.thinking, image = false }) {
   const m = messages.demo;
   const e = escapeHtml;
-  return `<div class="demo-film${image ? ' image-search-film' : ''}" aria-hidden="true">
-      <div class="film-top"><span class="film-logo"><img src="${e(messages.common.brand.ink)}" width="844" height="143" alt="SynaiQ"></span><span>${e(m.productTitle)}</span><small>${e(m.productNote)}</small></div>
+  return `<div class="demo-film${image ? ' image-search-film' : ''}">
+      <div class="film-top"><span class="film-logo"><img src="${e(messages.common.brand.ink)}" width="844" height="143" alt="SynaiQ"></span><span class="film-wordmark"><span class="film-kip"><img src="assets/kip-wordmark.png" width="275" height="96" alt="KIP"></span><span class="film-wordmark-label">${e(m.productLabel)}</span></span></div>
+      <div class="film-mobilebar"><button type="button" data-demo-sidebar-toggle aria-controls="demo-history" aria-expanded="false">${e(m.history)} ▾</button></div>
       <div class="film-body">
-        <div class="film-sidebar"><span class="film-new">${e(m.newChat)}</span><small>${e(m.recentQuestions)}</small><span class="film-nav-question">${e(m.warrantyTopic)}</span><span class="film-nav-library">${e(m.knowledgeCenter)}</span><span>${e(m.sourceTopic)}</span><small class="film-workspace">${e(m.workspace)}</small></div>
-        <div class="film-chat"><small class="film-breadcrumb">${e(image ? m.booth.collection : m.breadcrumb)}</small><div class="film-question">${question}</div><div class="film-thinking"><i></i><i></i><i></i><span>${e(thinking)}</span></div><div class="film-answer"><span class="film-avatar">${e(m.avatar)}</span><div>${answer}</div></div><div class="film-input">${draft ? `<span class="film-input-draft">${draft}</span>` : ''}<span class="film-input-placeholder">${e(m.followUp)}</span><span class="film-send">${e(m.send)}</span></div></div>
+        <nav class="film-sidebar" id="demo-history" aria-label="${e(m.history)}"><div class="film-sidebar-heading"><span>${e(m.history)}</span><button type="button" data-demo-sidebar-close>${e(m.collapse)} ×</button></div><button type="button" class="film-new">${e(m.newChat)}</button><small>${e(m.recentQuestions)}</small><button type="button" class="film-nav-question" aria-current="page">${e(m.warrantyTopic)}</button><button type="button" class="film-nav-library">${e(m.knowledgeCenter)}</button><button type="button" class="film-nav-source">${e(m.sourceTopic)}</button><div class="film-sidebar-art" aria-hidden="true"><img src="assets/demo-sidebar-dialogues.webp" width="512" height="512" alt="" draggable="false"></div><small class="film-workspace">${e(m.workspace)}</small></nav>
+        <button type="button" class="film-sidebar-scrim" data-demo-sidebar-close aria-label="${e(m.collapse)} ${e(m.history)}"></button>
+        <div class="film-chat"><small class="film-breadcrumb">${e(image ? m.booth.collection : m.breadcrumb)}</small><div class="film-question">${question}</div><div class="film-thinking"><i></i><i></i><i></i><span>${e(thinking)}</span></div><div class="film-answer"><span class="film-avatar">${e(m.avatar)}</span><div>${answer}</div></div><div class="film-input">${draft ? `<span class="film-input-draft">${draft}</span>` : ''}<span class="film-input-placeholder">${e(m.followUp)}</span><span class="film-send"><span>${e(m.send)}</span><span class="film-send-pen" aria-hidden="true"><img src="assets/demo-send-pen.webp" width="256" height="256" alt="" draggable="false"></span></span></div></div>
         ${panels}
-      </div><span class="film-cursor"><i></i></span>
+      </div><span class="film-cursor" aria-hidden="true"><i></i></span>
     </div>`;
 }
 
@@ -92,8 +94,8 @@ function renderKnowledgeFilm(messages) {
   const m = messages.demo, e = escapeHtml;
   return renderChatFilm(messages, {
     question: `<span>${e(m.question)}</span>`,
-    answer: `<p>${e(m.answer)}<br><span class="marked">${e(m.answerHighlight)}</span></p><small>${e(m.answerNote)}</small><div class="film-citation"><small>${e(m.citationLabel)}</small><span>${e(m.citationFilename)} <b>${e(m.citationPage)}</b></span></div>`,
-    panels: `<div class="film-source"><div><small>${e(m.sourceLabel)}</small><span>×</span></div><h4>${e(m.sourceTitle)}</h4><p class="film-source-label">${e(m.sourceHeading)}</p><p><mark>${e(m.answerHighlight)}</mark></p><div class="film-faux-lines"></div><small>${e(m.sourceNote)}</small></div>
+    answer: `<p>${e(m.answer)}<br><span class="marked">${e(m.answerHighlight)}</span></p><small>${e(m.answerNote)}</small><button type="button" class="film-citation" aria-expanded="false" aria-controls="demo-source-note"><small>${e(m.citationLabel)}</small><span>${e(m.citationFilename)} <b>${e(m.citationPage)}</b></span></button>`,
+    panels: `<section class="film-source film-note" id="demo-source-note" aria-label="${e(m.sourceRegion)}" inert><div class="film-note-top"><small>${e(m.sourceLabel)}</small><button type="button" data-demo-source-close>${e(m.close)} ×</button></div><h4>${e(m.sourceTitle)}</h4><div class="film-note-body"><p class="film-source-label">${e(m.sourceHeading)}</p><p><mark>${e(m.answerHighlight)}</mark></p><span class="film-note-scribble">${e(m.sourceScribble)}</span></div><small class="film-note-disclaimer">${e(m.sourceNote)}</small></section>
       <div class="film-library"><small>${e(m.libraryLabel)}</small><h4>${e(m.libraryTitle)}</h4><p>${e(m.libraryIntro)}</p><div class="film-table"><div>${m.tableHeaders.map(copy => `<span>${e(copy)}</span>`).join('')}</div>${m.tableRows.map(row => `<div>${row.map(copy => `<span>${e(copy)}</span>`).join('')}</div>`).join('')}</div><small>${e(m.libraryNote)}</small></div>`,
   });
 }
@@ -156,6 +158,29 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
   const pause = root.querySelector('[data-demo-pause]');
   const replay = root.querySelector('[data-demo-replay]');
   let elapsed = 0, lastTime = null, frame = null, inView = false, paused = false, currentState = '';
+  const narrowSidebar = matchMedia('(max-width:699px)');
+  let sidebarOpen = false, inspecting = false;
+  function syncPanels() {
+    const noteOpen = scene === 'knowledge' && currentState === 'source';
+    root.querySelector('.film-note')?.toggleAttribute('inert', !noteOpen || sidebarOpen);
+    root.querySelector('.film-citation')?.setAttribute('aria-expanded', String(noteOpen));
+    root.querySelector('.film-chat')?.toggleAttribute('inert', sidebarOpen || noteOpen || (scene === 'knowledge' && currentState === 'library'));
+    root.querySelector('.film-answer')?.toggleAttribute('inert', currentState === 'question' || currentState === 'click');
+    root.querySelector('.film-library')?.toggleAttribute('inert', sidebarOpen || currentState !== 'library');
+    root.querySelectorAll('.film-nav-question,.film-nav-library').forEach(button => {
+      const library = scene === 'knowledge' && currentState === 'library';
+      if (library === button.classList.contains('film-nav-library')) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
+  }
+  function setSidebar(open, restore = false) {
+    sidebarOpen = Boolean(open && narrowSidebar.matches);
+    root.classList.toggle('is-sidebar-open', sidebarOpen);
+    root.querySelector('[data-demo-sidebar-toggle]')?.setAttribute('aria-expanded', String(sidebarOpen));
+    syncPanels();
+    if (sidebarOpen) root.querySelector('[data-demo-sidebar-close]')?.focus();
+    else if (restore) root.querySelector('[data-demo-sidebar-toggle]')?.focus();
+  }
   function positionPointer() {
     const film = root.querySelector('.demo-film');
     const selector = scene === 'knowledge'
@@ -175,6 +200,7 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     if (state === currentState) return;
     currentState = state;
     root.dataset.state = state;
+    syncPanels();
     const chapter = state === 'library' ? 'library' : state === 'source' || (scene !== 'knowledge' && state === 'answer') ? 'source' : 'question';
     root.querySelectorAll('[data-chapter]').forEach(item => item.classList.toggle('is-active', item.dataset.chapter === chapter));
     positionPointer();
@@ -198,17 +224,19 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
   function sync() {
     if (frame !== null) cancelAnimationFrame(frame);
     frame = null; lastTime = null;
-    if (preference.matches || !timing) show('source');
-    else if (finished()) show('library');
+    if (!inspecting && (preference.matches || !timing)) show('source');
+    else if (!inspecting && finished()) show('library');
     if (running()) frame = requestAnimationFrame(tick);
     paintControls();
   }
   pause.addEventListener('click', () => {
+    inspecting = false;
+    setSidebar(false);
     if (finished()) { elapsed = 0; paused = false; show('question'); }
     else paused = !paused;
     sync();
   });
-  replay.addEventListener('click', () => { elapsed = 0; paused = false; show('question'); sync(); });
+  replay.addEventListener('click', () => { inspecting = false; setSidebar(false); elapsed = 0; paused = false; show('question'); sync(); });
   const observer = new IntersectionObserver(entries => {
     inView = entries[0].isIntersecting && entries[0].intersectionRatio >= (timing?.threshold ?? 0);
     sync();
@@ -225,8 +253,10 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     if (!host || !demoScenes.includes(value) || value === scene) return;
     resizeObserver.unobserve(root.querySelector('.demo-film'));
     scene = value;
+    inspecting = false;
     root.dataset.demoScene = scene;
     host.innerHTML = renderDemoFilm(scene, messages);
+    setSidebar(false);
     root.querySelector('.demo-chapters').innerHTML = renderDemoChapters(scene, m);
     const index = demoScenes.indexOf(scene);
     root.querySelector('[data-demo-title]').textContent = m.booth.titles[index];
@@ -249,6 +279,43 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     if (event.key === 'ArrowLeft') goPrevious(); else goNext();
     choices.find(button => button.dataset.demoSelect === scene)?.focus();
   };
+  // 手動查看只切換本機展示狀態；沿用單一動畫時鐘，不送出網路請求。
+  function inspectState(state) {
+    inspecting = true;
+    paused = true;
+    if (timing) elapsed = timing.durations.slice(0, demoStates.indexOf(state)).reduce((sum, value) => sum + value, 0);
+    setSidebar(false);
+    show(state);
+    sync();
+  }
+  const inspect = event => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    if (button.hasAttribute('data-demo-sidebar-toggle')) { paused = true; sync(); setSidebar(!sidebarOpen); }
+    else if (button.hasAttribute('data-demo-sidebar-close')) setSidebar(false, true);
+    else if (button.classList.contains('film-citation')) { inspectState('source'); root.querySelector('[data-demo-source-close]')?.focus(); }
+    else if (button.hasAttribute('data-demo-source-close')) { inspectState('answer'); root.querySelector('.film-citation')?.focus(); }
+    else if (button.classList.contains('film-nav-question')) { inspectState('answer'); if (narrowSidebar.matches) setSidebar(false, true); }
+    else if (button.classList.contains('film-nav-library')) { inspectState(scene === 'knowledge' ? 'library' : 'answer'); if (narrowSidebar.matches) setSidebar(false, true); }
+    else if (button.classList.contains('film-nav-source')) { inspectState(scene === 'knowledge' ? 'source' : 'library'); root.querySelector('[data-demo-source-close]')?.focus(); }
+    else if (button.classList.contains('film-new')) replay.click();
+  };
+  const dismiss = event => {
+    if (event.key === 'Escape') {
+      if (sidebarOpen) setSidebar(false, true);
+      else if (scene === 'knowledge' && currentState === 'source') { inspectState('answer'); root.querySelector('.film-citation')?.focus(); }
+    }
+    if (event.key === 'Tab' && sidebarOpen) {
+      const buttons = [...root.querySelectorAll('.film-sidebar button')];
+      const first = buttons[0], last = buttons.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  };
+  const resizeSidebar = () => setSidebar(false);
+  root.addEventListener('click', inspect);
+  root.addEventListener('keydown', dismiss);
+  narrowSidebar.addEventListener('change', resizeSidebar);
   previous?.addEventListener('click', goPrevious);
   next?.addEventListener('click', goNext);
   choices.forEach(button => { button.addEventListener('click', choose); button.addEventListener('keydown', navigate); });
@@ -262,5 +329,7 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     preference.removeEventListener('change', sync); document.removeEventListener('visibilitychange', sync);
     previous?.removeEventListener('click', goPrevious); next?.removeEventListener('click', goNext);
     choices.forEach(button => { button.removeEventListener('click', choose); button.removeEventListener('keydown', navigate); });
+    root.removeEventListener('click', inspect); root.removeEventListener('keydown', dismiss);
+    narrowSidebar.removeEventListener('change', resizeSidebar);
   };
 }

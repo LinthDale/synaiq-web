@@ -42,7 +42,7 @@ test('CEO section preserves the supplied quote and uses the requested speaking s
 test('homepage preserves the selected brand-matched interface studies', () => {
   assert.equal((html.match(/src="assets\/kip-search-demo\.svg"/g) || []).length, 1);
   assert.match(html, /data-demo-animation/);
-  assert.match(html, /品牌化介面 · 示例資料/);
+  assert.match(html, /示例資料 · 非實際連線操作/);
   assert.doesNotMatch(html, /kb-entry-redacted\.png/);
 });
 

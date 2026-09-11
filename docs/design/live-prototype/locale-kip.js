@@ -22,7 +22,7 @@ export const zhHant = {
   architectureTitle: ['四個層級，', '一套知識中樞。'],
   architectureNote: 'Connected from source to answer.',
   layers: [
-    ['使用者接入', 'Web、API 與行動裝置，接進既有工作流程。'],
+    ['使用者接入', 'Web、API 與行動裝置，接入既有工作流程。'],
     ['大模型層', '依需求選擇模型，讓提問連回組織的知識。'],
     ['知識中心', '文件接入、解析與分庫，集中管理資料來源。'],
     ['平台功能', '權限、紀錄、影像檢索與報表，支援日常使用。'],

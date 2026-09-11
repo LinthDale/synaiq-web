@@ -42,7 +42,7 @@ test('demo is a labeled animation, not a functioning product form', () => {
 
 test('narrow demo removes the hidden sidebar track and preserves a full-width chat', () => {
   const css = readFileSync(new URL('./site.css', import.meta.url), 'utf8');
-  assert.ok(hasDeclaration('site.css', '.film-body', 'grid-template-columns', 'minmax(0,1fr)', '(max-width:899px)'));
+  assert.ok(hasDeclaration('site.css', '.film-body', 'grid-template-columns', 'minmax(0,1fr)', '(max-width:699px)'));
   assert.doesNotMatch(css, /grid-template-columns:0 100%/);
 });
 
