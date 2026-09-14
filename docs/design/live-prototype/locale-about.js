@@ -70,7 +70,7 @@ export const en = {
     title: 'The people who turn ideas into practice.',
     intro: 'Across operations, finance and business development, we keep technical decisions connected to real needs.',
     members: [
-      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: 'General Manager, GHAN Green Energy', credentials: ['Institute of Industrial Engineering and Management, National Chiao Tung University'] },
+      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: 'Chief Executive Officer, SynaiQ', credentials: ['Institute of Industrial Engineering and Management, National Chiao Tung University'] },
       { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: 'Chief Executive Officer, SynaiQ', credentials: ['General Manager, Ju-Xun Sustainability Strategy', 'Chief Operating Officer, SynaiQ'] },
       { id: 'leef', name: 'Leef Lee', nativeName: '', role: 'Chief Financial Officer', credentials: ['Department of Accountancy, National Cheng Kung University', 'Associate Director, Finance and Accounting'] },
       { id: 'celestine', name: 'Celestine', nativeName: '李昱儒', role: 'Sales Director', credentials: ['National Chiayi University', 'Taiwan Class B Solar Photovoltaic Technician', 'ITRI Solar Energy and Energy-Efficient Building Engineer', 'ISO 9001:2015 Quality Management System Lead Auditor'] },
@@ -81,7 +81,7 @@ export const en = {
     title: 'Making complex things work simply.',
     intro: 'Across information management, software and firmware, we connect knowledge, systems and the places they serve.',
     members: [
-      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: 'Executive Assistant to the General Manager', credentials: ['Ph.D., Institute of Information Management, National Central University'] },
+      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: 'Associate Director, SynaiQ', credentials: ['Ph.D., Institute of Information Management, National Central University', 'ISO 27001:2022 Information Security Management System Lead Auditor'] },
       { id: 'steve', name: 'Steve Chiang', nativeName: '', role: 'Full-Stack Systems Architect', credentials: ['Doctoral Program in Information Engineering, Feng Chia University'] },
       { id: 'dale', name: 'Dale Lin', nativeName: '', role: 'Chief Full-Stack and Firmware Engineer', credentials: ['Graduate Institute of Sustainability and Green Energy Technology, National Central University'] },
     ],

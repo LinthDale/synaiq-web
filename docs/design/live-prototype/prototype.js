@@ -3,7 +3,7 @@ import { renderKip, initKip } from './kip-design.js';
 import { renderCases, initCases } from './cases-design.js';
 import { renderAbout, initAbout } from './about-design.js';
 import { renderAdvantageSection, renderContact } from './shared-design.js';
-import { SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260909-address';
+import { SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260911-team-content';
 const query = new URLSearchParams(location.search);
 const page = resolvePage(query.get('page'));
 const pages = {
