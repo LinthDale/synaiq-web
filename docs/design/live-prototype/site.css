@@ -3360,9 +3360,8 @@ body[data-page="kip"] .kip-capability-list dd {
   .cases-hero-art figcaption, .case-field-art figcaption { margin-top: 10px; }
   .case-identifier { margin-top: 32px; }
   .case-facts { grid-template-columns: 1fr; gap: 24px; padding-block: 28px; }
-  .case-facts > div { display: grid; grid-template-columns: 60px 1fr; column-gap: 12px; align-items: baseline; }
-  .case-facts h3 { margin: 0 0 8px; }
-  .case-facts p { grid-column: 2; }
+  .case-facts > div { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .case-facts h3 { margin: 8px 0; }
   .case-story-layout { gap: 30px; }
   .case-field-copy { grid-row: 1; }
   .case-field-art { margin-top: 32px; }
