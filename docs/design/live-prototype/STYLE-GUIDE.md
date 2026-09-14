@@ -490,9 +490,9 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 ### 先確認主機正在使用哪一版
 
-在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260911-team-pages/`；`synaiq-release-20260911-paper-products/` 已是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
+在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260914-cases-mobile/`；`synaiq-release-20260911-team-pages/` 是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
 
-檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 是目前維護入口。這份說明不經官網公開；歷史版本資料夾保留，不必逐個尋找同名檔。
+檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 是管理員維護入口；本次更新待另行授權，內容仍列舊目錄，請以操作索引為準。這份說明不經官網公開；歷史版本資料夾保留，不必逐個尋找同名檔。
 
 | 本機來源 | 正式包對應位置／限制 |
 |---|---|
@@ -510,7 +510,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 1. 編輯本機 `locale-about.js` 的姓名、職稱與學經歷，同步中英文。
 2. 在檔案管理員先下載**目前正式目錄中的同名檔案**作備份，不覆蓋正在編輯的本機來源。
-3. 將修改後的 `locale-about.js` 上傳到 `public_html/synaiq-release-20260911-team-pages/` 並確認覆蓋；檔名是 `locale-about.js`，不是 `local-about.js`。
+3. 將修改後的 `locale-about.js` 上傳到 `public_html/synaiq-release-20260914-cases-mobile/` 並確認覆蓋；檔名是 `locale-about.js`，不是 `local-about.js`。
 4. 一般重新整理官網，檢查中英內容。若仍異常，先比對實際載入網址、主機內容與回應標頭，不要再到其他歷史資料夾嘗試覆蓋。
 
 六份文案目前回傳 `Cache-Control: no-cache, must-revalidate`；已開著的頁面不會自動換字。關於我們的既存快取已透過 `20260911-team-content` 載入鏈切換；日後只改這份團隊文案，不必再改版本參數，一般重新整理即可。上架時保留這項主機快取政策。

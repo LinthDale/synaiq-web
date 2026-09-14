@@ -1,27 +1,48 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-09-11 17:35（Asia/Taipei）。
+最後更新：2026-09-14（Asia/Taipei）。
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260911-team-pages/`。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260914-cases-mobile/`。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
-| 本機修改「關於我們」中英文內容 | `C:\Users\User\synaiq\synaiq-web\docs\design\live-prototype\locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260911-team-pages/locale-about.js` |
-| 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，不對官網公開 |
+| 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260914-cases-mobile/locale-about.js` |
+| 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀；本次更新遭自動審核拒絕、待另行授權，內容仍指舊目錄，請以本文件為準 |
 | 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
 
-1. 修改本機 `locale-about.js` 的 `zhHant`、`en` 兩區，並 commit／push 保留版本紀錄。
-2. 在上述 Hostinger 目錄保留被替換檔案的下載副本，再覆蓋同名檔案。檔名是 **`locale-about.js`（locale 有 e）**。
-3. 一般重新整理官網，再檢查中英文內容。文案檔現在會重新向主機確認更新，不需要每次更名或手動改版本參數。
+修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
-**Git push 不會自動部署 Hostinger。** 本次檢查確認使用者已換對檔案：主機的 `locale-about.js` 與 commit `95bcbf8` 的本機內容相同；畫面仍舊是因為瀏覽器沿用七天的 JavaScript 快取。2026-09-11 17:26 已完成快取修補，17:28 通過正式站檢查。
+以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
-以上單檔覆蓋流程限於目前的 `locale-about.js` 純文字更新。其他 locale、HTML、JS、CSS、圖片或新增頁面須先檢查資源路徑與相依，再依完整發布流程封裝；例如 `locale-common.js` 含圖片路徑，`locale-demo.js` 的內容另供 KIP 靜態產品圖使用。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
+## 2026-09-14 手機版排版修正
 
-其他 `synaiq-release-*` 是歷史版本，不是日常編輯位置；`wp-*` 是保留的舊站資料。本次沒有新增 release 目錄，也沒有搬移或刪除歷史版本。以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄，不靠日期猜測。
+英文 Our Work 的 SETTING／INTERACTION／INTEGRATION 原本共用 60px 標籤欄，長標籤壓到標題。`33f01f3` 將 639px 以下改為標籤、標題、說明依序分行；桌面三欄維持。`3ad2d55` 同步前次已部署、但尚未提交的文案與快取修補。
+
+本次發布前逐一核對官網 64 檔與本機來源一致（CSS 以修正前版本核對），封裝 64 個核准公開檔案到全新目錄。完整保留主機後來新增的 LiteSpeed 區塊、locale 重新驗證規則、舊站 410、Wally 原圖及歷史 release。獨立資源網址使瀏覽器載入新 CSS。
+
+證據與回退資料：`out/synaiq-release-20260914-cases-mobile/`。包含 `baseline-verified.json`、`manifest.json`、`artifact/`、`preflight.json`、`routing-before.htaccess`、`routing-preview.htaccess`、`routing-live.htaccess`、`browser-local.json`、`browser-staged.json`、`browser-live.json`、`staged.json`、`activated.json` 及維護入口原文／候選副本（尚未寫入主機）。
+
+本機中英文 320／390／588／639／640／899／1440px 共 14 組排版檢查，以及 17 個 CSS／快取測試通過。發布包、主機直接網址及正式站另驗證四頁中英文與手機／桌面資源、導覽、無水平溢出；主機與正式站加入三列標籤不重疊檢查。
+
+### 本次回退
+
+1. 先核對主機路由仍符合本次 manifest；若已有後續修改，停止並重新備份比對。
+2. 在還原授權範圍內執行 `node out/synaiq-release-20260914-cases-mobile/release.mjs rollback`，將入口恢復為 `synaiq-release-20260911-team-pages`。腳本只接受已知路由 hash，保留舊站與 LiteSpeed 現況；本次未人工演練正式回退。
+3. 若日後已另行授權更新管理員維護入口，才依 `guide-before.txt` 恢復，先核對其現值仍符合 `guide-clarified.json`，避免覆蓋後續維護。
+4. 重新確認 root、中英文及快取。不刪除新舊 release，也不重跑 9/11 的舊部署或 patch 腳本。
+
+| 路由 | SHA-256 |
+|---|---|
+| 發布前 | `0241b3feb5e0825c7f418f19af4ab6e150237ef4c03b4ab95328e8ff28e5d6c2` |
+| 直接網址開放 | `2e924800fc80f340433e95c231b3fed864b3d9fb982599e93d6b550ee54d66de` |
+| 正式入口 | `2f41fc04fd3127427876c60a4a45c23045aa9574710bf6109b2d912741fcfade` |
+
+## 9 月 11 日維護紀錄（以下目錄與 hash 均為歷史資料）
+
+下列「目前」等措辭描述當時狀態；日常更新以本文最上方的 9/14 唯一位置為準。舊腳本僅供追溯，不可直接對新版執行。
 
 ## 目前線上狀態與這次修補
 

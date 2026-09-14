@@ -10,11 +10,11 @@
 |---|---|---|
 | 已核准、已上線的 Home／KIP／實績展示／關於我們中英雙語設計 | `docs/design/live-prototype/`；發布基底 `5aba844`，後續文案與快取修補見操作索引 | 客戶端渲染的靜態 HTML／CSS／JavaScript，含兩份 CSS、集中設定、三段共用 KIP 介面動畫及手繪顯影互動 |
 | Astro Phase A | `src/`、`astro.config.mjs` | Content Collections、schema、18 個語系內容頁及語意 HTML 基礎；尚未套入核准設計 |
-| 發布與修補資料 | `out/synaiq-release-20260911-team-pages/`、`out/hostinger-about-maintenance-20260911/`（本機保留、不進 Git） | 原始發布包與後續修補的精確備份／驗證；目前文案更新位置與還原順序以操作索引為準 |
+| 發布與修補資料 | `out/synaiq-release-20260914-cases-mobile/`（本次）、`out/hostinger-about-maintenance-20260911/`（歷史）（本機保留、不進 Git） | 原始發布包與後續修補的精確備份／驗證；目前文案更新位置與還原順序以操作索引為準 |
 
 現行版本與還原步驟見 [Hostinger 操作索引](docs/operations/deploy-hostinger.md)。初次上架事實見 [2026-09-08 部署紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md)，地址與快取修補見 [地址更新紀錄](docs/operations/address-update-2026-09-08.md)。正式站是 `synaiq.com`，不是 `synaiq-ai.com`；歷史文件中的 `synaiq-web-astro` 是當時的本機資料夾名稱，不代表其上架產物是 Astro build。
 
-更新團隊文字時，改 `docs/design/live-prototype/locale-about.js` 的中英文，備份主機同名檔後覆蓋 `public_html/synaiq-release-20260911-team-pages/locale-about.js`，再重新整理官網。文案檔會重新驗證快取；Git push 本身不會上傳 Hostinger。檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 也列出目前編輯位置。
+更新團隊文字時，改 `docs/design/live-prototype/locale-about.js` 的中英文，備份主機同名檔後覆蓋 `public_html/synaiq-release-20260914-cases-mobile/locale-about.js`，再重新整理官網。文案檔會重新驗證快取；Git push 本身不會上傳 Hostinger。檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 尚待另行授權更新，目前仍列舊目錄，請以上述路徑為準。
 
 舊三案風格、首頁 A／B、wireframe、字型比較及候選稿已清理。目前唯一採用的設計為 `docs/design/live-prototype/`；保留範圍與復原方式見 [設計維護入口](docs/design/README.md)。
 
