@@ -14,7 +14,7 @@
 
 現行版本與還原步驟見 [Hostinger 操作索引](docs/operations/deploy-hostinger.md)。初次上架事實見 [2026-09-08 部署紀錄](docs/operations/deployment-synaiq-com-2026-09-08.md)，地址與快取修補見 [地址更新紀錄](docs/operations/address-update-2026-09-08.md)。正式站是 `synaiq.com`，不是 `synaiq-ai.com`；歷史文件中的 `synaiq-web-astro` 是當時的本機資料夾名稱，不代表其上架產物是 Astro build。
 
-更新團隊文字時，改 `docs/design/live-prototype/locale-about.js` 的中英文，備份主機同名檔後覆蓋 `public_html/synaiq-release-20260914-cases-mobile/locale-about.js`，再重新整理官網。文案檔會重新驗證快取；Git push 本身不會上傳 Hostinger。檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 尚待另行授權更新，目前仍列舊目錄，請以上述路徑為準。
+更新團隊文字時，改 `docs/design/live-prototype/locale-about.js` 的中英文，備份主機同名檔後覆蓋 `public_html/synaiq-release-20260914-cases-mobile/locale-about.js`，再重新整理官網。文案檔會重新驗證快取；Git push 本身不會上傳 Hostinger。檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 已同步列出目前編輯位置。
 
 舊三案風格、首頁 A／B、wireframe、字型比較及候選稿已清理。目前唯一採用的設計為 `docs/design/live-prototype/`；保留範圍與復原方式見 [設計維護入口](docs/design/README.md)。
 

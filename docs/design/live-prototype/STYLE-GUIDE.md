@@ -492,7 +492,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260914-cases-mobile/`；`synaiq-release-20260911-team-pages/` 是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
 
-檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 是管理員維護入口；本次更新待另行授權，內容仍列舊目錄，請以操作索引為準。這份說明不經官網公開；歷史版本資料夾保留，不必逐個尋找同名檔。
+檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 是管理員維護入口，已同步目前正式目錄。這份說明不經官網公開；歷史版本資料夾保留，不必逐個尋找同名檔。
 
 | 本機來源 | 正式包對應位置／限制 |
 |---|---|

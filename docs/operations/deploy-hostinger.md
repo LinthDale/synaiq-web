@@ -10,7 +10,7 @@
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
 | Hostinger 覆蓋更新 | `public_html/synaiq-release-20260914-cases-mobile/locale-about.js` |
-| 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀；本次更新遭自動審核拒絕、待另行授權，內容仍指舊目錄，請以本文件為準 |
+| 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
@@ -23,7 +23,7 @@
 
 本次發布前逐一核對官網 64 檔與本機來源一致（CSS 以修正前版本核對），封裝 64 個核准公開檔案到全新目錄。完整保留主機後來新增的 LiteSpeed 區塊、locale 重新驗證規則、舊站 410、Wally 原圖及歷史 release。獨立資源網址使瀏覽器載入新 CSS。
 
-證據與回退資料：`out/synaiq-release-20260914-cases-mobile/`。包含 `baseline-verified.json`、`manifest.json`、`artifact/`、`preflight.json`、`routing-before.htaccess`、`routing-preview.htaccess`、`routing-live.htaccess`、`browser-local.json`、`browser-staged.json`、`browser-live.json`、`staged.json`、`activated.json` 及維護入口原文／候選副本（尚未寫入主機）。
+證據與回退資料：`out/synaiq-release-20260914-cases-mobile/`。包含 `baseline-verified.json`、`manifest.json`、`artifact/`、`preflight.json`、`routing-before.htaccess`、`routing-preview.htaccess`、`routing-live.htaccess`、`browser-local.json`、`browser-staged.json`、`browser-live.json`、`staged.json`、`activated.json` 及維護入口前後副本。使用者另行授權後，私有維護檔已更新；`guide-clarified.json` 記錄主機 SHA-256 核對通過，公開網址仍回傳 410。
 
 本機中英文 320／390／588／639／640／899／1440px 共 14 組排版檢查，以及 17 個 CSS／快取測試通過。發布包、主機直接網址及正式站另驗證四頁中英文與手機／桌面資源、導覽、無水平溢出；主機與正式站加入三列標籤不重疊檢查。
 
@@ -31,7 +31,7 @@
 
 1. 先核對主機路由仍符合本次 manifest；若已有後續修改，停止並重新備份比對。
 2. 在還原授權範圍內執行 `node out/synaiq-release-20260914-cases-mobile/release.mjs rollback`，將入口恢復為 `synaiq-release-20260911-team-pages`。腳本只接受已知路由 hash，保留舊站與 LiteSpeed 現況；本次未人工演練正式回退。
-3. 若日後已另行授權更新管理員維護入口，才依 `guide-before.txt` 恢復，先核對其現值仍符合 `guide-clarified.json`，避免覆蓋後續維護。
+3. 將管理員維護入口依 `guide-before.txt` 恢復，先核對其現值仍符合 `guide-clarified.json`，避免覆蓋後續維護。
 4. 重新確認 root、中英文及快取。不刪除新舊 release，也不重跑 9/11 的舊部署或 patch 腳本。
 
 | 路由 | SHA-256 |
