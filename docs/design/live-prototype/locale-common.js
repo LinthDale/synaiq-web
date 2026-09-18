@@ -32,8 +32,8 @@ export const zhHant = {
     "skip": "跳至主要內容"
   },
   "title": {
-    "home": "SynaiQ — 設計原型",
-    "kip": "KIP 平台 — SynaiQ 設計原型",
+    "home": "SynaiQ 鑫揚智能科技 — 知識留在組織裡",
+    "kip": "KIP 平台 — SynaiQ 鑫揚智能科技",
     "cases": "實績展示 — SynaiQ",
     "about": "關於我們 — SynaiQ"
   },
@@ -172,8 +172,8 @@ export const en = {
     "skip": "Skip to main content"
   },
   "title": {
-    "home": "SynaiQ — Design prototype",
-    "kip": "KIP Platform — SynaiQ design prototype",
+    "home": "SynaiQ — Knowledge stays with you.",
+    "kip": "KIP Platform — SynaiQ",
     "cases": "Our Work — SynaiQ",
     "about": "About Us — SynaiQ"
   },

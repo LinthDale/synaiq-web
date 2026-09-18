@@ -40,7 +40,7 @@ function fetchRaw(port, path, method = 'GET') {
 
 test('serves the review shell at both public entry points and resolves its relative dependencies', async t => {
   const { port } = await fixture(t);
-  assert.equal(PUBLIC_FILES.length, 65);
+  assert.equal(PUBLIC_FILES.length, 66);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
   for (const path of ['/', '/live-prototype/', '/live-prototype/index.html', '/page.html?page=kip', '/live-prototype/page.html?page=kip', '/live-prototype/page.html?page=cases', '/live-prototype/page.html?page=about&lang=en']) {
@@ -98,7 +98,7 @@ test('denies non-runtime sources, private assets, directories and development en
     '/live-prototype/assets/synaiq-logo-cis-6.jpg', '/assets/synaiq-logo-cis-6.jpg',
     '/live-prototype/assets/synaiq-logo-cis-5.jpg', '/assets/synaiq-logo-cis-5.jpg',
     '/live-prototype/assets/CIS-5.jpg', '/assets/CIS-5.jpg',
-    '/live-prototype/assets/', '/brand/', '/brand/team/', '/brand/team/daniel-web-1.jpg',
+    '/live-prototype/assets/', '/brand/', '/brand/team/',
     '/brand/team/dale-web-1.jpg', '/live-prototype/assets/team/dale-sketch.webp',
     '/out/team-deck-20260911/company-introduction.pptx', '/out/team-deck-20260911/ppt/media/image11.png',
     '/live-prototype/assets/team/', '/live-prototype/assets/cases/',
@@ -122,11 +122,11 @@ test('the new pages expose only the explicitly selected portraits, field photos 
     assert.ok(allowed.has(`/live-prototype/${file}`), file);
   }
   const portraits = PUBLIC_FILES.filter(entry => entry.url.startsWith('/brand/team/')).map(entry => entry.file);
-  assert.deepEqual(portraits, ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg']);
+  assert.deepEqual(portraits, ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg', 'team/daniel-web-1.jpg']);
   assert.equal(PUBLIC_FILES.filter(entry => entry.url.startsWith('/live-prototype/assets/team/')).length, 13);
   assert.equal(PUBLIC_FILES.filter(entry => entry.url.startsWith('/live-prototype/assets/cases/')).length, 4);
   assert.equal(allowed.has('/live-prototype/assets/cases/tokyo-1-1.jpg'), false);
-  assert.equal(allowed.has('/brand/team/daniel-web-1.jpg'), false);
+  assert.equal(allowed.has('/brand/team/daniel-web-1.jpg'), true);
 });
 
 test('rejects raw, encoded and double-encoded traversal and malformed URLs before normalization', async t => {

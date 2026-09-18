@@ -152,9 +152,11 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `page=cases` | 東京食品展故事 `story`、現場筆記 `fieldnotes`；報導來源接在筆記後 | `cases-design.js`／`locale-cases.js` |
 | `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locale-about.js` |
 
-兩頁都支援 `lang=zh-Hant`／`lang=en`。實績目前是一則東京食品展案例，四語導覽與裝置整合是故事內容；不要把展會整體業績寫成 AI 帶來的績效。團隊名單的唯一文字來源是 `locale-about.js`；Daniel 已依使用者提供的人像與履歷換成李昱儒 Celestine，職稱為業務總監，放在 `leadership.members`。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
+兩頁都支援 `lang=zh-Hant`／`lang=en`。實績目前是一則東京食品展案例，四語導覽與裝置整合是故事內容；不要把展會整體業績寫成 AI 帶來的績效。團隊名單的唯一文字來源是 `locale-about.js`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
 
-### 手繪與真照互動
+### 團隊彩色照片與實績圖片互動
+
+關於我們一律顯示彩色照片，不使用顯影、漸變或點擊暫停。照片映射及 Dale／Steve 的裁切在 `about-design.js`，樣式為 `site.css` 的 `.team-photo`。以下 `ink-photo.js` 互動只適用於實績頁。
 
 `ink-photo.js` 先顯示手繪，滑鼠移入後用水墨遮罩逐漸顯出真照；`tokens.css`「13 實績展示／關於我們」的 `--ink-reveal-duration` 目前為 `2600ms`。**點擊會保留點擊當下的顯影比例，再點一次才繼續**；不是第一次點擊就直接跳成完整真照。未暫停時離開圖片會逐漸回到手繪。鍵盤焦點也可顯影，Enter／Space 操作按鈕，Escape 返回手繪。觸控第一次輕點啟動顯影，過程中再次輕點可暫停／繼續；停在完整手繪或真照時，輕點開始反向轉場。reduced-motion 直接切換狀態，保留操作能力。
 
@@ -162,15 +164,12 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 SVG 的噪聲、位移與模糊只作用於顯影遮罩，真照人物保持清晰；永久柔邊在 `site.css` 的 `.ink-photo__canvas`，場域另用 `.ink-photo--scene`。不要用整張真照模糊或調色濾鏡替代柔邊，也不要用照片濾鏡冒充手繪素材。
 
-昱儒的 `assets/team/celestine-photo.webp` 保留使用者提供的完整 `864×1184` 構圖，僅轉成網頁格式。`about-design.js` 的 `photoCrop` 以 SVG 視窗取景，目前為 `x: 265, y: 58, width: 310, height: 310`，由 `ink-photo.js` 套用；不需破壞原圖。調整時比較手繪／真照的臉部大小與位置，維持一比一比例，並一起檢查 `#portrait-celestine .ink-photo__canvas` 的柔邊。
 
-Dale、Steve 的真照改用使用者提供的 `20260624公司簡介_不含影片.pptx` 第 4 頁素材，分別為簡報內的 `ppt/media/image11.png`（1045×1567）與 `image12.png`（1004×1236）；本機來源保留於 `out/team-deck-20260911/`，不加入公開白名單。兩張完整原照轉為 `assets/team/{dale,steve}-20260624-photo.webp`，並配對同名前綴的 `-sketch.webp`。`about-design.js` 明確列出每個人的真照、手繪與 `photoCrop`：Dale 為 `310,76,435,435`，Steve 為 `0,0,1004,1004`；取景順序為 x、y、width、height，不修改原始人物比例。
+Dale、Steve 的真照改用使用者提供的 `20260624公司簡介_不含影片.pptx` 第 4 頁素材，分別為簡報內的 `ppt/media/image11.png`（1045×1567）與 `image12.png`（1004×1236）；本機來源保留於 `out/team-deck-20260911/`，不加入公開白名單。兩張完整原照轉為 `assets/team/{dale,steve}-20260624-photo.webp`，並配對同名前綴的 `-sketch.webp`。`about-design.js` 明確列出每個人的真照與 `photoCrop`：Dale 為 `310,76,435,435`，Steve 為 `0,0,1004,1004`；取景順序為 x、y、width、height，不修改原始人物比例。
 
 Steve 是新增的技術成員，放在 Lou 與 Dale 之間；Lou 仍保留。Steve 的「博士班」英文使用 `Doctoral Program`，不能改成已取得博士學位。Dale 的學經歷以使用者最新更正為準，覆蓋簡報中的舊資料；修改 `locale-about.js` 時須同步中英。
 
-Dale 右下角的小貓由 `about-design.js` 的 `companion` 配對 `assets/team/dale-tuxedo-kitten-ink.webp`（簡潔線條手繪）與 `dale-tuxedo-kitten-photo.webp`（照片風格）。兩者都是 AI 生成素材，並非使用者提供的寵物實拍。`companion.silhouette` 指向原本含透明輪廓的 `dale-tuxedo-kitten.webp`；`ink-photo.js` 以獨立的 SVG `mask-type:alpha` 形狀遮罩包住小貓的兩個顯影圖層，去掉白底方塊並保留白胸。小貓 canvas 與手繪層使用正常合成，不能使用 multiply，否則白色毛髮會被後方深色衣服染暗。
-
-`renderInkPhoto` 把小貓的 SVG 放在 Dale 的同一個按鈕內，沒有新增焦點或獨立按鈕；移入人物或小貓時兩者同步顯影，點擊共同暫停／繼續，移出後一起回到手繪。各自的顯影與擦除遮罩共用進度及按比例換算的起點，由同一組動畫更新；不要另外啟動小貓的計時器。位置和尺寸在 `.ink-photo__canvas--companion`，維持在人物圖層上方，小貓不套用人物的大範圍永久柔邊，以保留耳朵和尾巴。
+Dale 右下角的小貓固定顯示 `dale-tuxedo-kitten-photo.webp`，以 `dale-tuxedo-kitten.webp` 的 alpha 輪廓去除方形白底；這是 AI 生成素材。位置在 `.team-photo-companion`，沒有互動或獨立按鈕。
 
 ## 共用聯絡資料
 
@@ -398,7 +397,7 @@ npm run test:design
 4. 產品組圖捲入／捲出、次數用盡、短視窗與 reduced-motion 都正常。
 5. 三片全部切換，逐幕看提問、回覆、引用／素材面板與末幕；檢查滑鼠點擊位置、暫停、重播、切片保持暫停及分頁切走後恢復。
 6. 長回答與檔名不壓住輸入框、不被裁切；八項優勢展開後不產生水平捲動。
-7. 實績與團隊圖片的移入／移出、顯影中途點擊暫停、再次點擊繼續、鍵盤與 reduced-motion 都正常；暫停後離開圖片仍保留比例，人物清晰且柔邊，頁面沒有圖片操作提示文字。
+7. 團隊照片直接顯示彩色、沒有顯影按鈕；實績圖片的移入／移出、顯影中途點擊暫停、再次點擊繼續、鍵盤與 reduced-motion 都正常；暫停後離開圖片仍保留比例，人物清晰且柔邊，頁面沒有圖片操作提示文字。
 8. 昱儒姓名、職稱、學經歷與所供資料一致；手繪／真照切換時臉部比例接近，取景不拉伸、不突然跳成較大的臉。
 
 ### 改 CSS 時的進階比較
@@ -458,7 +457,7 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 團隊手繪肖像 | `team/{wilson,sunny,leef,celestine,lou}-sketch.webp`、`team/{dale,steve}-20260624-sketch.webp`；各人物獨立素材，與原照配對，姓名映射在 `about-design.js` |
 | 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
 | Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
-| Dale 旁的黑白小貓 | `team/dale-tuxedo-kitten-ink.webp`／`dale-tuxedo-kitten-photo.webp`；手繪與寫實生成素材，以 `dale-tuxedo-kitten.webp` 的 alpha 作形狀遮罩；位置在 `.ink-photo__canvas--companion`，與 Dale 同步顯影及暫停 |
+| Dale 旁的黑白小貓 | `team/dale-tuxedo-kitten-ink.webp`／`dale-tuxedo-kitten-photo.webp`；手繪與寫實生成素材，以 `dale-tuxedo-kitten.webp` 的 alpha 作形狀遮罩；位置在 `.team-photo-companion`，固定顯示彩色照片 |
 | 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`／`tokyo-2-sketch.webp`、`cases/tokyo-5.jpg`／`tokyo-5-sketch.webp`；來源為舊官網回收的活動照片，配對用於顯影 |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |

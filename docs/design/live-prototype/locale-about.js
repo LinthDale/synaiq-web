@@ -1,6 +1,4 @@
-// Plain-text company and team copy. Legacy credentials are reproduced as supplied,
-// not independently verified qualifications; Celestine's entry and Steve's company-deck
-// material were supplied by the user. Dale's education follows the user's latest correction.
+// Plain-text company and team copy. Daniel uses the supplied legacy team record.
 export const zhHant = {
   hero: {
     eyebrow: 'THE PEOPLE BEHIND SYNAIQ',
@@ -24,10 +22,10 @@ export const zhHant = {
     title: '一起把想法，帶到現場的人。',
     intro: '從營運、財務到業務，讓每一份技術投入，都能回到真實需求。',
     members: [
-      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: '鑫揚智能科技CEO', credentials: ['國立交通大學工業工程與管理研究所'] },
-      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: '鑫揚智能科技執行長', credentials: ['鉅詢永續策略總經理', '鑫揚智能科技營運長'] },
+      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: '鑫揚智能科技CEO', credentials: ['國立交通大學工業工程與管理研究所碩士'] },
+      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: '鑫揚智能科技COO', credentials: ['鉅詢永續策略總經理', '國立交通大學工業工程與管理研究所碩士'] },
       { id: 'leef', name: 'Leef Lee', nativeName: '', role: '財務長', credentials: ['國立成功大學會計系', '財會協理'] },
-      { id: 'celestine', name: 'Celestine', nativeName: '李昱儒', role: '業務總監', credentials: ['國立嘉義大學', '中華民國太陽光電技術士乙級', '工研院太陽能節能建築工程師', 'ISO9001:2015 品質管理系統主任稽核員'] },
+      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: '鑫揚智能科技協理', credentials: ['國立中央大學資訊管理研究所博士', 'ISO27001:2022 資訊安全管理系統主任稽核員'] },
     ],
   },
   technical: {
@@ -35,14 +33,13 @@ export const zhHant = {
     title: '把複雜，做得好用。',
     intro: '跨越資訊管理、軟體與韌體，串起知識、系統和現場的每一個環節。',
     members: [
-      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: '鑫揚智能科技協理', credentials: ['國立中央大學資訊管理研究所博士', 'ISO27001:2022 資訊安全管理系統主任稽核員'] },
+      { id: 'daniel', name: 'Daniel Shih', nativeName: '', role: '專利策略師及業務總監', credentials: ['國立陽明交通大學科技管理研究所碩士'] },
       { id: 'steve', name: 'Steve Chiang', nativeName: '', role: '全端系統架構師', credentials: ['逢甲大學資訊工程研究所博士班'] },
       { id: 'dale', name: 'Dale Lin', nativeName: '', role: '全端暨韌體總工程師', credentials: ['中央大學永續與綠能科技研究所'] },
     ],
   },
   portrait: {
-    label: '暫停或繼續 {name} 的照片顯影',
-    alt: '{name} 的手繪肖像',
+    alt: '{name} 的彩色照片',
     credentials: '學經歷',
   },
 };
@@ -70,10 +67,10 @@ export const en = {
     title: 'The people who turn ideas into practice.',
     intro: 'Across operations, finance and business development, we keep technical decisions connected to real needs.',
     members: [
-      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: 'Chief Executive Officer, SynaiQ', credentials: ['Institute of Industrial Engineering and Management, National Chiao Tung University'] },
-      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: 'Chief Executive Officer, SynaiQ', credentials: ['General Manager, Ju-Xun Sustainability Strategy', 'Chief Operating Officer, SynaiQ'] },
+      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: 'Chief Executive Officer, SynaiQ', credentials: ["Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"] },
+      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: 'Chief Operating Officer, SynaiQ', credentials: ['General Manager, Ju-Xun Sustainability Strategy', "Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"] },
       { id: 'leef', name: 'Leef Lee', nativeName: '', role: 'Chief Financial Officer', credentials: ['Department of Accountancy, National Cheng Kung University', 'Associate Director, Finance and Accounting'] },
-      { id: 'celestine', name: 'Celestine', nativeName: '李昱儒', role: 'Sales Director', credentials: ['National Chiayi University', 'Taiwan Class B Solar Photovoltaic Technician', 'ITRI Solar Energy and Energy-Efficient Building Engineer', 'ISO 9001:2015 Quality Management System Lead Auditor'] },
+      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: 'Associate Director, SynaiQ', credentials: ['Ph.D., Institute of Information Management, National Central University', 'ISO 27001:2022 Information Security Management System Lead Auditor'] },
     ],
   },
   technical: {
@@ -81,14 +78,13 @@ export const en = {
     title: 'Making complex things work simply.',
     intro: 'Across information management, software and firmware, we connect knowledge, systems and the places they serve.',
     members: [
-      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: 'Associate Director, SynaiQ', credentials: ['Ph.D., Institute of Information Management, National Central University', 'ISO 27001:2022 Information Security Management System Lead Auditor'] },
+      { id: 'daniel', name: 'Daniel Shih', nativeName: '', role: 'Patent Strategist and Business Development Director', credentials: ["Master’s Degree, Institute of Technology Management, National Yang Ming Chiao Tung University"] },
       { id: 'steve', name: 'Steve Chiang', nativeName: '', role: 'Full-Stack Systems Architect', credentials: ['Doctoral Program in Information Engineering, Feng Chia University'] },
       { id: 'dale', name: 'Dale Lin', nativeName: '', role: 'Chief Full-Stack and Firmware Engineer', credentials: ['Graduate Institute of Sustainability and Green Energy Technology, National Central University'] },
     ],
   },
   portrait: {
-    label: 'Pause or resume the photograph reveal of {name}',
-    alt: 'Hand-drawn portrait of {name}',
+    alt: 'Color portrait of {name}',
     credentials: 'Background',
   },
 };

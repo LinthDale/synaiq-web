@@ -40,7 +40,7 @@ const runtimeFiles = [
   'assets/cases/tokyo-2-sketch.webp', 'assets/cases/tokyo-5-sketch.webp',
 ];
 const productFiles = ['synaiq-logo-light.svg', 'wally/wally-2.png', 'wally/wally-series.png', 'wally-2-plus.png', 'wally-mini.png'];
-const teamFiles = ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg'];
+const teamFiles = ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg', 'team/daniel-web-1.jpg'];
 
 export const PUBLIC_FILES = Object.freeze([
   ...runtimeFiles.map(file => Object.freeze({ url: `/live-prototype/${file}`, root: 'prototype', file })),

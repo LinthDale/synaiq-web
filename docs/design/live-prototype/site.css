@@ -3396,3 +3396,8 @@ body[data-page="kip"] .kip-capability-list dd {
   .editorial-link > span, .case-press-links a > :last-child { transition: none; }
 }
 /* END EDITORIAL */
+
+/* About portraits are always visible color photos, without reveal masks or controls. */
+.team-photo-frame { position: relative; }
+.team-photo { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.team-photo-companion { position: absolute; right: -6px; bottom: -8px; width: 36%; max-width: 120px; height: auto; mask-size: 100% 100%; mask-repeat: no-repeat; }

@@ -1,14 +1,10 @@
 import { getMessages, escapeHtml as esc } from './i18n.js';
-import { renderInkPhoto, initInkPhotos } from './ink-photo.js';
 
 const portraits = Object.freeze({
   wilson: { photo: '/brand/team/wilson-web-1.jpg', sketch: 'assets/team/wilson-sketch.webp' },
   sunny: { photo: '/brand/team/sunny-web-1.1.jpg', sketch: 'assets/team/sunny-sketch.webp' },
   leef: { photo: '/brand/team/leff-web-1.jpg', sketch: 'assets/team/leef-sketch.webp' },
-  celestine: {
-    photo: 'assets/team/celestine-photo.webp', sketch: 'assets/team/celestine-sketch.webp',
-    photoCrop: { x: 265, y: 58, width: 310, height: 310, sourceWidth: 864, sourceHeight: 1184 },
-  },
+  daniel: { photo: '/brand/team/daniel-web-1.jpg' },
   lou: { photo: '/brand/team/lou-web-1.jpg', sketch: 'assets/team/lou-sketch.webp' },
   steve: {
     photo: 'assets/team/steve-20260624-photo.webp', sketch: 'assets/team/steve-20260624-sketch.webp',
@@ -23,17 +19,18 @@ const portraits = Object.freeze({
 
 const personalize = (text, name) => text.replace('{name}', name);
 
+function renderPortrait(id, alt) {
+  const { photo, photoCrop, companion } = portraits[id];
+  const image = photoCrop
+    ? `<svg class="team-photo" viewBox="${photoCrop.x} ${photoCrop.y} ${photoCrop.width} ${photoCrop.height}" role="img" aria-label="${esc(alt)}"><image href="${esc(photo)}" width="${photoCrop.sourceWidth}" height="${photoCrop.sourceHeight}"/></svg>`
+    : `<img class="team-photo" src="${esc(photo)}" alt="${esc(alt)}" width="720" height="720">`;
+  return `<div id="portrait-${esc(id)}" class="team-photo-frame">${image}${companion ? `<img class="team-photo-companion" src="${esc(companion.photo)}" style="mask-image:url('${esc(companion.silhouette)}')" alt="" aria-hidden="true">` : ''}</div>`;
+}
+
 function renderMember(member, copy) {
   const name = [member.name, member.nativeName].filter(Boolean).join(' ');
   return `<article class="team-profile" aria-labelledby="team-${esc(member.id)}-name">
-    <figure class="team-portrait">${renderInkPhoto({
-      id: `portrait-${member.id}`,
-      ...portraits[member.id],
-      alt: personalize(copy.alt, name),
-      label: personalize(copy.label, name),
-      aspect: '1 / 1',
-      kind: 'portrait',
-    })}</figure>
+    <figure class="team-portrait">${renderPortrait(member.id, personalize(copy.alt, name))}</figure>
     <div class="team-copy">
       <p class="team-role">${esc(member.role)}</p>
       <h3 class="team-name" id="team-${esc(member.id)}-name">${esc(member.name)}${member.nativeName ? `<span class="team-native-name">${esc(member.nativeName)}</span>` : ''}</h3>
@@ -82,7 +79,4 @@ export function renderAbout({ contact, locale = 'zh-Hant', messages = getMessage
   </div>${contact()}`;
 }
 
-export function initAbout() {
-  const root = document.querySelector('.about-page');
-  return root ? initInkPhotos(root) : () => {};
-}
+export function initAbout() { return () => {}; }
