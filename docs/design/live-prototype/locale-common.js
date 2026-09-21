@@ -120,18 +120,18 @@ export const zhHant = {
     ]
   },
   "preview": {
-    "title": "SynaiQ / 設計原型",
+    "title": "SynaiQ / 本機預覽",
     "page": "頁面",
     "language": "語言",
     "width": "寬度",
     "fit": "配合視窗",
     "direct": "獨立開啟",
-    "frame": "SynaiQ 可連續縮放設計原型",
+    "frame": "SynaiQ 可連續縮放本機預覽",
     "status": "頁面實際寬度 {width}px · 預覽顯示 {scale}% · 儲存後更新 · 頁面內可捲動",
     "metrics": "排版檢查：內容 {width}px / 捲動範圍 {scroll}px · {result}",
     "overflow": "有水平溢出",
     "fits": "無水平溢出",
-    "waiting": "等待原型載入"
+    "waiting": "等待預覽載入"
   },
   "assets": {
     "searchScreen": "assets/kip-search-demo.svg",
@@ -260,18 +260,18 @@ export const en = {
     ]
   },
   "preview": {
-    "title": "SynaiQ / Design prototype",
+    "title": "SynaiQ / Local preview",
     "page": "Page",
     "language": "Language",
     "width": "Width",
     "fit": "Fit window",
     "direct": "Open page",
-    "frame": "SynaiQ continuously resizable design prototype",
+    "frame": "SynaiQ continuously resizable local preview",
     "status": "Page width {width}px · Preview {scale}% · Refresh after changes · Scroll inside the page",
     "metrics": "Layout: content {width}px / scroll width {scroll}px · {result}",
     "overflow": "Horizontal overflow",
     "fits": "No horizontal overflow",
-    "waiting": "Waiting for the prototype"
+    "waiting": "Waiting for the preview"
   },
   "assets": {
     "searchScreen": "assets/kip-search-demo-en.svg",

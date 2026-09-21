@@ -15,7 +15,8 @@ for (const locale of ['zh-Hant', 'en']) {
     assert.match(markup, /Daniel Shih/);
     assert.match(markup, /\/brand\/team\/daniel-web-1\.jpg/);
     assert.doesNotMatch(markup, /Celestine|celestine|data-ink|<button|<mask|sketch\.webp/);
-    assert.match(markup, /viewBox="310 76 435 435"/);
-    assert.match(markup, /dale-tuxedo-kitten-photo\.webp/);
+    assert.match(markup, /viewBox="288 46 485 485"/);
+    assert.match(markup, /viewBox="-18 -90 1059 1059"/);
+    assert.doesNotMatch(markup, /team-photo-companion|dale-tuxedo-kitten/);
   });
 }

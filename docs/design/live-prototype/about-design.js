@@ -8,23 +8,22 @@ const portraits = Object.freeze({
   lou: { photo: '/brand/team/lou-web-1.jpg', sketch: 'assets/team/lou-sketch.webp' },
   steve: {
     photo: 'assets/team/steve-20260624-photo.webp', sketch: 'assets/team/steve-20260624-sketch.webp',
-    photoCrop: { x: 0, y: 0, width: 1004, height: 1004, sourceWidth: 1004, sourceHeight: 1236 },
+    photoCrop: { x: -18, y: -90, width: 1059, height: 1059, sourceWidth: 1004, sourceHeight: 1236 },
   },
   dale: {
     photo: 'assets/team/dale-20260624-photo.webp', sketch: 'assets/team/dale-20260624-sketch.webp',
-    photoCrop: { x: 310, y: 76, width: 435, height: 435, sourceWidth: 1045, sourceHeight: 1567 },
-    companion: { sketch: 'assets/team/dale-tuxedo-kitten-ink.webp', photo: 'assets/team/dale-tuxedo-kitten-photo.webp', silhouette: 'assets/team/dale-tuxedo-kitten.webp' },
+    photoCrop: { x: 288, y: 46, width: 485, height: 485, sourceWidth: 1045, sourceHeight: 1567 },
   },
 });
 
 const personalize = (text, name) => text.replace('{name}', name);
 
 function renderPortrait(id, alt) {
-  const { photo, photoCrop, companion } = portraits[id];
+  const { photo, photoCrop } = portraits[id];
   const image = photoCrop
     ? `<svg class="team-photo" viewBox="${photoCrop.x} ${photoCrop.y} ${photoCrop.width} ${photoCrop.height}" role="img" aria-label="${esc(alt)}"><image href="${esc(photo)}" width="${photoCrop.sourceWidth}" height="${photoCrop.sourceHeight}"/></svg>`
     : `<img class="team-photo" src="${esc(photo)}" alt="${esc(alt)}" width="720" height="720">`;
-  return `<div id="portrait-${esc(id)}" class="team-photo-frame">${image}${companion ? `<img class="team-photo-companion" src="${esc(companion.photo)}" style="mask-image:url('${esc(companion.silhouette)}')" alt="" aria-hidden="true">` : ''}</div>`;
+  return `<div id="portrait-${esc(id)}" class="team-photo-frame">${image}</div>`;
 }
 
 function renderMember(member, copy) {

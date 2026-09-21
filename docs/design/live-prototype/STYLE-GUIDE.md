@@ -1,6 +1,6 @@
 # 官網樣式維護指南
 
-最後更新：2026-09-11。
+最後更新：2026-09-18。
 
 改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引涵蓋已上線的 Home／KIP／實績展示／關於我們中英版，供日常維護使用。
 
@@ -17,6 +17,7 @@
 | 實績展示的故事、場域筆記、照片圖說與報導標題 | `locale-cases.js`；報導 URL 與素材路徑在 `cases-design.js` |
 | 關於我們的理念、團隊名單、職稱及學經歷 | `locale-about.js` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
 | 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
+| 瀏覽器分頁標題（四頁中英） | `locale-common.js` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
 | CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
 | 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
 | 另外兩段動畫的查詢、片名與步驟 | `locale-demo.js` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
@@ -164,12 +165,14 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 SVG 的噪聲、位移與模糊只作用於顯影遮罩，真照人物保持清晰；永久柔邊在 `site.css` 的 `.ink-photo__canvas`，場域另用 `.ink-photo--scene`。不要用整張真照模糊或調色濾鏡替代柔邊，也不要用照片濾鏡冒充手繪素材。
 
+同一條永久柔邊規則的選擇器同時列入關於我們的 `.team-photo`，七張團隊肖像（五張 `<img>` 與 Dale、Steve 兩張 `<svg>`）因此共用完全相同的漸層值，不另外複製一份數值。柔邊只是 CSS `mask-image`，與 `ink-photo.js` 的顯影動畫無關；關於我們沒有顯影、按鈕或手繪，只有這層柔邊。修改漸層停駐點會同時改變實績頁與關於我們，兩頁都要重看。
 
-Dale、Steve 的真照改用使用者提供的 `20260624公司簡介_不含影片.pptx` 第 4 頁素材，分別為簡報內的 `ppt/media/image11.png`（1045×1567）與 `image12.png`（1004×1236）；本機來源保留於 `out/team-deck-20260911/`，不加入公開白名單。兩張完整原照轉為 `assets/team/{dale,steve}-20260624-photo.webp`，並配對同名前綴的 `-sketch.webp`。`about-design.js` 明確列出每個人的真照與 `photoCrop`：Dale 為 `310,76,435,435`，Steve 為 `0,0,1004,1004`；取景順序為 x、y、width、height，不修改原始人物比例。
+
+Dale、Steve 的真照改用使用者提供的 `20260624公司簡介_不含影片.pptx` 第 4 頁素材，分別為簡報內的 `ppt/media/image11.png`（1045×1567）與 `image12.png`（1004×1236）；本機來源保留於 `out/team-deck-20260911/`，不加入公開白名單。兩張完整原照轉為 `assets/team/{dale,steve}-20260624-photo.webp`，並配對同名前綴的 `-sketch.webp`。`about-design.js` 明確列出每個人的真照與 `photoCrop`：Dale 為 `288,46,485,485`，Steve 為 `-18,-90,1059,1059`；取景順序為 x、y、width、height，不修改原始人物比例。
+
+兩組 `photoCrop` 以 `/brand/team/*-web-1.jpg` 五張棚拍照為基準對齊頭部比例：五張的頭頂到下巴平均佔畫面高度 40.8%、頭頂上方留白平均 9.1%，Dale 與 Steve 的取景數字即由此反推。Steve 的方框比原圖寬，左右與上方會超出圖檔邊界（x、y 為負值）而露出透明區；超出範圍在畫面左側 0–1.7%、右側 96.5–100%、頂端 0–8.5%，人物剪影本身不會碰到圖檔左右邊界。調整這兩組數字時必須一併重算，不可只改其中一個。
 
 Steve 是新增的技術成員，放在 Lou 與 Dale 之間；Lou 仍保留。Steve 的「博士班」英文使用 `Doctoral Program`，不能改成已取得博士學位。Dale 的學經歷以使用者最新更正為準，覆蓋簡報中的舊資料；修改 `locale-about.js` 時須同步中英。
-
-Dale 右下角的小貓固定顯示 `dale-tuxedo-kitten-photo.webp`，以 `dale-tuxedo-kitten.webp` 的 alpha 輪廓去除方形白底；這是 AI 生成素材。位置在 `.team-photo-companion`，沒有互動或獨立按鈕。
 
 ## 共用聯絡資料
 
@@ -251,7 +254,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 | 第一段側欄最近問題、上方路徑、搜尋中提示 | 最外層 `warrantyTopic`、`breadcrumb`、`thinking`；`warrantyTopic` 是保留的舊欄位名，目前內容是採購筆電申請，不是保固問題 |
 | 第一段引用檔名與「查看原文」 | 最外層 `citationFilename`、`citationPage`；`citationPage` 是保留的舊欄位名，目前顯示查看原文，不是頁碼 |
 | 展開的引用原文 | 最外層 `sourceLabel`、`sourceTitle`、`sourceHeading`、`sourceNote`、`sourceScribble`（手繪圈註）；原文的標記段落共用 `answerHighlight` |
-| 寄出／Send、右上智慧知識搜尋、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locale-demo.js`，不要把圖示字元加回 `send` |
+| 寄出／Send、右上智慧知識平台／Knowledge Platform、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locale-demo.js`，不要把圖示字元加回 `send` |
 | 最後一幕知識中心的文件列表 | 最外層 `tableRows`；第一筆檔名需與 `citationFilename` 相同 |
 | 第一段下方 01／02／03 的步驟文字 | 最外層 `chapters`；不是 `booth` 裡的章節 |
 | 三段片名、說明 | `booth.titles`、`booth.descriptions`，依知識問答／自然語言找圖／以圖搜圖排序 |
@@ -270,7 +273,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 | 畫面上的字 | 在 `tokens.css` 搜尋 |
 |---|---|
-| 上排右側智慧知識搜尋 | `.film-wordmark-label`；左側仍使用品牌原版 SynaiQ，KIP 為獨立字標 |
+| 上排右側智慧知識平台／Knowledge Platform | `.film-wordmark-label`；左側仍使用品牌原版 SynaiQ，KIP 為獨立字標 |
 | 左側最近問題／知識中心 | `.film-sidebar`／`.film-sidebar > button` |
 | 手機對話紀錄／收合 | `.film-mobilebar button`／`.film-sidebar-heading button` |
 | 寄出文字／手繪筆 | `.film-input`／`.film-send`；筆寬 `--demo-send-pen-width` |
@@ -285,7 +288,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 ### 紙質 Demo 的維護位置
 
-2026-09-11 核准樣稿：黑金外部框架不變；原版 SynaiQ 在左上，KIP 字標與智慧知識搜尋在右上。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
+2026-09-11 核准樣稿：黑金外部框架不變；原版 SynaiQ 在左上，KIP 字標與產品名稱在右上（當時為智慧知識搜尋，現已更名為智慧知識平台／Knowledge Platform）。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
 
 | 調整項目 | 位置 |
 |---|---|
@@ -457,7 +460,6 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 團隊手繪肖像 | `team/{wilson,sunny,leef,celestine,lou}-sketch.webp`、`team/{dale,steve}-20260624-sketch.webp`；各人物獨立素材，與原照配對，姓名映射在 `about-design.js` |
 | 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
 | Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
-| Dale 旁的黑白小貓 | `team/dale-tuxedo-kitten-ink.webp`／`dale-tuxedo-kitten-photo.webp`；手繪與寫實生成素材，以 `dale-tuxedo-kitten.webp` 的 alpha 作形狀遮罩；位置在 `.team-photo-companion`，固定顯示彩色照片 |
 | 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`／`tokyo-2-sketch.webp`、`cases/tokyo-5.jpg`／`tokyo-5-sketch.webp`；來源為舊官網回收的活動照片，配對用於顯影 |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |
@@ -467,9 +469,9 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 
 上述手繪素材是 AI 生成插畫，不是產品現場照或委製作品證明。Wally 原色設備圖在 repo 的 `public/brand/`；設備照片中印好的 Logo 不會隨 `brand.js` 自動更換。線上角色圖 `https://synaiq.com/wp-content/uploads/2026/03/toutou-2.png` 仍是網站依賴，下架舊素材時不能誤刪它。
 
-新增團隊／場域手繪使用內建 `imagegen`：每張原照分別作為人物或構圖參考，再以首頁 `ceo-speaking-sketch-v1.webp` 作筆觸參考，生成白底、淡褐色疏線與少量排線的獨立插畫。保留人物辨識特徵與場域配置，不能把 CEO 參考圖的麥克風或其他人物帶入新圖。生成後只作網頁尺寸與格式最佳化；人物與場域 hover 顯示的是原照，不是 AI 重建的真照。裝飾小貓的寫實版本另由手繪素材生成，不能視為實拍來源。
+新增團隊／場域手繪使用內建 `imagegen`：每張原照分別作為人物或構圖參考，再以首頁 `ceo-speaking-sketch-v1.webp` 作筆觸參考，生成白底、淡褐色疏線與少量排線的獨立插畫。保留人物辨識特徵與場域配置，不能把 CEO 參考圖的麥克風或其他人物帶入新圖。生成後只作網頁尺寸與格式最佳化；人物與場域 hover 顯示的是原照，不是 AI 重建的真照。
 
-Wilson、Sunny、Leef、Lou 的真照分別在 repo 的 `public/brand/team/`，網址前綴為 `/brand/team/`；檔名以 `about-design.js` 的 `portraits` 映射為準，例如 Leef 對應舊檔 `leff-web-1.jpg`。Dale、Steve 與昱儒使用上述 `assets/team/` 素材。保留舊圖不代表仍在現行團隊頁使用，Daniel 的舊檔與舊 Dale 照片／手繪未列入公開白名單。新增公開素材須逐一加入 `share-preview.mjs`，不得整包公開舊素材回收目錄或公司簡報。
+Wilson、Sunny、Leef、Lou 的真照分別在 repo 的 `public/brand/team/`，網址前綴為 `/brand/team/`；檔名以 `about-design.js` 的 `portraits` 映射為準，例如 Leef 對應舊檔 `leff-web-1.jpg`。Dale、Steve 與昱儒使用上述 `assets/team/` 素材。保留舊圖不代表仍在現行團隊頁使用，Daniel 的舊檔與舊 Dale 照片／手繪未列入公開白名單。Dale 旁的裝飾小貓（`team/dale-tuxedo-kitten.webp`／`-photo.webp`／`-ink.webp`）已依使用者要求移除，三個檔案保留在 repo，但已從 `share-preview.mjs` 白名單刪除，不再對外提供。新增公開素材須逐一加入 `share-preview.mjs`，不得整包公開舊素材回收目錄或公司簡報。
 
 新聞小圖在 `home-design.js` 搜尋 `outlook-clipping`；中英無障礙說明在 `locale-home.js` 的 `outlook.clippingLabel`／`clippingAlt`。寬度改 `--outlook-clipping-width`，傾斜改 `--outlook-clipping-tilt`（建議 -6deg 至 6deg，放大角度需重驗手機邊界）。外面不顯示圖說、調查人數或提醒字，調查背景與限制保留在 `outlook-details` 展開區；原截圖內標題與署名不刪。原圖與外框分開維護，不必每次修改文字都重新生圖。
 

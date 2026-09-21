@@ -33,9 +33,6 @@ const runtimeFiles = [
   'assets/team/celestine-photo.webp',
   'assets/team/dale-20260624-photo.webp', 'assets/team/dale-20260624-sketch.webp',
   'assets/team/steve-20260624-photo.webp', 'assets/team/steve-20260624-sketch.webp',
-  'assets/team/dale-tuxedo-kitten.webp',
-  'assets/team/dale-tuxedo-kitten-photo.webp',
-  'assets/team/dale-tuxedo-kitten-ink.webp',
   'assets/cases/tokyo-2-scaled.jpg', 'assets/cases/tokyo-5.jpg',
   'assets/cases/tokyo-2-sketch.webp', 'assets/cases/tokyo-5-sketch.webp',
 ];

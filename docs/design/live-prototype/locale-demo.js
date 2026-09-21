@@ -2,8 +2,8 @@
 export const zhHant = {
   groupLabel: 'KIP 自動播放的操作情境動畫，示例資料，非連線產品',
   playbackLabel: 'PRODUCT IN MOTION', replay: '重新播放', pause: '暫停動畫', play: '播放動畫', reducedMotion: '減少動態：靜態展示',
-  productTitle: 'KIP / 智慧知識搜尋', productNote: '品牌化介面 · 示例資料',
-  productLabel: '智慧知識搜尋', history: '對話紀錄', close: '關閉', collapse: '收合', sourceRegion: '引用原文筆記', sourceScribble: '先核准，再採購',
+  productTitle: 'KIP / 智慧知識平台', productNote: '品牌化介面 · 示例資料',
+  productLabel: '智慧知識平台', history: '對話紀錄', close: '關閉', collapse: '收合', sourceRegion: '引用原文筆記', sourceScribble: '先核准，再採購',
   newChat: '＋ 新的對話', recentQuestions: '最近的問題', warrantyTopic: '如何申請採購筆電', knowledgeCenter: '知識中心', sourceTopic: '如何找到引用來源', workspace: '示範工作空間',
   breadcrumb: '組織知識庫 / 設備採購流程', question: '我想為新進同仁採購一台筆電，該如何申請？', thinking: '查找相關的採購流程', avatar: '知',
   answer: '依《設備採購流程》，先填寫用途、規格與預算。', answerHighlight: '主管核准後，由採購詢價、下單；到貨後驗收。', answerNote: '申請方式與核准權限，請依引用文件中的規範辦理。',
@@ -39,8 +39,8 @@ export const zhHant = {
 export const en = {
   groupLabel: 'KIP animated workflow preview using sample data, not a connected product',
   playbackLabel: 'PRODUCT IN MOTION', replay: 'Replay', pause: 'Pause animation', play: 'Play animation', reducedMotion: 'Reduced motion: still preview',
-  productTitle: 'KIP / Knowledge Search', productNote: 'Branded interface · Sample data',
-  productLabel: 'Knowledge Search', history: 'Conversations', close: 'Close', collapse: 'Close', sourceRegion: 'Source notes', sourceScribble: 'Approval before purchase',
+  productTitle: 'KIP / Knowledge Platform', productNote: 'Branded interface · Sample data',
+  productLabel: 'Knowledge Platform', history: 'Conversations', close: 'Close', collapse: 'Close', sourceRegion: 'Source notes', sourceScribble: 'Approval before purchase',
   newChat: '＋ New conversation', recentQuestions: 'Recent questions', warrantyTopic: 'Request a laptop purchase', knowledgeCenter: 'Knowledge Center', sourceTopic: 'How to find a cited source', workspace: 'Demo workspace',
   breadcrumb: 'Company knowledge / Equipment purchasing', question: 'How do I request a laptop for a new colleague?', thinking: 'Finding the relevant purchasing process', avatar: 'K',
   answer: 'Start with a purchase request: purpose, specs and budget.', answerHighlight: 'After manager approval, Purchasing gets quotes and orders. Inspect on arrival.', answerNote: 'Follow the application and approval rules in the cited process.',

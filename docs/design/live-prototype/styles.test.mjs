@@ -112,6 +112,16 @@ test('the live website has exactly two CSS files and one settings import', async
   }
 });
 
+test('the permanent soft edge covers the About portraits from one shared gradient', async () => {
+  // Regression guard: the About page once lost this edge by moving off renderInkPhoto.
+  const softEdge = 'radial-gradient(ellipse at 50% 45%, black 38%, #000e 52%, #0006 65%, transparent 77%)';
+  for (const selector of ['.team-photo', '.ink-photo__canvas:not(.ink-photo__canvas--companion)']) {
+    assert.ok(hasDeclaration('site.css', selector, 'mask-image', softEdge), `${selector} lost the soft edge`);
+  }
+  const css = await read('site.css');
+  assert.equal((css.match(/ellipse at 50% 45%, black 38%/g) ?? []).length, 1, 'The gradient keeps a single source of truth');
+});
+
 test('everyday typography and colour settings have a central editing point', async () => {
   const tokens = await read('tokens.css');
   for (const name of ['--display', '--body', '--ink', '--muted', '--hero-title-size', '--hero-intro-size', '--outlook-title-size', '--outlook-body-size', '--outlook-detail-size', '--outlook-surface', '--nav-text-size']) {

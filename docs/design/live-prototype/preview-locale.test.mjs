@@ -33,7 +33,7 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   const dispose = initPreview({ document, window, ResizeObserver: class { observe() {} disconnect() {} } });
   assert.equal(ids.preview.src, 'page.html?page=kip&lang=en#proof');
   assert.equal(document.documentElement.lang, 'en');
-  assert.equal(document.title, 'SynaiQ / Design prototype');
+  assert.equal(document.title, 'SynaiQ / Local preview');
   assert.equal(options[1].textContent, 'KIP Platform');
   assert.equal(options[2].textContent, 'Our Work');
   assert.equal(options[3].textContent, 'About Us');
@@ -97,9 +97,9 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   assert.equal(ids.language.value, 'en');
   ids.preview.contentDocument = null;
   ids.width.handlers.input();
-  assert.equal(ids.metrics.textContent, 'Waiting for the prototype');
+  assert.equal(ids.metrics.textContent, 'Waiting for the preview');
   Object.defineProperty(ids.preview, 'contentDocument', { configurable: true, get() { throw new Error('Blocked'); } });
   ids.width.handlers.input();
-  assert.equal(ids.metrics.textContent, 'Waiting for the prototype');
+  assert.equal(ids.metrics.textContent, 'Waiting for the preview');
   dispose();
 });
