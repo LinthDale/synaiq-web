@@ -1,21 +1,37 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-09-14（Asia/Taipei）。
+最後更新：2026-09-21（Asia/Taipei）。
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260914-cases-mobile/`。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260921-site-update/`。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260914-cases-mobile/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260921-site-update/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-09-21 官網更新
+
+發布來源：`d6a1df4094efc50002ef31b11fd9c8dcf251f38a`。更新公開標題、團隊彩色照片與方形比例、最新團隊名單，以及中英文 KIP Knowledge Platform 標籤與四張介面 SVG。文件整理與未引用素材清理一併提交；私人素材及開發工具沒有上傳。
+
+新版本：`public_html/synaiq-release-20260921-site-update/`，共 62 個公開檔案。發布前核對舊版 64 檔 hash，完整保留歷史版本、LiteSpeed、locale 快取、舊站 410 與 Wally 圖片規則。
+
+證據與回退：`out/synaiq-release-20260921-site-update/`，包含 manifest、原始發布包、路由前後副本、逐檔驗證、三階段瀏覽器報告與維護入口備份。本機設計測試 133 項通過、5 項略過；Astro 建置與 32 項測試通過。各階段瀏覽器驗證涵蓋四頁中英文 390／1440px，加 835px 導覽，共 17 組；檢查圖片、七張方形照片、導覽、水平溢出與 JavaScript 錯誤。
+
+回退時先核對主機仍為本次 manifest 的路由 hash，再執行 `node out/synaiq-release-20260921-site-update/release.mjs rollback`，恢復 `synaiq-release-20260914-cases-mobile`。維護入口應依 `guide-before.txt` 恢復，先核對現值以免覆蓋後續編輯。保留新舊 release；本次未演練正式回退。
+
+| 路由 | SHA-256 |
+|---|---|
+| 發布前 | `2f41fc04fd3127427876c60a4a45c23045aa9574710bf6109b2d912741fcfade` |
+| 測試網址開放 | `03d41b8b5f57808a44521266e13584a1cd497bb5c2ccdf6951618f1f760016e1` |
+| 正式入口 | `b7979dcac12fd03ec549e8af2269c32215098b3970dee1877594ca18ee6d0f79` |
 
 ## 2026-09-14 手機版排版修正
 
