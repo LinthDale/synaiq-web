@@ -2,7 +2,7 @@
 
 最後更新：2026-09-21（Asia/Taipei）。
 
-工程師及新的 AI session 請先讀 [官網更新與部署 README](../../WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
 ## 平常更新團隊文字，只看這裡
 

@@ -10,7 +10,7 @@
 | 公開檔案白名單 | `docs/design/live-prototype/share-preview.mjs` 的 `PUBLIC_FILES` |
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
 | 驗收網址 | https://synaiq.com/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合 |
-| 目前版本及回退紀錄 | [部署紀錄](docs/operations/deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
+| 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
 | 本機發布工具與證據 | `out/synaiq-release-20260921-site-update/`；供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
@@ -50,7 +50,7 @@ Test-Path out/synaiq-release-20260921-site-update/release.mjs
 
 不要列印環境檔內容。依 `package.json` 安裝 Node／依賴；缺少 `node_modules` 才需要 `npm ci`。瀏覽器驗證使用 Playwright 與已安裝的 Chrome（`channel: 'chrome'`）。
 
-讀取 [網站維護說明](docs/design/live-prototype/README.md)、[部署紀錄](docs/operations/deploy-hostinger.md)，再檢查該次改動。共用工作區有其他修改時，不清空、不 reset、不默認全部納入；明確列出本次提交檔案。現有發布腳本要求乾淨工作區，不能刪掉這個檢查來硬封裝；必要時在隔離的 checkout 準備已提交來源及本機工具。
+讀取 [網站維護說明](../design/live-prototype/README.md)、[部署紀錄](deploy-hostinger.md)，再檢查該次改動。共用工作區有其他修改時，不清空、不 reset、不默認全部納入；明確列出本次提交檔案。現有發布腳本要求乾淨工作區，不能刪掉這個檢查來硬封裝；必要時在隔離的 checkout 準備已提交來源及本機工具。
 
 ### 已驗證的主機存取方式
 
@@ -144,7 +144,7 @@ node "$releaseDir/update-guide.mjs"
 
 ### 4. 收尾才算完成
 
-更新 [部署紀錄](docs/operations/deploy-hostinger.md) 的現行目錄、來源 commit、驗證、證據路徑、回退版本與 hash。只在驗證實際通過後寫「完成」。提交並推送這份紀錄，再確認 `git status -sb`。
+更新 [部署紀錄](deploy-hostinger.md) 的現行目錄、來源 commit、驗證、證據路徑、回退版本與 hash。只在驗證實際通過後寫「完成」。提交並推送這份紀錄，再確認 `git status -sb`。
 
 最後回報：官網連結、Git commit／push 狀態、上線版本、驗證結果、舊版保留。Git 成功不能代替正式網址成功。只更新文件時，不需要再封裝或切換官網。
 
@@ -158,5 +158,5 @@ node "$releaseDir/update-guide.mjs"
 
 ## 可直接貼給下一個 AI session
 
-> 請先讀取根目錄 WEBSITE-UPDATE-README.md，依其中流程將本次網站修改 commit、push 並部署 synaiq.com。這個指令已包含正常發布、驗證、切換正式入口及維護紀錄同步的授權，不必逐階段再問是否繼續。沿用可用的主機存取與發布實作，先核對即時路由及來源，保留其他人的修改與歷史 release。需要系統權限時用工具提出具體要求，不重複詢問部署意願；缺少必要資料或遇到他人衝突時才提出問題。以正式網址驗證通過及 Git 同步為完成條件。
+> 請先讀取 docs/operations/WEBSITE-UPDATE-README.md，依其中流程將本次網站修改 commit、push 並部署 synaiq.com。這個指令已包含正常發布、驗證、切換正式入口及維護紀錄同步的授權，不必逐階段再問是否繼續。沿用可用的主機存取與發布實作，先核對即時路由及來源，保留其他人的修改與歷史 release。需要系統權限時用工具提出具體要求，不重複詢問部署意願；缺少必要資料或遇到他人衝突時才提出問題。以正式網址驗證通過及 Git 同步為完成條件。
 

@@ -2,7 +2,7 @@
 
 唯一日常工作目錄：`C:\Users\User\synaiq\synaiq-web`。正式站：[synaiq.com](https://synaiq.com)。版本庫：Azure DevOps `SynaiqDev/_git/synaiq-web`。
 
-**工程師與新的 AI session 要更新官網，先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)**：授權界線、主機存取、新版本發布指令、驗證與回退。
+**工程師與新的 AI session 要更新官網，先讀 [官網更新與部署 README](docs/operations/WEBSITE-UPDATE-README.md)**：授權界線、主機存取、新版本發布指令、驗證與回退。
 
 ## 日常只需這三個入口
 

@@ -1,6 +1,6 @@
 # 官網發布入口
 
-處理本專案網站更新、commit／push、Hostinger 上架或回退時，先讀取 [WEBSITE-UPDATE-README.md](WEBSITE-UPDATE-README.md)。即時版本以主機 `.htaccess` 為準，歷史紀錄在 [部署指南](docs/operations/deploy-hostinger.md)。
+處理本專案網站更新、commit／push、Hostinger 上架或回退時，先讀取 [docs/operations/WEBSITE-UPDATE-README.md](docs/operations/WEBSITE-UPDATE-README.md)。即時版本以主機 `.htaccess` 為準，歷史紀錄在 [部署指南](docs/operations/deploy-hostinger.md)。
 
 - 使用者明確要求上架時，正常發布步驟已在其授權範圍內，不要逐階段重問「是否繼續」。
 - 遵守目前執行環境的權限要求；本文件不取代沙箱／網路核准，不允許繞過拒絕。
