@@ -14,6 +14,13 @@
       "runtimeArgs": ["run", "dev:design"],
       "port": 4318,
       "autoPort": false
+    },
+    {
+      "name": "synaiq-web-design-verify",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["docs/design/live-prototype/share-preview.mjs", "4319"],
+      "port": 4319,
+      "autoPort": false
     }
   ]
 }
