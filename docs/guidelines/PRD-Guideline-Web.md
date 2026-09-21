@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.1 | Draft | Dale | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) | 2026-09-07 |
+| v0.2 | Draft | Dale | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) | 2026-09-14 |
 
 ## 0. 本文件定位
 
@@ -73,12 +73,12 @@
 | 6 System Architecture（C4 三圖） | 降級為本文件 §9 一張共用圖 | 單一 Worker，無多容器 |
 | 7 Data Model | 不適用 | 無 DB；`hosting.json` 的 d1/r2 皆 null，`drizzle/` 零 migration |
 | 8 API Contract | 不適用 | 無對外 API；唯一端點 `/_vinext/image` 為框架內建 |
-| 10 Observability | 精簡為 NFR 一列 | 無自建監控，靠 Cloudflare 內建加 Lighthouse 抽查 |
-| 12 Rollout & Migration | 精簡為一句：`git revert` 加重新 build | 靜態站，無資料遷移 |
+| 10 Observability | 精簡為 NFR 一列 | 無自建監控；依實際主機狀態與 Lighthouse 抽查 |
+| 12 Rollout & Migration | 依 [部署指南](../operations/deploy-hostinger.md) 核對版本、備份與路由後回退 | 靜態站，無資料遷移 |
 | 13 覆蓋率 ≥ 80% | 改為渲染測試加 build 綠燈加 Lighthouse 門檻 | 幾無業務邏輯層 |
 | 4.4 IEC 62443 / OT-IT | 不適用 | 非工控產品 |
 | 11 EMS 特化 | 不適用 | 同上 |
-| 11.2 doc-sync 三件套 | 置換為本案三件套：[`docs/README.md`](../README.md)、視覺手冊（PRD-005 產出）、[`HANDOVER.md`](../../HANDOVER.md) | 本案無 API.yaml／容器速查表／操作手冊 |
+| 11.2 doc-sync 三件套 | 置換為本案三件套：[`docs/README.md`](../README.md)、視覺手冊（PRD-005 產出）、[部署指南](../operations/deploy-hostinger.md) | 舊 HANDOVER 只作歷史參考 |
 
 ## 8. 提交前 Checklist
 
@@ -92,13 +92,14 @@
 
 ## 9. 全案共用架構圖
 
-PRD 只引用本圖，不得自行重畫。技術細節見 [`HANDOVER.md`](../../HANDOVER.md) §1。
+正式站與保留的 Astro 基礎如下；現行技術細節見 [專案 README](../../README.md)。舊 vinext／Cloudflare 架構保留於 [歷史交接](../archive/HANDOVER-2026-09-07.md)。
 
 ```mermaid
 flowchart LR
-  U["訪客瀏覽器"] --> W["Cloudflare Worker<br/>worker/index.ts"]
-  W --> IMG["/_vinext/image<br/>圖片最佳化"]
-  W --> R["vinext app-router<br/>dist/server/index.js"]
-  R --> P["app/**/page.tsx<br/>RSC 渲染"]
-  MD["content/pages/*.md"] -. "build 時 ?raw 內嵌" .-> P
+  S["live-prototype 原始碼"] --> B["封裝與本機驗證"]
+  B --> R["Hostinger 版本目錄"]
+  R --> G["核對後切換根路由"]
+  U["訪客瀏覽器"] --> G
+  G --> P["HTML / CSS / JavaScript 四頁中英文"]
+  A["src Astro Phase A"] --> D["dist 檢驗產物，尚未部署"]
 ```

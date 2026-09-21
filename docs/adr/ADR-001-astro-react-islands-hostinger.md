@@ -15,7 +15,7 @@ Accepted（2026-09-07 業主裁定）。部署路徑採 **A**（ADO Pipeline 建
 ## Context
 
 舊站建立在 `vinext@1.0.0-beta.2`（Vite 生態的 Next App Router 相容層），跑在 Cloudflare Worker、託管 OpenAI Sites，
-技術現況見 [`../../HANDOVER.md`](../../HANDOVER.md) §1。四項事實使「原地清理」不成立：
+技術現況見 [`../../HANDOVER.md`](../archive/HANDOVER-2026-09-07.md) §1。四項事實使「原地清理」不成立：
 
 | # | 事實 | 後果 |
 |---|---|---|

@@ -7,7 +7,7 @@
 | v0.4 | Draft | Dale | [#1299](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1299) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
-> 路由表與內容管線見 [`../../HANDOVER.md`](../../HANDOVER.md) §2。
+> 路由表與內容管線見 [`../../HANDOVER.md`](../archive/HANDOVER-2026-09-07.md) §2。
 > 資訊架構、線框與各頁區塊來源見 `../design/wireframes-v1.md`（已移除，僅存 Git `428c053` 歷史），本文不複述。
 
 ## 1. 問題與目標

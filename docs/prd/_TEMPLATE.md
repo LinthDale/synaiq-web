@@ -5,7 +5,7 @@
 | v0.1 | Draft | <Owner> | [#{{ADO_Fx}}](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/{{ADO_Fx}}) | YYYY-MM-DD |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
-> 架構圖引用同文件 §9，不重畫。技術現況見 [`../../HANDOVER.md`](../../HANDOVER.md)。
+> 架構圖引用同文件 §9，不重畫。技術現況見 [專案 README](../../README.md)。
 
 ## 1. 問題與目標
 

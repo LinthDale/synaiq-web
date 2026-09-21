@@ -4,7 +4,7 @@
 |---|---|---|---|---|
 | v1.1 | Locked | Dale | [#1296](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1296) | 2026-09-08 |
 
-> NFR 繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異；換底決策、被否決方案與查證來源見 [`ADR-001`](../adr/ADR-001-astro-react-islands-hostinger.md)；舊樹現況見 [`../../HANDOVER.md`](../../HANDOVER.md)。三者皆不複述。
+> NFR 繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異；換底決策、被否決方案與查證來源見 [`ADR-001`](../adr/ADR-001-astro-react-islands-hostinger.md)；舊樹現況見 [`../../HANDOVER.md`](../archive/HANDOVER-2026-09-07.md)。三者皆不複述。
 
 ## 1. 問題與目標
 

@@ -51,3 +51,6 @@ desktop.ini
 docs/design/live-prototype/assets/kb-entry-redacted.png
 docs/design/live-prototype/assets/synaiq-logo-cis-5.jpg
 docs/design/live-prototype/assets/synaiq-logo-cis-6.jpg
+
+# Local preview and test scratch files
+.tmp/

@@ -1,5 +1,7 @@
 # Company address update — 2026-09-08
 
+> 歷史快照：本文的版本、待辦與路徑描述當時狀態。現行操作以 [專案入口](../../../README.md) 與 [部署指南](../../operations/deploy-hostinger.md) 為準。
+
 Last updated: 2026-09-09 (Asia/Taipei).
 
 Status: **address deployed and verified** on `synaiq.com` on 2026-09-09. The address files were uploaded at approximately 09:01; the subsequent cache-version patch passed origin and public verification. Address source commit `6e437d2` was already pushed to Azure `main`. The production base remains the approved static prototype release from `752008b`, not Astro `dist/`.

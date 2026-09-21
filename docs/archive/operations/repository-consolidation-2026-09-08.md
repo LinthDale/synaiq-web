@@ -2,7 +2,7 @@
 
 最後更新：2026-09-08。
 
-> 2026-09-09 後續清理：業主要求移除舊風格與 wireframe。下方整併時保留的線框 render，以及 `out/repo-consolidation-20260908/bootstrap-local/` 的 4 張差異 PNG，已移至回收筒；正式部署／還原包未動。現行保留範圍見 [設計維護入口](../design/README.md)。其餘內容保留當時整併紀錄。
+> 2026-09-09 後續清理：業主要求移除舊風格與 wireframe。下方整併時保留的線框 render，以及 `out/repo-consolidation-20260908/bootstrap-local/` 的 4 張差異 PNG，已移至回收筒；正式部署／還原包未動。現行保留範圍見 [設計維護入口](../../design/README.md)。其餘內容保留當時整併紀錄。
 
 ## 唯一工作入口
 
@@ -52,7 +52,7 @@ C:\Users\User\synaiq\synaiq-web
 
 `synaiq.com` 仍使用 `752008b` 的手動封裝版本，詳見 [部署紀錄](deployment-synaiq-com-2026-09-08.md)。此次僅做 repo／分支整併，不修改 Hostinger、DNS、WordPress、資料庫或 `synaiq-ai.com` 產品服務。
 
-ADO YAML 改為人工觸發、建置／測試／artifact only。舊 FTP 部署與遠端目錄清空步驟不適用；`main` 合併及 Git push 不是正式站更新。參見 [Hostinger 操作索引](deploy-hostinger.md)。
+ADO YAML 改為人工觸發、建置／測試／artifact only。舊 FTP 部署與遠端目錄清空步驟不適用；`main` 合併及 Git push 不是正式站更新。參見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
 
 ## 最終驗證項目
 

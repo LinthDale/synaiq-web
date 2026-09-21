@@ -7,7 +7,7 @@
 | v0.3 | Draft | Dale | [#1297](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1297) | 2026-09-08 |
 
 > NFR 一律繼承 [`../guidelines/PRD-Guideline-Web.md`](../guidelines/PRD-Guideline-Web.md) §4，本文只列差異。
-> 內容管線規則見 [`../../HANDOVER.md`](../../HANDOVER.md) §2，本文不複述。
+> 內容管線規則見 [`../../HANDOVER.md`](../archive/HANDOVER-2026-09-07.md) §2，本文不複述。
 > KIP 文案的事實來源為 [`../design/kip-deck-extract.md`](../design/kip-deck-extract.md)（`S1`–`S6`）；
 > 逐頁的沿用／改寫／新寫分工見 `../design/content-gap-list.md`（已移除，僅存 Git `428c053` 歷史）。
 
