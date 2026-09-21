@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The four pages in both languages. These are the canonical addresses produced by
+     page-metadata.js; seo-metadata.test.mjs fails if this file and that module drift
+     apart. No lastmod: the pages are edited as one document and a guessed date is worse
+     than none. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://synaiq.com/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=home&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=home&amp;lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=home&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=kip&amp;lang=zh-Hant</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=kip&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=kip&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=kip&amp;lang=zh-Hant"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=kip&amp;lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=kip&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=kip&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=kip&amp;lang=zh-Hant"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=cases&amp;lang=zh-Hant</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=cases&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=cases&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=cases&amp;lang=zh-Hant"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=cases&amp;lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=cases&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=cases&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=cases&amp;lang=zh-Hant"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=about&amp;lang=zh-Hant</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=about&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=about&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=about&amp;lang=zh-Hant"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=about&amp;lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=about&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=about&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=about&amp;lang=zh-Hant"/>
+  </url>
+</urlset>

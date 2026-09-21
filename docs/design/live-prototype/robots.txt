@@ -1,0 +1,9 @@
+# Crawl policy for https://synaiq.com.
+# The published pages are one document served from a versioned release folder; Googlebot
+# must be able to fetch that folder's JavaScript and CSS to render them, so nothing under
+# /synaiq-release- is blocked here. Retired release folders are withdrawn with HTTP 410
+# in the site routing, not with a Disallow rule.
+User-agent: *
+Allow: /
+
+Sitemap: https://synaiq.com/sitemap.xml

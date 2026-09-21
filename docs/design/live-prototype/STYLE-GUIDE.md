@@ -18,6 +18,9 @@
 | 關於我們的理念、團隊名單、職稱及學經歷 | `locale-about.js` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
 | 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
 | 瀏覽器分頁標題（四頁中英） | `locale-common.js` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
+| 搜尋結果摘要（四頁中英） | `locale-common.js` 的 `description`；詳見「搜尋引擎中繼資料」 |
+| 正規網址、hreflang、og 標籤 | `page-metadata.js` 算出網址與文字，`prototype.js` 寫進 `<head>`；詳見「搜尋引擎中繼資料」 |
+| robots.txt、sitemap.xml | 本目錄的同名檔案；改網址規則要同步 `page-metadata.js` |
 | CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
 | 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
 | 另外兩段動畫的查詢、片名與步驟 | `locale-demo.js` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
@@ -39,6 +42,29 @@
 - 「首頁／KIP 平台／實績展示／關於我們」是換頁，段落目錄依當前頁改變。文字在 `locale-common.js` 的 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。700px 以上主導覽排在 Logo 與語言選單之間；更窄的手機版可換行，保持連結可讀。
 - 語言切換顯示的 `ZH／EN` 在 `i18n.js` 的 `catalog.shortLabel`；選單字級在 `tokens.css` 的 `--language-size`。新增語言需完整詞典與靜態圖，不能只新增一個選項，步驟見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 - 產業觀察的標題、兩段文章補充、年份、圖表朗讀說明與展開出處都在 `locale-home.js` 的 `outlook`；**圖表的 5 與 14.5 數值目前直接在 `home-design.js` 的 `budget-comparison`**，不是 CSS。若改數據，這些位置與原始來源必須一起核對。
+
+## 搜尋引擎中繼資料
+
+四頁 × 中英共八個網址，實際上是**同一份 `page.html`**。因此 `page.html` 裡**沒有**靜態
+`<link rel="canonical">`——寫死一個就會把 KIP／實績／關於我們併進首頁。`page.html` 只保留繁中首頁的
+靜態 `description` 與 og 標籤（社群爬蟲不跑 JavaScript），其餘由 `prototype.js` 依當前頁與語言就地補上。
+
+| 要改什麼 | 改哪裡 |
+|---|---|
+| 四頁中英的搜尋結果摘要 | `locale-common.js` 的 `description`；中文 ≤ 80 字、英文 ≤ 160 字 |
+| 正規網址、hreflang 的組法 | `page-metadata.js` 的 `canonicalUrl`／`alternateUrls`；純函式，不碰 DOM |
+| 實際寫進 `<head>` 的動作 | `prototype.js` 的 `applyPageMetadata`；就地更新，不重複新增標籤 |
+| 爬蟲規則與網址清單 | 本目錄的 `robots.txt`、`sitemap.xml` |
+
+- 摘要只能從該頁**既有的**首屏文案節錄，不新增承諾或數字；`page.html` 的靜態 `description`
+  必須與繁中首頁那一句完全相同，`seo-metadata.test.mjs` 會比對。
+- 正規網址一律建在 `https://synaiq.com`，與 `location.origin` 無關；從 www 或版本目錄
+  （`/synaiq-release-*/page.html`）開啟時也指回主網域。繁中首頁是 `https://synaiq.com/`，
+  其餘七組固定為 `https://synaiq.com/?page=<頁>&lang=<語言>`，參數順序不可對調。
+- 每頁三個 hreflang：`zh-Hant`、`en`、`x-default`（指向繁中）。
+- `robots.txt` **不可** Disallow `/synaiq-release-`：Googlebot 需要版本目錄裡的 JS／CSS 才能算出頁面；
+  下架的舊版本由主機路由回 410，不靠 robots 擋。
+- 改動網址規則後，`sitemap.xml` 的八個網址必須跟著改；兩邊不一致時 `seo-metadata.test.mjs` 會失敗。
 
 ## 平常先改這一個檔案
 
@@ -500,6 +526,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 | `docs/design/live-prototype/page.html` | 封裝成版本目錄中的 `page.html` 與 `index.html`；根網址讀後者 |
 | `docs/design/live-prototype/index.html`、`preview.js` | 本機連續縮放預覽外框，不上傳成正式首頁 |
 | `site.css`、`tokens.css` | 正式版本目錄內的兩份 CSS；不帶回舊 `prototype.css` 或已刪的分頁 CSS |
+| `robots.txt`、`sitemap.xml` | 一起封裝進版本目錄，內容已是 `https://synaiq.com/` 絕對網址，不做路徑改寫；需由根目錄路由改寫成 `/robots.txt`、`/sitemap.xml` 才會生效 |
 | renderer、詞典、`brand.js`、圖片 | 僅封裝需要的公開檔案；HTML、CSS、JS 及素材引用需對齊版本前綴 |
 | `STYLE-GUIDE.md`、測試、生成／錄製／部署工具、`.env.hostinger.local` | 留在本機，不上傳到公開網站 |
 

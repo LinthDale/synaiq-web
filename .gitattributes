@@ -1,3 +1,8 @@
 # Screen illustrations embed the logo's exact SVG bytes as base64.
 # Keep them stable on Windows and on clean CI checkouts.
 *.svg text eol=lf
+
+# The published crawl files are hashed byte for byte against their committed source during
+# release packaging, which normalizes line endings only for html/js/css/svg.
+docs/design/live-prototype/robots.txt text eol=lf
+docs/design/live-prototype/sitemap.xml text eol=lf

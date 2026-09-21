@@ -8,6 +8,8 @@ const root = new URL('.', import.meta.url);
 const edges = [
   ['page.html', /<script\s+type="module"\s+src="([^"]+)"/, 'prototype.js', TEAM_CONTENT_VERSION],
   ['prototype.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', TEAM_CONTENT_VERSION],
+  ['prototype.js', /from ['"]([^'"]*page-metadata\.js[^'"]*)['"]/, 'page-metadata.js', TEAM_CONTENT_VERSION],
+  ['page-metadata.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', TEAM_CONTENT_VERSION],
   ['i18n.js', /from ['"]([^'"]*locale-about\.js[^'"]*)['"]/, 'locale-about.js', TEAM_CONTENT_VERSION],
   ['i18n.js', /from ['"]([^'"]*locale-common\.js[^'"]*)['"]/, 'locale-common.js', TEAM_CONTENT_VERSION],
   ['i18n.js', /from ['"]([^'"]*locale-home\.js[^'"]*)['"]/, 'locale-home.js', TEAM_CONTENT_VERSION],

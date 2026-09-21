@@ -22,6 +22,7 @@
 | KIP 畫面＋信紙＋Wally 的秒數、延遲、出場次數 | [tokens.css](tokens.css) 搜尋「04 產品展示」；所有設定同一段 |
 | Demo 五段秒數、循環次數、滑鼠動作速度 | [tokens.css](tokens.css) 搜尋「06 Demo」；動畫文字在 [locale-demo.js](locale-demo.js) |
 | 修改動畫程式機制（不是調秒數） | [demo-animation.js](demo-animation.js)；操作方式見 [樣式維護指引](STYLE-GUIDE.md#動畫只改-tokenscss) |
+| 搜尋結果摘要、正規網址、hreflang、robots／sitemap | [locale-common.js](locale-common.js) 的 `description`、[page-metadata.js](page-metadata.js)、`robots.txt`／`sitemap.xml`；規則見 [樣式指引：搜尋引擎中繼資料](STYLE-GUIDE.md#搜尋引擎中繼資料) |
 | 中英文、其他語言、統一更換 Logo | [語言與 Logo 指引](localization-and-brand-guide.md) |
 | 插畫、新聞小圖與引用來源 | [樣式指引：素材與引用維護](STYLE-GUIDE.md#素材與引用維護) |
 | 正式站上架、快取與還原 | [Hostinger 操作索引](../../operations/deploy-hostinger.md) |

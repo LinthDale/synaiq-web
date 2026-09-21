@@ -4,6 +4,7 @@ import { renderCases, initCases } from './cases-design.js';
 import { renderAbout, initAbout } from './about-design.js';
 import { renderAdvantageSection, renderContact } from './shared-design.js';
 import { SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260911-team-content';
+import { pageMetadata } from './page-metadata.js?v=20260911-team-content';
 const query = new URLSearchParams(location.search);
 const page = resolvePage(query.get('page'));
 const pages = {
@@ -15,10 +16,44 @@ const pages = {
 const locale = resolveLocale(query.get('lang'));
 const messages = getMessages(locale);
 const common = messages.common;
-const metadata = SUPPORTED_LOCALES.find(item => item.code === locale);
-document.documentElement.lang = locale;
-document.documentElement.dir = metadata.dir;
-document.title = common.title[page];
+const localeMetadata = SUPPORTED_LOCALES.find(item => item.code === locale);
+document.documentElement.dir = localeMetadata.dir;
+
+// One document answers eight page/locale addresses, so page.html carries no canonical and
+// no per-page description; they are written here for the address actually requested.
+// Every tag is updated in place, so a language switch or page link never duplicates one.
+function upsertHeadTag(tag, identity, attributes) {
+  const selector = tag + Object.entries(identity).map(([name, value]) => `[${name}="${value}"]`).join('');
+  let element = document.head.querySelector(selector);
+  if (!element) {
+    element = document.createElement(tag);
+    for (const [name, value] of Object.entries(identity)) element.setAttribute(name, value);
+    document.head.append(element);
+  }
+  for (const [name, value] of Object.entries(attributes)) element.setAttribute(name, value);
+  return element;
+}
+function applyPageMetadata(crawl) {
+  document.documentElement.lang = crawl.lang;
+  document.title = crawl.title;
+  upsertHeadTag('meta', { name: 'description' }, { content: crawl.description });
+  upsertHeadTag('link', { rel: 'canonical' }, { href: crawl.canonical });
+  for (const alternate of crawl.alternates) {
+    upsertHeadTag('link', { rel: 'alternate', hreflang: alternate.hreflang }, { href: alternate.href });
+  }
+  for (const [property, content] of [['og:title', crawl.og.title], ['og:description', crawl.og.description], ['og:url', crawl.og.url], ['og:locale', crawl.og.locale]]) {
+    upsertHeadTag('meta', { property }, { content });
+  }
+  // Repeated property: replace the whole set rather than update one tag in place.
+  for (const stale of document.head.querySelectorAll('meta[property="og:locale:alternate"]')) stale.remove();
+  for (const content of crawl.og.localeAlternate) {
+    const element = document.createElement('meta');
+    element.setAttribute('property', 'og:locale:alternate');
+    element.setAttribute('content', content);
+    document.head.append(element);
+  }
+}
+applyPageMetadata(pageMetadata({ page, locale }));
 document.body.dataset.page = page;
 
 // Static shell labels use the same catalog as the page content.

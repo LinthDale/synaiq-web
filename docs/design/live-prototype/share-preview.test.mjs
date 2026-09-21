@@ -40,9 +40,12 @@ function fetchRaw(port, path, method = 'GET') {
 
 test('serves the review shell at both public entry points and resolves its relative dependencies', async t => {
   const { port } = await fixture(t);
-  assert.equal(PUBLIC_FILES.length, 63);
+  assert.equal(PUBLIC_FILES.length, 66);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
+  for (const file of ['page-metadata.js', 'robots.txt', 'sitemap.xml']) {
+    assert.ok(PUBLIC_FILES.some(entry => entry.url === `/live-prototype/${file}`), file);
+  }
   for (const path of ['/', '/live-prototype/', '/live-prototype/index.html', '/page.html?page=kip', '/live-prototype/page.html?page=kip', '/live-prototype/page.html?page=cases', '/live-prototype/page.html?page=about&lang=en']) {
     const res = await fetchRaw(port, path);
     assert.equal(res.status, 200, path);
@@ -66,7 +69,12 @@ test('uses no-store, noindex, same-origin framing and a narrow content security 
   assert.match(headers['content-security-policy'], /connect-src 'none'/);
   assert.match(headers['content-security-policy'], /frame-ancestors 'self'/);
   assert.doesNotMatch(headers['content-security-policy'], /unsafe-eval|\*|https:;/);
+  // The published robots.txt allows crawling; this loopback review server must not.
   assert.match((await fetchRaw(port, '/robots.txt')).body, /Disallow: \//);
+  const published = await fetchRaw(port, '/live-prototype/robots.txt');
+  assert.equal(published.status, 200);
+  assert.match(published.headers['content-type'], /text\/plain/);
+  assert.match((await fetchRaw(port, '/live-prototype/sitemap.xml')).headers['content-type'], /application\/xml/);
 });
 
 test('HEAD has the GET length and headers but no body', async t => {

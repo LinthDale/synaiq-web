@@ -13,7 +13,10 @@ const runtimeFiles = [
   'demo-animation.js',
   'kip-design.js',
   'cases-design.js', 'about-design.js', 'ink-photo.js',
-  'i18n.js', 'brand.js', 'shared-design.js', 'preview.js',
+  'i18n.js', 'page-metadata.js', 'brand.js', 'shared-design.js', 'preview.js',
+  // Published crawl files. The release packaging ships them; site routing serves them from
+  // the site root. This loopback preview keeps its own noindex robots.txt response below.
+  'robots.txt', 'sitemap.xml',
   'locale-common.js', 'locale-home.js', 'locale-kip.js', 'locale-demo.js',
   'locale-cases.js', 'locale-about.js',
   'assets/knowledge-threads-v2.png', 'assets/shared-knowledge-hands-v1.png',
@@ -59,6 +62,7 @@ const contentTypes = Object.freeze({
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp',
+  '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml; charset=utf-8',
 });
 const securityHeaders = Object.freeze({
   'Cache-Control': 'no-store',
@@ -134,6 +138,9 @@ export function createPreviewHandler({ prototypeRoot = defaultRoots.prototype, b
       send(response, request.method, 400, 'Invalid request\n');
       return;
     }
+    // This loopback review server is never the public site: it answers /robots.txt itself
+    // so a shared tunnel stays out of search engines. The published robots.txt is the
+    // allowlisted file, reachable here only at /live-prototype/robots.txt.
     if (pathname === '/robots.txt') {
       send(response, request.method, 200, 'User-agent: *\nDisallow: /\n');
       return;

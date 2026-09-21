@@ -37,6 +37,14 @@ export const zhHant = {
     "cases": "實績展示 — SynaiQ",
     "about": "關於我們 — SynaiQ"
   },
+  // Search-result summaries, trimmed from each page's approved hero copy; no new claims.
+  // The home entry is also the static description in page.html and must stay identical.
+  "description": {
+    "home": "散落的企業文件，變成隨問隨答的知識中樞。從一個問題開始，每個答案，都有出處可以追溯。",
+    "kip": "問得到、答得準、接得上。把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。",
+    "cases": "讓 AI 走進現場，讓對話跨越語言。從台南到東京，一個熟悉的身影，用四種語言，向世界介紹台灣的好味道。",
+    "about": "讓科技充滿溫度，讓 AI 走入生活。我們是鑫揚智能科技，把 AI 系統整合、知識管理與數位人技術，做成讓人願意使用的日常工具。"
+  },
   "contact": {
     "heading": [
       "先講一個場景，",
@@ -176,6 +184,13 @@ export const en = {
     "kip": "KIP Platform — SynaiQ",
     "cases": "Our Work — SynaiQ",
     "about": "About Us — SynaiQ"
+  },
+  // Search-result summaries, trimmed from each page's approved hero copy; no new claims.
+  "description": {
+    "home": "Scattered company documents become a knowledge hub you can ask. Start with a question. Every answer has a source you can trace.",
+    "kip": "Ask naturally. Answer precisely. Stay connected. Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
+    "cases": "AI in the field. Conversations beyond language. From Tainan to Tokyo, a familiar face introduces the flavors of Taiwan in four languages.",
+    "about": "Technology with warmth. AI for everyday life. SynaiQ brings AI integration, knowledge management and digital humans together in tools people want to use."
   },
   "contact": {
     "heading": [
