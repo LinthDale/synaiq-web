@@ -5,6 +5,7 @@
 | 工作 | 入口 |
 |---|---|
 | 啟動專案、理解目錄 | [專案 README](../README.md) |
+| 工程師／AI 接手官網更新、部署與權限 | [官網更新 README](../WEBSITE-UPDATE-README.md) |
 | 四頁中英文、圖片、預覽 | [網站維護](design/live-prototype/README.md) |
 | 字型、配色、排版、動畫 | [樣式指南](design/live-prototype/STYLE-GUIDE.md) |
 | 語言擴充與 Logo | [語言與品牌](design/live-prototype/localization-and-brand-guide.md) |
