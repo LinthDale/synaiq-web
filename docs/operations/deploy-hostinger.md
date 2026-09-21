@@ -6,18 +6,36 @@
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260921-site-update/`。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260921-seo-routing/`。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260921-site-update/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260921-seo-routing/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-09-21 SEO 與路由發布（現行）
+
+已完成正式上線。來源 commit：`6038f886a49aa3802719142bc0093fa27fb6bf4a`；正式目錄：`public_html/synaiq-release-20260921-seo-routing/`，65 個公開檔案。四頁中英文加入各頁 description、canonical 與 hreflang；根目錄發布 `robots.txt` 及包含 8 個網址的 `sitemap.xml`。`www` 以 301 轉至 `synaiq.com` 並保留 query；HTML、locale 與爬蟲檔案使用 `no-cache, must-revalidate`。
+
+本次接續時 stage 已完成，主機路由與 manifest 的 preview hash 相同，首頁仍為前一版；保留既有 `staged.json`，未重複上傳。先前 activate 失敗紀錄顯示尚未嘗試切換路由。重新完成 staged 17 組瀏覽器檢查後 activate 成功，65 檔與正式入口、爬蟲檔案共 76 筆 hash 驗證通過；live 17 組及快取 8 筆檢查均通過。瀏覽器涵蓋四頁 × 中英文 × 390／1440px，加 835px 導覽，檢查 SEO 中繼資料、圖片、語言切換、導覽、溢出及 JS／資源錯誤，並檢視桌面與手機 About 截圖。
+
+撤下 8 個舊 release 的公開路由，抽驗各目錄的 `index.html`、`page.html`、`locale-common.js` 均為 410；檔案仍保留在主機。前一版 `synaiq-release-20260921-site-update` 保留公開資源相容期，既有 LiteSpeed、WordPress 舊站 410 與 Wally 圖片規則保留。
+
+證據：`out/synaiq-release-20260921-seo-routing/` 的 manifest、artifact、路由前後副本、`inventory-resume.json`、`routing-resume-audit.htaccess`、`staged.json`、`activated.json`、`browser-local.json`、`browser-staged.json`、`browser-live.json`、截圖及 `cache-live.json`。私有維護入口先前已更新，本次在正式驗證後重新讀取並確認與 `guide-next.txt`、`guide-clarified.json` 的 hash 相同，公開網址仍為 410；接續驗證記錄為 `guide-resume-verified.json`。
+
+回退：先核對主機仍為下列本次正式路由 hash，再執行 `node out/synaiq-release-20260921-seo-routing/release.mjs rollback`，恢復 `synaiq-release-20260921-site-update` 與發布前完整路由。私有維護入口依 `guide-before.txt` 還原前，先核對現值仍為 `guide-clarified.json` 的 hash，避免覆蓋後續修改。保留所有新舊 release；本次未演練正式回退。
+
+| 路由 | SHA-256 |
+|---|---|
+| 發布前 | `b7979dcac12fd03ec549e8af2269c32215098b3970dee1877594ca18ee6d0f79` |
+| 測試網址開放 | `5655354996c841299f480fc5ace319e07e9f855686d5a03c4c0e074f9e58848f` |
+| 正式入口 | `e5bbadb7b4e28a44056646bf6ac28eb3058aeb866021c02abbf08fe000831020` |
 
 ## 2026-09-21 官網更新
 

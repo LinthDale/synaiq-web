@@ -1,10 +1,10 @@
 # 官網維護入口
 
-最後更新：2026-09-11。
+最後更新：2026-09-21。
 
 已上線的 Home／KIP／實績展示／關於我們中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。正式站使用另外封裝的版本，本機修改不會自動上架；現行版本與還原方式見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
 
-只改團隊文字時，編輯這裡的 `locale-about.js`，同步中英文；備份主機同名檔後，覆蓋 `public_html/synaiq-release-20260914-cases-mobile/locale-about.js`，再重新整理官網即可。檔名是 **locale-about.js**；文案檔已設定每次重新驗證快取。Hostinger 根目錄的 `00-SYNAIQ-START-HERE.txt` 已同步列出目前更新位置，其他版本資料夾留作還原。版面、CSS、圖片或新增頁面仍依樣式指引的發布流程處理。
+只改團隊文字時，編輯這裡的 `locale-about.js`，同步中英文；備份主機同名檔後，覆蓋 `public_html/synaiq-release-20260921-seo-routing/locale-about.js`，再重新整理官網即可。檔名是 **locale-about.js**；文案檔已設定每次重新驗證快取。Hostinger 根目錄的 `00-SYNAIQ-START-HERE.txt` 已同步列出目前更新位置，其他版本資料夾留作還原。版面、CSS、圖片或新增頁面仍依樣式指引的發布流程處理。
 
 ## 要改什麼，去哪裡
 

@@ -11,7 +11,7 @@
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
 | 驗收網址 | https://synaiq.com/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260921-site-update/`；供讀取參考，不可原地重跑新發布 |
+| 本機發布工具與證據 | `out/synaiq-release-20260921-seo-routing/`；供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
@@ -159,4 +159,3 @@ node "$releaseDir/update-guide.mjs"
 ## 可直接貼給下一個 AI session
 
 > 請先讀取 docs/operations/WEBSITE-UPDATE-README.md，依其中流程將本次網站修改 commit、push 並部署 synaiq.com。這個指令已包含正常發布、驗證、切換正式入口及維護紀錄同步的授權，不必逐階段再問是否繼續。沿用可用的主機存取與發布實作，先核對即時路由及來源，保留其他人的修改與歷史 release。需要系統權限時用工具提出具體要求，不重複詢問部署意願；缺少必要資料或遇到他人衝突時才提出問題。以正式網址驗證通過及 Git 同步為完成條件。
-
