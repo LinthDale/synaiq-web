@@ -1,17 +1,17 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-09-21（Asia/Taipei）。
+最後更新：2026-09-22（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260921-seo-routing/`。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260922-cases-tainan/`。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260921-seo-routing/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260922-cases-tainan/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
 
@@ -19,7 +19,29 @@
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
-## 2026-09-21 SEO 與路由發布（現行）
+## 2026-09-22 實績總覽與臺南案例發布（現行）
+
+已完成正式上線。來源 commit：`f3a96a38bc7995ace36fa5c38774c3aa902de22c`；正式目錄：`public_html/synaiq-release-20260922-cases-tainan/`，70 個公開檔案，根目錄 sitemap 包含 12 個網址。
+
+本次將實績展示分為總覽與獨立案例頁，整合東京食品展故事及現場紀錄，新增臺南市科技產業論壇、企業知識管理文案、三篇報導與配對素描顯影。總覽使用旅途文案與左右交替排列；圖片欄 60%、文字欄 40%，東京直圖另設高度上限，手機改為單欄。
+
+正式網址：[實績總覽](https://synaiq.com/?page=cases&lang=zh-Hant)、[東京食品展](https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant)、[臺南市科技產業論壇](https://synaiq.com/?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant)。各頁均可切換 `lang=en`。
+
+沿用本次已完成的 audit、baseline、preflight、package、local 26／26 與 capture-guide，未重新封裝或修改發布常數及檢查。接續依序完成 stage → staged smoke → 檢視桌機總覽及臺南桌機／手機截圖 → activate → live smoke → cache → update-guide，各命令退出碼皆為 0。stage 70 檔 hash 驗證通過且正式首頁未變；activate 70 檔與正式入口等共 81 筆 hash 驗證通過。staged 與 live 各 26／26 通過，涵蓋四頁中英文、390／1440px、835px 導覽與總覽、臺南雙語內頁、東京案例、舊錨點轉址、無效案例 noindex，以及圖片、報導連結、canonical、hreflang、溢出與 JS／資源錯誤。快取 8／8 通過，均為 `no-cache, must-revalidate`。
+
+`synaiq-release-20260921-site-update` 已退役，抽驗 `index.html`、`page.html`、`locale-common.js` 均回傳 410，檔案仍保留。前一版 `synaiq-release-20260921-seo-routing` 保留作回退及公開資源相容期；既有 LiteSpeed、WordPress 舊站 410、Wally 圖片及憑證驗證規則均保留。
+
+證據：`out/synaiq-release-20260922-cases-tainan/` 的 `inventory.json`、`baseline-verified.json`、`preflight.json`、`manifest.json`、`artifact/`、`routing-audit.htaccess`、`routing-before.htaccess`、`routing-preview.htaccess`、`routing-live.htaccess`、`browser-local.json`、`browser-staged.json`、`browser-live.json`、`screen-staged-*.png`、`screen-live-*.png`、`staged.json`、`activated.json`、`cache-live.json`、`guide-before.txt`、`guide-next.txt` 與 `guide-clarified.json`。私有維護入口 `00-SYNAIQ-START-HERE.txt` 已同步新目錄，SHA-256 為 `e5573a23aef1b977d3e1c130f4d750d9f7282454ea33c0c681e848605a769b7a`，公開網址仍為 410。
+
+回退：先確認主機仍符合下列本次正式路由 hash，再執行 `node out/synaiq-release-20260922-cases-tainan/release.mjs rollback`，恢復 `synaiq-release-20260921-seo-routing` 與發布前完整路由。私有維護入口依 `guide-before.txt` 還原前，先核對現值仍符合 `guide-clarified.json` 的 hash；原維護入口 hash 為 `c67d9ac039984ec000b29c18dae3d1b96836a8b96e6e3dd79a231ba53b87dc67`。保留全部新舊版本與證據，本次未觸發回退。
+
+| 路由 | SHA-256 |
+|---|---|
+| 發布前 | `e5bbadb7b4e28a44056646bf6ac28eb3058aeb866021c02abbf08fe000831020` |
+| 測試網址開放 | `5c9f362547d23afdd0eb63bb671c3cd0789038f06ab8e032956130c63a10a599` |
+| 正式入口 | `bb3daa7b7fad72a5ddef38bda2bba2887cf29a9043b933ee4b6fd9503f0cddb6` |
+
+## 2026-09-21 SEO 與路由發布
 
 已完成正式上線。來源 commit：`6038f886a49aa3802719142bc0093fa27fb6bf4a`；正式目錄：`public_html/synaiq-release-20260921-seo-routing/`，65 個公開檔案。四頁中英文加入各頁 description、canonical 與 hreflang；根目錄發布 `robots.txt` 及包含 8 個網址的 `sitemap.xml`。`www` 以 301 轉至 `synaiq.com` 並保留 query；HTML、locale 與爬蟲檔案使用 `no-cache, must-revalidate`。
 
