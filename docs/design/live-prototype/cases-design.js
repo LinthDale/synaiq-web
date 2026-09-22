@@ -41,10 +41,12 @@ function renderCasePhoto(entry, photo, text) {
   return `<img class="case-photo" src="${e(photo.photo)}" alt="${e(copy.alt)}" loading="${photo.eager ? 'eager' : 'lazy'}" style="--case-photo-aspect:${cssAspect(photo.aspect)}">`;
 }
 
-function renderTags(entry, overview, tags) {
+// The tags speak for themselves; the list heading is the case name above them, so no
+// aria-label is invented here.
+function renderTags(entry, tags) {
   const labels = (entry.tags ?? []).map(tag => tags[tag]).filter(Boolean);
   if (!labels.length) return '';
-  return `<ul class="case-tags" aria-label="${e(overview.listTitle)}">${labels.map(label => `<li>${e(label)}</li>`).join('')}</ul>`;
+  return `<ul class="case-tags">${labels.map(label => `<li>${e(label)}</li>`).join('')}</ul>`;
 }
 
 function renderCard(entry, copy, locale, featured) {
@@ -57,7 +59,7 @@ function renderCard(entry, copy, locale, featured) {
       <div class="case-card-copy">
         <p class="case-card-date">${e(text.dateLabel)}</p>
         <h3 class="case-card-name">${e(text.name)}</h3>
-        ${renderTags(entry, copy.overview, copy.tags)}
+        ${renderTags(entry, copy.tags)}
         <p class="case-card-summary">${e(text.summary)}</p>
         <span class="editorial-link case-card-action">${e(copy.overview.readCase)} <span aria-hidden="true">→</span></span>
       </div>

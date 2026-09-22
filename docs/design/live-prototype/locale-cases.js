@@ -6,10 +6,10 @@ export const zhHant = {
     title: ['讓 AI 走進現場，', '讓對話', '跨越語言。'],
     intro: '科技的價值，在相遇時發生。讓資訊有一張親切的面孔，也讓第一線服務，多一種與人溝通的方式。',
     action: '翻開這些故事',
-    listTitle: '全部實績',
+    listTitle: '一起見證我們的旅途',
     readCase: '翻開這個故事',
-    back: '返回全部實績',
-    notFound: { title: '找不到此案例', body: '請回到全部實績，選擇其他案例。' },
+    back: '回到旅途',
+    notFound: { title: '找不到此案例', body: '這一站還沒有故事。回到旅途，看看其他現場。' },
     closing: '下一段故事，從你的場域開始。',
   },
   // Only the content a case actually provided; label text for the identifiers in cases-data.js.
@@ -43,7 +43,7 @@ export const zhHant = {
       },
       field: {
         eyebrow: '02 / IN THE FIELD',
-        title: ['科技的價值，', '在相遇時發生。'],
+        title: ['在東京的現場，', '對話真的發生了。'],
         intro: '讓資訊有一張親切的面孔，也讓第一線服務，多一種與人溝通的方式。',
         notes: [
           ['從人的互動出發', '以熟悉的城市代表作為導覽入口，讓訪客自然開始對話。'],
@@ -68,10 +68,10 @@ export const en = {
     title: ['AI in the field.', 'Conversations', 'beyond language.'],
     intro: 'Technology finds meaning when people connect. A familiar face for information. Another way for front-line teams to welcome people.',
     action: 'Explore the stories',
-    listTitle: 'All work',
+    listTitle: 'Walk the journey with us',
     readCase: 'Explore the story',
-    back: 'Back to all work',
-    notFound: { title: 'Case not found', body: 'Return to all work to choose another case.' },
+    back: 'Back to the journey',
+    notFound: { title: 'Case not found', body: 'No story at this stop yet. Return to the journey and see the other fields.' },
     closing: 'Your setting could be the next story.',
   },
   tags: { exhibition: 'International exhibition', multilingual: 'Four languages', digitalHuman: 'AI digital human' },
@@ -104,7 +104,7 @@ export const en = {
       },
       field: {
         eyebrow: '02 / IN THE FIELD',
-        title: ['Technology finds meaning', 'when people connect.'],
+        title: ['In Tokyo,', 'the conversations happened.'],
         intro: 'A familiar face for information. Another way for front-line teams to welcome people.',
         notes: [
           ['Begin with people', 'A familiar city representative gives visitors a natural starting point for a conversation.'],

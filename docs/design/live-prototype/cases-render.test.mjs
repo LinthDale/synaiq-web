@@ -100,6 +100,39 @@ test('an unknown identifier says so, offers the overview and shows no case conte
   }
 });
 
+// Owner-approved wording. Pinned literally so a silent revert fails instead of shipping.
+test('the approved journey wording is the name of the overview in every slot', () => {
+  const zh = getMessages('zh-Hant');
+  const en = getMessages('en');
+  assert.equal(zh.cases.overview.listTitle, '一起見證我們的旅途');
+  assert.equal(en.cases.overview.listTitle, 'Walk the journey with us');
+  assert.equal(zh.cases.overview.back, '回到旅途');
+  assert.equal(en.cases.overview.back, 'Back to the journey');
+  assert.equal(zh.common.navigation.casesList, '我們的旅途');
+  assert.equal(en.common.navigation.casesList, 'The journey');
+  assert.equal(zh.cases.overview.notFound.body, '這一站還沒有故事。回到旅途，看看其他現場。');
+  assert.equal(en.cases.overview.notFound.body, 'No story at this stop yet. Return to the journey and see the other fields.');
+  // The card link and the hero link keep their own approved wording.
+  assert.equal(zh.cases.overview.readCase, '翻開這個故事');
+  assert.equal(zh.cases.overview.action, '翻開這些故事');
+  // The heading appears over the cards, the back link only inside a case.
+  const overview = render({ locale: 'zh-Hant' });
+  assert.ok(overview.includes(`<h2 id="cases-list-title">${zh.cases.overview.listTitle}</h2>`));
+  assert.ok(!overview.includes(zh.cases.overview.back));
+  // The back link keeps its arrow glyph beside the new wording.
+  assert.ok(render({ locale: 'zh-Hant', caseId: DEFAULT_CASE }).includes(`<span aria-hidden="true">←</span> ${zh.cases.overview.back}`));
+  assert.ok(render({ locale: 'en', caseId: 'not-a-case' }).includes(`<span aria-hidden="true">←</span> ${en.cases.overview.back}`));
+  // One sentence, one home: the field heading no longer repeats the overview intro.
+  for (const messages of [zh, en]) {
+    const field = messages.cases.cases[DEFAULT_CASE].field;
+    assert.equal(messages.cases.overview.intro.includes(field.title.join('')), false);
+  }
+  assert.deepEqual(zh.cases.cases[DEFAULT_CASE].field.title, ['在東京的現場，', '對話真的發生了。']);
+  assert.deepEqual(en.cases.cases[DEFAULT_CASE].field.title, ['In Tokyo,', 'the conversations happened.']);
+  // No tag list borrows the overview heading as its accessible name.
+  assert.ok(!overview.includes('class="case-tags" aria-label'));
+});
+
 test('the default message catalog and locale keep the renderer usable without arguments', () => {
   const markup = renderCases();
   assert.match(markup, /data-cases-state="overview"/);
