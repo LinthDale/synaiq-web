@@ -40,7 +40,7 @@ function fetchRaw(port, path, method = 'GET') {
 
 test('serves the review shell at both public entry points and resolves its relative dependencies', async t => {
   const { port } = await fixture(t);
-  assert.equal(PUBLIC_FILES.length, 67);
+  assert.equal(PUBLIC_FILES.length, 71);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
   for (const file of ['page-metadata.js', 'cases-data.js', 'robots.txt', 'sitemap.xml']) {
@@ -132,7 +132,7 @@ test('the new pages expose only the explicitly selected portraits, field photos 
   const portraits = PUBLIC_FILES.filter(entry => entry.url.startsWith('/brand/team/')).map(entry => entry.file);
   assert.deepEqual(portraits, ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg', 'team/daniel-web-1.jpg']);
   assert.equal(PUBLIC_FILES.filter(entry => entry.url.startsWith('/live-prototype/assets/team/')).length, 10);
-  assert.equal(PUBLIC_FILES.filter(entry => entry.url.startsWith('/live-prototype/assets/cases/')).length, 4);
+  assert.equal(PUBLIC_FILES.filter(entry => entry.url.startsWith('/live-prototype/assets/cases/')).length, 8);
   assert.equal(allowed.has('/live-prototype/assets/cases/tokyo-1-1.jpg'), false);
   assert.equal(allowed.has('/brand/team/daniel-web-1.jpg'), true);
 });

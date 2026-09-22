@@ -3264,17 +3264,19 @@ body[data-page="kip"] .kip-capability-list dd {
 .editorial-section-heading > p { max-width: 32em; margin: 0; }
 .editorial-underline { position: relative; width: fit-content; }
 .editorial-underline::after { content: ''; position: absolute; left: 0; bottom: -.07em; width: 95%; height: .09em; border-bottom: 2px solid var(--editorial-olive); border-radius: 50%; transform: rotate(-2deg); }
-/* 02 實績總覽：一筆時精選整寬，兩筆以上排成網格。封面統一裁切成同一比例，
-   取景焦點由 cases-data.js 的 focus 提供，直式來源才不會裁掉人物。 */
+/* 02 實績總覽：圖片欄 60%、文字欄 40%；直圖另設高度上限。 */
+.cases-page { --case-copy-column: 2fr; --case-image-column: 3fr; --case-column-gap: clamp(28px, 4vw, 64px); --case-portrait-long-edge: 480px; }
 .cases-list { padding-top: 0; }
-.case-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 60px 6%; }
-.case-card-grid--single { grid-template-columns: minmax(0, 1fr); }
+.case-rows { display: grid; gap: calc(var(--editorial-space) * .8); }
 .case-card { min-width: 0; }
-.case-card-link { display: grid; gap: 28px; align-items: start; grid-template-columns: minmax(0, 1fr); }
-/* 直式封面與文字並排；橫式封面整寬置頂，兩種取向都不需要另一份版型。 */
-.case-card--portrait .case-card-link { grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: 6%; align-items: center; }
-.case-card-cover { margin: 0; min-width: 0; }
+.case-card-layout { display: grid; gap: var(--case-column-gap); align-items: center; grid-template-columns: minmax(0, var(--case-image-column)) minmax(0, var(--case-copy-column)); }
+/* 偶數列鏡像：文字先排，封面用 order 移到右欄，HTML 順序不變。 */
+.case-card--right .case-card-layout { grid-template-columns: minmax(0, var(--case-copy-column)) minmax(0, var(--case-image-column)); }
+.case-card--right .case-card-cover { order: 2; }
+.case-card-cover { display: grid; place-items: center; width: 100%; margin: 0; min-width: 0; }
 .case-cover { display: block; width: 100%; aspect-ratio: var(--case-cover-aspect, 3 / 2); object-fit: cover; object-position: var(--case-cover-focus, 50% 50%); }
+.case-card--portrait .case-cover { width: calc(100% * var(--case-cover-aspect)); max-width: calc(var(--case-portrait-long-edge) * var(--case-cover-aspect)); }
+.case-card--portrait .ink-photo { width: calc(100% * var(--ink-photo-aspect)); max-width: calc(var(--case-portrait-long-edge) * var(--ink-photo-aspect)); }
 .case-card-copy { min-width: 0; }
 .case-card-date { margin: 0; }
 .case-card-name { margin: 12px 0 0; }
@@ -3285,19 +3287,19 @@ body[data-page="kip"] .kip-capability-list dd {
 .case-card-link:hover .case-card-action { border-bottom-color: var(--editorial-rule); }
 .case-card-link:hover .case-card-action > span { transform: translate(4px, 0); }
 /* 03 單一案例詳情 */
-.cases-hero-layout { display: grid; grid-template-columns: 1.12fr 1fr; gap: 6%; align-items: center; }
-/* 橫式主照先整寬出場，再接文字；直式維持左右並排。 */
-.cases-hero-layout--landscape { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-.cases-hero-layout--landscape .cases-hero-art { order: -1; max-width: none; margin: 0; }
-.cases-hero-layout--landscape .cases-hero-copy { padding-bottom: 0; }
+.cases-hero-layout { display: grid; grid-template-columns: minmax(0, var(--case-copy-column)) minmax(0, var(--case-image-column)); gap: var(--case-column-gap); align-items: center; }
+/* 兩種取向都以文字左、圖片右呈現；圖片長邊與總覽使用相同基準。 */
+.cases-hero-art > .ink-photo, .cases-hero-art > .case-photo { margin-inline: auto; }
+.cases-hero-layout--portrait .cases-hero-art > .ink-photo { width: calc(100% * var(--ink-photo-aspect)); max-width: calc(var(--case-portrait-long-edge) * var(--ink-photo-aspect)); }
+.cases-hero-layout--portrait .cases-hero-art > .case-photo { width: calc(100% * var(--case-photo-aspect)); max-width: calc(var(--case-portrait-long-edge) * var(--case-photo-aspect)); }
 /* 沒有配對手繪的案例直接顯示照片，柔邊沿用場域顯影的同一組漸層。 */
 .case-photo { display: block; width: 100%; aspect-ratio: var(--case-photo-aspect, 3 / 4); object-fit: cover; }
 .case-back { padding-bottom: var(--editorial-space); }
 .case-notfound { padding-bottom: var(--editorial-space); }
-.cases-hero-copy { min-width: 0; padding-bottom: 24px; }
+.cases-hero-copy { min-width: 0; }
 .cases-hero-copy .editorial-intro { max-width: 25em; }
 .case-identifier { display: flex; flex-wrap: wrap; gap: 10px 30px; margin-top: 76px; }
-.cases-hero-art { width: 100%; max-width: 480px; margin: -20px 0 0 auto; }
+.cases-hero-art { width: 100%; min-width: 0; margin: 0; }
 .cases-hero-art figcaption, .case-field-art figcaption { margin-top: 16px; }
 .case-story { padding-top: 0; }
 .case-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; padding: 34px 0; border-top: 1px solid var(--editorial-rule); border-bottom: 1px solid var(--editorial-rule); }
@@ -3309,6 +3311,8 @@ body[data-page="kip"] .kip-capability-list dd {
 .case-field { background: var(--editorial-wash); }
 .case-field-layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: 10%; align-items: center; }
 .case-field-art { margin: 0; min-width: 0; }
+.case-field-art--portrait > .ink-photo { max-width: calc(var(--case-portrait-long-edge) * var(--ink-photo-aspect)); margin-inline: auto; }
+.case-field-art--portrait > .case-photo { max-width: calc(var(--case-portrait-long-edge) * var(--case-photo-aspect)); margin-inline: auto; }
 .case-field-copy h2 { margin: 0; }
 .case-notes { list-style: none; padding: 0; margin: 40px 0 0; }
 .case-notes li { display: grid; grid-template-columns: 32px 1fr; gap: 18px; margin-top: 28px; }
@@ -3375,10 +3379,14 @@ body[data-page="kip"] .kip-capability-list dd {
   .team-portrait { width: 78%; }
 }
 @media (max-width: 899px) {
-  .cases-hero-layout { gap: 3%; }
-  .case-card-grid { gap: 52px 4%; }
-  .case-card--portrait .case-card-link { gap: 4%; }
-  .cases-hero-art { margin-top: 0; }
+  .cases-page { --case-portrait-long-edge: 360px; }
+  .cases-hero-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  /* 窄螢幕每一列都改成單欄、封面在上，左右交替在這個寬度沒有意義。 */
+  .case-rows { gap: 56px; }
+  .case-rows .case-card-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .case-rows .case-card--right .case-card-cover { order: 0; }
+  .case-card-cover, .cases-hero-art { max-width: 440px; margin-inline: auto; }
+  .cases-hero-art { order: -1; }
   .case-identifier { margin-top: 42px; }
   .case-story-layout, .case-field-layout { gap: 6%; }
   .editorial-section-heading { gap: 28px; }
@@ -3391,11 +3399,9 @@ body[data-page="kip"] .kip-capability-list dd {
 @media (max-width: 639px) {
   .editorial-kicker { margin-bottom: 24px; }
   .cases-hero-layout, .case-story-layout, .case-field-layout { grid-template-columns: 1fr; }
-  .case-card-grid, .case-card--portrait .case-card-link { grid-template-columns: 1fr; gap: 24px; }
-  .case-card-grid { gap: 44px; }
+  .case-rows { gap: 48px; }
   .case-card-summary { margin-bottom: 18px; }
   .cases-hero-copy { padding-bottom: 0; }
-  .cases-hero-art { max-width: 420px; margin: 30px auto 0; }
   .cases-hero-art figcaption, .case-field-art figcaption { margin-top: 10px; }
   .case-identifier { margin-top: 32px; }
   .case-facts { grid-template-columns: 1fr; gap: 24px; padding-block: 28px; }

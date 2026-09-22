@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { SUPPORTED_PAGES, SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, localeHref, pageHref, escapeHtml } from './i18n.js';
 import { pageMetadata, canonicalUrl, crawlTargets, crawlUrls, SITE_ORIGIN, INDEXABLE, NOT_INDEXABLE } from './page-metadata.js';
-import { DEFAULT_CASE, resolveCaseId, publishedCases } from './cases-data.js';
+import { DEFAULT_CASE, resolveCaseId, publishedCases, caseIds } from './cases-data.js';
 import { createHeadShim } from './head-test-helpers.mjs';
 import { PUBLIC_FILES } from './share-preview.mjs';
 
@@ -50,12 +50,15 @@ test('canonical addresses keep one stable form: page before language, bare root 
     'https://synaiq.com/?page=cases&lang=en',
     'https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant',
     'https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=en',
+    'https://synaiq.com/?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant',
+    'https://synaiq.com/?page=cases&case=tainan-tech-forum-2026&lang=en',
     'https://synaiq.com/?page=about&lang=zh-Hant',
     'https://synaiq.com/?page=about&lang=en',
   ]);
   assert.equal(new Set(crawlUrls()).size, crawlUrls().length);
   // A case identifier that is unknown, unpublished or malformed never reaches an address.
-  for (const caseId of ['not-a-case', 'tainan-tech-forum-2026', '../../private', '__proto__']) {
+  // 'kaohsiung-expo-2027' has a valid shape but no content yet, so it stays unreachable.
+  for (const caseId of ['not-a-case', 'kaohsiung-expo-2027', '../../private', '__proto__']) {
     assert.equal(canonicalUrl({ page: 'cases', locale: 'en', caseId }), 'https://synaiq.com/?page=cases&lang=en', caseId);
   }
 });
@@ -88,7 +91,7 @@ test('every published case has its own crawl identity and keeps the section page
 });
 
 test('an unknown case identifier states the miss, leaves the index and carries no canonical', () => {
-  for (const caseId of ['not-a-case', 'tainan-tech-forum-2026', '../../private', '<script>', '__proto__']) {
+  for (const caseId of ['not-a-case', 'kaohsiung-expo-2027', '../../private', '<script>', '__proto__']) {
     for (const { code } of SUPPORTED_LOCALES) {
       const label = `${caseId}/${code}`;
       const overview = getMessages(code).cases.overview;
@@ -217,7 +220,9 @@ test('the sitemap lists exactly the canonical addresses of the four pages and ev
     assert.deepEqual(entry.alternates, expected, entry.loc);
   }
   // A miss has no canonical, so nothing that is not indexable can appear in the sitemap.
-  assert.doesNotMatch(xml, /case=(?!tokyo-foodex-2026)/);
+  const listed = [...xml.matchAll(/case=([a-z0-9-]+)/g)].map(match => match[1]);
+  assert.ok(listed.length > 0);
+  for (const id of listed) assert.ok(caseIds().includes(id), `${id} is in the sitemap but not published`);
   assert.equal(/<lastmod>/.test(xml), false, 'a guessed lastmod is worse than none');
   assert.doesNotMatch(xml, PREVIEW_WORDING);
 });

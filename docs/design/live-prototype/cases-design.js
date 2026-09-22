@@ -7,16 +7,17 @@ import { CASES, publishedCases, findCase, parseAspect, aspectOrientation } from 
 // all wording from locale-cases.js, both keyed by the same identifier.
 
 const PAPER_PLANE = `<svg class="editorial-paper-plane" viewBox="0 0 180 100" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 79c20-24 52-20 51-4-1 16-28 13-23-4 5-16 26-19 46-24" stroke-width="1.1" stroke-dasharray="3 5"/><path d="m89 38 74-23-34 60-11-25-29-12Z" stroke-width="1.4"/><path d="m118 50 45-35-54 30M118 50l-4 16 10-7" stroke-width="1.1"/><path d="m92 35 68-23M133 75l31-56" stroke-width=".65" opacity=".4"/></svg>`;
-// Every overview cover is cropped to one ratio so a mixed portrait/landscape grid stays even.
-const GRID_COVER_ASPECT = '3 / 2';
+// The overview lists cases as full-width alternating rows, so each cover keeps its own
+// ratio; this is only the fallback for a case that declares no usable one.
+const DEFAULT_COVER_ASPECT = '3 / 2';
 
-function cssAspect(aspect, fallback = GRID_COVER_ASPECT) {
+function cssAspect(aspect, fallback = DEFAULT_COVER_ASPECT) {
   const ratio = parseAspect(aspect) ?? parseAspect(fallback);
   return `${ratio.width} / ${ratio.height}`;
 }
 
 function coverAspect(entry) {
-  return entry.cover?.aspect ?? entry.hero?.aspect ?? GRID_COVER_ASPECT;
+  return entry.cover?.aspect ?? entry.hero?.aspect ?? DEFAULT_COVER_ASPECT;
 }
 
 /** object-position for a cover cropped away from its own ratio; validated, never raw. */
@@ -29,6 +30,10 @@ function renderCover(entry, text, aspect) {
   // A cover shares its alternative text with the photo it is taken from unless the case
   // names another entry, so a card is never described by the wrong picture.
   const alt = text.photos[entry.cover?.altKey ?? entry.hero.key].alt;
+  const paired = [entry.hero, ...(entry.field?.photos ?? [])].find(photo => photo.photo === entry.cover.image && photo.sketch);
+  if (paired) {
+    return renderInkPhoto({ id: `cover-${entry.id}`, sketch: paired.sketch, photo: paired.photo, alt, label: text.photos[paired.key].label, aspect: cssAspect(aspect), kind: paired.kind });
+  }
   return `<img class="case-cover" src="${e(entry.cover.image)}" alt="${e(alt)}" loading="lazy" style="--case-cover-aspect:${cssAspect(aspect)};--case-cover-focus:${coverFocus(entry)}">`;
 }
 
@@ -49,27 +54,28 @@ function renderTags(entry, tags) {
   return `<ul class="case-tags">${labels.map(label => `<li>${e(label)}</li>`).join('')}</ul>`;
 }
 
-function renderCard(entry, copy, locale, featured) {
+// Rows alternate sides. Both orientations share the same 60% image column;
+// Portraits have a separate height cap so the wider image column does not enlarge them.
+function renderRow(entry, copy, locale, index) {
   const text = copy.cases[entry.id];
-  const aspect = featured ? coverAspect(entry) : GRID_COVER_ASPECT;
-  const orientation = featured ? aspectOrientation(aspect) : 'grid';
-  return `<article class="case-card case-card--${orientation}${featured ? ' case-card--featured' : ''}">
-    <a class="case-card-link" href="${e(pageHref({ page: 'cases', caseId: entry.id, locale }))}">
+  const aspect = coverAspect(entry);
+  const side = index % 2 === 0 ? 'left' : 'right';
+  return `<article class="case-card case-card--${aspectOrientation(aspect)} case-card--${side}" data-case-row="${index + 1}">
+    <div class="case-card-layout">
       <figure class="case-card-cover">${renderCover(entry, text, aspect)}</figure>
-      <div class="case-card-copy">
+      <a class="case-card-copy case-card-link" href="${e(pageHref({ page: 'cases', caseId: entry.id, locale }))}">
         <p class="case-card-date">${e(text.dateLabel)}</p>
         <h3 class="case-card-name">${e(text.name)}</h3>
         ${renderTags(entry, copy.tags)}
         <p class="case-card-summary">${e(text.summary)}</p>
         <span class="editorial-link case-card-action">${e(copy.overview.readCase)} <span aria-hidden="true">→</span></span>
-      </div>
-    </a>
+      </a>
+    </div>
   </article>`;
 }
 
 function renderOverview(copy, cases, locale) {
   const o = copy.overview;
-  const featured = cases.length === 1;
   return `<section class="editorial-hero cases-overview-hero" aria-labelledby="cases-title"><div class="wrap">
       <p class="editorial-kicker">${e(o.eyebrow)}</p>
       <h1 id="cases-title">${o.title.map((line, i) => `<span${i === 2 ? ' class="editorial-underline"' : ''}>${e(line)}</span>`).join('')}</h1>
@@ -78,7 +84,7 @@ function renderOverview(copy, cases, locale) {
     </div></section>
     <section class="editorial-section cases-list" id="cases-list" aria-labelledby="cases-list-title"><div class="wrap">
       <div class="editorial-section-heading"><h2 id="cases-list-title">${e(o.listTitle)}</h2></div>
-      <div class="case-card-grid${featured ? ' case-card-grid--single' : ''}">${cases.map(entry => renderCard(entry, copy, locale, featured)).join('')}</div>
+      <div class="case-rows">${cases.map((entry, index) => renderRow(entry, copy, locale, index)).join('')}</div>
     </div></section>`;
 }
 
@@ -118,7 +124,7 @@ function renderField(entry, text) {
   const photos = entry.field?.photos ?? [];
   const notes = text.field?.notes ?? [];
   if (!hasField(entry, text)) return '';
-  const art = photos.map(photo => `<figure class="case-field-art">${renderCasePhoto(entry, photo, text)}<figcaption>${e(text.photos[photo.key].caption)}</figcaption></figure>`).join('');
+  const art = photos.map(photo => `<figure class="case-field-art case-field-art--${aspectOrientation(photo.aspect)}">${renderCasePhoto(entry, photo, text)}<figcaption>${e(text.photos[photo.key].caption)}</figcaption></figure>`).join('');
   return `<section class="editorial-section case-field" id="fieldnotes" aria-labelledby="case-field-title"><div class="wrap case-field-layout">
       ${art}
       <div class="case-field-copy"><p class="editorial-kicker">${e(text.field.eyebrow)}</p><h2 id="case-field-title">${text.field.title.map(e).join('<br>')}</h2><p class="editorial-intro">${e(text.field.intro)}</p><ol class="case-notes">${notes.map(([title, body], i) => `<li><span>0${i + 1}</span><div><h3>${e(title)}</h3><p>${e(body)}</p></div></li>`).join('')}</ol></div>

@@ -21,11 +21,13 @@ test('every published case carries one permanent identifier in the approved shap
   }
   // The legacy section anchors point at this case, so it has to be published.
   assert.ok(findCase(DEFAULT_CASE), `${DEFAULT_CASE} must be published`);
-  // Newest first, with at most one featured case lifted to the top.
+  // At most one featured case, and it leads whatever its date; the rest are newest first.
   assert.ok(published.filter(entry => entry.featured).length <= 1);
-  for (const [index, entry] of published.entries()) {
-    if (index === 0 || entry.featured) continue;
-    assert.ok(published[index - 1].date.start >= entry.date.start, `${entry.id} is out of date order`);
+  if (published.some(entry => entry.featured)) assert.equal(published[0].featured, true);
+  const rest = published.filter(entry => !entry.featured);
+  for (const [index, entry] of rest.entries()) {
+    if (index === 0) continue;
+    assert.ok(rest[index - 1].date.start >= entry.date.start, `${entry.id} is out of date order`);
   }
 });
 
@@ -111,7 +113,9 @@ test('coverage addresses are https and unique per case', () => {
 });
 
 test('an unknown identifier resolves to null and never becomes a path', () => {
-  for (const value of [undefined, null, '', 'not-a-case', 'tainan-tech-forum-2026', '../../private', '/etc/passwd', '<script>', '__proto__', 'constructor', 'TOKYO-FOODEX-2026', 'a'.repeat(65)]) {
+  // 'kaohsiung-expo-2027' is the shape a future case would use; until it is published it is
+  // a miss like any other, so an identifier can never be reached before its content exists.
+  for (const value of [undefined, null, '', 'not-a-case', 'kaohsiung-expo-2027', '../../private', '/etc/passwd', '<script>', '__proto__', 'constructor', 'TOKYO-FOODEX-2026', 'a'.repeat(65)]) {
     assert.equal(resolveCaseId(value), null, String(value));
     assert.equal(findCase(value), null, String(value));
   }

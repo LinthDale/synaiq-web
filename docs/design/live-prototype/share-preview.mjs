@@ -38,6 +38,10 @@ const runtimeFiles = [
   'assets/team/steve-20260624-photo.webp', 'assets/team/steve-20260624-sketch.webp',
   'assets/cases/tokyo-2-scaled.jpg', 'assets/cases/tokyo-5.jpg',
   'assets/cases/tokyo-2-sketch.webp', 'assets/cases/tokyo-5-sketch.webp',
+  'assets/cases/tainan-tech-forum-2026-cover.jpg',
+  'assets/cases/tainan-tech-forum-2026-panel.jpg',
+  'assets/cases/tainan-tech-forum-2026-cover-sketch.webp',
+  'assets/cases/tainan-tech-forum-2026-panel-sketch.webp',
 ];
 const productFiles = ['synaiq-logo-light.svg', 'wally/wally-2.png', 'wally/wally-series.png', 'wally-2-plus.png', 'wally-mini.png'];
 const teamFiles = ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg', 'team/daniel-web-1.jpg'];

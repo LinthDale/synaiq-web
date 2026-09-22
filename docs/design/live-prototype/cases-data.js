@@ -11,12 +11,13 @@ export const CASE_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const TOKYO_FOODEX_2026 = Object.freeze({
   id: 'tokyo-foodex-2026',
   published: true,
-  featured: false,
+  // Kept at the top of the overview by decision, ahead of the newer Tainan case.
+  featured: true,
   // Real precision only; a case known to the month never gains an invented day.
   date: Object.freeze({ start: '2026-03-10', end: '2026-03-10', precision: 'day' }),
   // Label text for each tag lives in locale-cases.js under the same key.
   tags: Object.freeze(['exhibition', 'multilingual', 'digitalHuman']),
-  // The overview grid crops every cover to one ratio, so a portrait source names its focus.
+  // Paired covers share the hero reveal; focus is retained for the plain-photo fallback.
   cover: Object.freeze({ image: 'assets/cases/tokyo-2-scaled.jpg', focus: '50% 32%' }),
   hero: Object.freeze({
     key: 'hero', photo: 'assets/cases/tokyo-2-scaled.jpg',
@@ -35,7 +36,31 @@ const TOKYO_FOODEX_2026 = Object.freeze({
   ]),
 });
 
-export const CASES = Object.freeze([TOKYO_FOODEX_2026]);
+const TAINAN_TECH_FORUM_2026 = Object.freeze({
+  id: 'tainan-tech-forum-2026',
+  published: true,
+  featured: false,
+  date: Object.freeze({ start: '2026-09-16', end: '2026-09-17', precision: 'day' }),
+  tags: Object.freeze(['industry-forum', 'knowledge-platform', 'panel']),
+  // A landscape cover fills the image column; portraits have a separate height cap.
+  cover: Object.freeze({ image: 'assets/cases/tainan-tech-forum-2026-cover.jpg', focus: '50% 50%' }),
+  hero: Object.freeze({
+    key: 'hero', photo: 'assets/cases/tainan-tech-forum-2026-cover.jpg',
+    sketch: 'assets/cases/tainan-tech-forum-2026-cover-sketch.webp',
+    aspect: '16 / 9', kind: 'scene', eager: true,
+  }),
+  field: Object.freeze({
+    photos: Object.freeze([Object.freeze({
+      key: 'panel', photo: 'assets/cases/tainan-tech-forum-2026-panel.jpg',
+      sketch: 'assets/cases/tainan-tech-forum-2026-panel-sketch.webp',
+      aspect: '4 / 3', kind: 'scene',
+    })]),
+  }),
+  // No coverage confirmed for this case, so the section is omitted rather than left empty.
+  media: Object.freeze([]),
+});
+
+export const CASES = Object.freeze([TOKYO_FOODEX_2026, TAINAN_TECH_FORUM_2026]);
 
 /** Newest first, with a single featured case lifted to the top of the overview. */
 export function publishedCases(cases = CASES) {
@@ -64,7 +89,7 @@ export function parseAspect(aspect) {
   return Object.freeze({ width: +parts[1], height: +parts[2] });
 }
 
-/** Landscape covers lead above the copy; portrait covers sit beside it. */
+/** Orientation controls image sizing; desktop cases share one side-by-side layout. */
 export function aspectOrientation(aspect) {
   const ratio = parseAspect(aspect);
   return ratio && ratio.width / ratio.height >= 1 ? 'landscape' : 'portrait';

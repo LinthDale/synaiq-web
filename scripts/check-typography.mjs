@@ -6,7 +6,8 @@ import { resolve } from 'node:path';
 import postcss from 'postcss';
 import { chromium } from 'playwright';
 import { createPreviewServer } from '../docs/design/live-prototype/share-preview.mjs';
-import { SUPPORTED_PAGES } from '../docs/design/live-prototype/i18n.js';
+import { SUPPORTED_PAGES, pageHref } from '../docs/design/live-prototype/i18n.js';
+import { caseIds } from '../docs/design/live-prototype/cases-data.js';
 
 const directory = 'docs/design/live-prototype/';
 const tokens = postcss.parse(readFileSync(`${directory}tokens.css`, 'utf8'));
@@ -50,8 +51,12 @@ try {
   report.browser = browser.version();
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   page.on('pageerror', error => report.errors.push(error.message));
-  for (const name of SUPPORTED_PAGES) for (const language of ['zh-Hant', 'en']) {
-    await page.goto(`${origin}/live-prototype/page.html?page=${name}&lang=${language}`, { waitUntil: 'networkidle' });
+  const pages = SUPPORTED_PAGES.flatMap(name => [
+    { name, caseId: null },
+    ...(name === 'cases' ? caseIds().map(caseId => ({ name, caseId })) : []),
+  ]);
+  for (const { name, caseId } of pages) for (const language of ['zh-Hant', 'en']) {
+    await page.goto(`${origin}/live-prototype/page.html${pageHref({ page: name, caseId, locale: language })}`, { waitUntil: 'networkidle' });
     await page.locator('main h1').waitFor();
     await page.evaluate(() => document.fonts.ready);
     const scenes = await page.locator('[data-demo-select]').evaluateAll(buttons => buttons.map(button => button.dataset.demoSelect));
@@ -98,7 +103,19 @@ try {
           const style = getComputedStyle(el);
           return { element: `${el.tagName}.${el.className}`, text: el.textContent.trim().slice(0, 100), font: style.fontFamily, size: style.fontSize, weight: style.fontWeight, leading: style.lineHeight, color: style.color };
         });
-        const ownership = { authoredRules: authored.length, textElements: textElements.length, misplaced, inline, unexpectedSheets };
+        // Independently walk all text nodes: page length is not evidence that the
+        // inventory is complete, especially for an overview with only a few cases.
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const textParents = new Set();
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (node.textContent.trim() && !['SCRIPT', 'STYLE'].includes(node.parentElement?.tagName)) textParents.add(node.parentElement);
+        }
+        const ownership = {
+          authoredRules: authored.length, textElements: textElements.length,
+          completeTextInventory: textParents.size === textElements.length && textElements.every(element => textParents.has(element)),
+          misplaced, inline, unexpectedSheets,
+        };
         const failures = [];
         const checked = [];
         const overflow = document.documentElement.scrollWidth > innerWidth;
@@ -159,12 +176,11 @@ try {
         }
         return { checked, failures, overflow, underline, eyebrowInitials, ownership, textInventory };
       }, { definitions: [...definitions.values()], overrides });
-      report.cases.push({ name, language, scene, width, ...result });
+      report.cases.push({ name, caseId, language, scene, width, ...result });
       assert.deepEqual(result.ownership.misplaced, [], 'Authored typography found outside tokens.css');
       assert.deepEqual(result.ownership.inline, [], 'Inline typography bypasses the editing file');
       assert.deepEqual(result.ownership.unexpectedSheets, [], 'Unaudited external stylesheet');
-      const minimumTextElements = ['home', 'kip'].includes(name) ? 100 : 50;
-      assert.ok(result.ownership.textElements > minimumTextElements, 'Text inventory must cover the rendered page, not only known settings');
+      assert.ok(result.ownership.textElements > 0 && result.ownership.completeTextInventory, `Incomplete text inventory at ${name}/${caseId ?? 'overview'}/${language}/${width}`);
       assert.deepEqual(result.failures, [], `Inactive settings at ${name}/${language}/${scene}/${width}`);
       assert.equal(result.overflow, false, `Overflow at ${name}/${language}/${scene}/${width}`);
       if (name === 'home' && language === 'zh-Hant') assert.deepEqual(result.underline, { text: '知識中樞', other: '變成隨問隨答的', decorated: 'underline', firstDecoration: 'none', stableGeometry: true });

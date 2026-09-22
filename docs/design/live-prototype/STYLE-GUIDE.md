@@ -190,7 +190,7 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `page=cases&case=<識別碼>` | 單一案例：案例故事 `story`、現場紀錄 `fieldnotes`、相關報導 `press` | `cases-design.js`／`locale-cases.js` 的 `cases.<識別碼>`＋`cases-data.js` |
 | `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locale-about.js` |
 
-兩頁都支援 `lang=zh-Hant`／`lang=en`。實績分成「總覽」與「單一案例」：總覽文案適用所有案例，「從台南到東京」等專屬文字屬於東京案例。目前只有一則 `tokyo-foodex-2026`，四語導覽與裝置整合是故事內容；不要把展會整體業績寫成 AI 帶來的績效。`01 / THE STORY`、`02 / IN THE FIELD` 是案例**內**的小節標示，不是案例排序。本頁目錄會依網址變化：總覽只有「我們的旅途」，案例只列它實際有的小節，找不到案例時沒有目錄。總覽卡片上方的標題是「一起見證我們的旅途」，案例頁的返回連結是「回到旅途」；這組旅途文案由使用者核准，`cases-render.test.mjs` 逐字比對。新增一筆實績的固定步驟見 [維護入口](README.md#新增一筆實績)。
+兩頁都支援 `lang=zh-Hant`／`lang=en`。實績分成「總覽」與「單一案例」：總覽文案適用所有案例，「從台南到東京」等專屬文字屬於東京案例。目前兩則：`tokyo-foodex-2026`（四語導覽與裝置整合，有現場紀錄與兩則報導）與 `tainan-tech-forum-2026`（KIP 參展與綜合論談與談，有現場紀錄、沒有報導）。不要把展會整體業績寫成 AI 帶來的績效。`01 / THE STORY`、`02 / IN THE FIELD` 是案例**內**的小節標示，不是案例排序。本頁目錄會依網址變化：總覽只有「我們的旅途」，案例只列它實際有的小節，找不到案例時沒有目錄。總覽卡片上方的標題是「一起見證我們的旅途」，案例頁的返回連結是「回到旅途」；這組旅途文案由使用者核准，`cases-render.test.mjs` 逐字比對。新增一筆實績的固定步驟見 [維護入口](README.md#新增一筆實績)。
 
 團隊名單的唯一文字來源是 `locale-about.js`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
 
@@ -198,12 +198,19 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 封面直式、橫式都支援，由 `cases-data.js` 的 `hero.aspect` 決定，版型只有一份：
 
-- 直式（例如 `3 / 4`，東京）：案例頁維持文字與主照左右並排，`cases-hero-layout--portrait`。
-- 橫式（例如 `16 / 9`）：主照整寬置頂、文字接在下方，`cases-hero-layout--landscape`；沒有另一份版型。
-- 總覽網格：所有封面統一裁成 **3:2**（`.case-cover` 的 `object-fit: cover`），直式來源用 `cover.focus`
-  指定 `object-position`（東京為 `50% 32%`，讓人物與螢幕留在畫面內）。只有一筆案例時改用單張整寬精選版面。
+- 900px 以上，總覽與案例頁皆為**圖片 60%、文字 40%**（扣除欄間距後計算）。
+  `site.css` 的 `.cases-page` 集中設定 `--case-copy-column`、`--case-image-column` 與 `--case-column-gap`。
+- 直式（例如 `3 / 4`，東京）與橫式（例如 `16 / 9`，臺南）皆使用左右雙欄；案例頁統一文字在左、圖片在右。
+  `cases-hero-layout--portrait`／`--landscape` 只區分圖片尺寸計算，不將橫圖移到整寬頂端。
+- **直式圖片高度上限 480px**，依比例縮窄並置中；由 `--case-portrait-long-edge` 集中控制總覽、主照與現場照片。橫圖仍填滿圖片欄寬，保留臺南場景的可讀尺寸。
+- **總覽是整寬的左右交替列**（`.case-rows`），不是網格：第一列封面在左（`.case-card--left`），
+  第二列在右（`.case-card--right`），之後依序交替；`data-case-row` 是該列的序號。
+  圖片欄始終佔 60%，文字欄始終佔 40%，不隨取向改變。封面使用各自宣告比例，不拉伸成同一形狀。
+- `cover.focus` 用於沒有配對手繪的靜態封面；配對顯影沿用主照的置中取景，讓手繪與真照使用同一框架。
+- 899px 以下總覽與案例頁都改成單欄、圖片在上；橫圖最大寬 440px，直圖最大高 360px，窄容器自動縮小。
 - 沒有配對手繪的案例直接顯示照片（`.case-photo`），柔邊沿用 `.ink-photo--scene` 的同一組漸層值，
-  不另外複製數值；手繪不是新增案例的門檻。
+  不另外複製數值；手繪不是新增案例的門檻。總覽封面會從案例照片中尋找同路徑的配對手繪，找到便使用既有顯影互動。圖片按鈕與文字／故事連結分開，避免點擊暫停時跳頁。
+- 總覽排序：`featured: true` 的案例固定置頂（目前是東京），其餘依活動日期由新到舊。
 
 ### 團隊彩色照片與實績圖片互動
 
@@ -512,7 +519,8 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
 | Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
 | 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`（1440×2560，兼作總覽封面）／`tokyo-2-sketch.webp`（941×1672）、`cases/tokyo-5.jpg`（1774×2364）／`tokyo-5-sketch.webp`（1086×1449）；來源為舊官網回收的活動照片，配對用於顯影。路徑與配對只在 `cases-data.js` 定義 |
-| 新案例照片 | 放 `assets/cases/`，檔名含案例識別碼。直式主照長邊 ≥ 1600px、橫式封面建議 2400×1350（16:9）或 2400×1600（3:2），JPG、sRGB、約 300–700KB；總覽會裁成 3:2，直式來源要一併給 `cover.focus`。手繪選填，WebP、長邊約 1000px |
+| 臺南市科技產業論壇原照與手繪 | `cases/tainan-tech-forum-2026-cover.jpg`（2400×1350，16:9，261KB，兼作封面與案例主照）／`tainan-tech-forum-2026-cover-sketch.webp`（1600×900，234KB）、`cases/tainan-tech-forum-2026-panel.jpg`（1476×1107，4:3，198KB，綜合論談台上）／`tainan-tech-forum-2026-panel-sketch.webp`（1200×900，173KB）；原照由使用者提供，白底淡褐色手繪以原照作構圖、`ceo-speaking-sketch-v1.webp` 作筆觸參考，由內建 imagegen 生成；配對只在 `cases-data.js` 定義 |
+| 新案例照片 | 放 `assets/cases/`，檔名含案例識別碼。橫式封面 2400×1350（16:9）、直式主照長邊 ≥ 1600px，JPG、sRGB、mozjpeg 品質 85、4:2:0，約 200–700KB。總覽保留原始比例，只有宣告比例與原檔不同時才需要 `cover.focus`。手繪選填，WebP、長邊約 1000px |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |
 | 手撕信紙邊界 | `torn-paper-cotton-v2.webp`；真實 alpha 邊緣，窄版採裁切寬紙帶，不把整條纖維壓縮到手機寬度 |

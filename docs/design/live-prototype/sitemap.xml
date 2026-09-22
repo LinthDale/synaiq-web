@@ -53,6 +53,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant"/>
   </url>
   <url>
+    <loc>https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
+  </url>
+  <url>
+    <loc>https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://synaiq.com/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
+  </url>
+  <url>
     <loc>https://synaiq.com/?page=about&amp;lang=zh-Hant</loc>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://synaiq.com/?page=about&amp;lang=zh-Hant"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://synaiq.com/?page=about&amp;lang=en"/>

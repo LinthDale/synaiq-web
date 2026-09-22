@@ -13,8 +13,8 @@ import { PUBLIC_FILES } from './share-preview.mjs';
 // invented case can reach the site through the public data modules.
 const FIXTURE_ID = 'fixture-landscape-case';
 const FIXTURE = Object.freeze({
-  id: FIXTURE_ID, published: true, featured: true,
-  date: Object.freeze({ start: '2026-09', end: '2026-09', precision: 'month' }),
+  id: FIXTURE_ID, published: true, featured: false,
+  date: Object.freeze({ start: '2026-11', end: '2026-11', precision: 'month' }),
   tags: Object.freeze(['exhibition']),
   cover: Object.freeze({ image: 'assets/cases/fixture-wide.jpg', focus: '50% 40%' }),
   hero: Object.freeze({ key: 'hero', photo: 'assets/cases/fixture-wide.jpg', aspect: '16 / 9', kind: 'scene', eager: true }),
@@ -37,31 +37,34 @@ function messagesWith(locale) {
   return { ...base, cases: { ...base.cases, cases: { ...base.cases.cases, [FIXTURE_ID]: FIXTURE_TEXT } } };
 }
 
-const twoCases = Object.freeze([findCase(DEFAULT_CASE), FIXTURE]);
+const withFixture = Object.freeze([...CASES, FIXTURE]);
 const classesOf = markup => [...markup.matchAll(/\sclass="([^"]+)"/g)].map(match => match[1]);
 const idsOf = markup => [...markup.matchAll(/\sid="([^"]+)"/g)].map(match => match[1]).filter(id => !id.startsWith('ink-'));
 
-test('a second case turns the overview into a grid with one shared cover ratio', () => {
-  const markup = renderCases({ locale: 'zh-Hant', messages: messagesWith('zh-Hant'), cases: twoCases });
-  assert.match(markup, /case-card-grid"/);
-  assert.ok(!markup.includes('case-card-grid--single'));
-  assert.ok(!markup.includes('case-card--featured'));
-  // Every cover in the grid is cropped to the same box, so mixed orientations stay even.
-  assert.equal([...markup.matchAll(/--case-cover-aspect:3 \/ 2/g)].length, 2);
-  assert.equal([...markup.matchAll(/case-card--grid/g)].length, 2);
+test('a further case takes the next row and keeps the sides alternating', () => {
+  const markup = renderCases({ locale: 'zh-Hant', messages: messagesWith('zh-Hant'), cases: withFixture });
+  const rows = [...markup.matchAll(/<article class="case-card ([^"]+)" data-case-row="(\d+)">/g)];
+  assert.equal(rows.length, 3, 'the shared template takes a third case with no change');
+  assert.deepEqual(rows.map(row => row[2]), ['1', '2', '3']);
+  assert.deepEqual(rows.map(row => row[1].includes('case-card--left') ? 'left' : 'right'), ['left', 'right', 'left']);
+  // The featured case leads whatever its date, then newest first: Tokyo, the fixture, Tainan.
+  assert.ok(markup.indexOf(DEFAULT_CASE) < markup.indexOf(FIXTURE_ID));
+  assert.ok(markup.indexOf(FIXTURE_ID) < markup.indexOf('tainan-tech-forum-2026'));
+  // Each cover keeps its own ratio; nothing is cropped to a shared one.
+  assert.equal([...markup.matchAll(/--(?:case-cover|ink-photo)-aspect:16 \/ 9/g)].length, 2);
+  assert.ok(markup.includes('--ink-photo-aspect:3 / 4'));
+  assert.ok(!markup.includes('--case-cover-aspect:3 / 2'));
   assert.ok(markup.includes('--case-cover-focus:50% 40%'), 'the fixture keeps its own focus');
-  assert.ok(markup.includes('--case-cover-focus:50% 32%'), 'the shipped case keeps its own focus');
-  // The featured case leads, then newest first.
-  assert.ok(markup.indexOf(FIXTURE_ID) < markup.indexOf(DEFAULT_CASE));
+  assert.ok(markup.includes('id="cover-tokyo-foodex-2026"'), 'the portrait cover uses its paired reveal');
   assert.ok(markup.includes('href="?page=cases&amp;case=fixture-landscape-case&amp;lang=zh-Hant"'));
   // Escaped, not executed.
   assert.ok(markup.includes('&lt;script&gt;alert(1)&lt;/script&gt; 橫式測試'));
   assert.ok(!markup.includes('<script>alert(1)'));
 });
 
-test('a landscape case leads with a full-width photograph and needs no sketch', () => {
+test('a landscape case uses the shared hero and needs no sketch', () => {
   const messages = messagesWith('zh-Hant');
-  const markup = renderCases({ locale: 'zh-Hant', messages, caseId: FIXTURE_ID, cases: twoCases });
+  const markup = renderCases({ locale: 'zh-Hant', messages, caseId: FIXTURE_ID, cases: withFixture });
   assert.match(markup, /data-cases-state="detail"/);
   assert.match(markup, /cases-hero-layout--landscape/);
   assert.ok(!markup.includes('cases-hero-layout--portrait'));
@@ -72,7 +75,7 @@ test('a landscape case leads with a full-width photograph and needs no sketch', 
   assert.ok(markup.includes(FIXTURE_TEXT.photos.hero.caption));
   // Absent blocks leave no heading behind, and the directory agrees with the page.
   assert.deepEqual(idsOf(markup).filter(id => ['story', 'fieldnotes', 'press'].includes(id)), ['story']);
-  assert.deepEqual([...caseSectionIds({ caseId: FIXTURE_ID, messages, cases: twoCases })], ['story']);
+  assert.deepEqual([...caseSectionIds({ caseId: FIXTURE_ID, messages, cases: withFixture })], ['story']);
   assert.ok(!markup.includes('case-field'));
   assert.ok(!markup.includes('case-press'));
   assert.ok(!markup.includes('case-notes'));
@@ -80,7 +83,7 @@ test('a landscape case leads with a full-width photograph and needs no sketch', 
 
 test('adding a case leaves the existing case detail structurally untouched', () => {
   const shipped = renderCases({ locale: 'zh-Hant', caseId: DEFAULT_CASE });
-  const alongside = renderCases({ locale: 'zh-Hant', messages: messagesWith('zh-Hant'), caseId: DEFAULT_CASE, cases: twoCases });
+  const alongside = renderCases({ locale: 'zh-Hant', messages: messagesWith('zh-Hant'), caseId: DEFAULT_CASE, cases: withFixture });
   assert.deepEqual(classesOf(alongside), classesOf(shipped));
   assert.deepEqual(idsOf(alongside), idsOf(shipped));
   const text = getMessages('zh-Hant').cases.cases[DEFAULT_CASE];
