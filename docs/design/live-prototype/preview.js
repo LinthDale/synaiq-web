@@ -1,10 +1,16 @@
 import { SUPPORTED_LOCALES, getMessages, resolveLocale, resolvePage, pageHref, escapeHtml } from './i18n.js';
+import { caseIds, resolveCaseId } from './cases-data.js';
 
 export function readPreviewRoute(href) {
   const url = new URL(href, 'https://preview.invalid/');
   let hash = url.hash.slice(1);
   try { hash = decodeURIComponent(hash); } catch { /* Keep a malformed fragment as literal text. */ }
-  return { page: resolvePage(url.searchParams.get('page')), locale: resolveLocale(url.searchParams.get('lang')), hash };
+  return {
+    page: resolvePage(url.searchParams.get('page')),
+    caseId: resolveCaseId(url.searchParams.get('case')),
+    locale: resolveLocale(url.searchParams.get('lang')),
+    hash,
+  };
 }
 
 export function previewPageHref(route) { return `page.html${pageHref(route)}`; }
@@ -12,9 +18,9 @@ export function previewPageHref(route) { return `page.html${pageHref(route)}`; }
 const format = (template, values) => template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
 
 export function initPreview({ document = globalThis.document, window = globalThis.window, ResizeObserver = globalThis.ResizeObserver } = {}) {
-  const ids = ['stage', 'viewport', 'preview', 'width', 'page', 'language', 'fit', 'readout', 'direct', 'status', 'metrics'];
+  const ids = ['stage', 'viewport', 'preview', 'width', 'page', 'case', 'language', 'fit', 'readout', 'direct', 'status', 'metrics'];
   const nodes = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
-  const { stage, viewport, preview: frame, width, page, language } = nodes;
+  const { stage, viewport, preview: frame, width, page, case: caseSelect, language } = nodes;
   let route = readPreviewRoute(window.location.href);
   let frameWindow;
   let copy;
@@ -24,6 +30,8 @@ export function initPreview({ document = globalThis.document, window = globalThi
     nodes.direct.href = new URL(previewPageHref(route), window.location.href).href;
     const url = new URL(window.location.href);
     url.searchParams.set('page', route.page);
+    if (route.caseId) url.searchParams.set('case', route.caseId);
+    else url.searchParams.delete('case');
     url.searchParams.set('lang', route.locale);
     url.hash = new URL(previewPageHref(route), url).hash;
     window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
@@ -52,6 +60,15 @@ export function initPreview({ document = globalThis.document, window = globalThi
     nodes.status.textContent = format(copy.status, { width: w, scale: Math.round(scale * 100) });
   }
 
+  // Case names are translated, so the picker is rebuilt with the rest of the shell copy.
+  function renderCaseOptions() {
+    const messages = getMessages(route.locale);
+    const options = [['', messages.common.navigation.casesList], ...caseIds().map(id => [id, messages.cases.cases[id].name])];
+    caseSelect.innerHTML = options.map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('');
+    caseSelect.value = route.caseId ?? '';
+    caseSelect.disabled = route.page !== 'cases';
+  }
+
   function localize() {
     const common = getMessages(route.locale).common;
     copy = common.preview;
@@ -62,6 +79,7 @@ export function initPreview({ document = globalThis.document, window = globalThi
     for (const option of page.options) option.textContent = common.navigation[`${option.value}Page`] ?? common.navigation[option.value];
     page.value = route.page;
     language.value = route.locale;
+    renderCaseOptions();
     frame.title = copy.frame;
     resize();
     inspect();
@@ -97,11 +115,14 @@ export function initPreview({ document = globalThis.document, window = globalThi
 
   const resizeAndInspect = () => { resize(); window.requestAnimationFrame(inspect); };
   const fit = () => { width.value = String(Math.max(320, Math.min(1600, stage.clientWidth - 32))); resizeAndInspect(); };
-  const changePage = () => navigate({ page: resolvePage(page.value), locale: route.locale, hash: '' });
+  // A page switch starts over on that page; a language switch keeps the case and section.
+  const changePage = () => navigate({ page: resolvePage(page.value), caseId: null, locale: route.locale, hash: '' });
+  const changeCase = () => navigate({ ...route, caseId: resolveCaseId(caseSelect.value), hash: '' });
   const changeLanguage = () => navigate({ ...route, locale: resolveLocale(language.value) });
   const restoreRoute = () => navigate(readPreviewRoute(window.location.href));
   width.addEventListener('input', resizeAndInspect);
   page.addEventListener('change', changePage);
+  caseSelect.addEventListener('change', changeCase);
   language.addEventListener('change', changeLanguage);
   nodes.fit.addEventListener('click', fit);
   frame.addEventListener('load', loaded);
@@ -117,6 +138,7 @@ export function initPreview({ document = globalThis.document, window = globalThi
     window.clearInterval(timer);
     width.removeEventListener('input', resizeAndInspect);
     page.removeEventListener('change', changePage);
+    caseSelect.removeEventListener('change', changeCase);
     language.removeEventListener('change', changeLanguage);
     nodes.fit.removeEventListener('click', fit);
     frame.removeEventListener('load', loaded);

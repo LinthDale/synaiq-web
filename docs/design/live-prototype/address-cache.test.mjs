@@ -3,19 +3,23 @@ import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { PUBLIC_FILES } from './share-preview.mjs';
 
-const TEAM_CONTENT_VERSION = '20260911-team-content';
+// One shared token for every versioned edge; the cases expansion restructured the work
+// page's copy, so returning visitors must not keep a half-old module set.
+const CONTENT_VERSION = '20260922-cases-expansion';
 const root = new URL('.', import.meta.url);
 const edges = [
-  ['page.html', /<script\s+type="module"\s+src="([^"]+)"/, 'prototype.js', TEAM_CONTENT_VERSION],
-  ['prototype.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', TEAM_CONTENT_VERSION],
-  ['prototype.js', /from ['"]([^'"]*page-metadata\.js[^'"]*)['"]/, 'page-metadata.js', TEAM_CONTENT_VERSION],
-  ['page-metadata.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', TEAM_CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-about\.js[^'"]*)['"]/, 'locale-about.js', TEAM_CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-common\.js[^'"]*)['"]/, 'locale-common.js', TEAM_CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-home\.js[^'"]*)['"]/, 'locale-home.js', TEAM_CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-kip\.js[^'"]*)['"]/, 'locale-kip.js', TEAM_CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-cases\.js[^'"]*)['"]/, 'locale-cases.js', TEAM_CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-demo\.js[^'"]*)['"]/, 'locale-demo.js', TEAM_CONTENT_VERSION],
+  ['page.html', /<script\s+type="module"\s+src="([^"]+)"/, 'prototype.js', CONTENT_VERSION],
+  ['prototype.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', CONTENT_VERSION],
+  ['prototype.js', /from ['"]([^'"]*page-metadata\.js[^'"]*)['"]/, 'page-metadata.js', CONTENT_VERSION],
+  ['prototype.js', /from ['"]([^'"]*cases-data\.js[^'"]*)['"]/, 'cases-data.js', CONTENT_VERSION],
+  ['page-metadata.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', CONTENT_VERSION],
+  ['page-metadata.js', /from ['"]([^'"]*cases-data\.js[^'"]*)['"]/, 'cases-data.js', CONTENT_VERSION],
+  ['i18n.js', /from ['"]([^'"]*locale-about\.js[^'"]*)['"]/, 'locale-about.js', CONTENT_VERSION],
+  ['i18n.js', /from ['"]([^'"]*locale-common\.js[^'"]*)['"]/, 'locale-common.js', CONTENT_VERSION],
+  ['i18n.js', /from ['"]([^'"]*locale-home\.js[^'"]*)['"]/, 'locale-home.js', CONTENT_VERSION],
+  ['i18n.js', /from ['"]([^'"]*locale-kip\.js[^'"]*)['"]/, 'locale-kip.js', CONTENT_VERSION],
+  ['i18n.js', /from ['"]([^'"]*locale-cases\.js[^'"]*)['"]/, 'locale-cases.js', CONTENT_VERSION],
+  ['i18n.js', /from ['"]([^'"]*locale-demo\.js[^'"]*)['"]/, 'locale-demo.js', CONTENT_VERSION],
 ];
 
 for (const [source, pattern, target, version] of edges) {
@@ -34,7 +38,7 @@ for (const [source, pattern, target, version] of edges) {
 }
 
 test('versioned locale imports resolve with the approved bilingual address', async () => {
-  const { getMessages } = await import(`./i18n.js?v=${TEAM_CONTENT_VERSION}`);
+  const { getMessages } = await import(`./i18n.js?v=${CONTENT_VERSION}`);
   assert.equal(getMessages('zh-Hant').common.footer.address, '407臺中市西屯區何安里臺灣大道二段910號10樓之2');
   assert.equal(getMessages('en').common.footer.address, '10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan');
 });

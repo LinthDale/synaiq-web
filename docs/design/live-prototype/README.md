@@ -14,15 +14,17 @@
 | 排版、RWD 幾何、撕紙邊界 | [site.css](site.css)；搜尋對應 BEGIN 區段 |
 | 首頁文字、CEO quote | [locale-home.js](locale-home.js)；搜尋 `ceo:`，中英文分別修改 |
 | KIP 文字／共用導覽、優勢、聯絡、頁尾 | [locale-kip.js](locale-kip.js)／[locale-common.js](locale-common.js) |
-| 實績展示文字、東京食品展故事與圖說 | [locale-cases.js](locale-cases.js)；圖片與報導連結在 [cases-design.js](cases-design.js) |
+| 實績總覽文字、各案例故事與圖說 | [locale-cases.js](locale-cases.js) 的 `overview`／`tags`／`cases.<識別碼>`，中英同步 |
+| 案例日期、排序、精選、照片路徑、封面取景與報導網址 | [cases-data.js](cases-data.js)；版型在 [cases-design.js](cases-design.js)，不為單一案例改版型 |
+| 新增一筆實績 | 本檔「新增一筆實績」小節；步驟固定，不需改共用版型 |
 | 關於我們理念、團隊姓名、職稱、學經歷 | [locale-about.js](locale-about.js)；人物素材與取景在 [about-design.js](about-design.js) |
 | 人物照片、手繪與小貓輪廓 | `assets/team/`；使用中的素材配對只在 `about-design.js` 定義 |
-| 實績場域照片與手繪 | `assets/cases/`；素材配對只在 `cases-design.js` 定義 |
+| 實績場域照片與手繪 | `assets/cases/`；素材配對只在 `cases-data.js` 定義 |
 | 新頁面的紙感版面、人物／場域顯影 | [樣式指引：實績與團隊頁](STYLE-GUIDE.md#實績與團隊頁)；字型、留白與顯影秒數在 `tokens.css`「13 實績展示／關於我們」 |
 | KIP 畫面＋信紙＋Wally 的秒數、延遲、出場次數 | [tokens.css](tokens.css) 搜尋「04 產品展示」；所有設定同一段 |
 | Demo 五段秒數、循環次數、滑鼠動作速度 | [tokens.css](tokens.css) 搜尋「06 Demo」；動畫文字在 [locale-demo.js](locale-demo.js) |
 | 修改動畫程式機制（不是調秒數） | [demo-animation.js](demo-animation.js)；操作方式見 [樣式維護指引](STYLE-GUIDE.md#動畫只改-tokenscss) |
-| 搜尋結果摘要、正規網址、hreflang、robots／sitemap | [locale-common.js](locale-common.js) 的 `description`、[page-metadata.js](page-metadata.js)、`robots.txt`／`sitemap.xml`；規則見 [樣式指引：搜尋引擎中繼資料](STYLE-GUIDE.md#搜尋引擎中繼資料) |
+| 搜尋結果摘要、正規網址、hreflang、robots／sitemap | [locale-common.js](locale-common.js) 的 `description`、[page-metadata.js](page-metadata.js) 的 `crawlUrls`、`robots.txt`／`sitemap.xml`；規則見 [樣式指引：搜尋引擎中繼資料](STYLE-GUIDE.md#搜尋引擎中繼資料) |
 | 中英文、其他語言、統一更換 Logo | [語言與 Logo 指引](localization-and-brand-guide.md) |
 | 插畫、新聞小圖與引用來源 | [樣式指引：素材與引用維護](STYLE-GUIDE.md#素材與引用維護) |
 | 正式站上架、快取與還原 | [Hostinger 操作索引](../../operations/deploy-hostinger.md) |
@@ -39,11 +41,27 @@ npm run dev:design
 
 - 繁中首頁：`page.html?page=home&lang=zh-Hant`
 - 英文 KIP：`page.html?page=kip&lang=en`
-- 繁中實績展示：`page.html?page=cases&lang=zh-Hant`；段落為 `#story`、`#fieldnotes`。
+- 繁中實績總覽：`page.html?page=cases&lang=zh-Hant`；段落為 `#cases-list`。
+- 東京食品展案例：`page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant`；段落為 `#story`、`#fieldnotes`、`#press`。預覽列有「案例」選單；切換語言保留案例，切換頁面回到總覽。
+- 舊連結 `page.html?page=cases&lang=zh-Hant#story` 會自動換成東京案例的同一段落（replaceState，不會卡住上一頁）。無效識別碼顯示「找不到此案例」並設為 noindex。
 - 繁中關於我們：`page.html?page=about&lang=zh-Hant`；段落為 `#approach`、`#leadership`、`#technical`。
 - 四頁都可切換 `lang=en`；加上 `#contact` 等錨點可定位共用段落。
 - 4318 已被此預覽使用時不必再開；需要另一個埠可用 `npm run dev:design -- 4319`。
 - 同名檔案修改不必重啟。新增素材或模組時，先更新 `share-preview.mjs` 的明確白名單，確認程序身分後僅重新載入該預覽服務，再驗證新檔可取得。
+
+## 新增一筆實績
+
+共用版型不跟著每案重寫；固定七步，順序不要跳：
+
+1. **核對內容**：名稱、日期、場域、合作單位可否公開、SynaiQ 實際提供的內容、照片使用依據。未確認的活動訊息或產品介紹不能直接當成實績。
+2. **取固定識別碼**：小寫英數與連字號，例如 `tainan-tech-forum-2026`；一旦發布就不再更動，它是公開網址的一部分。
+3. **加雙語文字**：`locale-cases.js` 的 `cases.<識別碼>`，中英文都要，欄位與既有案例一致。沒有現場紀錄或報導就整段不寫，不放「待補」。
+4. **加一筆案例設定**：`cases-data.js` 的 `CASES`，填 `date`（只寫實際已知精度）、`tags`、`cover`、`hero`，選填 `field`／`media`。`published: false` 的案例不會顯示，也不會進 sitemap。
+5. **放照片並更新白名單**：素材放 `assets/cases/`，再把每個檔名加進 `share-preview.mjs` 的 `PUBLIC_FILES`；沒加進白名單的檔案預覽與正式站都取不到。
+6. **更新 sitemap**：`sitemap.xml` 為每個公開案例補中英兩筆，網址與 `page-metadata.js` 的 `crawlUrls()` 必須一致。
+7. **驗證**：`npm run test:design`，再開本機預覽看總覽卡片、案例詳情、語言切換與 390／835／1440px；要上架再依 [官網更新 README](../../operations/WEBSITE-UPDATE-README.md) 走發布流程（`release.mjs` 的 `EXPECTED_FILES` 與 `SITEMAP_URLS` 依本次實際數量重算）。
+
+封面直式或橫式都可以：`hero.aspect` 寫實際比例，直式（如 `3 / 4`）在案例頁左右並排，橫式（如 `16 / 9`）主照整寬置頂。總覽網格一律裁成 3:2，直式來源用 `cover.focus` 指定取景焦點。
 
 ## 安全預覽與分享
 

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SUPPORTED_LOCALES, SUPPORTED_PAGES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml, messageShape } from './i18n.js';
+import { SUPPORTED_LOCALES, SUPPORTED_PAGES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml, messageShape, CASE_PARAM_PATTERN } from './i18n.js';
+import { CASE_ID_PATTERN } from './cases-data.js';
 
 test('locale selection is explicit, canonical and safely falls back to Traditional Chinese', () => {
   for (const value of ['', undefined, 'de', '../../private', '<script>', 'zh', 'zh-TW']) assert.equal(resolveLocale(value), 'zh-Hant');
@@ -38,6 +39,19 @@ test('page links and language changes preserve page and section without choosing
   assert.equal(pageHref({page:'unknown',locale:'unknown'}), '?page=home&lang=zh-Hant');
   assert.equal(localeHref('https://example.com/live-prototype/page.html?page=kip&lang=en#proof','zh-Hant'), '/live-prototype/page.html?page=kip&lang=zh-Hant#proof');
   assert.equal(localeHref('https://example.com/live-prototype/?page=home&lang=zh-Hant#contact','en'), '/live-prototype/?page=home&lang=en#contact');
+});
+
+test('a case identifier travels between page and language, and only in its approved shape', () => {
+  // Parameter order is part of the canonical address: page, then case, then language.
+  assert.equal(pageHref({ page: 'cases', caseId: 'tokyo-foodex-2026', locale: 'en', hash: 'fieldnotes' }), '?page=cases&case=tokyo-foodex-2026&lang=en#fieldnotes');
+  assert.equal(pageHref({ page: 'cases', caseId: 'tokyo-foodex-2026', locale: 'zh-Hant' }), '?page=cases&case=tokyo-foodex-2026&lang=zh-Hant');
+  assert.equal(pageHref({ page: 'cases', caseId: null, locale: 'zh-Hant' }), '?page=cases&lang=zh-Hant');
+  for (const value of ['', '../../private', '<script>', 'Tokyo Foodex', '-leading', '__proto__', 'a'.repeat(65), 'tokyo foodex']) {
+    assert.equal(pageHref({ page: 'cases', caseId: value, locale: 'en' }), '?page=cases&lang=en', value);
+  }
+  // i18n.js stays free of data imports, so the two patterns are pinned to each other here.
+  assert.equal(CASE_PARAM_PATTERN.source, CASE_ID_PATTERN.source);
+  assert.equal(localeHref('https://example.com/page.html?page=cases&case=tokyo-foodex-2026&lang=en#fieldnotes', 'zh-Hant'), '/page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant#fieldnotes');
 });
 
 test('no language bundle carries local preview wording into published copy', () => {

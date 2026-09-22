@@ -13,7 +13,7 @@ const runtimeFiles = [
   'demo-animation.js',
   'kip-design.js',
   'cases-design.js', 'about-design.js', 'ink-photo.js',
-  'i18n.js', 'page-metadata.js', 'brand.js', 'shared-design.js', 'preview.js',
+  'i18n.js', 'page-metadata.js', 'cases-data.js', 'brand.js', 'shared-design.js', 'preview.js',
   // Published crawl files. The release packaging ships them; site routing serves them from
   // the site root. This loopback preview keeps its own noindex robots.txt response below.
   'robots.txt', 'sitemap.xml',

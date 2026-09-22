@@ -1,9 +1,9 @@
-import { zhHant as homeZh, en as homeEn } from './locale-home.js?v=20260911-team-content';
-import { zhHant as kipZh, en as kipEn } from './locale-kip.js?v=20260911-team-content';
-import { zhHant as casesZh, en as casesEn } from './locale-cases.js?v=20260911-team-content';
-import { zhHant as aboutZh, en as aboutEn } from './locale-about.js?v=20260911-team-content';
-import { zhHant as demoZh, en as demoEn } from './locale-demo.js?v=20260911-team-content';
-import { zhHant as commonZh, en as commonEn } from './locale-common.js?v=20260911-team-content';
+import { zhHant as homeZh, en as homeEn } from './locale-home.js?v=20260922-cases-expansion';
+import { zhHant as kipZh, en as kipEn } from './locale-kip.js?v=20260922-cases-expansion';
+import { zhHant as casesZh, en as casesEn } from './locale-cases.js?v=20260922-cases-expansion';
+import { zhHant as aboutZh, en as aboutEn } from './locale-about.js?v=20260922-cases-expansion';
+import { zhHant as demoZh, en as demoEn } from './locale-demo.js?v=20260922-cases-expansion';
+import { zhHant as commonZh, en as commonEn } from './locale-common.js?v=20260922-cases-expansion';
 import { BRAND } from './brand.js';
 
 // Add a reviewed language bundle here; no language parameter is used as a file path.
@@ -22,8 +22,14 @@ export function getMessages(locale = DEFAULT_LOCALE) {
   const messages = catalog[resolveLocale(locale)].messages;
   return { ...messages, common: { ...messages.common, brand: BRAND } };
 }
-export function pageHref({ page = 'home', locale = DEFAULT_LOCALE, hash = '' } = {}) {
-  const query = new URLSearchParams({ page: resolvePage(page), lang: resolveLocale(locale) });
+// A case identifier travels in the address, so only this fixed shape is carried over; the
+// published identifiers themselves belong to cases-data.js, which this module never imports.
+export const CASE_PARAM_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
+/** Parameter order is fixed: page, then case, then language. Never swapped. */
+export function pageHref({ page = 'home', locale = DEFAULT_LOCALE, hash = '', caseId = null } = {}) {
+  const query = new URLSearchParams({ page: resolvePage(page) });
+  if (caseId !== null && CASE_PARAM_PATTERN.test(String(caseId))) query.set('case', String(caseId));
+  query.set('lang', resolveLocale(locale));
   return `?${query}${hash ? `#${encodeURIComponent(hash.replace(/^#/, ''))}` : ''}`;
 }
 export function localeHref(currentUrl, locale) {

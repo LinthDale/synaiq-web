@@ -4,24 +4,31 @@ import { readPreviewRoute, previewPageHref, initPreview } from './preview.js';
 
 test('preview routes normalize locale and page while preserving the fragment', () => {
   const route = readPreviewRoute('https://example.test/live-prototype/?page=kip&lang=en#proof');
-  assert.deepEqual(route, { page: 'kip', locale: 'en', hash: 'proof' });
+  assert.deepEqual(route, { page: 'kip', caseId: null, locale: 'en', hash: 'proof' });
   assert.equal(previewPageHref(route), 'page.html?page=kip&lang=en#proof');
   for (const [page, hash] of [['cases', 'story'], ['about', 'leadership']]) {
     const route = readPreviewRoute(`?page=${page}&lang=en#${hash}`);
-    assert.deepEqual(route, { page, locale: 'en', hash });
+    assert.deepEqual(route, { page, caseId: null, locale: 'en', hash });
     assert.equal(previewPageHref(route), `page.html?page=${page}&lang=en#${hash}`);
   }
-  assert.deepEqual(readPreviewRoute('?page=oops&lang=missing#contact'), { page: 'home', locale: 'zh-Hant', hash: 'contact' });
+  // A published case identifier is carried; anything else is dropped, never guessed at.
+  const detail = readPreviewRoute('?page=cases&case=tokyo-foodex-2026&lang=en#fieldnotes');
+  assert.deepEqual(detail, { page: 'cases', caseId: 'tokyo-foodex-2026', locale: 'en', hash: 'fieldnotes' });
+  assert.equal(previewPageHref(detail), 'page.html?page=cases&case=tokyo-foodex-2026&lang=en#fieldnotes');
+  for (const value of ['not-a-case', '../../private', '<script>']) {
+    assert.equal(readPreviewRoute(`?page=cases&case=${encodeURIComponent(value)}&lang=en`).caseId, null, value);
+  }
+  assert.deepEqual(readPreviewRoute('?page=oops&lang=missing#contact'), { page: 'home', caseId: null, locale: 'zh-Hant', hash: 'contact' });
   assert.equal(previewPageHref(readPreviewRoute('?lang=en#%E8%B3%87%E6%96%99')), 'page.html?page=home&lang=en#%E8%B3%87%E6%96%99');
   assert.equal(previewPageHref(readPreviewRoute('?lang=en#%broken')), 'page.html?page=home&lang=en#%25broken');
 });
 
 test('preview shell localizes and stays synchronized with iframe navigation and language changes', () => {
   function element() { return { value: '', style: {}, dataset: {}, handlers: {}, textContent: '', addEventListener(type, callback) { this.handlers[type] = callback; }, removeEventListener() {} }; }
-  const ids = Object.fromEntries(['stage', 'viewport', 'preview', 'width', 'page', 'language', 'fit', 'readout', 'direct', 'status', 'metrics'].map(id => [id, element()]));
+  const ids = Object.fromEntries(['stage', 'viewport', 'preview', 'width', 'page', 'case', 'language', 'fit', 'readout', 'direct', 'status', 'metrics'].map(id => [id, element()]));
   ids.width.value = '1440';
   Object.assign(ids.stage, { clientWidth: 1000, clientHeight: 800 });
-  const labels = ['title', 'page', 'language', 'width', 'fit', 'direct'].map(key => ({ dataset: { previewLabel: key }, textContent: '' }));
+  const labels = ['title', 'page', 'case', 'language', 'width', 'fit', 'direct'].map(key => ({ dataset: { previewLabel: key }, textContent: '' }));
   const options = ['home', 'kip', 'cases', 'about'].map(value => ({ value, textContent: '' }));
   ids.page.options = options;
   const document = { title: '', documentElement: {}, getElementById: id => ids[id], querySelectorAll: () => labels };
@@ -101,5 +108,29 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   Object.defineProperty(ids.preview, 'contentDocument', { configurable: true, get() { throw new Error('Blocked'); } });
   ids.width.handlers.input();
   assert.equal(ids.metrics.textContent, 'Waiting for the preview');
+  // The case picker is only live on the work page; a language switch keeps the case, a page
+  // switch starts over, so the shell never points at a case on the wrong page.
+  ids.page.value = 'cases';
+  ids.page.handlers.change();
+  assert.equal(ids.preview.src, 'page.html?page=cases&lang=en');
+  assert.equal(ids.case.disabled, false);
+  assert.match(ids.case.innerHTML, /value="tokyo-foodex-2026"/);
+  assert.match(ids.case.innerHTML, /FOODEX Japan/);
+  ids.case.value = 'tokyo-foodex-2026';
+  ids.case.handlers.change();
+  assert.equal(ids.preview.src, 'page.html?page=cases&case=tokyo-foodex-2026&lang=en');
+  assert.match(ids.direct.href, /case=tokyo-foodex-2026/);
+  assert.match(window.location.search, /case=tokyo-foodex-2026/);
+  ids.language.value = 'zh-Hant';
+  ids.language.handlers.change();
+  assert.equal(ids.preview.src, 'page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant');
+  assert.equal(ids.case.value, 'tokyo-foodex-2026');
+  assert.match(ids.case.innerHTML, /東京食品展/);
+  ids.page.value = 'about';
+  ids.page.handlers.change();
+  assert.equal(ids.preview.src, 'page.html?page=about&lang=zh-Hant');
+  assert.equal(ids.case.disabled, true);
+  assert.equal(ids.case.value, '');
+  assert.doesNotMatch(window.location.search, /case=/);
   dispose();
 });

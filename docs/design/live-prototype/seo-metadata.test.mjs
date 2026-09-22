@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-import { SUPPORTED_PAGES, SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, localeHref, escapeHtml } from './i18n.js';
-import { pageMetadata, canonicalUrl, SITE_ORIGIN } from './page-metadata.js';
+import { SUPPORTED_PAGES, SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, localeHref, pageHref, escapeHtml } from './i18n.js';
+import { pageMetadata, canonicalUrl, crawlTargets, crawlUrls, SITE_ORIGIN, INDEXABLE, NOT_INDEXABLE } from './page-metadata.js';
+import { DEFAULT_CASE, resolveCaseId, publishedCases } from './cases-data.js';
 import { createHeadShim } from './head-test-helpers.mjs';
 import { PUBLIC_FILES } from './share-preview.mjs';
 
@@ -37,6 +38,87 @@ test('canonical addresses keep one stable form: page before language, bare root 
   // Unknown input falls back to the default address instead of inventing a new one.
   for (const pair of [undefined, {}, { page: '../../private', locale: '<script>' }, { page: '__proto__', locale: 'de' }]) {
     assert.equal(canonicalUrl(pair), 'https://synaiq.com/');
+  }
+  // Each published case adds one address per language, inserted after the overview pair.
+  assert.equal(crawlTargets().length, combinations.length + 2 * publishedCases().length);
+  assert.deepEqual(crawlUrls(), [
+    'https://synaiq.com/',
+    'https://synaiq.com/?page=home&lang=en',
+    'https://synaiq.com/?page=kip&lang=zh-Hant',
+    'https://synaiq.com/?page=kip&lang=en',
+    'https://synaiq.com/?page=cases&lang=zh-Hant',
+    'https://synaiq.com/?page=cases&lang=en',
+    'https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant',
+    'https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=en',
+    'https://synaiq.com/?page=about&lang=zh-Hant',
+    'https://synaiq.com/?page=about&lang=en',
+  ]);
+  assert.equal(new Set(crawlUrls()).size, crawlUrls().length);
+  // A case identifier that is unknown, unpublished or malformed never reaches an address.
+  for (const caseId of ['not-a-case', 'tainan-tech-forum-2026', '../../private', '__proto__']) {
+    assert.equal(canonicalUrl({ page: 'cases', locale: 'en', caseId }), 'https://synaiq.com/?page=cases&lang=en', caseId);
+  }
+});
+
+test('every published case has its own crawl identity and keeps the section page in its title', () => {
+  for (const entry of publishedCases()) {
+    for (const { code } of SUPPORTED_LOCALES) {
+      const label = `${entry.id}/${code}`;
+      const messages = getMessages(code);
+      const text = messages.cases.cases[entry.id];
+      const crawl = pageMetadata({ page: 'cases', locale: code, caseId: entry.id });
+      assert.equal(crawl.caseId, entry.id, label);
+      assert.equal(crawl.notFound, false, label);
+      assert.equal(crawl.robots, INDEXABLE, label);
+      assert.equal(crawl.canonical, `${SITE_ORIGIN}/?page=cases&case=${entry.id}&lang=${code}`, label);
+      assert.equal(crawl.og.url, crawl.canonical, label);
+      // Same rule as the other pages: the section name, then the brand.
+      assert.equal(crawl.title, `${text.name} — ${messages.common.navigation.casesPage} — SynaiQ`, label);
+      assert.equal(crawl.description, text.summary, label);
+      assert.ok([...crawl.description].length <= DESCRIPTION_LIMIT[code], `${label}: ${[...crawl.description].length} characters`);
+      assert.doesNotMatch(crawl.title, PREVIEW_WORDING, label);
+      assert.doesNotMatch(crawl.description, PREVIEW_WORDING, label);
+      assert.deepEqual(crawl.alternates.map(item => item.hreflang), ['zh-Hant', 'en', 'x-default'], label);
+      assert.equal(crawl.alternates.find(item => item.hreflang === code).href, crawl.canonical, label);
+      assert.equal(crawl.alternates.at(-1).href, canonicalUrl({ page: 'cases', locale: 'zh-Hant', caseId: entry.id }), label);
+      // A case keeps its own address; it never collapses into the overview.
+      assert.notEqual(crawl.canonical, canonicalUrl({ page: 'cases', locale: code }), label);
+    }
+  }
+});
+
+test('an unknown case identifier states the miss, leaves the index and carries no canonical', () => {
+  for (const caseId of ['not-a-case', 'tainan-tech-forum-2026', '../../private', '<script>', '__proto__']) {
+    for (const { code } of SUPPORTED_LOCALES) {
+      const label = `${caseId}/${code}`;
+      const overview = getMessages(code).cases.overview;
+      const crawl = pageMetadata({ page: 'cases', locale: code, caseId });
+      assert.equal(crawl.notFound, true, label);
+      assert.equal(crawl.caseId, null, label);
+      assert.equal(crawl.robots, NOT_INDEXABLE, label);
+      assert.equal(crawl.canonical, null, label);
+      assert.equal(crawl.og.url, null, label);
+      assert.deepEqual(crawl.alternates, [], label);
+      assert.equal(crawl.title, `${overview.notFound.title} — ${getMessages(code).common.navigation.casesPage} — SynaiQ`, label);
+      assert.equal(crawl.description, overview.notFound.body, label);
+      // No real case copy may leak into a miss.
+      assert.doesNotMatch(crawl.title, /FOODEX|東京/, label);
+      assert.doesNotMatch(crawl.description, /FOODEX|東京/, label);
+    }
+  }
+  // An absent or empty parameter is the overview, not a miss.
+  for (const caseId of [undefined, null, '']) {
+    const crawl = pageMetadata({ page: 'cases', locale: 'zh-Hant', caseId });
+    assert.equal(crawl.notFound, false);
+    assert.equal(crawl.robots, INDEXABLE);
+    assert.equal(crawl.canonical, canonicalUrl({ page: 'cases', locale: 'zh-Hant' }));
+  }
+  // The other three pages ignore a stray case parameter entirely.
+  for (const page of ['home', 'kip', 'about']) {
+    const crawl = pageMetadata({ page, locale: 'en', caseId: DEFAULT_CASE });
+    assert.equal(crawl.caseId, null, page);
+    assert.equal(crawl.notFound, false, page);
+    assert.equal(crawl.canonical, canonicalUrl({ page, locale: 'en' }), page);
   }
 });
 
@@ -120,7 +202,7 @@ test('robots.txt invites crawling and never blocks the release folder Googlebot 
   for (const line of directives) assert.doesNotMatch(line, /synaiq-release/);
 });
 
-test('the sitemap lists exactly the eight canonical addresses with their alternates', async () => {
+test('the sitemap lists exactly the canonical addresses of the four pages and every published case', async () => {
   const xml = await read('sitemap.xml');
   const decode = value => value.replaceAll('&amp;', '&');
   const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, block]) => ({
@@ -128,11 +210,14 @@ test('the sitemap lists exactly the eight canonical addresses with their alterna
     alternates: [...block.matchAll(/<xhtml:link\s+rel="alternate"\s+hreflang="([^"]+)"\s+href="([^"]+)"\s*\/>/g)]
       .map(([, hreflang, href]) => ({ hreflang, href: decode(href) })),
   }));
-  assert.deepEqual(entries.map(entry => entry.loc), combinations.map(pair => canonicalUrl(pair)));
+  const targets = crawlTargets();
+  assert.deepEqual(entries.map(entry => entry.loc), [...crawlUrls()]);
   for (const [index, entry] of entries.entries()) {
-    const expected = pageMetadata(combinations[index]).alternates.map(({ hreflang, href }) => ({ hreflang, href }));
+    const expected = pageMetadata(targets[index]).alternates.map(({ hreflang, href }) => ({ hreflang, href }));
     assert.deepEqual(entry.alternates, expected, entry.loc);
   }
+  // A miss has no canonical, so nothing that is not indexable can appear in the sitemap.
+  assert.doesNotMatch(xml, /case=(?!tokyo-foodex-2026)/);
   assert.equal(/<lastmod>/.test(xml), false, 'a guessed lastmod is worse than none');
   assert.doesNotMatch(xml, PREVIEW_WORDING);
 });
@@ -146,18 +231,23 @@ const pageFunctions = Object.fromEntries(['Home', 'Kip', 'Cases', 'About']
   .flatMap(name => ['render', 'init'].map(prefix => [`${prefix}${name}`, () => ''])));
 
 /** Run the bootstrap against a head shim and hand back its metadata writer. */
-function runShell({ page, locale, url }) {
+function runShell({ page, locale, url, history }) {
   const { head, createElement, nodes } = createHeadShim(staticHead);
   const document = {
     documentElement: {}, head, createElement, body: { dataset: {} },
     querySelectorAll: () => [],
     getElementById: () => ({ innerHTML: '', addEventListener() {} }),
   };
-  const apply = vm.runInNewContext(`${bootstrap}\napplyPageMetadata;`, {
+  const context = {
     location: new URL(url ?? `https://synaiq.com/?page=${page}&lang=${locale}`),
     document, URLSearchParams, SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages,
-    localeHref, esc: escapeHtml, pageMetadata, ...pageFunctions,
-  });
+    localeHref, pageHref, esc: escapeHtml, pageMetadata, resolveCaseId, DEFAULT_CASE,
+    ...pageFunctions,
+  };
+  // Left out unless a test supplies one: the bootstrap guards its own history access, so a
+  // context without history must still boot every address.
+  if (history) context.history = history;
+  const apply = vm.runInNewContext(`${bootstrap}\napplyPageMetadata;`, context);
   return { document, head, nodes, apply };
 }
 
@@ -179,7 +269,68 @@ test('the shell writes apex-origin crawl tags for the requested address, whateve
     assert.equal(head.querySelector('meta[property="og:title"]').getAttribute('content'), expected.title, label);
     assert.equal(head.querySelector('meta[property="og:description"]').getAttribute('content'), expected.description, label);
     assert.equal(head.querySelector('meta[property="og:locale"]').getAttribute('content'), expected.og.locale, label);
+    assert.equal(head.querySelector('meta[name="robots"]').getAttribute('content'), INDEXABLE, label);
     assert.deepEqual(head.querySelectorAll('meta[property="og:locale:alternate"]').map(node => node.getAttribute('content')), [...expected.og.localeAlternate], label);
+  }
+});
+
+test('the shell writes each published case address from the identifier in the query', () => {
+  for (const entry of publishedCases()) {
+    for (const { code } of SUPPORTED_LOCALES) {
+      const label = `${entry.id}/${code}`;
+      const expected = pageMetadata({ page: 'cases', locale: code, caseId: entry.id });
+      const url = `https://www.synaiq.com/synaiq-release-20260922-cases/page.html?page=cases&case=${entry.id}&lang=${code}`;
+      const { document, head } = runShell({ page: 'cases', locale: code, url });
+      assert.equal(document.title, expected.title, label);
+      assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), expected.canonical, label);
+      assert.equal(head.querySelector('meta[property="og:url"]').getAttribute('content'), expected.canonical, label);
+      assert.equal(head.querySelector('meta[name="description"]').getAttribute('content'), expected.description, label);
+      assert.equal(head.querySelector('meta[name="robots"]').getAttribute('content'), INDEXABLE, label);
+      for (const alternate of expected.alternates) {
+        assert.equal(head.querySelector(`link[rel="alternate"][hreflang="${alternate.hreflang}"]`).getAttribute('href'), alternate.href, `${label}/${alternate.hreflang}`);
+      }
+    }
+  }
+});
+
+test('the shell withdraws canonical, alternates and og:url for a case that does not exist', () => {
+  const url = 'https://synaiq.com/?page=cases&case=not-a-case&lang=en';
+  const { document, head, apply } = runShell({ page: 'cases', locale: 'en', url });
+  const miss = pageMetadata({ page: 'cases', locale: 'en', caseId: 'not-a-case' });
+  assert.equal(document.title, miss.title);
+  assert.equal(head.querySelector('meta[name="robots"]').getAttribute('content'), NOT_INDEXABLE);
+  assert.equal(head.querySelector('link[rel="canonical"]'), null);
+  assert.deepEqual(head.querySelectorAll('link[rel="alternate"]'), []);
+  assert.equal(head.querySelector('meta[property="og:url"]'), null);
+  // Returning to a real address restores every withdrawn tag exactly once.
+  const real = pageMetadata({ page: 'cases', locale: 'en', caseId: DEFAULT_CASE });
+  apply(real);
+  assert.equal(head.querySelectorAll('link[rel="canonical"]').length, 1);
+  assert.equal(head.querySelectorAll('link[rel="alternate"]').length, 3);
+  assert.equal(head.querySelectorAll('meta[property="og:url"]').length, 1);
+  assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), real.canonical);
+  assert.equal(head.querySelector('meta[name="robots"]').getAttribute('content'), INDEXABLE);
+});
+
+test('a legacy work-page anchor without a case moves to the case that owns that section', () => {
+  for (const hash of ['#story', '#fieldnotes']) {
+    const replaced = [];
+    const history = { replaceState: (state, title, href) => replaced.push(href) };
+    const url = `https://synaiq.com/?page=cases&lang=zh-Hant${hash}`;
+    const { document, head } = runShell({ page: 'cases', locale: 'zh-Hant', url, history });
+    // replaceState, so the browser's back button leaves the site instead of looping.
+    assert.deepEqual(replaced, [`?page=cases&case=${DEFAULT_CASE}&lang=zh-Hant${hash}`], hash);
+    const expected = pageMetadata({ page: 'cases', locale: 'zh-Hant', caseId: DEFAULT_CASE });
+    assert.equal(document.title, expected.title, hash);
+    assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), expected.canonical, hash);
+  }
+  // Any other address on the work page is left exactly as requested.
+  for (const url of ['https://synaiq.com/?page=cases&lang=zh-Hant', 'https://synaiq.com/?page=cases&lang=zh-Hant#contact', 'https://synaiq.com/?page=home&lang=zh-Hant#story']) {
+    const replaced = [];
+    const history = { replaceState: (state, title, href) => replaced.push(href) };
+    const { head } = runShell({ page: new URL(url).searchParams.get('page'), locale: 'zh-Hant', url, history });
+    assert.deepEqual(replaced, [], url);
+    assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), canonicalUrl({ page: new URL(url).searchParams.get('page'), locale: 'zh-Hant' }), url);
   }
 });
 

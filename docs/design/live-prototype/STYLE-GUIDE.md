@@ -14,7 +14,8 @@
 |---|---|
 | 首頁 Banner、敘事、產業觀察、Wally 文案 | `locale-home.js` 的 `hero`／`narrative`／`outlook`／`wally` |
 | KIP 頁的標題、流程、四層架構與說明 | `locale-kip.js` |
-| 實績展示的故事、場域筆記、照片圖說與報導標題 | `locale-cases.js`；報導 URL 與素材路徑在 `cases-design.js` |
+| 實績總覽文案、各案例故事、現場紀錄、圖說與報導標題 | `locale-cases.js` 的 `overview`／`tags`／`cases.<識別碼>` |
+| 案例日期、排序、精選、照片路徑、封面取景與報導 URL | `cases-data.js` 的 `CASES`；版型在 `cases-design.js` |
 | 關於我們的理念、團隊名單、職稱及學經歷 | `locale-about.js` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
 | 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
 | 瀏覽器分頁標題（四頁中英） | `locale-common.js` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
@@ -45,14 +46,17 @@
 
 ## 搜尋引擎中繼資料
 
-四頁 × 中英共八個網址，實際上是**同一份 `page.html`**。因此 `page.html` 裡**沒有**靜態
-`<link rel="canonical">`——寫死一個就會把 KIP／實績／關於我們併進首頁。`page.html` 只保留繁中首頁的
-靜態 `description` 與 og 標籤（社群爬蟲不跑 JavaScript），其餘由 `prototype.js` 依當前頁與語言就地補上。
+四頁 × 中英共八個網址，再加上每個公開案例的中英兩個網址，實際上都是**同一份 `page.html`**。
+因此 `page.html` 裡**沒有**靜態 `<link rel="canonical">`——寫死一個就會把 KIP／實績／關於我們併進首頁。
+`page.html` 只保留繁中首頁的靜態 `description` 與 og 標籤（社群爬蟲不跑 JavaScript），
+其餘由 `prototype.js` 依當前頁、語言與案例就地補上。
 
 | 要改什麼 | 改哪裡 |
 |---|---|
 | 四頁中英的搜尋結果摘要 | `locale-common.js` 的 `description`；中文 ≤ 80 字、英文 ≤ 160 字 |
+| 各案例的 title／摘要 | `locale-cases.js` 的 `cases.<識別碼>.name`／`summary`；title 固定為 `${案例名稱} — ${實績展示} — SynaiQ`，摘要就是 `summary`，同樣受字數上限 |
 | 正規網址、hreflang 的組法 | `page-metadata.js` 的 `canonicalUrl`／`alternateUrls`；純函式，不碰 DOM |
+| 全部應被收錄的網址清單 | `page-metadata.js` 的 `crawlUrls()`；`sitemap.xml` 必須與它完全相同 |
 | 實際寫進 `<head>` 的動作 | `prototype.js` 的 `applyPageMetadata`；就地更新，不重複新增標籤 |
 | 爬蟲規則與網址清單 | 本目錄的 `robots.txt`、`sitemap.xml` |
 
@@ -61,10 +65,15 @@
 - 正規網址一律建在 `https://synaiq.com`，與 `location.origin` 無關；從 www 或版本目錄
   （`/synaiq-release-*/page.html`）開啟時也指回主網域。繁中首頁是 `https://synaiq.com/`，
   其餘七組固定為 `https://synaiq.com/?page=<頁>&lang=<語言>`，參數順序不可對調。
-- 每頁三個 hreflang：`zh-Hant`、`en`、`x-default`（指向繁中）。
+- 案例網址固定為 `https://synaiq.com/?page=cases&case=<識別碼>&lang=<語言>`，
+  參數順序是**頁面 → 案例 → 語言**，不可對調。
+- 每頁三個 hreflang：`zh-Hant`、`en`、`x-default`（指向繁中）；案例的三個 hreflang 指向同一個案例。
+- 無效或尚未公開的案例識別碼：`robots` 寫 `noindex, nofollow`，並**移除** canonical、hreflang 與
+  `og:url`，不改指到總覽——指過去會把打錯的網址併進總覽。回到正常網址時這些標籤會補回來。
 - `robots.txt` **不可** Disallow `/synaiq-release-`：Googlebot 需要版本目錄裡的 JS／CSS 才能算出頁面；
   下架的舊版本由主機路由回 410，不靠 robots 擋。
-- 改動網址規則後，`sitemap.xml` 的八個網址必須跟著改；兩邊不一致時 `seo-metadata.test.mjs` 會失敗。
+- 改動網址規則或新增公開案例後，`sitemap.xml` 必須跟著改：網址數 = 8 + 每個公開案例 2；
+  兩邊不一致時 `seo-metadata.test.mjs` 會失敗。發布時 `release.mjs` 的 `SITEMAP_URLS` 也要一起更新。
 
 ## 平常先改這一個檔案
 
@@ -127,6 +136,7 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | KIP 區段留白 | `--kip-spacing` |
 | 實績／關於我們的大標、段落標題、內文與留白 | 「13 實績展示／關於我們」的 `--editorial-title-size`／`--editorial-about-title-size`／`--editorial-section-title-size`／`--editorial-body-size`／`--editorial-space` |
 | 手繪逐漸顯影為真照的時間／點擊水紋 | 「13 實績展示／關於我們」的 `--ink-reveal-duration`／`--ink-ripple-duration` |
+| 總覽卡片的案例名稱字級 | 「13 實績展示／關於我們」的 `--case-card-title-size` |
 | KIP 資料接入、自動解析、搜尋可用 | `--kip-step-title-size`、`--kip-step-body-size` |
 | KIP 四層架構卡片 | `--kip-layer-title-size`、`--kip-layer-body-size` |
 | KIP 問完，順手看原文 | `--kip-proof-title-size`、`--kip-proof-body-size` |
@@ -161,7 +171,7 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `BEGIN EDITORIAL` | 實績展示、關於我們、人物／場域水墨顯影與 RWD |
 
 `home-design.js`／`kip-design.js` 組合各頁 HTML、指定圖片並啟動互動；`shared-design.js` 組合八項優勢與聯絡區；`demo-animation.js` 同時產生三片共用的聊天介面、設定示例圖片，並執行出場、切片與五段播放。這些檔案不是日常字級或秒數的設定入口。
-`cases-design.js`／`about-design.js` 組合兩個新增頁面，共用 `ink-photo.js` 的 `renderInkPhoto`／`initInkPhotos`。頁面登錄在 `prototype.js`，詞典登錄與合法頁名在 `i18n.js`；預覽外框由 `index.html`／`preview.js` 控制。
+`cases-design.js`／`about-design.js` 組合兩個新增頁面，共用 `ink-photo.js` 的 `renderInkPhoto`／`initInkPhotos`。`cases-design.js` 是**總覽與案例詳情共用的一份版型**，依 `cases-data.js` 的資料渲染；新增案例不改版型，也不為單一案例複製 HTML。頁面登錄在 `prototype.js`，詞典登錄與合法頁名在 `i18n.js`；預覽外框由 `index.html`／`preview.js` 控制。
 手繪註記 `handwritten-note`、信紙 `source-paper`、圖片標籤 `slot-caption`、Demo 介面 `film-*` 的**文字樣式**在 `tokens.css` 下半部；文字內容仍在語言檔。版型尺寸與座標在 `site.css`。
 
 `--persona-body-size` 不控制其下方 `.note` 的素材註記；要改該註記，在 `tokens.css` 搜尋「共用素材註記」。小按鈕另用 `--button-small-size`。保留你在 `.outlook-caveat` 加上的 `!important`，其字級亦由 `--outlook-note-size` 控制。
@@ -176,10 +186,24 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 | 頁面 | 內容與段落 ID | 渲染入口 |
 |---|---|---|
-| `page=cases` | 東京食品展故事 `story`、現場筆記 `fieldnotes`；報導來源接在筆記後 | `cases-design.js`／`locale-cases.js` |
+| `page=cases` | 實績總覽：共同頁首與案例列表 `cases-list` | `cases-design.js`／`locale-cases.js` 的 `overview` |
+| `page=cases&case=<識別碼>` | 單一案例：案例故事 `story`、現場紀錄 `fieldnotes`、相關報導 `press` | `cases-design.js`／`locale-cases.js` 的 `cases.<識別碼>`＋`cases-data.js` |
 | `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locale-about.js` |
 
-兩頁都支援 `lang=zh-Hant`／`lang=en`。實績目前是一則東京食品展案例，四語導覽與裝置整合是故事內容；不要把展會整體業績寫成 AI 帶來的績效。團隊名單的唯一文字來源是 `locale-about.js`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
+兩頁都支援 `lang=zh-Hant`／`lang=en`。實績分成「總覽」與「單一案例」：總覽文案適用所有案例，「從台南到東京」等專屬文字屬於東京案例。目前只有一則 `tokyo-foodex-2026`，四語導覽與裝置整合是故事內容；不要把展會整體業績寫成 AI 帶來的績效。`01 / THE STORY`、`02 / IN THE FIELD` 是案例**內**的小節標示，不是案例排序。本頁目錄會依網址變化：總覽只有「全部實績」，案例只列它實際有的小節，找不到案例時沒有目錄。新增一筆實績的固定步驟見 [維護入口](README.md#新增一筆實績)。
+
+團隊名單的唯一文字來源是 `locale-about.js`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
+
+### 案例封面與主照的取向
+
+封面直式、橫式都支援，由 `cases-data.js` 的 `hero.aspect` 決定，版型只有一份：
+
+- 直式（例如 `3 / 4`，東京）：案例頁維持文字與主照左右並排，`cases-hero-layout--portrait`。
+- 橫式（例如 `16 / 9`）：主照整寬置頂、文字接在下方，`cases-hero-layout--landscape`；沒有另一份版型。
+- 總覽網格：所有封面統一裁成 **3:2**（`.case-cover` 的 `object-fit: cover`），直式來源用 `cover.focus`
+  指定 `object-position`（東京為 `50% 32%`，讓人物與螢幕留在畫面內）。只有一筆案例時改用單張整寬精選版面。
+- 沒有配對手繪的案例直接顯示照片（`.case-photo`），柔邊沿用 `.ink-photo--scene` 的同一組漸層值，
+  不另外複製數值；手繪不是新增案例的門檻。
 
 ### 團隊彩色照片與實績圖片互動
 
@@ -391,7 +415,7 @@ npm run dev:design
 
 - [連續縮放預覽](http://127.0.0.1:4318/live-prototype/?page=home&lang=zh-Hant)：選四頁、中英與寬度；外框可縮小整張頁面以配合視窗。
 - [獨立網站頁面](http://127.0.0.1:4318/live-prototype/page.html?page=home&lang=zh-Hant)：看真實字級及用 DevTools 找 CSS 時優先使用，不受預覽外框縮放影響。
-- [實績展示](http://127.0.0.1:4318/live-prototype/page.html?page=cases&lang=zh-Hant)／[關於我們](http://127.0.0.1:4318/live-prototype/page.html?page=about&lang=zh-Hant)：新增頁面；可附上前述段落 ID，語言改為 `en` 可檢查英文版。
+- [實績總覽](http://127.0.0.1:4318/live-prototype/page.html?page=cases&lang=zh-Hant)／[東京食品展案例](http://127.0.0.1:4318/live-prototype/page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant)／[關於我們](http://127.0.0.1:4318/live-prototype/page.html?page=about&lang=zh-Hant)：新增頁面；可附上前述段落 ID，語言改為 `en` 可檢查英文版。實績另外要看舊錨點 `?page=cases&lang=zh-Hant#story` 會換成案例網址，以及 `?page=cases&case=not-a-case&lang=zh-Hant` 顯示「找不到此案例」。
 - 存檔後重新整理；這個伺服器沒有自動熱更新。DevTools 裡直接調整只作用於當次瀏覽器，必須寫回來源檔才會保留。
 - 字沒變：先確認改的是目前 repo、正確語言與生效的 media 規則，再確認選到的是網站 iframe 而非預覽外框。圖片裡的字則依靜態圖生成流程處理。
 - 修改同名 CSS／JS／圖片不必重啟服務；新增公開檔名須更新 `share-preview.mjs` 白名單，確認程序身分後僅重載這個預覽服務。不可停止所有 Node 程序或把整個 repo 公開。
@@ -428,6 +452,7 @@ npm run test:design
 6. 長回答與檔名不壓住輸入框、不被裁切；八項優勢展開後不產生水平捲動。
 7. 團隊照片直接顯示彩色、沒有顯影按鈕；實績圖片的移入／移出、顯影中途點擊暫停、再次點擊繼續、鍵盤與 reduced-motion 都正常；暫停後離開圖片仍保留比例，人物清晰且柔邊，頁面沒有圖片操作提示文字。
 8. 昱儒姓名、職稱、學經歷與所供資料一致；手繪／真照切換時臉部比例接近，取景不拉伸、不突然跳成較大的臉。
+9. 實績：總覽卡片點進案例、案例的「返回全部實績」回到總覽；語言切換保留案例與小節；重新整理與瀏覽器上一頁都可用；舊錨點 `#story`／`#fieldnotes` 換成案例網址且不卡住上一頁；無效識別碼顯示「找不到此案例」而不是任何案例內容。只有一筆案例時沒有空白卡片或版面異常。
 
 ### 改 CSS 時的進階比較
 
@@ -486,7 +511,8 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 團隊手繪肖像 | `team/{wilson,sunny,leef,celestine,lou}-sketch.webp`、`team/{dale,steve}-20260624-sketch.webp`；各人物獨立素材，與原照配對，姓名映射在 `about-design.js` |
 | 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
 | Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
-| 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`／`tokyo-2-sketch.webp`、`cases/tokyo-5.jpg`／`tokyo-5-sketch.webp`；來源為舊官網回收的活動照片，配對用於顯影 |
+| 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`（1440×2560，兼作總覽封面）／`tokyo-2-sketch.webp`（941×1672）、`cases/tokyo-5.jpg`（1774×2364）／`tokyo-5-sketch.webp`（1086×1449）；來源為舊官網回收的活動照片，配對用於顯影。路徑與配對只在 `cases-data.js` 定義 |
+| 新案例照片 | 放 `assets/cases/`，檔名含案例識別碼。直式主照長邊 ≥ 1600px、橫式封面建議 2400×1350（16:9）或 2400×1600（3:2），JPG、sRGB、約 300–700KB；總覽會裁成 3:2，直式來源要一併給 `cover.focus`。手繪選填，WebP、長邊約 1000px |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |
 | 手撕信紙邊界 | `torn-paper-cotton-v2.webp`；真實 alpha 邊緣，窄版採裁切寬紙帶，不把整條纖維壓縮到手機寬度 |

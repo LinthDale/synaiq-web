@@ -125,6 +125,11 @@ img {
   padding: 8px;
   min-height: 44px;
 }
+/* The narrow-screen rule below turns .menu back on, so hiding it needs the same weight as
+   .page-context[hidden]: a page with no sections must not offer an empty directory. */
+.menu[hidden] {
+  display: none;
+}
 .skip {
   position: fixed;
   left: 16px;
@@ -3259,8 +3264,36 @@ body[data-page="kip"] .kip-capability-list dd {
 .editorial-section-heading > p { max-width: 32em; margin: 0; }
 .editorial-underline { position: relative; width: fit-content; }
 .editorial-underline::after { content: ''; position: absolute; left: 0; bottom: -.07em; width: 95%; height: .09em; border-bottom: 2px solid var(--editorial-olive); border-radius: 50%; transform: rotate(-2deg); }
-/* 02 實績展示 */
+/* 02 實績總覽：一筆時精選整寬，兩筆以上排成網格。封面統一裁切成同一比例，
+   取景焦點由 cases-data.js 的 focus 提供，直式來源才不會裁掉人物。 */
+.cases-list { padding-top: 0; }
+.case-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 60px 6%; }
+.case-card-grid--single { grid-template-columns: minmax(0, 1fr); }
+.case-card { min-width: 0; }
+.case-card-link { display: grid; gap: 28px; align-items: start; grid-template-columns: minmax(0, 1fr); }
+/* 直式封面與文字並排；橫式封面整寬置頂，兩種取向都不需要另一份版型。 */
+.case-card--portrait .case-card-link { grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: 6%; align-items: center; }
+.case-card-cover { margin: 0; min-width: 0; }
+.case-cover { display: block; width: 100%; aspect-ratio: var(--case-cover-aspect, 3 / 2); object-fit: cover; object-position: var(--case-cover-focus, 50% 50%); }
+.case-card-copy { min-width: 0; }
+.case-card-date { margin: 0; }
+.case-card-name { margin: 12px 0 0; }
+.case-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 10px; padding: 0; margin: 18px 0 0; }
+.case-tags li { padding: 5px 14px; border: 1px solid var(--editorial-rule); border-radius: 999px; }
+.case-card-summary { margin: 20px 0 24px; max-width: 34em; }
+.case-card-action { border-bottom-color: transparent; }
+.case-card-link:hover .case-card-action { border-bottom-color: var(--editorial-rule); }
+.case-card-link:hover .case-card-action > span { transform: translate(4px, 0); }
+/* 03 單一案例詳情 */
 .cases-hero-layout { display: grid; grid-template-columns: 1.12fr 1fr; gap: 6%; align-items: center; }
+/* 橫式主照先整寬出場，再接文字；直式維持左右並排。 */
+.cases-hero-layout--landscape { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.cases-hero-layout--landscape .cases-hero-art { order: -1; max-width: none; margin: 0; }
+.cases-hero-layout--landscape .cases-hero-copy { padding-bottom: 0; }
+/* 沒有配對手繪的案例直接顯示照片，柔邊沿用場域顯影的同一組漸層。 */
+.case-photo { display: block; width: 100%; aspect-ratio: var(--case-photo-aspect, 3 / 4); object-fit: cover; }
+.case-back { padding-bottom: var(--editorial-space); }
+.case-notfound { padding-bottom: var(--editorial-space); }
 .cases-hero-copy { min-width: 0; padding-bottom: 24px; }
 .cases-hero-copy .editorial-intro { max-width: 25em; }
 .case-identifier { display: flex; flex-wrap: wrap; gap: 10px 30px; margin-top: 76px; }
@@ -3298,7 +3331,7 @@ body[data-page="kip"] .kip-capability-list dd {
 /* 永久柔邊：實績頁的水墨畫布與關於我們的靜態彩色肖像共用同一組漸層，改這一行會同時影響兩頁。 */
 .ink-photo__canvas:not(.ink-photo__canvas--companion), .team-photo { mask-image: radial-gradient(ellipse at 50% 45%, black 38%, #000e 52%, #0006 65%, transparent 77%); }
 .ink-photo__drawing { mix-blend-mode: multiply; }
-.ink-photo--scene .ink-photo__canvas:not(.ink-photo__canvas--companion) { mask-image: radial-gradient(ellipse at 50% 53%, black 42%, #000d 60%, transparent 81%); }
+.ink-photo--scene .ink-photo__canvas:not(.ink-photo__canvas--companion), .case-photo { mask-image: radial-gradient(ellipse at 50% 53%, black 42%, #000d 60%, transparent 81%); }
 #portrait-celestine .ink-photo__canvas:not(.ink-photo__canvas--companion) {
   mask-image: linear-gradient(to right, transparent 13%, black 30%, black 70%, transparent 87%), radial-gradient(ellipse at 50% 42%, black 30%, #000d 51%, transparent 78%);
   mask-composite: intersect;
@@ -3343,6 +3376,8 @@ body[data-page="kip"] .kip-capability-list dd {
 }
 @media (max-width: 899px) {
   .cases-hero-layout { gap: 3%; }
+  .case-card-grid { gap: 52px 4%; }
+  .case-card--portrait .case-card-link { gap: 4%; }
   .cases-hero-art { margin-top: 0; }
   .case-identifier { margin-top: 42px; }
   .case-story-layout, .case-field-layout { gap: 6%; }
@@ -3356,6 +3391,9 @@ body[data-page="kip"] .kip-capability-list dd {
 @media (max-width: 639px) {
   .editorial-kicker { margin-bottom: 24px; }
   .cases-hero-layout, .case-story-layout, .case-field-layout { grid-template-columns: 1fr; }
+  .case-card-grid, .case-card--portrait .case-card-link { grid-template-columns: 1fr; gap: 24px; }
+  .case-card-grid { gap: 44px; }
+  .case-card-summary { margin-bottom: 18px; }
   .cases-hero-copy { padding-bottom: 0; }
   .cases-hero-art { max-width: 420px; margin: 30px auto 0; }
   .cases-hero-art figcaption, .case-field-art figcaption { margin-top: 10px; }
@@ -3394,7 +3432,7 @@ body[data-page="kip"] .kip-capability-list dd {
 }
 @media (prefers-reduced-motion: reduce) {
   .ink-photo__ripple { display: none; }
-  .editorial-link > span, .case-press-links a > :last-child { transition: none; }
+  .editorial-link > span, .case-press-links a > :last-child, .case-card-action > span { transition: none; }
 }
 /* END EDITORIAL */
 

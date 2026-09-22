@@ -4,12 +4,14 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { hasDeclaration } from './css-test-helpers.mjs';
 import { getMessages, resolvePage, escapeHtml as esc } from './i18n.js';
+import { caseSectionIds } from './cases-design.js';
+import { DEFAULT_CASE } from './cases-data.js';
 
 const html = readFileSync(new URL('./page.html', import.meta.url), 'utf8');
 const source = readFileSync(new URL('./prototype.js', import.meta.url), 'utf8');
 const navigationSource = source.slice(source.indexOf('export function initPageNavigation')).replace('export function', 'function');
 
-function createNavigation({ page = 'home', compact = false, locale = 'zh-Hant' } = {}) {
+function createNavigation({ page = 'home', compact = false, locale = 'zh-Hant', caseId = null, caseState } = {}) {
   function element(extra = {}) {
     const attributes = new Map();
     const handlers = new Map();
@@ -40,6 +42,8 @@ function createNavigation({ page = 'home', compact = false, locale = 'zh-Hant' }
   let resize;
   vm.runInNewContext(navigationSource, {
     document, page, common: getMessages(locale).common, getMessages, resolvePage, esc, matchMedia: () => media,
+    // The work page's directory is computed by the renderer, so the real function runs here.
+    caseSectionIds, caseId, caseState, messages: getMessages(locale),
     ResizeObserver: class { constructor(callback) { resize = callback; } observe() {} },
   });
   return { links, menu, contextNav, contextLabel, contextLinks, document, media, properties, resize };
@@ -64,10 +68,11 @@ test('all four primary page switches are present; context directory is outside s
   assert.ok(hasDeclaration('site.css', '.page-context', 'inset', 'var(--header-height,112px) 0 auto', '(max-width:899px)'));
 });
 
+// The work page now defaults to its overview; one case's own sections are covered below.
 const pageSections = {
   home: ['wally', 'proof', 'footer'],
   kip: ['process', 'architecture', 'advantages', 'proof'],
-  cases: ['story', 'fieldnotes'],
+  cases: ['cases-list'],
   about: ['approach', 'leadership', 'technical'],
 };
 
@@ -99,6 +104,32 @@ test('English navigation translates the contextual directory without changing pa
     const current = nav.links.filter(link => link.getAttribute('aria-current') === 'page');
     assert.equal(current.length, 1);
     assert.equal(current[0].dataset.pageLink, page);
+  }
+});
+
+test('the work page lists the overview, one case lists only the sections it renders', () => {
+  for (const locale of ['zh-Hant', 'en']) {
+    const copy = getMessages(locale).common.navigation;
+    const overview = createNavigation({ page: 'cases', locale });
+    assert.deepEqual([...overview.contextLinks.innerHTML.matchAll(/href="#([^"]+)"/g)].map(match => match[1]), ['cases-list']);
+    assert.ok(overview.contextLinks.innerHTML.includes(esc(copy.casesList)), locale);
+    assert.equal(overview.menu.hidden, false, locale);
+
+    const detail = createNavigation({ page: 'cases', locale, caseId: DEFAULT_CASE });
+    assert.deepEqual([...detail.contextLinks.innerHTML.matchAll(/href="#([^"]+)"/g)].map(match => match[1]), ['story', 'fieldnotes', 'press']);
+    for (const label of [copy.caseStory, copy.fieldnotes, copy.casePress]) {
+      assert.ok(detail.contextLinks.innerHTML.includes(esc(label)), `${locale}: ${label}`);
+    }
+    assert.doesNotMatch(detail.contextLinks.innerHTML, /\?page=/, locale);
+
+    // A stated miss has no sections, so the directory control is withdrawn.
+    const miss = createNavigation({ page: 'cases', locale, caseId: 'not-a-case' });
+    assert.equal(miss.contextLinks.innerHTML, '');
+    assert.equal(miss.menu.hidden, true, locale);
+    assert.equal(miss.contextNav.hidden, true, locale);
+    // The narrow-screen rule re-enables .menu, so the hidden state needs its own rule.
+    assert.ok(hasDeclaration('site.css', '.menu[hidden]', 'display', 'none'));
+    assert.ok(hasDeclaration('site.css', '.menu', 'display', 'block', '(max-width:899px)'));
   }
 });
 

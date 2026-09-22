@@ -40,10 +40,10 @@ function fetchRaw(port, path, method = 'GET') {
 
 test('serves the review shell at both public entry points and resolves its relative dependencies', async t => {
   const { port } = await fixture(t);
-  assert.equal(PUBLIC_FILES.length, 66);
+  assert.equal(PUBLIC_FILES.length, 67);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
-  for (const file of ['page-metadata.js', 'robots.txt', 'sitemap.xml']) {
+  for (const file of ['page-metadata.js', 'cases-data.js', 'robots.txt', 'sitemap.xml']) {
     assert.ok(PUBLIC_FILES.some(entry => entry.url === `/live-prototype/${file}`), file);
   }
   for (const path of ['/', '/live-prototype/', '/live-prototype/index.html', '/page.html?page=kip', '/live-prototype/page.html?page=kip', '/live-prototype/page.html?page=cases', '/live-prototype/page.html?page=about&lang=en']) {
@@ -126,7 +126,7 @@ test('denies non-runtime sources, private assets, directories and development en
 
 test('the new pages expose only the explicitly selected portraits, field photos and runtime modules', () => {
   const allowed = new Set(PUBLIC_FILES.map(entry => entry.url));
-  for (const file of ['cases-design.js', 'about-design.js', 'locale-cases.js', 'locale-about.js', 'ink-photo.js']) {
+  for (const file of ['cases-design.js', 'cases-data.js', 'about-design.js', 'locale-cases.js', 'locale-about.js', 'ink-photo.js']) {
     assert.ok(allowed.has(`/live-prototype/${file}`), file);
   }
   const portraits = PUBLIC_FILES.filter(entry => entry.url.startsWith('/brand/team/')).map(entry => entry.file);

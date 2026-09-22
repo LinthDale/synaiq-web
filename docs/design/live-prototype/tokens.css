@@ -1669,6 +1669,7 @@ html:lang(en) body[data-page="kip"] .kip-opening h1 {
   --editorial-about-title-size: clamp(44px, 5.6vw, 82px);
   --editorial-section-title-size: clamp(30px, 3.2vw, 46px);
   --editorial-body-size: clamp(16px, 1.3vw, 18px);
+  --case-card-title-size: clamp(24px, 2.2vw, 32px); /* 總覽卡片的案例名稱 */
   --editorial-olive: #667655;
   --editorial-wash: #e9ece4;
   --editorial-rule: #777a6b40;
@@ -1685,6 +1686,12 @@ html:lang(en) body[data-page="kip"] .kip-opening h1 {
 .editorial-section h2 { font: 300 var(--editorial-section-title-size)/1.55 var(--display); letter-spacing: -.025em; }
 .editorial-section-heading > p, .case-story-copy { font: 400 var(--editorial-body-size)/1.95 var(--body); color: var(--muted); }
 .case-identifier { font: 500 11px/1.6 var(--body); letter-spacing: .08em; color: var(--muted); }
+.case-card-date { font: 500 12px/1.5 var(--body); letter-spacing: .1em; color: var(--editorial-olive); }
+.case-card-name { font: 400 var(--case-card-title-size)/1.35 var(--display); }
+.case-tags { font: 500 12px/1.5 var(--body); letter-spacing: .06em; color: var(--muted); }
+.case-card-summary { font: 400 var(--editorial-body-size)/1.9 var(--body); color: var(--muted); }
+.case-card-link:hover { text-decoration: none; }
+.case-card-link:hover .case-card-name { color: var(--editorial-olive); }
 .cases-hero-art figcaption, .case-field-art figcaption { font: 400 11px/1.7 var(--body); color: var(--muted); letter-spacing: .04em; text-align: center; }
 .case-facts > div > span { font: 500 12px/1.5 var(--body); color: var(--editorial-olive); letter-spacing: .1em; }
 .case-facts h3 { font: 400 clamp(22px,2vw,28px)/1.5 var(--display); }
