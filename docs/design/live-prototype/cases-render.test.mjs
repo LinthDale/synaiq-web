@@ -9,6 +9,7 @@ const render = options => renderCases({ contact: () => CONTACT, ...options });
 const ids = markup => [...markup.matchAll(/\sid="([^"]+)"/g)].map(match => match[1]);
 // Approved copy contains ampersands and quotes, so it is compared in its escaped form.
 const has = (markup, value) => markup.includes(escapeHtml(value));
+const count = (markup, needle) => markup.split(needle).length - 1;
 
 test('the overview introduces the work as a whole and leads to each case by its own address', () => {
   for (const locale of ['zh-Hant', 'en']) {
@@ -69,6 +70,33 @@ test('overview reveal controls stay outside navigation links and retain separate
       assert.ok(markup.includes(`class="case-card-copy case-card-link" href="?page=cases&amp;case=${entry.id}&amp;lang=${locale}"`));
     }
     assert.equal(new Set(ids(markup)).size, ids(markup).length);
+  }
+});
+
+test('only the overview covers invite the reveal, and they ship both pointer wordings', () => {
+  // Each wording is shipped and CSS shows the one matching the pointer, so both must exist.
+  const revealable = publishedCases().filter(entry => entry.hero.sketch);
+  assert.ok(revealable.length > 0);
+  for (const locale of ['zh-Hant', 'en']) {
+    const hint = getMessages(locale).cases.overview.photoHint;
+    const markup = render({ locale });
+    assert.equal(count(markup, '<span class="ink-photo__hint" aria-hidden="true">'), revealable.length, locale);
+    assert.equal(count(markup, `<span class="ink-photo__hint-touch">${escapeHtml(hint.touch)}</span>`), revealable.length, locale);
+    assert.equal(count(markup, `<span class="ink-photo__hint-hover">${escapeHtml(hint.hover)}</span>`), revealable.length, locale);
+    // The drawn arrow travels with the wording, inside the decoration the reader ignores.
+    const blocks = [...markup.matchAll(/<span class="ink-photo__hint" aria-hidden="true">([\s\S]*?)<\/span>\s*<\/button>/g)];
+    assert.equal(blocks.length, revealable.length, locale);
+    for (const [, body] of blocks) {
+      assert.match(body, /<svg[^>]*viewBox="0 0 80 60"/, locale);
+      assert.ok(!body.includes('<button'), locale);
+    }
+    // The other wording never leaks: no case page and no dead end carries a hint.
+    for (const caseId of [...publishedCases().map(entry => entry.id), 'not-a-case']) {
+      const page = render({ locale, caseId });
+      assert.equal(count(page, 'ink-photo__hint'), 0, `${locale}/${caseId}`);
+      assert.ok(!has(page, hint.touch), `${locale}/${caseId}`);
+      assert.ok(!has(page, hint.hover), `${locale}/${caseId}`);
+    }
   }
 });
 

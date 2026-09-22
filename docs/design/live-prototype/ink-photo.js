@@ -36,7 +36,7 @@ function renderCanvas({ key, width, height, sketch, source, alt, companion = fal
 }
 
 /** A real photo blooms through a feathered ink mask; the image itself stays sharp. */
-export function renderInkPhoto({ id, sketch, photo, alt, label, aspect = '1 / 1', kind = 'portrait', photoCrop, companion }) {
+export function renderInkPhoto({ id, sketch, photo, alt, label, aspect = '1 / 1', kind = 'portrait', photoCrop, companion, hint }) {
   const dimensions = /^\s*(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)\s*$/.exec(aspect);
   if (!dimensions || +dimensions[1] <= 0 || +dimensions[2] <= 0) throw new TypeError('Invalid ink photo aspect ratio');
   const width = Math.round(1000 * dimensions[1] / dimensions[2]);
@@ -62,6 +62,10 @@ export function renderInkPhoto({ id, sketch, photo, alt, label, aspect = '1 / 1'
       ${companion ? renderCanvas({ key: `${key}-companion`, width: 1000, height: 1000, sketch: companion.sketch, source: `<image href="${imagePath(companion.photo)}" x="0" y="0" width="1000" height="1000" preserveAspectRatio="xMidYMid slice"/>`, companion: true, silhouette: companion.silhouette }) : ''}
       <span class="ink-photo__ripple" aria-hidden="true"></span>
     </span>
+    ${hint ? `<span class="ink-photo__hint" aria-hidden="true">
+      <span class="ink-photo__hint-touch">${esc(hint.touch)}</span><span class="ink-photo__hint-hover">${esc(hint.hover)}</span>
+      <svg viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M73 4C53 7 29 17 31 31c2 12 20 10 18-1C46 15 19 24 12 52M7 43l5 9 10-5"/><path d="M69 2C53 6 41 11 35 18" stroke-width=".55" opacity=".45"/></svg>
+    </span>` : ''}
   </button>`;
 }
 

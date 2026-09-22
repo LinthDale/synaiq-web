@@ -135,3 +135,20 @@ test('everyday typography and colour settings have a central editing point', asy
   assert.match(tokens, /--ceo-quote-size:\s*clamp\(27px, 7\.3vw, 33px\)/);
   assert.match(tokens, /html:lang\(en\) body\[data-page="kip"\][\s\S]*--kip-title-size:\s*clamp\(34px, 5\.3vw, 76px\)/);
 });
+
+test('the cover hint keeps its colour in tokens.css and its behaviour in site.css', async () => {
+  const tokens = await read('tokens.css');
+  assert.ok(tokens.includes('--ink-hint-color:'), 'Missing --ink-hint-color');
+  assert.ok(tokens.includes('var(--ink-hint-color)'), 'Unused --ink-hint-color');
+  assert.ok(hasDeclaration('tokens.css', '.ink-photo__hint', 'color', 'var(--ink-hint-color)'));
+  // The hint sits over the cover but never takes a click or covers the revealed photograph.
+  assert.ok(hasDeclaration('site.css', '.ink-photo__hint', 'position', 'absolute'));
+  assert.ok(hasDeclaration('site.css', '.ink-photo__hint', 'pointer-events', 'none'));
+  assert.ok(hasDeclaration('site.css', '.ink-photo:not([data-ink-state="sketch"]) .ink-photo__hint', 'opacity', '0'),
+    'the hint must fade as soon as the reveal leaves the sketch state');
+  // Touch wording by default; the pointer wording appears only where hovering is real.
+  assert.ok(hasDeclaration('site.css', '.ink-photo__hint-hover', 'display', 'none'));
+  assert.ok(hasDeclaration('site.css', '.ink-photo__hint-touch', 'display', 'none', '(hover: hover) and (pointer: fine)'));
+  assert.ok(hasDeclaration('site.css', '.ink-photo__hint-hover', 'display', 'inline', '(hover: hover) and (pointer: fine)'));
+  assert.ok(hasDeclaration('site.css', '.ink-photo__hint', 'transition', 'none', '(prefers-reduced-motion: reduce)'));
+});

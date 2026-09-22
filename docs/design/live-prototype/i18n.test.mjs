@@ -54,6 +54,21 @@ test('a case identifier travels between page and language, and only in its appro
   assert.equal(localeHref('https://example.com/page.html?page=cases&case=tokyo-foodex-2026&lang=en#fieldnotes', 'zh-Hant'), '/page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant#fieldnotes');
 });
 
+test('the cover hint supplies a distinct wording per pointer in every language', () => {
+  // Both wordings ship on every cover; CSS decides which one a device shows, so a missing
+  // one would leave a silent blank rather than fail at runtime.
+  for (const { code } of SUPPORTED_LOCALES) {
+    const hint = getMessages(code).cases.overview.photoHint;
+    for (const key of ['touch', 'hover']) {
+      assert.equal(typeof hint[key], 'string', `${code}.${key}`);
+      assert.ok(hint[key].trim().length > 0, `${code}.${key}`);
+    }
+    assert.notEqual(hint.touch, hint.hover, code);
+  }
+  assert.deepEqual(getMessages('zh-Hant').cases.overview.photoHint, { touch: '點我看看', hover: '移入看看' });
+  assert.deepEqual(getMessages('en').cases.overview.photoHint, { touch: 'Tap to peek', hover: 'Hover to peek' });
+});
+
 test('no language bundle carries local preview wording into published copy', () => {
   // The local shell is named 本機預覽／Local preview; prototype wording must never reach a published string.
   for (const { code } of SUPPORTED_LOCALES) assert.doesNotMatch(JSON.stringify(getMessages(code)), /設計原型|prototype/i, code);

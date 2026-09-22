@@ -62,6 +62,32 @@ test('a further case takes the next row and keeps the sides alternating', () => 
   assert.ok(!markup.includes('<script>alert(1)'));
 });
 
+/** The one overview row for this case, from its <article> to the matching close. */
+function rowFor(markup, id) {
+  const anchor = markup.indexOf(`case=${id}`);
+  assert.ok(anchor > 0, `${id} has no row`);
+  return markup.slice(markup.lastIndexOf('<article', anchor), markup.indexOf('</article>', anchor));
+}
+
+test('a cover with no paired sketch is a plain photograph and invites nothing', () => {
+  const markup = renderCases({ locale: 'zh-Hant', messages: messagesWith('zh-Hant'), cases: withFixture });
+  const hint = getMessages('zh-Hant').cases.overview.photoHint;
+  // The hint belongs to the reveal, so a case that has no sketch yet simply has no hint.
+  const fixtureRow = rowFor(markup, FIXTURE_ID);
+  assert.match(fixtureRow, /<img class="case-cover" src="assets\/cases\/fixture-wide\.jpg"/);
+  assert.ok(!fixtureRow.includes('ink-photo__hint'));
+  assert.ok(!fixtureRow.includes('data-ink-photo'));
+  assert.ok(!fixtureRow.includes(hint.touch));
+  assert.ok(!fixtureRow.includes(hint.hover));
+  // The rows that do have a paired sketch still carry theirs, one each.
+  for (const id of [DEFAULT_CASE, 'tainan-tech-forum-2026']) {
+    const row = rowFor(markup, id);
+    assert.equal(row.split('ink-photo__hint"').length - 1, 1, id);
+    assert.ok(row.includes(hint.touch), id);
+    assert.ok(row.includes(hint.hover), id);
+  }
+});
+
 test('a landscape case uses the shared hero and needs no sketch', () => {
   const messages = messagesWith('zh-Hant');
   const markup = renderCases({ locale: 'zh-Hant', messages, caseId: FIXTURE_ID, cases: withFixture });

@@ -26,13 +26,13 @@ function coverFocus(entry) {
   return /^\d{1,3}% \d{1,3}%$/.test(focus) ? focus : '50% 50%';
 }
 
-function renderCover(entry, text, aspect) {
+function renderCover(entry, text, aspect, hint) {
   // A cover shares its alternative text with the photo it is taken from unless the case
   // names another entry, so a card is never described by the wrong picture.
   const alt = text.photos[entry.cover?.altKey ?? entry.hero.key].alt;
   const paired = [entry.hero, ...(entry.field?.photos ?? [])].find(photo => photo.photo === entry.cover.image && photo.sketch);
   if (paired) {
-    return renderInkPhoto({ id: `cover-${entry.id}`, sketch: paired.sketch, photo: paired.photo, alt, label: text.photos[paired.key].label, aspect: cssAspect(aspect), kind: paired.kind });
+    return renderInkPhoto({ id: `cover-${entry.id}`, sketch: paired.sketch, photo: paired.photo, alt, label: text.photos[paired.key].label, aspect: cssAspect(aspect), kind: paired.kind, hint });
   }
   return `<img class="case-cover" src="${e(entry.cover.image)}" alt="${e(alt)}" loading="lazy" style="--case-cover-aspect:${cssAspect(aspect)};--case-cover-focus:${coverFocus(entry)}">`;
 }
@@ -62,7 +62,7 @@ function renderRow(entry, copy, locale, index) {
   const side = index % 2 === 0 ? 'left' : 'right';
   return `<article class="case-card case-card--${aspectOrientation(aspect)} case-card--${side}" data-case-row="${index + 1}">
     <div class="case-card-layout">
-      <figure class="case-card-cover">${renderCover(entry, text, aspect)}</figure>
+      <figure class="case-card-cover">${renderCover(entry, text, aspect, copy.overview.photoHint)}</figure>
       <a class="case-card-copy case-card-link" href="${e(pageHref({ page: 'cases', caseId: entry.id, locale }))}">
         <p class="case-card-date">${e(text.dateLabel)}</p>
         <h3 class="case-card-name">${e(text.name)}</h3>

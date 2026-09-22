@@ -1676,6 +1676,7 @@ html:lang(en) body[data-page="kip"] .kip-opening h1 {
   --editorial-hover-duration: 240ms;
   --ink-reveal-duration: 2600ms; /* 滑鼠停留後逐漸顯現真照；點擊暫停當前比例 */
   --ink-ripple-duration: 800ms; /* 點擊的水紋擴散 */
+  --ink-hint-color: #8b7461; /* 封面提示沿用素描的褐色筆觸 */
 }
 .editorial-kicker { font: 500 12px/1.5 var(--body); letter-spacing: .12em; color: var(--editorial-olive); }
 .editorial-hero h1 { font: 300 var(--editorial-title-size)/1.45 var(--display); letter-spacing: -.035em; }
@@ -1705,6 +1706,7 @@ html:lang(en) body[data-page="kip"] .kip-opening h1 {
 .editorial-closing p { font: 300 clamp(26px,3vw,40px)/1.5 var(--display); }
 .editorial-paper-plane { color: var(--editorial-olive); }
 .ink-photo { color: var(--muted); text-align: left; }
+.ink-photo__hint { font: italic 400 clamp(15px, 1.3vw, 18px)/1.5 var(--display); letter-spacing: .04em; color: var(--ink-hint-color); text-align: right; }
 .about-handnote { font: italic 400 17px/1.6 var(--display); color: var(--editorial-olive); }
 .about-principle-number { font: italic 300 28px/1.25 var(--display); color: var(--editorial-olive); }
 .about-principle h3 { font: 400 24px/1.4 var(--display); }
