@@ -3332,7 +3332,7 @@ body[data-page="kip"] .kip-capability-list dd {
 .ink-photo:focus-visible { outline: 2px solid var(--editorial-olive); outline-offset: 8px; border-radius: 6px; }
 .ink-photo__art { position: relative; display: block; aspect-ratio: var(--ink-photo-aspect); }
 .ink-photo__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
-.ink-photo__hint { position: absolute; top: -12px; right: 0; z-index: 1; display: grid; justify-items: end; pointer-events: none; white-space: nowrap; transform: rotate(-6deg); transform-origin: right top; transition: opacity var(--editorial-hover-duration) ease; }
+.ink-photo__hint { position: absolute; top: -28px; right: -16px; z-index: 1; display: grid; justify-items: end; pointer-events: none; white-space: nowrap; transform: rotate(-6deg); transform-origin: right top; transition: opacity var(--editorial-hover-duration) ease; }
 .ink-photo__hint svg { display: block; width: 72px; height: 54px; margin-right: 24px; }
 .ink-photo__hint-hover { display: none; }
 .ink-photo:not([data-ink-state="sketch"]) .ink-photo__hint { opacity: 0; }
