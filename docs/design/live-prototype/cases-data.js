@@ -56,8 +56,12 @@ const TAINAN_TECH_FORUM_2026 = Object.freeze({
       aspect: '4 / 3', kind: 'scene',
     })]),
   }),
-  // No coverage confirmed for this case, so the section is omitted rather than left empty.
-  media: Object.freeze([]),
+  // Index-matched to press.links in locale-cases.js; each article names 鑫揚智能 in its text.
+  media: Object.freeze([
+    'https://money.udn.com/money/story/5635/9766564',
+    'https://www.setn.com/news/1906433',
+    'https://cnews.com.tw/204260917a05/',
+  ]),
 });
 
 export const CASES = Object.freeze([TOKYO_FOODEX_2026, TAINAN_TECH_FORUM_2026]);

@@ -72,7 +72,7 @@ test('overview reveal controls stay outside navigation links and retain separate
   }
 });
 
-test('the Tainan case shows its story and field record, and omits the coverage it has none of', () => {
+test('the Tainan case shows its story, field record and its own three articles', () => {
   const id = 'tainan-tech-forum-2026';
   const entry = publishedCases().find(item => item.id === id);
   for (const locale of ['zh-Hant', 'en']) {
@@ -84,10 +84,27 @@ test('the Tainan case shows its story and field record, and omits the coverage i
     assert.ok(has(markup, text.summary), locale);
     // Orientation controls sizing within the shared side-by-side hero layout.
     assert.match(markup, /cases-hero-layout--landscape/, locale);
-    // No coverage: the whole section is absent, heading and all.
-    assert.deepEqual(ids(markup).filter(item => ['story', 'fieldnotes', 'press'].includes(item)), ['story', 'fieldnotes'], locale);
-    assert.ok(!markup.includes('case-press'), locale);
-    assert.deepEqual([...caseSectionIds({ caseId: id, messages: getMessages(locale) })], ['story', 'fieldnotes'], locale);
+    // This case has its own coverage, kept separate from the other case's articles.
+    assert.deepEqual(ids(markup).filter(item => ['story', 'fieldnotes', 'press'].includes(item)), ['story', 'fieldnotes', 'press'], locale);
+    assert.deepEqual([...caseSectionIds({ caseId: id, messages: getMessages(locale) })], ['story', 'fieldnotes', 'press'], locale);
+    assert.deepEqual(entry.media, [
+      'https://money.udn.com/money/story/5635/9766564',
+      'https://www.setn.com/news/1906433',
+      'https://cnews.com.tw/204260917a05/',
+    ]);
+    for (const [index, url] of entry.media.entries()) {
+      assert.ok(markup.includes(`href="${url}" target="_blank" rel="noopener noreferrer"`), `${locale}: ${url}`);
+      // Each address keeps the publisher and headline that belong to it.
+      assert.ok(markup.indexOf(url) < markup.indexOf(escapeHtml(text.press.links[index][1])), `${locale}: ${url} pairing`);
+    }
+    for (const [publisher, title] of text.press.links) {
+      assert.ok(has(markup, publisher), `${locale}: ${publisher}`);
+      assert.ok(has(markup, title), `${locale}: ${title}`);
+    }
+    // No address from the other case appears here.
+    for (const other of publishedCases().find(item => item.id === DEFAULT_CASE).media) {
+      assert.ok(!markup.includes(other), `${locale}: ${other}`);
+    }
     // Both illustrations reveal their original photographs within the same case.
     assert.equal([...markup.matchAll(/data-ink-photo\b/g)].length, 2, locale);
     assert.ok(!markup.includes('<img class="case-photo"'), locale);

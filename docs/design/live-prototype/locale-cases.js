@@ -99,6 +99,14 @@ export const zhHant = {
           ['讓經驗留在組織', '把作業文件與經驗紀錄納入可持續維護的知識庫，支援日常協作、新人學習與工作交接。'],
         ],
       },
+      press: {
+        title: '從報導，看見現場。',
+        links: [
+          ['經濟日報', '臺南市「2026 T-AI-NAN 智匯臺南・永續賦能」科技論壇受與會者好評'],
+          ['三立新聞網', '「2026 T-AI-NAN 智匯臺南・永續賦能」聚焦智慧製造與無人載具'],
+          ['匯流新聞網', '全臺唯一　臺南打造半導體＋AI＋智慧機器人的金三角聚落'],
+        ],
+      },
     },
   },
 };
@@ -199,6 +207,14 @@ export const en = {
           ['Bring documents together', 'Connect scattered documents to the knowledge center, then parse and organize them into libraries that provide a shared foundation for the team.'],
           ['Check every answer against its source', 'Ask for work information in natural language. Citations lead back to the original material so people can verify the answer and its context.'],
           ['Keep experience in the organization', 'Maintain procedures and records of experience in a knowledge base that supports collaboration, onboarding, and handovers.'],
+        ],
+      },
+      press: {
+        title: 'Another view of the story.',
+        links: [
+          ['Economic Daily News', 'Tainan\'s "2026 T-AI-NAN" technology forum wins praise from attendees'],
+          ['SETN', '"2026 T-AI-NAN" forum focuses on smart manufacturing and unmanned vehicles'],
+          ['CNEWS', 'Tainan builds Taiwan\'s only semiconductor, AI and robotics golden triangle'],
         ],
       },
     },

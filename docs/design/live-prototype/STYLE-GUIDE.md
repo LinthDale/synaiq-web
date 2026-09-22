@@ -190,7 +190,7 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `page=cases&case=<識別碼>` | 單一案例：案例故事 `story`、現場紀錄 `fieldnotes`、相關報導 `press` | `cases-design.js`／`locale-cases.js` 的 `cases.<識別碼>`＋`cases-data.js` |
 | `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locale-about.js` |
 
-兩頁都支援 `lang=zh-Hant`／`lang=en`。實績分成「總覽」與「單一案例」：總覽文案適用所有案例，「從台南到東京」等專屬文字屬於東京案例。目前兩則：`tokyo-foodex-2026`（四語導覽與裝置整合，有現場紀錄與兩則報導）與 `tainan-tech-forum-2026`（KIP 參展與綜合論談與談，有現場紀錄、沒有報導）。不要把展會整體業績寫成 AI 帶來的績效。`01 / THE STORY`、`02 / IN THE FIELD` 是案例**內**的小節標示，不是案例排序。本頁目錄會依網址變化：總覽只有「我們的旅途」，案例只列它實際有的小節，找不到案例時沒有目錄。總覽卡片上方的標題是「一起見證我們的旅途」，案例頁的返回連結是「回到旅途」；這組旅途文案由使用者核准，`cases-render.test.mjs` 逐字比對。新增一筆實績的固定步驟見 [維護入口](README.md#新增一筆實績)。
+兩頁都支援 `lang=zh-Hant`／`lang=en`。實績分成「總覽」與「單一案例」：總覽文案適用所有案例，「從台南到東京」等專屬文字屬於東京案例。目前兩則：`tokyo-foodex-2026`（四語導覽與裝置整合，有現場紀錄與兩則報導）與 `tainan-tech-forum-2026`（KIP 參展與綜合論談與談，有現場紀錄與三則報導）。不要把展會整體業績寫成 AI 帶來的績效。`01 / THE STORY`、`02 / IN THE FIELD` 是案例**內**的小節標示，不是案例排序。本頁目錄會依網址變化：總覽只有「我們的旅途」，案例只列它實際有的小節，找不到案例時沒有目錄。總覽卡片上方的標題是「一起見證我們的旅途」，案例頁的返回連結是「回到旅途」；這組旅途文案由使用者核准，`cases-render.test.mjs` 逐字比對。新增一筆實績的固定步驟見 [維護入口](README.md#新增一筆實績)。
 
 團隊名單的唯一文字來源是 `locale-about.js`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
 

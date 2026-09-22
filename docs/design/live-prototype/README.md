@@ -43,7 +43,7 @@ npm run dev:design
 - 英文 KIP：`page.html?page=kip&lang=en`
 - 繁中實績總覽：`page.html?page=cases&lang=zh-Hant`；段落為 `#cases-list`。
 - 東京食品展案例：`page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant`；段落為 `#story`、`#fieldnotes`、`#press`。
-- 臺南市科技產業論壇案例：`page.html?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant`；段落只有 `#story`、`#fieldnotes`（沒有報導）。
+- 臺南市科技產業論壇案例：`page.html?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant`；段落為 `#story`、`#fieldnotes`、`#press`（三則報導）。
 - 預覽列有「案例」選單；切換語言保留案例，切換頁面回到總覽。
 - 舊連結 `page.html?page=cases&lang=zh-Hant#story` 會自動換成東京案例的同一段落（replaceState，不會卡住上一頁）。無效識別碼顯示「找不到此案例」並設為 noindex。
 - 繁中關於我們：`page.html?page=about&lang=zh-Hant`；段落為 `#approach`、`#leadership`、`#technical`。
@@ -63,7 +63,7 @@ npm run dev:design
 6. **更新 sitemap**：`sitemap.xml` 為每個公開案例補中英兩筆，網址與 `page-metadata.js` 的 `crawlUrls()` 必須一致。
 7. **驗證**：`npm run test:design`，再開本機預覽看總覽卡片、案例詳情、語言切換與 390／835／1440px；要上架再依 [官網更新 README](../../operations/WEBSITE-UPDATE-README.md) 走發布流程（`release.mjs` 的 `EXPECTED_FILES` 與 `SITEMAP_URLS` 依本次實際數量重算）。
 
-實際範例：`tainan-tech-forum-2026` 就是照這七步加進來的——`cases-data.js` 一筆設定（橫式封面、一張現場照片及各自配對手繪、`media: []`）、`locale-cases.js` 一組雙語文字與顯影按鈕標籤（沒有 `press` 區塊）、`assets/cases/` 四個檔案、白名單四筆、sitemap 兩筆。總覽封面及案例內兩張圖均使用手繪顯影、暫停／繼續與鍵盤操作；總覽圖片是獨立互動按鈕，文字區與「翻開這個故事」連結負責進入內頁。
+實際範例：`tainan-tech-forum-2026` 就是照這七步加進來的——`cases-data.js` 一筆設定（橫式封面、一張現場照片及各自配對手繪、三個報導網址）、`locale-cases.js` 一組雙語文字、顯影按鈕標籤與對應的三則報導標題、`assets/cases/` 四個檔案、白名單四筆、sitemap 兩筆。報導網址放 `cases-data.js` 的 `media`、標題放 `locale-cases.js` 的 `press.links`，兩邊依序一一對應。總覽封面及案例內兩張圖均使用手繪顯影、暫停／繼續與鍵盤操作；總覽圖片是獨立互動按鈕，文字區與「翻開這個故事」連結負責進入內頁。
 
 封面直式或橫式都可以：`hero.aspect` 寫顯示比例。總覽與案例頁在 900px 以上都以圖片欄 60%、文字欄 40% 分配扣除間距後的欄寬；直圖置中且高度上限 480px，套用總覽、主照與現場照片，橫圖仍填滿圖片欄。總覽保留左右交替，案例頁統一文字左、圖片右。899px 以下改單欄、圖片在上，橫圖最大寬 440px、直圖最大高 360px，均不超過容器。配對顯影沿用主照置中取景；沒有配對手繪時，靜態封面用 `cover.focus` 指定取景。排序由 `featured` 與日期決定：目前東京 `featured: true` 置頂，其餘依日期由新到舊。
 
