@@ -6,20 +6,34 @@
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260923-taistro/`。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260923-domain/`，主網址為 https://taistro.com.tw/。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260923-taistro/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260923-domain/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
-| 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
+| 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
-## 2026-09-23 SEO 主網域遷移（待網路放行，未啟用）
+## 2026-09-23 SEO 主網域遷移（已啟用）
+
+### 正式切換結果
+
+已啟用 `public_html/synaiq-release-20260923-domain/`，來源 commit `ecd081ead825879ccb8f4c041bc6f3a0531dcde7`。`synaiq.com`、`www.synaiq.com`、`www.taistro.com.tw` 的 HTTPS 請求以 301 導向 `https://taistro.com.tw`，保留路徑及 query；canonical、hreflang、Open Graph、robots 與 12 個 sitemap URL 同步新網域。Hostinger 後台兩網域 SSL 均為 Active；切換後已在 hPanel 清除兩網域 CDN 快取並看到成功通知。實際瀏覽器從 `https://www.synaiq.com/` 開啟，網址列已變為 `https://taistro.com.tw/`。
+
+證據位於 `out/synaiq-release-20260923-domain/`：`activated.json` 驗證 83 個檔案／入口；`migration-https-live.json` 16 項通過；`cache-live.json` 8 項通過。來源 72 檔仍以完整 hash 驗證；新網域 CDN 圖片另核對尺寸、比例與可見像素，透明區先合成白底再比對，避免不可見 RGB 差異誤判。Wally 系列圖修正比較後平均差 0.879，低於原門檻 3。所有失敗、回退、候選路由與圖片檢視證據保留。
+
+`migration-supported-live.json` 另補齊兩個舊網域 HTTP 完整跳轉鏈，共 18 項通過。正式瀏覽器矩陣 24 組已通過（四頁中英文手機／桌面、835px 導覽及案例詳頁），保留於 `browser-live-24-passed.json`；最後舊案例書籤組的額外 curl 圖片請求遇辦公室 `SEC_E_UNTRUSTED_ROOT`，補跑亦在網路層中斷。沒有將完整自動套件標示 passed。用正常 TLS 的 Codex 內建瀏覽器補查最後兩個網址：舊 `#story` 書籤正確轉為東京案例並保留錨點／新 canonical；不存在案例呈現 notFound、noindex/nofollow，無 canonical、hreflang 或 og:url，兩頁皆無水平溢出。補查證據為 `browser-live-manual-supplement.json`。正式路由保留，沒有因辦公室網路驗收限制再次回退。
+
+`http-office-check.json` 記錄目前辦公室連線：兩個舊網域 HTTP 正常 301 升級 HTTPS；新網域 apex／www 的 HTTP 仍被 FortiGuard 回覆 403「Web Page Blocked」。這是本次 HTTP 驗證限制，不代表已驗證的 HTTPS 站點失效，亦不因此回退正常的主網域切換。未修改 DNS、網路安全設定或略過 TLS。
+
+主機私有維護入口已同步新版本，`guide-clarified.json` 核對 SHA-256 `a46a34a4208dc0f2d1d6197fb17a00bf25c4d3ee557e4460f38c2e8614436f6a`，公開網址仍為 410。Hostinger API 帳號識別的 domain 仍用 `synaiq.com`，不是公開主網址。
+
+回退前核對正式路由 SHA-256 為 `a2a927c95c0fc4a3d23983958e5183396c781603ac703f339ca0b31a6ce5ef01`，再使用本次工具的 rollback 階段還原 `routing-before.htaccess`，回到品牌版 `synaiq-release-20260923-taistro`（路由 hash `cbf412c4a9ff7cd11f1620274ab1599bfe1c9281dd1fffe76129756b2508a4c0`）；私有維護檔按 `guide-before.txt` 還原，並清兩網域 CDN 快取。不得覆蓋他人後續路由，候選名稱已使用時需準備新候選。下面時間紀錄為先前失敗嘗試，並非目前狀態。
 
 ### 13:54 再次接續（仍未啟用）
 

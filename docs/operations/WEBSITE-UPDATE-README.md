@@ -9,13 +9,15 @@
 | 修改正式網站 | `docs/design/live-prototype/`，品牌素材在 `public/brand/` |
 | 公開檔案白名單 | `docs/design/live-prototype/share-preview.mjs` 的 `PUBLIC_FILES` |
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
-| 驗收網址 | https://synaiq.com/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合 |
+| 驗收網址 | https://taistro.com.tw/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260923-taistro/`；供讀取參考，不可原地重跑新發布 |
+| 本機發布工具與證據 | `out/synaiq-release-20260923-domain/`；供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
 **Git push 不會自動部署官網。正式站來源是 live-prototype，不是 Astro `dist/`。**
+
+2026-09-23 已切換主網址為 `https://taistro.com.tw/`；Hostinger API 的既有主機識別仍用 `domain: synaiq.com`。修改網域轉址後需清除 synaiq.com 與 taistro.com.tw 的 Hostinger CDN 快取，避免沿用先前的 301。CDN 會最佳化圖片，來源檔案仍需精確 hash 核對，CDN 圖片則另驗證比例與可見內容，不能直接要求壓縮後檔案 hash 等於來源。
 
 `index.html` 是本機預覽外框；正式入口由 `page.html` 封裝成發布包的 `index.html`。不能直接上傳本機外框，也不能上傳整個 repo 或 `out/`。
 
