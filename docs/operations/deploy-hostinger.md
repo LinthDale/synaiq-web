@@ -6,12 +6,12 @@
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260923-cover-hint/`。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260923-taistro/`。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260923-cover-hint/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260923-taistro/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://synaiq.com/?page=about&lang=zh-Hant)、[英文關於我們](https://synaiq.com/?page=about&lang=en) |
 
@@ -19,7 +19,27 @@
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
-## 2026-09-23 實績封面顯影提示（現行）
+## 2026-09-23 tAistro 品牌更新（現行）
+
+已完成正式上線。來源 commit：`c8432fee4ff5fd22ad5e7224fb9f5c3d31929e71`；正式目錄：`public_html/synaiq-release-20260923-taistro/`，72 個公開檔案。網址：[tAistro](https://taistro.com.tw/)、[KIP](https://taistro.com.tw/?page=kip&lang=zh-Hant)；原 `https://synaiq.com/` 同步提供新版。
+
+公司品牌改為 tAistro／星洋智能科技股份有限公司，聯絡連結改為 `service@taistro.com.tw`；產品保留 Synaiq Logo＋KIP 標籤。動態 Demo 與四張中英文靜態產品畫面同步更新，靜態畫面右上標示對齊 Demo，導覽標籤縮短為 KIP。
+
+驗證：設計測試 182 通過、5 略過；local、staged、live 各 26／26 通過；staged 品牌檢查與新網域 HTTPS 品牌檢查各 24／24 通過，涵蓋四頁雙語及 390／835／1440px。實際檢視 KIP 桌面與手機截圖。stage 72 檔 hash 通過；activate 83 筆驗證通過；快取 8／8 通過。舊 Demo 選擇器造成的首次 local 失敗報告保留，更新為新版標誌斷言後重跑通過。
+
+2026-09-23 約 12:02（Asia/Taipei）實測 taistro.com.tw 與 www 的 HTTPS 均回 200，HTTP 均以 301 導向各自 HTTPS。SSL 已較 11:32 的握手失敗恢復。本次未更動 DNS／郵件服務，email 連結驗證不代表信箱收信驗證。新網域目前仍是 synaiq.com 的停放別名；canonical、hreflang、robots 與 sitemap 保留 synaiq.com，尚未執行搜尋引擎主網域遷移或新舊網域統一轉址。
+
+證據：`out/synaiq-release-20260923-taistro/`，含 inventory、baseline、preflight、manifest、artifact、routing-audit／before／preview／live.htaccess、browser-local／staged／live.json、brand-checks-staged／alias.json、截圖、staged.json、activated.json、cache-live.json、維護入口前後副本及 guide-clarified.json。私有 `00-SYNAIQ-START-HERE.txt` 已更新，公開仍回 410；新 hash：`fc0fce32ededd39d148879f700a9f8d615aa9e6c77a7807929c0c80976541c5e`。
+
+回退：核對現行路由仍為下列正式 hash 後，使用 `node out/synaiq-release-20260923-taistro/release.mjs rollback` 還原完整發布前路由及 `synaiq-release-20260923-cover-hint`。私有維護入口以 `guide-before.txt` 還原，先核對目前內容仍符合本次新 hash。前一版維護入口 hash：`1b8ce06eb6ef63de31ab1b73b02c4c002eb2efc77ef4655e026352b54a66998a`。所有歷史檔案保留；cases-tainan 撤下公開存取但不刪除。
+
+| 路由 | SHA-256 |
+|---|---|
+| 發布前 | `814159a24d02e1c7906c0f41c55c370499bda2acda319e357531b66746627f7d` |
+| 測試網址開放 | `bcc23fa0f43dffcafcb254b00798d855b9d9bd060eabcf4d48166d1f2aec1721` |
+| 正式入口 | `cbf412c4a9ff7cd11f1620274ab1599bfe1c9281dd1fffe76129756b2508a4c0` |
+
+## 2026-09-23 實績封面顯影提示
 
 已完成正式上線。來源 commit：`ea4ce37b88fa1892cefda3cb3e2d0dabe2d2a1f9`；正式目錄：`public_html/synaiq-release-20260923-cover-hint/`，70 個公開檔案，sitemap 保留 12 個網址。正式網址：[中文實績總覽](https://synaiq.com/?page=cases&lang=zh-Hant)、[英文實績總覽](https://synaiq.com/?page=cases&lang=en)。
 
