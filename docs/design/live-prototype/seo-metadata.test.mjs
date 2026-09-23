@@ -26,40 +26,40 @@ const brandRoot = new URL('../../../public/brand/', import.meta.url);
 test('canonical addresses keep one stable form: page before language, bare root for the default page', () => {
   assert.equal(combinations.length, 8);
   assert.deepEqual(combinations.map(pair => canonicalUrl(pair)), [
-    'https://synaiq.com/',
-    'https://synaiq.com/?page=home&lang=en',
-    'https://synaiq.com/?page=kip&lang=zh-Hant',
-    'https://synaiq.com/?page=kip&lang=en',
-    'https://synaiq.com/?page=cases&lang=zh-Hant',
-    'https://synaiq.com/?page=cases&lang=en',
-    'https://synaiq.com/?page=about&lang=zh-Hant',
-    'https://synaiq.com/?page=about&lang=en',
+    'https://taistro.com.tw/',
+    'https://taistro.com.tw/?page=home&lang=en',
+    'https://taistro.com.tw/?page=kip&lang=zh-Hant',
+    'https://taistro.com.tw/?page=kip&lang=en',
+    'https://taistro.com.tw/?page=cases&lang=zh-Hant',
+    'https://taistro.com.tw/?page=cases&lang=en',
+    'https://taistro.com.tw/?page=about&lang=zh-Hant',
+    'https://taistro.com.tw/?page=about&lang=en',
   ]);
   // Unknown input falls back to the default address instead of inventing a new one.
   for (const pair of [undefined, {}, { page: '../../private', locale: '<script>' }, { page: '__proto__', locale: 'de' }]) {
-    assert.equal(canonicalUrl(pair), 'https://synaiq.com/');
+    assert.equal(canonicalUrl(pair), 'https://taistro.com.tw/');
   }
   // Each published case adds one address per language, inserted after the overview pair.
   assert.equal(crawlTargets().length, combinations.length + 2 * publishedCases().length);
   assert.deepEqual(crawlUrls(), [
-    'https://synaiq.com/',
-    'https://synaiq.com/?page=home&lang=en',
-    'https://synaiq.com/?page=kip&lang=zh-Hant',
-    'https://synaiq.com/?page=kip&lang=en',
-    'https://synaiq.com/?page=cases&lang=zh-Hant',
-    'https://synaiq.com/?page=cases&lang=en',
-    'https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant',
-    'https://synaiq.com/?page=cases&case=tokyo-foodex-2026&lang=en',
-    'https://synaiq.com/?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant',
-    'https://synaiq.com/?page=cases&case=tainan-tech-forum-2026&lang=en',
-    'https://synaiq.com/?page=about&lang=zh-Hant',
-    'https://synaiq.com/?page=about&lang=en',
+    'https://taistro.com.tw/',
+    'https://taistro.com.tw/?page=home&lang=en',
+    'https://taistro.com.tw/?page=kip&lang=zh-Hant',
+    'https://taistro.com.tw/?page=kip&lang=en',
+    'https://taistro.com.tw/?page=cases&lang=zh-Hant',
+    'https://taistro.com.tw/?page=cases&lang=en',
+    'https://taistro.com.tw/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant',
+    'https://taistro.com.tw/?page=cases&case=tokyo-foodex-2026&lang=en',
+    'https://taistro.com.tw/?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant',
+    'https://taistro.com.tw/?page=cases&case=tainan-tech-forum-2026&lang=en',
+    'https://taistro.com.tw/?page=about&lang=zh-Hant',
+    'https://taistro.com.tw/?page=about&lang=en',
   ]);
   assert.equal(new Set(crawlUrls()).size, crawlUrls().length);
   // A case identifier that is unknown, unpublished or malformed never reaches an address.
   // 'kaohsiung-expo-2027' has a valid shape but no content yet, so it stays unreachable.
   for (const caseId of ['not-a-case', 'kaohsiung-expo-2027', '../../private', '__proto__']) {
-    assert.equal(canonicalUrl({ page: 'cases', locale: 'en', caseId }), 'https://synaiq.com/?page=cases&lang=en', caseId);
+    assert.equal(canonicalUrl({ page: 'cases', locale: 'en', caseId }), 'https://taistro.com.tw/?page=cases&lang=en', caseId);
   }
 });
 
@@ -200,7 +200,7 @@ test('shipped vector art and stylesheets carry no preview wording in their own t
 test('robots.txt invites crawling and never blocks the release folder Googlebot must render', async () => {
   const robots = await read('robots.txt');
   const directives = robots.split(/\r?\n/).map(line => line.trim()).filter(line => line && !line.startsWith('#'));
-  assert.deepEqual(directives, ['User-agent: *', 'Allow: /', 'Sitemap: https://synaiq.com/sitemap.xml']);
+  assert.deepEqual(directives, ['User-agent: *', 'Allow: /', 'Sitemap: https://taistro.com.tw/sitemap.xml']);
   assert.equal(/^\s*Disallow:/im.test(robots.replace(/^[^\n]*#[^\n]*$/gm, '')), false, 'no Disallow rule may reach the release folder');
   for (const line of directives) assert.doesNotMatch(line, /synaiq-release/);
 });
@@ -244,7 +244,7 @@ function runShell({ page, locale, url, history }) {
     getElementById: () => ({ innerHTML: '', addEventListener() {} }),
   };
   const context = {
-    location: new URL(url ?? `https://synaiq.com/?page=${page}&lang=${locale}`),
+    location: new URL(url ?? `https://taistro.com.tw/?page=${page}&lang=${locale}`),
     document, URLSearchParams, SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages,
     localeHref, pageHref, esc: escapeHtml, pageMetadata, resolveCaseId, DEFAULT_CASE,
     ...pageFunctions,
@@ -261,7 +261,7 @@ test('the shell writes apex-origin crawl tags for the requested address, whateve
     const label = `${page}/${locale}`;
     const expected = pageMetadata({ page, locale });
     // A www host and a release-folder path must not leak into anything a crawler reads.
-    const url = `https://www.synaiq.com/synaiq-release-20260921-site-update/page.html?page=${page}&lang=${locale}`;
+    const url = `https://www.taistro.com.tw/synaiq-release-20260921-site-update/page.html?page=${page}&lang=${locale}`;
     const { document, head } = runShell({ page, locale, url });
     assert.equal(document.documentElement.lang, locale, label);
     assert.equal(document.title, expected.title, label);
@@ -284,7 +284,7 @@ test('the shell writes each published case address from the identifier in the qu
     for (const { code } of SUPPORTED_LOCALES) {
       const label = `${entry.id}/${code}`;
       const expected = pageMetadata({ page: 'cases', locale: code, caseId: entry.id });
-      const url = `https://www.synaiq.com/synaiq-release-20260922-cases/page.html?page=cases&case=${entry.id}&lang=${code}`;
+      const url = `https://www.taistro.com.tw/synaiq-release-20260922-cases/page.html?page=cases&case=${entry.id}&lang=${code}`;
       const { document, head } = runShell({ page: 'cases', locale: code, url });
       assert.equal(document.title, expected.title, label);
       assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), expected.canonical, label);
@@ -299,7 +299,7 @@ test('the shell writes each published case address from the identifier in the qu
 });
 
 test('the shell withdraws canonical, alternates and og:url for a case that does not exist', () => {
-  const url = 'https://synaiq.com/?page=cases&case=not-a-case&lang=en';
+  const url = 'https://taistro.com.tw/?page=cases&case=not-a-case&lang=en';
   const { document, head, apply } = runShell({ page: 'cases', locale: 'en', url });
   const miss = pageMetadata({ page: 'cases', locale: 'en', caseId: 'not-a-case' });
   assert.equal(document.title, miss.title);
@@ -321,7 +321,7 @@ test('a legacy work-page anchor without a case moves to the case that owns that 
   for (const hash of ['#story', '#fieldnotes']) {
     const replaced = [];
     const history = { replaceState: (state, title, href) => replaced.push(href) };
-    const url = `https://synaiq.com/?page=cases&lang=zh-Hant${hash}`;
+    const url = `https://taistro.com.tw/?page=cases&lang=zh-Hant${hash}`;
     const { document, head } = runShell({ page: 'cases', locale: 'zh-Hant', url, history });
     // replaceState, so the browser's back button leaves the site instead of looping.
     assert.deepEqual(replaced, [`?page=cases&case=${DEFAULT_CASE}&lang=zh-Hant${hash}`], hash);
@@ -330,7 +330,7 @@ test('a legacy work-page anchor without a case moves to the case that owns that 
     assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), expected.canonical, hash);
   }
   // Any other address on the work page is left exactly as requested.
-  for (const url of ['https://synaiq.com/?page=cases&lang=zh-Hant', 'https://synaiq.com/?page=cases&lang=zh-Hant#contact', 'https://synaiq.com/?page=home&lang=zh-Hant#story']) {
+  for (const url of ['https://taistro.com.tw/?page=cases&lang=zh-Hant', 'https://taistro.com.tw/?page=cases&lang=zh-Hant#contact', 'https://taistro.com.tw/?page=home&lang=zh-Hant#story']) {
     const replaced = [];
     const history = { replaceState: (state, title, href) => replaced.push(href) };
     const { head } = runShell({ page: new URL(url).searchParams.get('page'), locale: 'zh-Hant', url, history });

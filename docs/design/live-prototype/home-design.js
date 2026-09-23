@@ -96,7 +96,7 @@ export function renderHome({ advantageSection, contact, locale = 'zh-Hant', mess
   <section class="home-wally paper-edge" id="wally"><div class="wrap">
     <div class="wally-heading"><h2>${lines(wally.title)}</h2><div><p>${lines(wally.intro)}</p><span class="wally-detail">${h(wally.detail)}</span></div></div>
     <div class="wally-persona">
-      <figure class="persona-art media-slot" data-slot="06"><img src="https://synaiq.com/wp-content/uploads/2026/03/toutou-2.png" alt="${h(wally.personaAlt)}" loading="lazy">${slotLabel('06', wally.personaCaption)}</figure>
+      <figure class="persona-art media-slot" data-slot="06"><img src="https://taistro.com.tw/wp-content/uploads/2026/03/toutou-2.png" alt="${h(wally.personaAlt)}" loading="lazy">${slotLabel('06', wally.personaCaption)}</figure>
       <div class="persona-context"><span>${h(wally.personaEyebrow)}</span><h3>${lines(wally.personaTitle)}</h3><p>${lines(wally.personaCopy)}</p><img src="/brand/wally-mini.png" alt="${h(wally.miniAlt)}" loading="lazy"><p class="note">${h(wally.materialNote)}</p></div>
     </div>
     <figure class="wally-panorama media-slot" data-slot="05"><div class="panorama-scroll" role="region" aria-label="${h(wally.panoramaLabel)}" tabindex="0"><img src="/brand/wally/wally-series.png" width="1300" height="670" alt="${h(wally.panoramaAlt)}" loading="lazy"></div>${slotLabel('05', wally.panoramaCaption)}</figure>

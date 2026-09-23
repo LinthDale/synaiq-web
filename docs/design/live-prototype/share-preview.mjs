@@ -79,7 +79,7 @@ const securityHeaders = Object.freeze({
   'Content-Security-Policy': [
     "default-src 'none'", "script-src 'self' 'unsafe-inline'",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    'font-src https://fonts.gstatic.com', "img-src 'self' data: https://synaiq.com",
+    'font-src https://fonts.gstatic.com', "img-src 'self' data: https://taistro.com.tw",
     "connect-src 'none'", "frame-src 'self'", "frame-ancestors 'self'",
     "base-uri 'none'", "form-action 'none'", "object-src 'none'",
   ].join('; '),

@@ -1,11 +1,11 @@
 // Crawl metadata for the published site. Pure functions only: no DOM, no location, no
 // network. One document answers every page/locale/case address, so every URL here is built
 // on the apex origin and on the same link logic as the navigation — a www host, a release
-// folder (/synaiq-release-*/page.html) or a local preview all point crawlers at synaiq.com.
+// folder (/synaiq-release-*/page.html) or a local preview all point crawlers at taistro.com.tw.
 import { SUPPORTED_PAGES, SUPPORTED_LOCALES, DEFAULT_LOCALE, resolvePage, resolveLocale, getMessages, pageHref } from './i18n.js?v=20260922-cases-expansion';
 import { publishedCases, resolveCaseId } from './cases-data.js?v=20260922-cases-expansion';
 
-export const SITE_ORIGIN = 'https://synaiq.com';
+export const SITE_ORIGIN = 'https://taistro.com.tw';
 // Open Graph wants POSIX-style locales; the site's own codes stay the source of truth.
 export const OG_LOCALES = Object.freeze({ 'zh-Hant': 'zh_TW', en: 'en_US' });
 export const INDEXABLE = 'index, follow';

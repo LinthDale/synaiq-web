@@ -1,4 +1,4 @@
-# Crawl policy for https://synaiq.com.
+# Crawl policy for https://taistro.com.tw.
 # The published pages are one document served from a versioned release folder; Googlebot
 # must be able to fetch that folder's JavaScript and CSS to render them, so nothing under
 # /synaiq-release- is blocked here. Retired release folders are withdrawn with HTTP 410
@@ -6,4 +6,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://synaiq.com/sitemap.xml
+Sitemap: https://taistro.com.tw/sitemap.xml
