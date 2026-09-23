@@ -25,6 +25,7 @@ const runtimeFiles = [
   'assets/torn-letter-edge.svg', 'assets/torn-paper-cotton-v2.webp',
   'assets/ceo-speaking-sketch-v1.webp',
   'assets/synaiq-logo-ink.svg',
+  'assets/taistro-logo-ink.svg', 'assets/taistro-logo-light.svg',
   'assets/kip-connected-work-v1.webp',
   'assets/contact-cat-yarn-v1.webp',
   'assets/investing-cio-20240629.png', 'assets/news-sketch-frame-v2.webp',

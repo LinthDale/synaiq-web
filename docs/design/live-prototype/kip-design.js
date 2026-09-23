@@ -18,14 +18,14 @@ export function renderKip({ advantageSection, contact, locale = 'zh-Hant', messa
   <section class="hero kip-opening" aria-labelledby="kip-title">
     <div class="wrap kip-opening-layout">
       <div class="kip-opening-copy">
-        <p class="eyebrow">${e(m.eyebrow)}</p>
+        <p class="product-identity"><img src="${e(messages.common.productBrand.ink)}" width="844" height="143" alt="Synaiq"><span>${e(m.productLabel)}</span></p>
         <h1 id="kip-title">${e(m.title[0])}<br>${e(m.title[1])}<br><span class="marked">${e(m.title[2])}</span></h1>
         <p class="intro">${e(m.intro)}</p>
         <a class="button" href="#contact">${e(m.cta)}</a>
       </div>
       <div class="kip-opening-scene">
         <svg class="kip-pencil-trail" viewBox="0 0 700 610" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M59 70c24-59 73-51 54-6-14 34-61 28-60 58 1 61 164 4 272-21S611 79 638 194s-72 308-156 338-148-25-140-76 86-62 125-37 2 59-51 48"/><path d="m52 58 8 14 14-5M396 461l20 7-13 13"/></svg>
-        <div class="kip-scene-caption"><span>01 / KIP</span><span>${e(m.sceneCaption)}</span></div>
+        <div class="kip-scene-caption"><span>01 / Synaiq KIP</span><span>${e(m.sceneCaption)}</span></div>
         <figure class="kip-hero-screen"><img src="${e(messages.common.assets.searchScreen)}" width="1440" height="900" alt="${e(m.screenAlt)}"></figure>
         <div class="kip-evidence-slip"><span class="kip-slip-label">${e(m.sourceLabel)}</span><p>${e(m.sampleQuestion)}</p><p class="kip-slip-answer">${e(m.sampleAnswer)}<span class="marked">${e(m.sampleHighlight)}</span></p><small>${e(m.sampleCitation)}</small></div>
         <span class="kip-scene-note">${e(m.sceneNote)}</span>

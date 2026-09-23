@@ -1,12 +1,13 @@
 // Plain-copy dictionaries: layout and markup stay in kip-design.js.
 import { zhHant as demoZh, en as demoEn } from './locale-demo.js';
 export const zhHant = {
-  eyebrow: 'SYNAIQ KIP',
+  eyebrow: 'Synaiq KIP',
+  productLabel: 'KIP 智慧知識平台',
   title: ['問得到、', '答得準、', '接得上。'],
   intro: '把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。',
   cta: '預約導入評估',
   sceneCaption: '互動介面概念示範 · 非實際產品截圖',
-  screenAlt: 'KIP 智慧知識搜尋的紙質介面示意，以虛構設備採購流程呈現問題、答案與引用來源',
+  screenAlt: 'Synaiq KIP 智慧知識搜尋的紙質介面示意，以虛構設備採購流程呈現問題、答案與引用來源',
   sourceLabel: '可核對的出處',
   sampleQuestion: demoZh.question,
   sampleAnswer: `${demoZh.sourceHeading}；`,
@@ -41,12 +42,13 @@ export const zhHant = {
 };
 
 export const en = {
-  eyebrow: 'SYNAIQ KIP',
+  eyebrow: 'Synaiq KIP',
+  productLabel: 'KIP Knowledge Intelligence Platform',
   title: ['Ask naturally.', 'Answer precisely.', 'Stay connected.'],
   intro: 'Turn scattered company documents into a knowledge hub that answers questions with sources you can check.',
   cta: 'Discuss your use case',
   sceneCaption: 'Interface concept · Not an actual product screenshot',
-  screenAlt: 'A paper-textured KIP knowledge-search concept showing a question, answer and source from a fictional equipment purchasing process',
+  screenAlt: 'A paper-textured Synaiq KIP knowledge-search concept showing a question, answer and source from a fictional equipment purchasing process',
   sourceLabel: 'A source you can check',
   sampleQuestion: demoEn.question,
   sampleAnswer: `${demoEn.sourceHeading}. `,

@@ -12,7 +12,7 @@ test('shared consultation keeps its copy and places the decorative cat above its
   assert.ok(contact);
   assert.match(contact, /先講一個場景，<br>我們回一個做法。/);
   assert.match(contact, /從資料來源、使用對象與查詢需求開始，<br>一起確認第一個可驗證的知識流程。/);
-  assert.match(contact, /class="contact-invitation">\s*<img[^>]*src="assets\/contact-cat-yarn-v1\.webp"[^>]*alt=""[^>]*>\s*<a class="button inverse" href="mailto:service@synaiq.com">洽談導入<\/a>/);
+  assert.match(contact, /class="contact-invitation">\s*<img[^>]*src="assets\/contact-cat-yarn-v1\.webp"[^>]*alt=""[^>]*>\s*<a class="button inverse" href="mailto:service@taistro.com.tw">洽談導入<\/a>/);
   assert.match(contact, /width="900" height="600"/);
   assert.match(css, /\.contact-invitation\s*\{[^}]*flex-direction:\s*column/);
   assert.match(css, /\.contact-cat\s*\{[^}]*height:\s*auto/);

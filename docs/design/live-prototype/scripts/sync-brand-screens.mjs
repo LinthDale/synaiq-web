@@ -5,7 +5,7 @@ import { lstatSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { isAbsolute, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { screenLocaleSuffixes, screenMessages } from '../locale-screens.js';
-import { BRAND } from '../brand.js';
+import { BRAND, PRODUCT_BRAND } from '../brand.js';
 
 const root = new URL('../', import.meta.url);
 const screenNames = Object.freeze(['search', 'library']);
@@ -33,10 +33,16 @@ export function resolveBrandAsset(assetPath) {
   return target;
 }
 
-export function renderScreen(template, messages, logo, art = {}) {
+export function renderScreen(template, messages, logo, art = {}, productLogo = logo, layout = {}) {
   const used = new Set();
   const source = template.replace(/\{\{([a-zA-Z][a-zA-Z0-9.]*)\}\}/g, (placeholder, key) => {
     if (key === 'brand.logoDataUrl') return `data:image/svg+xml;base64,${logo.toString('base64')}`;
+    if (key === 'product.logoDataUrl') return `data:image/svg+xml;base64,${productLogo.toString('base64')}`;
+    if (key.startsWith('layout.')) {
+      const value = layout[key.slice(7)];
+      if (!Number.isFinite(value)) throw new Error(`Missing screen layout value: ${key}`);
+      return String(value);
+    }
     if (key.startsWith('art.')) {
       const value = art[key.slice(4)];
       if (typeof value !== 'string' || !/^data:image\/(png|webp);base64,[A-Za-z0-9+/=]+$/.test(value)) throw new Error(`Invalid approved screen artwork: ${key}`);
@@ -56,6 +62,7 @@ export function renderScreen(template, messages, logo, art = {}) {
 
 export function buildScreens() {
   const logo = readFileSync(resolveBrandAsset(BRAND.ink));
+  const productLogo = readFileSync(resolveBrandAsset(PRODUCT_BRAND.ink));
   if (!/<svg\b/.test(logo.toString('utf8'))) throw new Error('The approved ink logo master must be an SVG');
   // Fixed approved local assets only. No remote references or private image paths.
   const art = Object.fromEntries(Object.entries({ edge: 'demo-paper-edge.webp', kip: 'kip-wordmark.png', dialogues: 'demo-sidebar-dialogues.webp', pen: 'demo-send-pen.webp' }).map(([key, name]) => {
@@ -71,6 +78,15 @@ export function buildScreens() {
   const outputs = [];
   const paths = new Set();
   for (const [locale, suffix] of Object.entries(screenLocaleSuffixes)) {
+    // Match the desktop film header at 1240px, normalized to this 1440px canvas:
+    // 24px right padding, 120px product logo, 11px gap, 12px label.
+    // Label widths measured with the actual Manrope/Noto Sans TC demo fonts.
+    const labelWidths = { 'zh-Hant': 98.359375, en: 146.21875 };
+    const productLabelWidth = labelWidths[locale] * 1440 / 1240;
+    const layout = {
+      productLabelWidth,
+      productLogoX: (1440 - 24 * 1440 / 1240) - productLabelWidth - (120 + 11) * 1440 / 1240,
+    };
     // Locale suffixes are explicit local configuration, never user-supplied paths.
     if (suffix !== '' && !/^-[a-zA-Z0-9-]+$/.test(suffix)) throw new Error(`Invalid screen locale suffix: ${locale}`);
     for (const screen of screenNames) {
@@ -79,7 +95,7 @@ export function buildScreens() {
       const relativePath = `assets/kip-${screen}-demo${suffix}.svg`;
       if (paths.has(relativePath)) throw new Error(`Duplicate screen output: ${relativePath}`);
       paths.add(relativePath);
-      outputs.push({ locale, screen, relativePath, source: renderScreen(templates[screen], messages, logo, art) });
+      outputs.push({ locale, screen, relativePath, source: renderScreen(templates[screen], messages, logo, art, productLogo, layout) });
     }
   }
   return outputs;

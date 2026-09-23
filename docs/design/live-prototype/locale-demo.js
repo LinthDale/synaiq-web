@@ -1,9 +1,9 @@
 // Both rendered scenes and playback state changes use these messages.
 export const zhHant = {
-  groupLabel: 'KIP 自動播放的操作情境動畫，示例資料，非連線產品',
+  groupLabel: 'Synaiq KIP 自動播放的操作情境動畫，示例資料，非連線產品',
   playbackLabel: 'PRODUCT IN MOTION', replay: '重新播放', pause: '暫停動畫', play: '播放動畫', reducedMotion: '減少動態：靜態展示',
-  productTitle: 'KIP / 智慧知識平台', productNote: '品牌化介面 · 示例資料',
-  productLabel: '智慧知識平台', history: '對話紀錄', close: '關閉', collapse: '收合', sourceRegion: '引用原文筆記', sourceScribble: '先核准，再採購',
+  productTitle: 'Synaiq KIP / 智慧知識平台', productNote: '品牌化介面 · 示例資料',
+  productLabel: 'KIP 智慧知識平台', history: '對話紀錄', close: '關閉', collapse: '收合', sourceRegion: '引用原文筆記', sourceScribble: '先核准，再採購',
   newChat: '＋ 新的對話', recentQuestions: '最近的問題', warrantyTopic: '如何申請採購筆電', knowledgeCenter: '知識中心', sourceTopic: '如何找到引用來源', workspace: '示範工作空間',
   breadcrumb: '組織知識庫 / 設備採購流程', question: '我想為新進同仁採購一台筆電，該如何申請？', thinking: '查找相關的採購流程', avatar: '知',
   answer: '依《設備採購流程》，先填寫用途、規格與預算。', answerHighlight: '主管核准後，由採購詢價、下單；到貨後驗收。', answerNote: '申請方式與核准權限，請依引用文件中的規範辦理。',
@@ -14,7 +14,7 @@ export const zhHant = {
   chaptersLabel: '動畫依序呈現的流程', chapters: ['用自然語言提問', '沿著引用看原文', '查詢文件所在位置'],
   note: '模擬滑鼠點擊與內容展開的情境動畫 · 示例資料 · 非實際連線操作',
   booth: {
-    label: 'KIP 功能動畫展示', previous: '上一段動畫', next: '下一段動畫', select: '選擇功能動畫', nowShowing: '正在放映',
+    label: 'Synaiq KIP 功能動畫展示', previous: '上一段動畫', next: '下一段動畫', select: '選擇功能動畫', nowShowing: '正在放映',
     titles: ['知識問答', '以自然語言找圖', '以圖搜圖'],
     descriptions: ['從採購需求出發，找到流程與文件依據。', '不用記住檔名，用一句描述找回需要的圖片。', '從一張參考圖片出發，查看外觀相近的素材。'],
     collection: '示例圖庫 / 產品素材',
@@ -37,10 +37,10 @@ export const zhHant = {
 };
 
 export const en = {
-  groupLabel: 'KIP animated workflow preview using sample data, not a connected product',
+  groupLabel: 'Synaiq KIP animated workflow preview using sample data, not a connected product',
   playbackLabel: 'PRODUCT IN MOTION', replay: 'Replay', pause: 'Pause animation', play: 'Play animation', reducedMotion: 'Reduced motion: still preview',
-  productTitle: 'KIP / Knowledge Platform', productNote: 'Branded interface · Sample data',
-  productLabel: 'Knowledge Platform', history: 'Conversations', close: 'Close', collapse: 'Close', sourceRegion: 'Source notes', sourceScribble: 'Approval before purchase',
+  productTitle: 'Synaiq KIP / Knowledge Platform', productNote: 'Branded interface · Sample data',
+  productLabel: 'KIP Knowledge Platform', history: 'Conversations', close: 'Close', collapse: 'Close', sourceRegion: 'Source notes', sourceScribble: 'Approval before purchase',
   newChat: '＋ New conversation', recentQuestions: 'Recent questions', warrantyTopic: 'Request a laptop purchase', knowledgeCenter: 'Knowledge Center', sourceTopic: 'How to find a cited source', workspace: 'Demo workspace',
   breadcrumb: 'Company knowledge / Equipment purchasing', question: 'How do I request a laptop for a new colleague?', thinking: 'Finding the relevant purchasing process', avatar: 'K',
   answer: 'Start with a purchase request: purpose, specs and budget.', answerHighlight: 'After manager approval, Purchasing gets quotes and orders. Inspect on arrival.', answerNote: 'Follow the application and approval rules in the cited process.',
@@ -51,7 +51,7 @@ export const en = {
   chaptersLabel: 'Steps shown in the animation', chapters: ['Ask in your own words', 'Follow the source', 'Organize your documents'],
   note: 'Animated clicks and content reveals · Sample data · Not a live product session',
   booth: {
-    label: 'KIP feature screening room', previous: 'Previous animation', next: 'Next animation', select: 'Choose a feature animation', nowShowing: 'NOW SHOWING',
+    label: 'Synaiq KIP feature screening room', previous: 'Previous animation', next: 'Next animation', select: 'Choose a feature animation', nowShowing: 'NOW SHOWING',
     titles: ['Knowledge Q&A', 'Find images with words', 'Search by image'],
     descriptions: ['Start with a purchasing need. Find the process and its source.', 'Describe the image you need, without remembering its filename.', 'Start with a reference image to discover visually related assets.'],
     collection: 'Sample library / Product assets',

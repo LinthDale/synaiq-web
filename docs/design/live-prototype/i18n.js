@@ -4,7 +4,7 @@ import { zhHant as casesZh, en as casesEn } from './locale-cases.js?v=20260922-c
 import { zhHant as aboutZh, en as aboutEn } from './locale-about.js?v=20260922-cases-expansion';
 import { zhHant as demoZh, en as demoEn } from './locale-demo.js?v=20260922-cases-expansion';
 import { zhHant as commonZh, en as commonEn } from './locale-common.js?v=20260922-cases-expansion';
-import { BRAND } from './brand.js';
+import { BRAND, PRODUCT_BRAND } from './brand.js';
 
 // Add a reviewed language bundle here; no language parameter is used as a file path.
 const catalog = {
@@ -20,7 +20,7 @@ export function resolveLocale(value) {
 }
 export function getMessages(locale = DEFAULT_LOCALE) {
   const messages = catalog[resolveLocale(locale)].messages;
-  return { ...messages, common: { ...messages.common, brand: BRAND } };
+  return { ...messages, common: { ...messages.common, brand: BRAND, productBrand: PRODUCT_BRAND } };
 }
 // A case identifier travels in the address, so only this fixed shape is carried over; the
 // published identifiers themselves belong to cases-data.js, which this module never imports.

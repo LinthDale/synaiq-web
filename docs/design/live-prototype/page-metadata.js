@@ -56,7 +56,7 @@ function caseHead(code, id, notFound) {
   const overview = messages.cases.overview;
   const text = notFound ? overview.notFound : messages.cases.cases[id];
   const name = notFound ? text.title : text.name;
-  return { title: `${name} — ${section} — SynaiQ`, description: notFound ? text.body : text.summary };
+  return { title: `${name} — ${section} — tAistro`, description: notFound ? text.body : text.summary };
 }
 
 /** Everything the document head needs for one page/locale/case request. */

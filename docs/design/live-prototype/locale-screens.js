@@ -4,8 +4,8 @@ import { zhHant, en } from './locale-demo.js';
 
 export const screenLocaleSuffixes = Object.freeze({ 'zh-Hant': '', en: '-en' });
 const captions = {
-  'zh-Hant': { searchTitle: 'KIP 智慧搜尋介面示意', libraryTitle: 'KIP 知識中心介面示意', description: '品牌化介面與虛構採購流程示意，並非真實產品截圖或客戶資料。', format: '格式', search: '搜尋文件名稱', add: '＋ 接入文件', pdf: 'PDF', word: 'Word', excel: 'Excel' },
-  en: { searchTitle: 'KIP knowledge search interface concept', libraryTitle: 'KIP knowledge center interface concept', description: 'Branded interface and fictional purchasing process, not a live product screenshot or customer data.', format: 'Format', search: 'Search document names', add: '＋ Add files', pdf: 'PDF', word: 'Word', excel: 'Excel' },
+  'zh-Hant': { searchTitle: 'Synaiq KIP 智慧搜尋介面示意', libraryTitle: 'Synaiq KIP 知識中心介面示意', description: '品牌化介面與虛構採購流程示意，並非真實產品截圖或客戶資料。', format: '格式', search: '搜尋文件名稱', add: '＋ 接入文件', pdf: 'PDF', word: 'Word', excel: 'Excel' },
+  en: { searchTitle: 'Synaiq KIP knowledge search interface concept', libraryTitle: 'Synaiq KIP knowledge center interface concept', description: 'Branded interface and fictional purchasing process, not a live product screenshot or customer data.', format: 'Format', search: 'Search document names', add: '＋ Add files', pdf: 'PDF', word: 'Word', excel: 'Excel' },
 };
 
 export const screenMessages = Object.fromEntries(Object.entries({ 'zh-Hant': zhHant, en }).map(([locale, demo]) => {

@@ -576,7 +576,7 @@ section.advantages .advantage-scenario span {
   }
 }
 @media (max-width: 379px) {
-  .page-navigation { gap: 8px; }
+  .page-navigation { gap: 0 8px; flex-wrap: wrap; }
 }
 /* 中型視窗：主導覽放在 Logo 與語言選單之間；窄手機保留可讀的換行。 */
 @media (min-width: 700px) and (max-width: 899px) {
@@ -3458,3 +3458,18 @@ body[data-page="kip"] .kip-capability-list dd {
 .team-photo-frame { position: relative; }
 /* height:auto keeps the intrinsic height attribute from overriding the square ratio. */
 .team-photo { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+
+/* Company and product identities */
+.product-identity { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; margin: 0 0 24px; }
+.product-identity img { width: 150px; height: auto; }
+@media (max-width: 480px) {
+  .ink-photo__hint { right: 0; }
+}
+
+.film-product-logo { display: block; flex-shrink: 0; width: 120px; }
+.film-product-logo img { display: block; width: 100%; height: auto; }
+@media (max-width: 600px) {
+  .film-wordmark { flex-wrap: wrap; justify-content: flex-end; white-space: normal; max-width: 58%; gap: 4px 8px; }
+  .film-product-logo { width: 88px; }
+  .film-wordmark-label { text-align: right; }
+}

@@ -1,6 +1,10 @@
-// Brand assets are language-independent. Keep the two approved CIS variants.
-export const BRAND = Object.freeze({
+// Company and product identities have independent approved artwork.
+export const PRODUCT_BRAND = Object.freeze({
   ink: 'assets/synaiq-logo-ink.svg',
-  light: '/brand/synaiq-logo-light.svg',
-  name: 'SynaiQ',
+  name: 'Synaiq',
+});
+export const BRAND = Object.freeze({
+  ink: 'assets/taistro-logo-ink.svg',
+  light: 'assets/taistro-logo-light.svg',
+  name: 'tAistro',
 });

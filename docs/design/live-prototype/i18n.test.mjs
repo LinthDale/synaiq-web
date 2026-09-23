@@ -29,9 +29,11 @@ test('page links and language changes preserve page and section without choosing
       assert.ok(getMessages(locale)[page]);
       assert.ok(getMessages(locale).common.title[page]);
       const navigation = getMessages(locale).common.navigation;
-      const label = navigation[`${page}Page`] ?? navigation[page];
+      const label = page === 'kip'
+        ? (locale === 'zh-Hant' ? 'Synaiq KIP 平台' : 'Synaiq KIP Platform')
+        : navigation[`${page}Page`] ?? navigation[page];
       // Home deliberately leads with the brand and tagline; every other page leads with its own name.
-      if (page !== 'home') assert.ok(getMessages(locale).common.title[page].startsWith(`${label} — SynaiQ`), `${locale}/${page}`);
+      if (page !== 'home') assert.ok(getMessages(locale).common.title[page].startsWith(`${label} — tAistro`), `${locale}/${page}`);
     }
   }
   for (const value of [undefined, '', 'constructor', '__proto__', '../../private']) assert.equal(resolvePage(value), 'home');

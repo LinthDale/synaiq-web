@@ -34,36 +34,29 @@
 
 本次只驗證繁中／英文。未驗證的 RTL 或其他文字系統仍需要相應版面測試；有 `dir` 登錄不代表已完成 RTL 設計。
 
-## Logo 要怎麼換一次、同步各處？
+## 公司與產品 Logo 分開管理
 
-目前沒有「選檔上傳」畫面。原型的做法是：**更換共用原檔 → 執行示意圖同步指令 → 重新整理**。
+`brand.js` 的 `BRAND` 是網站公司品牌 **tAistro**；`PRODUCT_BRAND` 是產品 **Synaiq KIP** 的 Synaiq Logo。公司品牌更換不會覆蓋產品識別。
 
-中央設定是 `brand.js` 的 `BRAND`。目前有兩個正式配色版本，而不是在不同頁面各放一份 Logo：
-
-| 原檔（相對於 repository） | 顯示位置 |
+| 原檔 | 用途 |
 | --- | --- |
-| `docs/design/live-prototype/assets/synaiq-logo-ink.svg` | 淺底頁首、動態產品介面，以及生成後的中英靜態產品示意圖 |
-| `public/brand/synaiq-logo-light.svg` | 深底頁尾 |
+| `assets/taistro-logo-ink.svg` | 網站淺底頁首、Demo 與靜態示意圖左上角 |
+| `assets/taistro-logo-light.svg` | 網站深底頁尾 |
+| `assets/synaiq-logo-ink.svg` | Synaiq KIP 標題、Demo 與四張示意圖右上角的產品識別 |
 
-操作步驟：
+新版 tAistro 圖形擷取自使用者提供的 `20260922_星洋taistro_LOGO.pdf` 第一頁，保留向量路徑與黑／白配色，去除版面背景。公司中文名為「星洋智能科技股份有限公司」，Email 為 `service@taistro.com.tw`。正式網站網域另行確認，不依 Email 自動變更 DNS 或 SEO 網址。
 
-1. 準備透明背景、已核准的 SVG。保留正確外觀和 `viewBox`，不要上傳整張 CIS 排版 JPG 或含黑底的圖片。
-2. 先保留舊版備份／Git 差異，再以同檔名替換上述原檔。若整體識別有改版，淺底／深底兩版都要更新；單純更新其中一個配色只改對應檔。
-3. 在 repository 根目錄執行：
+更換同一品牌素材時，保留 `viewBox` 與透明背景，使用已審查、無腳本或外部引用的 SVG。新檔名必須同步 `brand.js`、`page.html` fallback、公開白名單及相關測試。
 
-   ```powershell
-   node docs/design/live-prototype/scripts/sync-brand-screens.mjs
-   node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
-   node --test docs/design/live-prototype/*.test.mjs
-   ```
+若修改產品 Logo 或示意圖文字，執行：
 
-4. 重新整理原網址，檢查中英文頁首、頁尾、動畫、產品示意圖。公開預覽使用 `no-store`；同一路徑換檔不用重啟伺服器。
+```powershell
+node docs/design/live-prototype/scripts/sync-brand-screens.mjs
+node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
+npm run test:design
+```
 
-同步指令讀取同一個 `BRAND.ink`，更新中英共四張產品示意 SVG 的內嵌 Logo。沒有逐張重做設計，也不需要把原始 Logo 交給 AI 生圖。可先用 `--check` 唯讀檢查是否過期。
-
-若要改原檔名稱或路徑，修改 `brand.js`，確認生成器仍指向 `assets/` 內本機 SVG，更新公開 allowlist 及靜態 `page.html` 的預設 fallback 路徑後，再生成與驗證。一般換圖建議保留固定檔名，避免額外路徑變動。
-
-既有 `brand-logo.test.mjs` 鎖定使用者核准的黑／白／金配色及幾何；若刻意採用新的品牌幾何，須在核准後同步更新測試基線，不應直接略過失敗。
+生成器同時讀取 `BRAND.ink`（左上公司 Logo）及 `PRODUCT_BRAND.ink`（右上產品 Logo，搭配 KIP 文字）。任一 Logo 變更都需重新產生四張示意圖。檢查中英文頁首、頁尾、產品標題、動畫及產品示意圖，並確認手機與桌面排版。正式上架依官網更新 README 辦理。
 
 ### 不會自動改的地方
 

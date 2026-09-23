@@ -37,7 +37,7 @@ test('paper demo preserves responsive navigation, notebook and localized send co
             const send=page.locator('.film-send');
             assert.equal((await send.innerText()).trim(),locale==='en'?'Send':'寄出');
             await send.locator('img').evaluate(i=>i.decode());
-            assert.equal(await page.locator('.film-kip img').getAttribute('alt'),'KIP');
+            assert.equal(await page.locator('.film-product-logo img').getAttribute('alt'),'Synaiq');
             if(width<700) {
               await page.locator('[data-demo-sidebar-toggle]').click();
               assert.equal(await page.locator('.film-sidebar').isVisible(),true);

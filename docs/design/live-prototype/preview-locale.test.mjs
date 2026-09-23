@@ -40,8 +40,8 @@ test('preview shell localizes and stays synchronized with iframe navigation and 
   const dispose = initPreview({ document, window, ResizeObserver: class { observe() {} disconnect() {} } });
   assert.equal(ids.preview.src, 'page.html?page=kip&lang=en#proof');
   assert.equal(document.documentElement.lang, 'en');
-  assert.equal(document.title, 'SynaiQ / Local preview');
-  assert.equal(options[1].textContent, 'KIP Platform');
+  assert.equal(document.title, 'tAistro / Local preview');
+  assert.equal(options[1].textContent, 'KIP');
   assert.equal(options[2].textContent, 'Our Work');
   assert.equal(options[3].textContent, 'About Us');
   assert.match(ids.status.textContent, /Page width 1440px/);

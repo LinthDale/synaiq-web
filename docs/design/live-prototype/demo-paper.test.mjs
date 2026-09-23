@@ -8,7 +8,7 @@ test('approved paper shell and send pen are shared by all scenes and languages',
   for (const locale of ['zh-Hant', 'en']) for (const scene of ['knowledge', 'text-image', 'image-image']) {
     const html = renderDemoFilm(scene, getMessages(locale));
     assert.match(html, /class="film-wordmark"/);
-    assert.match(html, /assets\/kip-wordmark.png/);
+    assert.match(html, /assets\/synaiq-logo-ink.svg/);
     assert.match(html, /assets\/demo-sidebar-dialogues.webp/);
     assert.match(html, /assets\/demo-send-pen.webp/);
     assert.match(html, /data-demo-sidebar-toggle/);

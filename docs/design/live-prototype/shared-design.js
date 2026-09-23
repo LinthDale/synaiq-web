@@ -7,5 +7,5 @@ export function renderAdvantageSection(messages = getMessages().common) {
 
 export function renderContact(messages = getMessages().common) {
   const copy = messages.contact;
-  return `<section class="contact" id="contact"><div class="wrap"><div><h2>${copy.heading.map(esc).join('<br>')}</h2><p>${copy.description.map(esc).join('<br>')}</p></div><div class="contact-invitation"><img class="contact-cat" src="assets/contact-cat-yarn-v1.webp" width="900" height="600" alt="" loading="lazy" decoding="async"><a class="button inverse" href="mailto:service@synaiq.com">${esc(copy.cta)}</a></div></div></section>`;
+  return `<section class="contact" id="contact"><div class="wrap"><div><h2>${copy.heading.map(esc).join('<br>')}</h2><p>${copy.description.map(esc).join('<br>')}</p></div><div class="contact-invitation"><img class="contact-cat" src="assets/contact-cat-yarn-v1.webp" width="900" height="600" alt="" loading="lazy" decoding="async"><a class="button inverse" href="mailto:service@taistro.com.tw">${esc(copy.cta)}</a></div></div></section>`;
 }

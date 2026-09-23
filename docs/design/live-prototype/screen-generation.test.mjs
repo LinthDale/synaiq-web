@@ -6,7 +6,7 @@ import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildScreens, renderScreen, resolveBrandAsset, syncBrandScreens } from './scripts/sync-brand-screens.mjs';
 import { screenLocaleSuffixes, screenMessages } from './locale-screens.js';
-import { BRAND } from './brand.js';
+import { BRAND, PRODUCT_BRAND } from './brand.js';
 import { zhHant, en } from './locale-demo.js';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
@@ -29,7 +29,7 @@ test('all static product screens use the approved shared paper chrome and curren
     const demo = locale === 'en' ? en : zhHant;
     assert.match(source, /id="paper-header"/);
     assert.match(source, /id="sidebar-dialogues"/);
-    assert.match(source, /id="kip-wordmark"/);
+    assert.match(source, /id="product-logo"/);
     assert.match(source, /fill="#e9e6dc"/);
     assert.doesNotMatch(source, /第\s*12\s*頁|page\s*12|保固|warranty|Procurement_Contract/i);
     assert.ok(source.includes(demo.citationFilename));
@@ -54,6 +54,7 @@ test('every configured locale generates both screen assets with the current sing
     const embedded = source.match(/href="data:image\/svg\+xml;base64,([^"]+)"/)?.[1];
     assert.ok(embedded, relativePath);
     assert.deepEqual(Buffer.from(embedded, 'base64'), master, relativePath);
+    assert.ok(source.includes(readFileSync(new URL(PRODUCT_BRAND.ink, import.meta.url)).toString('base64')), relativePath);
     assert.equal(read(relativePath).replaceAll('\r\n', '\n'), source.replaceAll('\r\n', '\n'), relativePath);
     assert.match(source, /width="1440" height="900" viewBox="0 0 1440 900"/);
     assert.doesNotMatch(source, /\{\{/);

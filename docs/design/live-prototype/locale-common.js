@@ -2,17 +2,17 @@
 export const zhHant = {
   "navigation": {
     "home": "首頁",
-    "kip": "KIP 平台",
+    "kip": "KIP",
     "casesPage": "實績展示",
     "aboutPage": "關於我們",
     "site": "網站頁面",
-    "homeLabel": "SynaiQ 首頁",
+    "homeLabel": "tAistro 首頁",
     "homeContext": "首頁內容",
-    "kipContext": "KIP 平台內容",
+    "kipContext": "Synaiq KIP 平台內容",
     "casesContext": "實績展示內容",
     "aboutContext": "關於我們內容",
     "homeSections": "首頁段落",
-    "kipSections": "KIP 平台段落",
+    "kipSections": "Synaiq KIP 平台段落",
     "casesSections": "實績展示段落",
     "aboutSections": "關於我們段落",
     "casesList": "我們的旅途",
@@ -24,7 +24,7 @@ export const zhHant = {
     "technical": "技術團隊",
     "wally": "Wally 數位人",
     "proof": "產品畫面",
-    "about": "關於 SynaiQ",
+    "about": "關於 tAistro",
     "process": "知識流程",
     "architecture": "四層架構",
     "advantages": "八項優勢",
@@ -34,10 +34,10 @@ export const zhHant = {
     "skip": "跳至主要內容"
   },
   "title": {
-    "home": "SynaiQ 鑫揚智能科技 — 知識留在組織裡",
-    "kip": "KIP 平台 — SynaiQ 鑫揚智能科技",
-    "cases": "實績展示 — SynaiQ",
-    "about": "關於我們 — SynaiQ"
+    "home": "tAistro 星洋智能科技 — 知識留在組織裡",
+    "kip": "Synaiq KIP 平台 — tAistro 星洋智能科技",
+    "cases": "實績展示 — tAistro",
+    "about": "關於我們 — tAistro"
   },
   // Search-result summaries, trimmed from each page's approved hero copy; no new claims.
   // The home entry is also the static description in page.html and must stay identical.
@@ -45,7 +45,7 @@ export const zhHant = {
     "home": "散落的企業文件，變成隨問隨答的知識中樞。從一個問題開始，每個答案，都有出處可以追溯。",
     "kip": "問得到、答得準、接得上。把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。",
     "cases": "讓 AI 走進現場，讓對話跨越語言。科技的價值，在相遇時發生。",
-    "about": "讓科技充滿溫度，讓 AI 走入生活。我們是鑫揚智能科技，把 AI 系統整合、知識管理與數位人技術，做成讓人願意使用的日常工具。"
+    "about": "讓科技充滿溫度，讓 AI 走入生活。我們是星洋智能科技，把 AI 系統整合、知識管理與數位人技術，做成讓人願意使用的日常工具。"
   },
   "contact": {
     "heading": [
@@ -59,7 +59,7 @@ export const zhHant = {
     "cta": "洽談導入"
   },
   "footer": {
-    "company": "鑫揚智能科技股份有限公司",
+    "company": "星洋智能科技股份有限公司",
     "address": "407臺中市西屯區何安里臺灣大道二段910號10樓之2"
   },
   "advantages": {
@@ -130,14 +130,14 @@ export const zhHant = {
     ]
   },
   "preview": {
-    "title": "SynaiQ / 本機預覽",
+    "title": "tAistro / 本機預覽",
     "page": "頁面",
     "case": "案例",
     "language": "語言",
     "width": "寬度",
     "fit": "配合視窗",
     "direct": "獨立開啟",
-    "frame": "SynaiQ 可連續縮放本機預覽",
+    "frame": "tAistro 可連續縮放本機預覽",
     "status": "頁面實際寬度 {width}px · 預覽顯示 {scale}% · 儲存後更新 · 頁面內可捲動",
     "metrics": "排版檢查：內容 {width}px / 捲動範圍 {scroll}px · {result}",
     "overflow": "有水平溢出",
@@ -153,17 +153,17 @@ export const zhHant = {
 export const en = {
   "navigation": {
     "home": "Home",
-    "kip": "KIP Platform",
+    "kip": "KIP",
     "casesPage": "Our Work",
     "aboutPage": "About Us",
     "site": "Website pages",
-    "homeLabel": "SynaiQ home",
+    "homeLabel": "tAistro home",
     "homeContext": "On this page",
-    "kipContext": "Inside KIP",
+    "kipContext": "Inside Synaiq KIP",
     "casesContext": "Our work contents",
     "aboutContext": "About us contents",
     "homeSections": "Home sections",
-    "kipSections": "KIP sections",
+    "kipSections": "Synaiq KIP sections",
     "casesSections": "Our work sections",
     "aboutSections": "About us sections",
     "casesList": "The journey",
@@ -175,7 +175,7 @@ export const en = {
     "technical": "Technical team",
     "wally": "Wally",
     "proof": "Product tour",
-    "about": "About SynaiQ",
+    "about": "About tAistro",
     "process": "Knowledge flow",
     "architecture": "Architecture",
     "advantages": "Eight advantages",
@@ -185,17 +185,17 @@ export const en = {
     "skip": "Skip to main content"
   },
   "title": {
-    "home": "SynaiQ — Knowledge stays with you.",
-    "kip": "KIP Platform — SynaiQ",
-    "cases": "Our Work — SynaiQ",
-    "about": "About Us — SynaiQ"
+    "home": "tAistro — Knowledge stays with you.",
+    "kip": "Synaiq KIP Platform — tAistro",
+    "cases": "Our Work — tAistro",
+    "about": "About Us — tAistro"
   },
   // Search-result summaries, trimmed from each page's approved hero copy; no new claims.
   "description": {
     "home": "Scattered company documents become a knowledge hub you can ask. Start with a question. Every answer has a source you can trace.",
     "kip": "Ask naturally. Answer precisely. Stay connected. Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
     "cases": "AI in the field. Conversations beyond language. Technology finds meaning when people connect.",
-    "about": "Technology with warmth. AI for everyday life. SynaiQ brings AI integration, knowledge management and digital humans together in tools people want to use."
+    "about": "Technology with warmth. AI for everyday life. tAistro brings AI integration, knowledge management and digital humans together in tools people want to use."
   },
   "contact": {
     "heading": [
@@ -209,7 +209,7 @@ export const en = {
     "cta": "Let’s talk"
   },
   "footer": {
-    "company": "SynaiQ",
+    "company": "tAistro",
     "address": "10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan"
   },
   "advantages": {
@@ -280,14 +280,14 @@ export const en = {
     ]
   },
   "preview": {
-    "title": "SynaiQ / Local preview",
+    "title": "tAistro / Local preview",
     "page": "Page",
     "case": "Case",
     "language": "Language",
     "width": "Width",
     "fit": "Fit window",
     "direct": "Open page",
-    "frame": "SynaiQ continuously resizable local preview",
+    "frame": "tAistro continuously resizable local preview",
     "status": "Page width {width}px · Preview {scale}% · Refresh after changes · Scroll inside the page",
     "metrics": "Layout: content {width}px / scroll width {scroll}px · {result}",
     "overflow": "Horizontal overflow",

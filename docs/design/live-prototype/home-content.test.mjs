@@ -28,7 +28,7 @@ test('CEO section preserves the supplied quote and uses the requested speaking s
   assert.match(ceoSection, /src="assets\/ceo-speaking-sketch-v1\.webp"/);
   assert.match(text, /邱浩煒 Wilson/);
   assert.doesNotMatch(ceoSection, /邱浩偉/);
-  assert.match(text, /CEO of Synaiq/);
+  assert.match(text, /CEO of tAistro/);
   const quote = ceoSection.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1].replace(/<[^>]*>/g, '');
   assert.equal(quote, zhHant.ceo.quote.flat().map(escapeHtml).join(''));
   assert.equal((ceoSection.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1].match(/<p>/g) || []).length, 2);

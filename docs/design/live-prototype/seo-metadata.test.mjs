@@ -76,7 +76,7 @@ test('every published case has its own crawl identity and keeps the section page
       assert.equal(crawl.canonical, `${SITE_ORIGIN}/?page=cases&case=${entry.id}&lang=${code}`, label);
       assert.equal(crawl.og.url, crawl.canonical, label);
       // Same rule as the other pages: the section name, then the brand.
-      assert.equal(crawl.title, `${text.name} — ${messages.common.navigation.casesPage} — SynaiQ`, label);
+      assert.equal(crawl.title, `${text.name} — ${messages.common.navigation.casesPage} — tAistro`, label);
       assert.equal(crawl.description, text.summary, label);
       assert.ok([...crawl.description].length <= DESCRIPTION_LIMIT[code], `${label}: ${[...crawl.description].length} characters`);
       assert.doesNotMatch(crawl.title, PREVIEW_WORDING, label);
@@ -102,7 +102,7 @@ test('an unknown case identifier states the miss, leaves the index and carries n
       assert.equal(crawl.canonical, null, label);
       assert.equal(crawl.og.url, null, label);
       assert.deepEqual(crawl.alternates, [], label);
-      assert.equal(crawl.title, `${overview.notFound.title} — ${getMessages(code).common.navigation.casesPage} — SynaiQ`, label);
+      assert.equal(crawl.title, `${overview.notFound.title} — ${getMessages(code).common.navigation.casesPage} — tAistro`, label);
       assert.equal(crawl.description, overview.notFound.body, label);
       // No real case copy may leak into a miss.
       assert.doesNotMatch(crawl.title, /FOODEX|東京/, label);
@@ -161,7 +161,7 @@ test('the published markup carries static home metadata and never a static canon
   assert.equal(byKey.get('og:description'), home.description.home);
   assert.equal(byKey.get('og:url'), canonicalUrl({ page: 'home', locale: 'zh-Hant' }));
   assert.equal(byKey.get('og:type'), 'website');
-  assert.equal(byKey.get('og:site_name'), 'SynaiQ');
+  assert.equal(byKey.get('og:site_name'), 'tAistro');
   assert.equal(byKey.get('og:locale'), 'zh_TW');
   assert.equal(byKey.get('og:locale:alternate'), 'en_US');
   assert.equal(byKey.get('twitter:card'), 'summary');

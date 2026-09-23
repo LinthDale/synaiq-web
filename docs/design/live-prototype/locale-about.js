@@ -1,9 +1,9 @@
 // Plain-text company and team copy. Daniel uses the supplied legacy team record.
 export const zhHant = {
   hero: {
-    eyebrow: 'THE PEOPLE BEHIND SYNAIQ',
+    eyebrow: 'THE PEOPLE BEHIND tAistro',
     title: ['讓科技充滿溫度，', '讓 AI 走入生活。'],
-    intro: '我們是鑫揚智能科技。從組織裡的一份知識，到現場的一次對話，我們把 AI 系統整合、知識管理與數位人技術，做成讓人願意使用的日常工具。',
+    intro: '我們是星洋智能科技。從組織裡的一份知識，到現場的一次對話，我們把 AI 系統整合、知識管理與數位人技術，做成讓人願意使用的日常工具。',
     action: '認識我們的團隊',
     note: '好的技術，從理解人開始。',
   },
@@ -22,10 +22,10 @@ export const zhHant = {
     title: '一起把想法，帶到現場的人。',
     intro: '從營運、財務到業務，讓每一份技術投入，都能回到真實需求。',
     members: [
-      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: '鑫揚智能科技CEO', credentials: ['國立交通大學工業工程與管理研究所碩士'] },
-      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: '鑫揚智能科技COO', credentials: ['鉅詢永續策略總經理', '國立交通大學工業工程與管理研究所碩士'] },
+      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: '星洋智能科技CEO', credentials: ['國立交通大學工業工程與管理研究所碩士'] },
+      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: '星洋智能科技COO', credentials: ['鉅詢永續策略總經理', '國立交通大學工業工程與管理研究所碩士'] },
       { id: 'leef', name: 'Leef Lee', nativeName: '', role: '財務長', credentials: ['國立成功大學會計系', '財會協理'] },
-      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: '鑫揚智能科技協理', credentials: ['國立中央大學資訊管理研究所博士', 'ISO27001:2022 資訊安全管理系統主任稽核員'] },
+      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: '星洋智能科技協理', credentials: ['國立中央大學資訊管理研究所博士', 'ISO27001:2022 資訊安全管理系統主任稽核員'] },
     ],
   },
   technical: {
@@ -46,9 +46,9 @@ export const zhHant = {
 
 export const en = {
   hero: {
-    eyebrow: 'THE PEOPLE BEHIND SYNAIQ',
+    eyebrow: 'THE PEOPLE BEHIND tAistro',
     title: ['Technology with warmth.', 'AI for everyday life.'],
-    intro: 'We are SynaiQ. From knowledge inside an organization to a conversation in the field, we bring AI integration, knowledge management and digital humans together in tools people want to use.',
+    intro: 'We are tAistro. From knowledge inside an organization to a conversation in the field, we bring AI integration, knowledge management and digital humans together in tools people want to use.',
     action: 'Meet the team',
     note: 'Good technology begins with understanding people.',
   },
@@ -67,10 +67,10 @@ export const en = {
     title: 'The people who turn ideas into practice.',
     intro: 'Across operations, finance and business development, we keep technical decisions connected to real needs.',
     members: [
-      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: 'Chief Executive Officer, SynaiQ', credentials: ["Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"] },
-      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: 'Chief Operating Officer, SynaiQ', credentials: ['General Manager, Ju-Xun Sustainability Strategy', "Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"] },
+      { id: 'wilson', name: 'Wilson Chiu', nativeName: '', role: 'Chief Executive Officer, tAistro', credentials: ["Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"] },
+      { id: 'sunny', name: 'Sunny Kang', nativeName: '', role: 'Chief Operating Officer, tAistro', credentials: ['General Manager, Ju-Xun Sustainability Strategy', "Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"] },
       { id: 'leef', name: 'Leef Lee', nativeName: '', role: 'Chief Financial Officer', credentials: ['Department of Accountancy, National Cheng Kung University', 'Associate Director, Finance and Accounting'] },
-      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: 'Associate Director, SynaiQ', credentials: ['Ph.D., Institute of Information Management, National Central University', 'ISO 27001:2022 Information Security Management System Lead Auditor'] },
+      { id: 'lou', name: 'Yi Shyang Lou', nativeName: '', role: 'Associate Director, tAistro', credentials: ['Ph.D., Institute of Information Management, National Central University', 'ISO 27001:2022 Information Security Management System Lead Auditor'] },
     ],
   },
   technical: {

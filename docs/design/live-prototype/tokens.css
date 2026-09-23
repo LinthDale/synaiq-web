@@ -1730,3 +1730,6 @@ html:lang(en) .editorial-section h2 { line-height: 1.25; }
 @media (prefers-reduced-motion: reduce) {
   :root { --ink-reveal-duration: 0ms; --ink-ripple-duration: 0ms; }
 }
+
+/* Product identity next to the approved Synaiq mark. */
+.product-identity span { font-size: 15px; line-height: 1.5; }
