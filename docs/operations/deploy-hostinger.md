@@ -21,6 +21,13 @@
 
 ## 2026-09-23 SEO 主網域遷移（待網路放行，未啟用）
 
+### 13:27 後接續嘗試（仍未啟用）
+
+使用者再次明確要求切換。新網域 Node 初次 HTTPS 200，接續仍間歇解析至 FortiGuard 攔截 IP；Windows 原生 curl 正常 TLS 200。改用正常 Windows curl 公開 GET（不改 DNS／proxy／hosts、不略過 TLS）後，分離來源位元驗證與 CDN 圖片驗證：來源 72 檔 hash 全通過；CDN 會無損重編 PNG 並縮小大照片，正式驗收工具為圖片另檢查比例、尺寸及 64×64 內容平均像素誤差小於 3，非圖片仍要求完整 hash。發布包與 manifest 未重建。
+
+`resume-stage5.mjs stage` 成功；staged Chrome 驗收前 10 組通過（首頁、KIP 中英文桌面手機與中文案例總覽），隨後英文案例頁 `page.goto` 回 `net::ERR_CERT_AUTHORITY_INVALID`。未略過瀏覽器憑證錯誤，未啟用正式新路由。已執行 `release.mjs rollback`，回傳 verified，恢復完整品牌版路由及首頁 hash。新增證據：inventory-resume2／resume4、routing-resume2／resume4-audit.htaccess、staged.json、browser-staged.json（failed）、rollback-*.json、public-get.mjs、各 resume-stage*.mjs。所有候選檔及失敗證據保留；這些已執行的階段不得直接原地重跑。
+
+
 使用者授權將 SEO 與舊網域轉址移至 `https://taistro.com.tw`。來源 commit：`ecd081ead825879ccb8f4c041bc6f3a0531dcde7`，已 push；候選目錄 `public_html/synaiq-release-20260923-domain/` 已完整上傳 72 檔，但目前未公開、未啟用。原正式品牌版與網址规则仍為下節所列版本。
 
 原始碼已改 canonical、hreflang、Open Graph、robots、12 個 sitemap URL 及 Wally 圖片來源；候選正式路由將 synaiq.com／www.synaiq.com／www.taistro.com.tw 以 301 導到新主網址，保留 path、query 與憑證驗證例外。本機設計測試 182 通過、5 略過；local 瀏覽器 26／26 通過，路由防迴圈及錯誤目的地拒絕檢查通過。
