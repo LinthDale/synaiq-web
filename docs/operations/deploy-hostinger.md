@@ -19,6 +19,20 @@
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
+## 2026-09-23 SEO 主網域遷移（待網路放行，未啟用）
+
+使用者授權將 SEO 與舊網域轉址移至 `https://taistro.com.tw`。來源 commit：`ecd081ead825879ccb8f4c041bc6f3a0531dcde7`，已 push；候選目錄 `public_html/synaiq-release-20260923-domain/` 已完整上傳 72 檔，但目前未公開、未啟用。原正式品牌版與網址规则仍為下節所列版本。
+
+原始碼已改 canonical、hreflang、Open Graph、robots、12 個 sitemap URL 及 Wally 圖片來源；候選正式路由將 synaiq.com／www.synaiq.com／www.taistro.com.tw 以 301 導到新主網址，保留 path、query 與憑證驗證例外。本機設計測試 182 通過、5 略過；local 瀏覽器 26／26 通過，路由防迴圈及錯誤目的地拒絕檢查通過。
+
+stage 與一次有核對既有檔案的 resume-stage 均因 Node 公開 HTTPS 的 `DEPTH_ZERO_SELF_SIGNED_CERT` 停止。兩次自動回退後均獨立透過 API 核對實際路由，確認為品牌版 hash `cbf412c4a9ff7cd11f1620274ab1599bfe1c9281dd1fffe76129756b2508a4c0`。不可把已上傳／已 push 視為主網域遷移完成。
+
+根因證據：Node 系統解析 taistro.com.tw 與 www 得到 `208.91.112.55`，HTTP 回 403，可見文字為「Web Filter Violation / FortiGuard Intrusion Prevention - Access Blocked」，分類「新註冊域名」。同時 Windows Resolve-DnsName 與 curl 得到 Hostinger CDN IP 並可 HTTPS 200，表示不同解析路徑結果不一致；先前 TLS 錯誤不能直接歸因於 Hostinger 憑證。未改 DNS、hosts、防火牆、proxy，也未停用 TLS 驗證。
+
+待網管放行 taistro.com.tw 與 www.taistro.com.tw 後再恢復：先確認 Node 的正常 HTTPS 驗證與 DNS 不再落到阻擋頁；重新 audit 主機路由，核對完整既有上傳內容，使用新的唯一候選路由檔恢复 staged，不重跑會覆寫既有內容的 stage。通過 staged → activate → live、`check-migration.mjs` 的 20 組轉址／憑證路徑檢查及 cache 後，才更新主機維護入口及現行版本文件。現有 `resume-stage.mjs` 已用過，候選檔名稱不可原地重用。
+
+證據：`out/synaiq-release-20260923-domain/`，包含 manifest／artifact、本機驗收、失敗紀錄、兩次錯誤後 audit 及 routing-after-stage-error／routing-after-resume-error.htaccess。`guide-next.txt` 只是候選檔，尚未套用；`check-migration.mjs` 尚未在正式切換後執行。原始碼目前比正式站超前一個 SEO 發布。
+
 ## 2026-09-23 tAistro 品牌更新（現行）
 
 已完成正式上線。來源 commit：`c8432fee4ff5fd22ad5e7224fb9f5c3d31929e71`；正式目錄：`public_html/synaiq-release-20260923-taistro/`，72 個公開檔案。網址：[tAistro](https://taistro.com.tw/)、[KIP](https://taistro.com.tw/?page=kip&lang=zh-Hant)；原 `https://synaiq.com/` 同步提供新版。
