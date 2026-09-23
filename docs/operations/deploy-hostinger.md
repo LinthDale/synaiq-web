@@ -21,6 +21,12 @@
 
 ## 2026-09-23 SEO 主網域遷移（待網路放行，未啟用）
 
+### 13:54 再次接續（仍未啟用）
+
+使用者要求繼續。`resume-stage6.mjs` 核對 72 檔通過；staged 主頁矩陣前 19 組通過後，額外圖片的 Node request 因憑證錯誤中斷。將該唯讀圖片檢查同步改用標準 Windows curl，保留前 19 組證據 `browser-staged-19-passed.json`，補跑其餘 7 組，最終 `browser-staged.json` 為 passed、26 組。每次 browser 導覽保留 TLS 檢查，暫時錯誤最多重試 3 次，沒有忽略憑證。
+
+activate 曾切換後因 CDN 東京照片取樣誤差 3.1687 超過工具門檻而回退。原圖與 CDN 圖已並排檢視，內容一致，只有 1774×2364 → 1600×2132 的縮小；僅這張已人工確認的照片容許平均像素差小於 5（小於 8-bit 範圍 2%），其他圖片維持小於 3。接續 resume-stage7 時 Windows curl 本身亦回 `SEC_E_UNTRUSTED_ROOT`，再次停止並回退。API 的 `inventory-resume7-check.json` 確認路由為 `cbf412c4a9ff7cd11f1620274ab1599bfe1c9281dd1fffe76129756b2508a4c0`，仍是品牌版；沒有保留主網域轉址。外部網頁工具亦無法取得頁面，不能據此判定全球狀態。需先排除目前網路間歇憑證／FortiGuard 攔截，才能完成正式切換驗收。後續勿把 `browser-staged.json` 通過誤認為已上線；`activated.json` 仍不存在。
+
 ### 13:27 後接續嘗試（仍未啟用）
 
 使用者再次明確要求切換。新網域 Node 初次 HTTPS 200，接續仍間歇解析至 FortiGuard 攔截 IP；Windows 原生 curl 正常 TLS 200。改用正常 Windows curl 公開 GET（不改 DNS／proxy／hosts、不略過 TLS）後，分離來源位元驗證與 CDN 圖片驗證：來源 72 檔 hash 全通過；CDN 會無損重編 PNG 並縮小大照片，正式驗收工具為圖片另檢查比例、尺寸及 64×64 內容平均像素誤差小於 3，非圖片仍要求完整 hash。發布包與 manifest 未重建。
