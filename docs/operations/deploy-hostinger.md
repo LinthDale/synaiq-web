@@ -1,23 +1,37 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-09-23（Asia/Taipei）。
+最後更新：2026-09-29（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260923-domain/`，主網址為 https://taistro.com.tw/。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260929-tainan-photos/`，主網址為 https://taistro.com.tw/。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260923-domain/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260929-tainan-photos/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-09-29 臺南論壇照片交換（已上線）
+
+來源 commit：`369dd0fac59dfccfcd38558c5831e8f0dc350703`，已推送 `origin/main`。正式目錄為 `public_html/synaiq-release-20260929-tainan-photos/`，證據與發布工具在 `out/synaiq-release-20260929-tainan-photos/`。
+
+實績總覽封面及臺南案例首圖改為綜合論談照片；原本 2026.09.16 Synaiq KIP 示範照片移至內頁現場紀錄。相片與手繪配對、原始比例、中英文圖說及替代文字隨照片一起交換。
+
+驗證：設計測試 182 項通過、5 項略過；完整本機瀏覽器 26 組通過。舊站 72 檔 baseline 核對通過，新包 72 檔上傳／直接網址核對通過，正式切換 83 項檔案及入口核對通過；CDN 最佳化圖片另比對比例及可見像素。8 個快取檢查網址皆為 `no-cache, must-revalidate`。
+
+Chrome／Edge 的遠端自動套件遇辦公室憑證信任錯誤，失敗紀錄保留於 `browser-staged-chrome-failed.json` 與 `browser-staged-edge-failed.json`，未忽略 TLS。改用 Codex 內建瀏覽器在正常 TLS 下分別檢查 staged／正式站各 21 組（四主頁 × 中英文 × 1440／390px、臺南內頁四組、835px 實績總覽），檢查頁面內容、溢出、圖片路徑與圖說；正式手機照片完成顯影並目視確認。`browser-staged.json`／`browser-live.json` 明確記錄此替代驗收範圍，不宣稱遠端 headless 完整套件通過。
+
+主機私有維護入口已更新，公开請求仍為 410；原文與新文分別為 `guide-before.txt`／`guide-next.txt`，新 SHA-256：`351eac59e1be071a7b2aa5dc51d1e8141a70c9933df1cd49bf6721862f3bdb33`。
+
+正式路由 SHA-256：`9469f4ec1e70d12f184519f52427212f6a02f6d330d5c2452b5c5304cc73ae31`；發布前路由：`a2a927c95c0fc4a3d23983958e5183396c781603ac703f339ca0b31a6ce5ef01`。回退前先核對即時路由仍是本次正式 hash，再執行 `node out/synaiq-release-20260929-tainan-photos/release.mjs rollback`，恢復 `synaiq-release-20260923-domain`。私有維護入口需另依保存原文還原並核對現值 hash。舊版檔案全數保留；本次未演練正式回退。
 
 ## 2026-09-23 SEO 主網域遷移（已啟用）
 

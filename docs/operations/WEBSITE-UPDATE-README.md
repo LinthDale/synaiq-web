@@ -1,6 +1,6 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-09-23。
+給工程師及新的 AI session。最後核對：2026-09-29。
 
 ## 先看這張表
 
@@ -11,7 +11,7 @@
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
 | 驗收網址 | https://taistro.com.tw/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260923-domain/`；供讀取參考，不可原地重跑新發布 |
+| 本機發布工具與證據 | `out/synaiq-release-20260929-tainan-photos/`；供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
@@ -47,7 +47,7 @@ git remote -v
 git diff --stat
 git diff --check
 Test-Path .env.hostinger.local
-Test-Path out/synaiq-release-20260923-taistro/release.mjs
+Test-Path out/synaiq-release-20260929-tainan-photos/release.mjs
 ```
 
 不要列印環境檔內容。依 `package.json` 安裝 Node／依賴；缺少 `node_modules` 才需要 `npm ci`。瀏覽器驗證使用 Playwright 與已安裝的 Chrome（`channel: 'chrome'`）。
