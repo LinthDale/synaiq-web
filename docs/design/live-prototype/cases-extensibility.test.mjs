@@ -51,7 +51,8 @@ test('a further case takes the next row and keeps the sides alternating', () => 
   assert.ok(markup.indexOf(DEFAULT_CASE) < markup.indexOf(FIXTURE_ID));
   assert.ok(markup.indexOf(FIXTURE_ID) < markup.indexOf('tainan-tech-forum-2026'));
   // Each cover keeps its own ratio; nothing is cropped to a shared one.
-  assert.equal([...markup.matchAll(/--(?:case-cover|ink-photo)-aspect:16 \/ 9/g)].length, 2);
+  assert.equal([...markup.matchAll(/--(?:case-cover|ink-photo)-aspect:16 \/ 9/g)].length, 1);
+  assert.ok(markup.includes('--ink-photo-aspect:4 / 3'));
   assert.ok(markup.includes('--ink-photo-aspect:3 / 4'));
   assert.ok(!markup.includes('--case-cover-aspect:3 / 2'));
   assert.ok(markup.includes('--case-cover-focus:50% 40%'), 'the fixture keeps its own focus');

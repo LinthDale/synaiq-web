@@ -43,17 +43,17 @@ const TAINAN_TECH_FORUM_2026 = Object.freeze({
   date: Object.freeze({ start: '2026-09-16', end: '2026-09-17', precision: 'day' }),
   tags: Object.freeze(['industry-forum', 'knowledge-platform', 'panel']),
   // A landscape cover fills the image column; portraits have a separate height cap.
-  cover: Object.freeze({ image: 'assets/cases/tainan-tech-forum-2026-cover.jpg', focus: '50% 50%' }),
+  cover: Object.freeze({ image: 'assets/cases/tainan-tech-forum-2026-panel.jpg', focus: '50% 50%' }),
   hero: Object.freeze({
-    key: 'hero', photo: 'assets/cases/tainan-tech-forum-2026-cover.jpg',
-    sketch: 'assets/cases/tainan-tech-forum-2026-cover-sketch.webp',
-    aspect: '16 / 9', kind: 'scene', eager: true,
+    key: 'panel', photo: 'assets/cases/tainan-tech-forum-2026-panel.jpg',
+    sketch: 'assets/cases/tainan-tech-forum-2026-panel-sketch.webp',
+    aspect: '4 / 3', kind: 'scene', eager: true,
   }),
   field: Object.freeze({
     photos: Object.freeze([Object.freeze({
-      key: 'panel', photo: 'assets/cases/tainan-tech-forum-2026-panel.jpg',
-      sketch: 'assets/cases/tainan-tech-forum-2026-panel-sketch.webp',
-      aspect: '4 / 3', kind: 'scene',
+      key: 'hero', photo: 'assets/cases/tainan-tech-forum-2026-cover.jpg',
+      sketch: 'assets/cases/tainan-tech-forum-2026-cover-sketch.webp',
+      aspect: '16 / 9', kind: 'scene',
     })]),
   }),
   // Index-matched to press.links in locale-cases.js; each article names 鑫揚智能 in its text.

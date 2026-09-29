@@ -48,10 +48,10 @@ test('the overview lists cases as full-width rows that alternate sides and keep 
     'case-card--portrait case-card--left',
     'case-card--landscape case-card--right',
   ]);
-  // Native ratios, not one shared crop: the portrait cover stays 3:4, the landscape 16:9.
+  // Native ratios: the portrait stays 3:4 and the Tainan forum panel stays 4:3.
   const markup = render({ locale: 'zh-Hant' });
   assert.ok(markup.includes('--ink-photo-aspect:3 / 4'));
-  assert.ok(markup.includes('--ink-photo-aspect:16 / 9'));
+  assert.ok(markup.includes('--ink-photo-aspect:4 / 3'));
   assert.ok(!markup.includes('--ink-photo-aspect:3 / 2'));
   assert.ok(!markup.includes('case-card-grid'));
   assert.ok(!markup.includes('case-card--featured'));
