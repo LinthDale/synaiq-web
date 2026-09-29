@@ -17,7 +17,27 @@
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
-以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，勿覆寫或刪除。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-09-29 主機歷史版本清理（已完成）
+
+使用者核准主機保留現行版與最近兩個正式版本。`public_html` 的 release 目錄從 16 個減為 3 個：
+
+| 保留版本 | 用途 |
+|---|---|
+| `synaiq-release-20260929-tainan-photos` | 現行正式版 |
+| `synaiq-release-20260923-domain` | 上一個正式版，可供本次發布回退 |
+| `synaiq-release-20260923-taistro` | 再上一個正式版 |
+
+更早 13 個 release 已備份後移除，共 643 檔、337,155,006 bytes（約 337 MB）。這是移除檔案的位元組合計，不是 Hostinger 帳戶總用量報表。精確目錄清單、時間及逐步刪除紀錄在 `out/hostinger-cleanup-20260929/cleanup-complete.json`、`operations.jsonl`。
+
+本機備份 `out/hostinger-cleanup-20260929/releases-backup.zip` 含原 16 個 release 與仍使用的 Wally 圖片，共 860 檔；逐一讀取 ZIP 解壓內容核對 manifest SHA-256 全部通過。ZIP 大小 411,610,949 bytes，SHA-256 `177d1a1a95c523deb1bb577e8039c30590f121dd74347eb97c331a1bb065b565`。未壓縮副本與 `manifest.json`、`RESTORE.md` 一起保留；這是本工作機離線備份，未進 Git、尚無第二份異機備份。
+
+刪除前逐目錄重新比對遠端樹、檔案時間／大小與完整內容 hash；確認三個保留版本未引用移除目錄。刪除後重新核對保留版本及 Wally 圖片共 217 檔，內容未變，正式路由 SHA-256 仍為 `9469f4ec1e70d12f184519f52427212f6a02f6d330d5c2452b5c5304cc73ae31`。四頁中英文、robots、sitemap、Wally 圖片及三個退休／私有路徑共 14 個正式 HTTPS 檢查通過（`public-verification.json`）；本次未變更畫面，未重跑完整瀏覽器矩陣。
+
+主機私有 `00-SYNAIQ-START-HERE.txt` 已記錄三版保留規則、清理結果及備份位置；內容 SHA-256 `265ca94ba2c449d164bf30f54e36627869fef28a649ab4d982ac45e53a211d9f`，公開網址維持 410。
+
+WordPress、`.private`、根目錄設定與舊站 PHP 檔保留；首頁與兩個回退版本仍引用 `wp-content/uploads/2026/03/toutou-2.png`，完整 WordPress 檔案及資料庫備份尚未確認，不在本次移除。歷史段落中的「舊版全數保留」是當次發布紀錄；現在回退至更早版本前，須依 `RESTORE.md` 還原原名目錄並核對檔案，不能直接執行指向已刪目錄的舊 rollback。
 
 ## 2026-09-29 臺南論壇照片交換（已上線）
 

@@ -140,7 +140,7 @@ node "$releaseDir/update-guide.mjs"
 | live | 正式網址瀏覽器報告 passed；title 無預覽字樣、圖片、導覽、語言、排版正常 |
 | guide | 主機私有 `00-SYNAIQ-START-HERE.txt` 指向新目錄；其公開網址仍為 410 |
 
-封裝會改寫 `/brand/`、`assets/`、入口 CSS／JS 路徑到新 release，保留模組載入關係。檢查完整 `page.html → prototype.js → i18n.js → locale-*.js` 鏈；locale 的 `Cache-Control` 應為 `no-cache, must-revalidate`。保留既有 LiteSpeed、WordPress 舊站 410、Wally 圖片白名單及所有歷史版本。
+封裝會改寫 `/brand/`、`assets/`、入口 CSS／JS 路徑到新 release，保留模組載入關係。檢查完整 `page.html → prototype.js → i18n.js → locale-*.js` 鏈；locale 的 `Cache-Control` 應為 `no-cache, must-revalidate`。保留既有 LiteSpeed、WordPress 舊站 410、Wally 圖片白名單。歷史版本依下列保留規則歸檔，不在一般發布過程直接刪除。
 
 9/21 的三階段瀏覽器檢查各有 17 組：四頁 × 中英文 × 390／1440px，再加 835px 導覽。這是當次基準；本次改到其他斷點或互動時，增加相應驗證，不把舊報告複製成新 passed。
 
@@ -149,6 +149,15 @@ node "$releaseDir/update-guide.mjs"
 更新 [部署紀錄](deploy-hostinger.md) 的現行目錄、來源 commit、驗證、證據路徑、回退版本與 hash。只在驗證實際通過後寫「完成」。提交並推送這份紀錄，再確認 `git status -sb`。
 
 最後回報：官網連結、Git commit／push 狀態、上線版本、驗證結果、舊版保留。Git 成功不能代替正式網址成功。只更新文件時，不需要再封裝或切換官網。
+
+## 主機版本保留與歸檔
+
+2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成。主機保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。
+
+- 離線備份與清理證據：`out/hostinger-cleanup-20260929/`；`releases-backup.zip`、`manifest.json`、`RESTORE.md`。這些檔案未進 Git，也尚未複製至其他備份服務，需由維護者保管。
+- 後續歸檔須先確認真正發布順序、即時路由與所有保留版本的素材依賴；不能只看資料夾日期。未有可還原備份與逐檔校驗的版本不得刪除。保留原始發布 manifest、路由與驗證證據。
+- 歷史回退腳本可能指向已歸檔版本。先依 `RESTORE.md` 還原原名目錄並驗證，再準備受 hash 保護的切換；不可直接重跑歷史 rollback。
+- 本次未清理 WordPress：三個保留版本仍引用 `wp-content/uploads/2026/03/toutou-2.png`；完整 WordPress 檔案與資料庫備份尚未確認。單張圖片備份不代表完整舊站備份。
 
 ## 失敗、重試與回退
 
