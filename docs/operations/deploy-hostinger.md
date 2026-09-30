@@ -1,23 +1,39 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-09-29（Asia/Taipei）。
+最後更新：2026-09-30（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260929-tainan-photos/`，主網址為 https://taistro.com.tw/。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260930-kip-name/`，主網址為 https://taistro.com.tw/。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260929-tainan-photos/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260930-kip-name/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-09-30 KIP 中文名稱修正（已上線）
+
+來源 commit：`a10af39632abaf42a9c8710fa0780b69de20899d`，已推送 `origin/main`。正式目錄為 `public_html/synaiq-release-20260930-kip-name/`，證據與發布工具在 `out/synaiq-release-20260930-kip-name/`。
+
+Demo、KIP 頁面標籤、兩張生成產品 SVG，以及臺南案例介紹統一使用「KIP 知識智慧平台」。英文及產品互動機制未變更。
+
+驗證：設計測試 182 項通過、5 項略過；生成圖片 freshness check 通過。本機與 staged 各 26 組瀏覽器驗收通過。正式站已通過 18 組，含四頁中英文 × 桌面／手機、835px 導覽及中文實績總覽；Home／KIP 三種 demo 情境與两張產品 SVG 名稱已核對。其餘 8 組在英文 835px 實績總覽圖片請求遇傳輸錯誤，續跑又遇 TLS 信任錯誤，未宣稱完整 26 組正式驗收通過。通過紀錄在 `browser-live-18-passed-before-transport-failure.json`，後續失敗保留於 `browser-live.json` 及 `smoke-live-resume-*.log`。現行版本 72 檔 baseline、新版本 72 檔上傳及重新 staging 核對通過，正式切換後 83 項檔案／入口核對通過；8 個快取網址均為 `no-cache, must-revalidate`。CDN 最佳化點陣圖另驗證比例與可見內容，SVG 仍比對完整 hash。
+
+本工作機的 Windows curl、Chrome／內建瀏覽器及 Node fetch 曾出現間歇性憑證信任錯誤。首次 activation 因正式入口 HTTPS 驗收失敗自動恢復舊路由，隨後以主機 API 確認恢復結果。`release-retry.mjs` 在核對即時 hash 與既有上傳檔案後重開直接網址，再完成正式切換；未盲目重傳或覆蓋。最終 `public-get.mjs` 使用 Node 原生 HTTPS 的獨立連線，保留預設憑證鏈與主機名稱驗證，不修改 DNS／信任設定。完整經過及限制見 `TRANSPORT-NOTES.md`、`failure-activate-*.json`、`inventory-current.json`、`restaged.json`、`activated.json`。
+
+瀏覽器矩陣由正常 Node TLS 取得實際公開回應，將真實內容交由 Chromium 檢查排版、互動及圖片；報告明確記錄 transport，不能解讀為本機 Chromium 原生 TLS 已修復。內建瀏覽器原生 HTTPS 另成功檢查 staged KIP 頁面名稱、demo、延遲載入圖片及無水平溢出；正式入口原生瀏覽器仍曾遇憑證錯誤，未繞過警告。
+
+主機私有維護入口已同步，公開網址維持 410；新 SHA-256：`29dd6d0b829e8be605e4d33ab9f44fc188db9677de9e2c25a7c4da0a15a177c1`。本次保留全部既有版本，主機暫有四個 release；`synaiq-release-20260923-taistro` 超出三版保留目標，待另依備份與校驗流程歸檔，本次不刪除。
+
+正式路由 SHA-256：`31ef59d9d8bc259ca556f42304ee981a42d3bf176048a30caefa897b7de31d75`；發布前路由：`9469f4ec1e70d12f184519f52427212f6a02f6d330d5c2452b5c5304cc73ae31`。回退前須確認即時路由仍為本次 hash，再執行 `node out/synaiq-release-20260930-kip-name/release-retry.mjs rollback`，恢復 `synaiq-release-20260929-tainan-photos`；私有維護入口另依 `guide-before.txt` 還原並核對現值。所有失敗、恢復與最終驗證紀錄均保留。
 
 ## 2026-09-29 主機歷史版本清理（已完成）
 

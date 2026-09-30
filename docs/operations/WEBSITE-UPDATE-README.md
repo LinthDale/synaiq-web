@@ -1,6 +1,6 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-09-29。
+給工程師及新的 AI session。最後核對：2026-09-30。
 
 ## 先看這張表
 
@@ -11,7 +11,7 @@
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
 | 驗收網址 | https://taistro.com.tw/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260929-tainan-photos/`；供讀取參考，不可原地重跑新發布 |
+| 本機發布工具與證據 | `out/synaiq-release-20260930-kip-name/`；本次最終切換由 `release-retry.mjs` 完成，供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
@@ -47,7 +47,7 @@ git remote -v
 git diff --stat
 git diff --check
 Test-Path .env.hostinger.local
-Test-Path out/synaiq-release-20260929-tainan-photos/release.mjs
+Test-Path out/synaiq-release-20260930-kip-name/release-retry.mjs
 ```
 
 不要列印環境檔內容。依 `package.json` 安裝 Node／依賴；缺少 `node_modules` 才需要 `npm ci`。瀏覽器驗證使用 Playwright 與已安裝的 Chrome（`channel: 'chrome'`）。
@@ -152,7 +152,7 @@ node "$releaseDir/update-guide.mjs"
 
 ## 主機版本保留與歸檔
 
-2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成。主機保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。
+2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成，當時保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。2026-09-30 新增正式版 `synaiq-release-20260930-kip-name`，本次未執行刪除，暫保留四版；最舊的 taistro 版待另依下列流程歸檔。
 
 - 離線備份與清理證據：`out/hostinger-cleanup-20260929/`；`releases-backup.zip`、`manifest.json`、`RESTORE.md`。這些檔案未進 Git，也尚未複製至其他備份服務，需由維護者保管。
 - 後續歸檔須先確認真正發布順序、即時路由與所有保留版本的素材依賴；不能只看資料夾日期。未有可還原備份與逐檔校驗的版本不得刪除。保留原始發布 manifest、路由與驗證證據。
