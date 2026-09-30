@@ -19,6 +19,16 @@
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
+## 2026-09-30 去識別化產品畫面與 U 字型串接（待完成上架）
+
+最新來源 `7c690351b7e62a9a61dcb6c8e5bebaf1888179c8` 已推送 `origin/main`。新增 EMS 三張、PVsim 四張實際介面，已排除客戶／案場名稱、專案標頭、帳號及地理座標文字；PVsim 使用同一既有完成案件的模型、遮陰、月發電與 u-20 串接成果，選取一組 16 片的 U 字型往返串列顯示順序。智慧方案箭頭及底線改成雙筆觸手繪樣式，PVsim 敘事範圍擴為場域。沒有修改 DGX 案件、儲存設定或重新送算。
+
+最新發布包 `out/synaiq-release-20260930-u-screens/`：192 項設計測試通過、5 略過；封裝本機 28 組通過，涵蓋六頁中英文、390／1440px，及兩產品 320／835px 的圖片切換、放大、流程與語言切換。83 個檔案已完整上傳，但 stage 公開 HTTPS 檢查失敗，**尚未完成 staged／live 驗收，不是正式版本**。工具已恢復 solutions 入口，API audit 確認正式路由仍為 `460472c0bca83a297831a65bd1d023b75c13e5bcc489c6f8238f121a9a6f2bd7`。
+
+Node（含 Windows 系統 CA）及 Windows curl/Schannel 均曾間歇遇到不受信任憑證；曾成功的正常 HTTPS 請求不代表信任問題已修復。沒有忽略憑證、安裝根憑證或改動信任設定。待可信網路恢復後，依本次 `RESUME.md` 及 `resume-release.mjs` 重新核對既有檔案與路由；不能重跑原 stage 的上傳，也不能跳過公開驗收。私有維護入口仍正確指向 solutions。
+
+前兩次發布嘗試 `synaiq-release-20260930-product-screens`、`synaiq-release-20260930-screens-anon` 及最新包均保留原始失敗／復原證據，不覆寫或刪除。root 路由不開放這三包；前者含未去識別化素材，不可重新公開。當前主機共八個發布目錄，實際正式版仍以上方 solutions 路徑及即時 `.htaccess` 為準。
+
 ## 2026-09-30 智慧方案、EMS 與 PVsim 敘事頁（已上線）
 
 來源 commit：`d73493c03c5ab738846a1dc931090c51f095aee0`，已推送 `origin/main`。發布目錄 `public_html/synaiq-release-20260930-solutions/`；證據與工具位於 `out/synaiq-release-20260930-solutions/`。

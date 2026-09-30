@@ -17,6 +17,8 @@
 
 **Git push 不會自動部署官網。正式站來源是 live-prototype，不是 Astro `dist/`。**
 
+2026-09-30 待發布更新：去識別化 EMS／PVsim 畫面、PVsim u-20（U 字型）串接與手繪導覽，來源 `7c69035` 已 push；`out/synaiq-release-20260930-u-screens/` 的 83 檔已上傳、本機 28 組通過，但公開 HTTPS 憑證信任錯誤導致 stage 恢復 solutions 入口。**此包尚未上線，現行目錄仍見上表。** 接續前先讀該目錄 `RESUME.md`，正常信任連線恢復後再做 staged／live 驗收。不可直接重跑已存在目錄的原 stage 或略過憑證驗證。
+
 2026-09-23 已切換主網址為 `https://taistro.com.tw/`；Hostinger API 的既有主機識別仍用 `domain: synaiq.com`。修改網域轉址後需清除 synaiq.com 與 taistro.com.tw 的 Hostinger CDN 快取，避免沿用先前的 301。CDN 會最佳化圖片，來源檔案仍需精確 hash 核對，CDN 圖片則另驗證比例與可見內容，不能直接要求壓縮後檔案 hash 等於來源。
 
 `index.html` 是本機預覽外框；正式入口由 `page.html` 封裝成發布包的 `index.html`。不能直接上傳本機外框，也不能上傳整個 repo 或 `out/`。
