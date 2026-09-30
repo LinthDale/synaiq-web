@@ -18,8 +18,8 @@ export const zhHant = {
       "對照同一批板位的不同串接方式，閱讀典型氣象與模型假設下的月發電量估算。"
     ],
     [
-      "逐板串接設計",
-      "從每片模組的歸屬走到串列、MPPT 與逆變器配置，核對電氣設計。"
+      "U 字型串接設計",
+      "以 U 字型上下往返串接，選取一串就能核對逐板順序，以及所屬的 MPPT 與逆變器。"
     ]
   ]
 },
@@ -85,8 +85,8 @@ export const en = {
       "Compare string arrangements for the same module positions using typical weather and model assumptions."
     ],
     [
-      "Module-level string design",
-      "Follow each module into its string, MPPT input and inverter configuration for electrical review."
+      "U-shaped string design",
+      "Review a U-shaped return path. Select a string to follow its module sequence and check its assigned MPPT input and inverter."
     ]
   ]
 },
