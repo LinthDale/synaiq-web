@@ -496,8 +496,8 @@ body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navi
   background: #64754f;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M2 3Q32 1 60 3T118 2M7 5Q51 3 104 4' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
-.product-navigation-chevron { width: 24px; height: 22px; flex: 0 0 24px; transform: rotate(-4deg); transition: transform var(--navigation-arrow-duration) ease; }
-.product-navigation[open] .product-navigation-chevron { transform: rotate(176deg); }
+.product-navigation-chevron { width: 11px; height: 10px; flex: 0 0 11px; transition: transform var(--navigation-arrow-duration) ease; }
+.product-navigation[open] .product-navigation-chevron { transform: rotate(180deg); }
 @media (prefers-reduced-motion: reduce) { .product-navigation-chevron { transition: none; } }
 .product-navigation-links {
   position: absolute;
