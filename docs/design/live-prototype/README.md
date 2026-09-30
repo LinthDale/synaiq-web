@@ -2,9 +2,9 @@
 
 最後更新：2026-09-30。
 
-已上線的 Home／KIP／實績展示／關於我們中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。正式站使用另外封裝的版本，本機修改不會自動上架；現行版本與還原方式見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
+已上線的 Home／KIP／EMS／PVsim／實績展示／關於我們中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。正式站使用另外封裝的版本，本機修改不會自動上架；現行版本與還原方式見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
 
-只改團隊文字時，編輯這裡的 `locale-about.js`，同步中英文；備份主機同名檔後，覆蓋 `public_html/synaiq-release-20260930-kip-name/locale-about.js`，再重新整理官網即可。檔名是 **locale-about.js**；文案檔已設定每次重新驗證快取。Hostinger 根目錄的 `00-SYNAIQ-START-HERE.txt` 列出正式更新位置，其他版本資料夾留作還原。版面、CSS、圖片或新增頁面仍依樣式指引的發布流程處理。
+只改團隊文字時，編輯這裡的 `locale-about.js`，同步中英文；備份主機同名檔後，覆蓋 `public_html/synaiq-release-20260930-solutions/locale-about.js`，再重新整理官網即可。檔名是 **locale-about.js**；文案檔已設定每次重新驗證快取。Hostinger 根目錄的 `00-SYNAIQ-START-HERE.txt` 列出正式更新位置，其他版本資料夾留作還原。版面、CSS、圖片或新增頁面仍依樣式指引的發布流程處理。
 
 ## 要改什麼，去哪裡
 
@@ -42,6 +42,7 @@ npm run dev:design
 開啟 [本機預覽](http://127.0.0.1:4318/live-prototype/)，存檔後重新整理。預覽列可選頁面、語言並連續調整實際 iframe 寬度；「獨立開啟」可不經預覽外框檢視網站。
 
 - 繁中首頁：`page.html?page=home&lang=zh-Hant`
+- 繁中 EMS：`page.html?page=ems&lang=zh-Hant`；PVsim：`page.html?page=pvsim&lang=zh-Hant`。
 - 英文 KIP：`page.html?page=kip&lang=en`
 - 繁中實績總覽：`page.html?page=cases&lang=zh-Hant`；段落為 `#cases-list`。
 - 東京食品展案例：`page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant`；段落為 `#story`、`#fieldnotes`、`#press`。
@@ -49,7 +50,7 @@ npm run dev:design
 - 預覽列有「案例」選單；切換語言保留案例，切換頁面回到總覽。
 - 舊連結 `page.html?page=cases&lang=zh-Hant#story` 會自動換成東京案例的同一段落（replaceState，不會卡住上一頁）。無效識別碼顯示「找不到此案例」並設為 noindex。
 - 繁中關於我們：`page.html?page=about&lang=zh-Hant`；段落為 `#approach`、`#leadership`、`#technical`。
-- 四頁都可切換 `lang=en`；加上 `#contact` 等錨點可定位共用段落。
+- 六頁都可切換 `lang=en`；加上 `#contact` 等錨點可定位共用段落。
 - 4318 已被此預覽使用時不必再開；需要另一個埠可用 `npm run dev:design -- 4319`。
 - 同名檔案修改不必重啟。新增素材或模組時，先更新 `share-preview.mjs` 的明確白名單，確認程序身分後僅重新載入該預覽服務，再驗證新檔可取得。
 

@@ -9,9 +9,9 @@
 | 修改正式網站 | `docs/design/live-prototype/`，品牌素材在 `public/brand/` |
 | 公開檔案白名單 | `docs/design/live-prototype/share-preview.mjs` 的 `PUBLIC_FILES` |
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
-| 驗收網址 | https://taistro.com.tw/，四頁的 `?page=home/kip/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
+| 驗收網址 | https://taistro.com.tw/，六頁的 `?page=home/kip/ems/pvsim/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260930-kip-name/`；本次最終切換由 `release-retry.mjs` 完成，供讀取參考，不可原地重跑新發布 |
+| 本機發布工具與證據 | `out/synaiq-release-20260930-solutions/`；本次最終切換由 `release.mjs` 完成，供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
@@ -47,7 +47,7 @@ git remote -v
 git diff --stat
 git diff --check
 Test-Path .env.hostinger.local
-Test-Path out/synaiq-release-20260930-kip-name/release-retry.mjs
+Test-Path out/synaiq-release-20260930-solutions/release.mjs
 ```
 
 不要列印環境檔內容。依 `package.json` 安裝 Node／依賴；缺少 `node_modules` 才需要 `npm ci`。瀏覽器驗證使用 Playwright 與已安裝的 Chrome（`channel: 'chrome'`）。
@@ -85,7 +85,7 @@ git diff --check
 
 例如 `out/synaiq-release-YYYYMMDD-<簡短名稱>/`；同日第二次發布另取唯一名稱。不要覆蓋既有證據。
 
-**現況限制：repo 尚無通用的 `npm run deploy`。** 9/21 的腳本是單次發布腳本，放在 Git 忽略的 `out/`。新的 clone 不會自帶這些工具、manifest 或憑證；需從原工作機／團隊保管的發布備份取得，不能當成已存在。此 README 沒有建立 CI 自動部署或通用 CLI。
+**現況限制：repo 尚無通用的 `npm run deploy`。** 9/21 的腳本是單次發布腳本，放在 Git 忽略的 `out/`。本次工具沿用正常 TLS 驗證；若此 Windows 工作機的 Node 自帶 CA 出現憑證錯誤，可在明確的本次腳本命令加 `--use-system-ca` 使用既有系統信任庫。本次 cache／live smoke 使用此方法，但仍可能遇到間歇性信任錯誤；保留失敗紀錄，核對入口版本後僅補跑未通過部分，不停用憑證驗證。此方法不代表瀏覽器或系統憑證設定已修改。新的 clone 不會自帶這些工具、manifest 或憑證；需從原工作機／團隊保管的發布備份取得，不能當成已存在。此 README 沒有建立 CI 自動部署或通用 CLI。
 
 在新目錄準備下列工具，以 9/21 最終檔案為參考：
 
@@ -135,7 +135,7 @@ node "$releaseDir/update-guide.mjs"
 | package | 來源等於指定 commit；產生 allowlist artifact、manifest、逐檔 hash、測試與正式路由候選 |
 | local | 本機瀏覽器報告 passed，實際檢視受影響頁面截圖 |
 | stage | 新目錄逐檔 hash 相同；開放 allowlist 直接網址；root 仍是舊版 |
-| staged | 直接網址四頁中英文及手機／桌面正常，沒有資源或 JS 錯誤 |
+| staged | 直接網址六頁中英文及手機／桌面正常，沒有資源或 JS 錯誤 |
 | activate | 再核對路由沒有被他人更動，切入口，root 各 query 的內容與新入口相同 |
 | live | 正式網址瀏覽器報告 passed；title 無預覽字樣、圖片、導覽、語言、排版正常 |
 | guide | 主機私有 `00-SYNAIQ-START-HERE.txt` 指向新目錄；其公開網址仍為 410 |
@@ -152,7 +152,7 @@ node "$releaseDir/update-guide.mjs"
 
 ## 主機版本保留與歸檔
 
-2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成，當時保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。2026-09-30 新增正式版 `synaiq-release-20260930-kip-name`，本次未執行刪除，暫保留四版；最舊的 taistro 版待另依下列流程歸檔。
+2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成，當時保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。2026-09-30 新增正式版 `synaiq-release-20260930-kip-name`，同日再新增 `synaiq-release-20260930-solutions`，本次未執行刪除，暫保留五版；超出三版保留目標的歷史版本待另依下列流程歸檔。
 
 - 離線備份與清理證據：`out/hostinger-cleanup-20260929/`；`releases-backup.zip`、`manifest.json`、`RESTORE.md`。這些檔案未進 Git，也尚未複製至其他備份服務，需由維護者保管。
 - 後續歸檔須先確認真正發布順序、即時路由與所有保留版本的素材依賴；不能只看資料夾日期。未有可還原備份與逐檔校驗的版本不得刪除。保留原始發布 manifest、路由與驗證證據。

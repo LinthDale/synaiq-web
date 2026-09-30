@@ -6,18 +6,34 @@
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260930-kip-name/`，主網址為 https://taistro.com.tw/。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260930-solutions/`，主網址為 https://taistro.com.tw/。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260930-kip-name/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260930-solutions/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-09-30 智慧方案、EMS 與 PVsim 敘事頁（已上線）
+
+來源 commit：`d73493c03c5ab738846a1dc931090c51f095aee0`，已推送 `origin/main`。發布目錄 `public_html/synaiq-release-20260930-solutions/`；證據與工具位於 `out/synaiq-release-20260930-solutions/`。
+
+主導覽由 KIP 改為「智慧方案／Solutions」，承接 Synaiq KIP、EMS、PVsim 三個站內介紹頁。EMS 以能源監控、需量、儲能調度、事件與報表串起管理故事；PVsim 以屋面、配置、遮陰、發電與串接串起設計故事。兩頁皆有中英文敘事、三步流程、六項能力方向、六步互動示意、產品專屬聯絡文案與後段外部示範入口。依使用者確認，兩產品明確標示為示範環境；官網互動不連接設備或執行工程計算。原 KIP 名稱修正保留。
+
+驗證：197 項設計測試中 192 通過、5 略過；來源瀏覽器 48 組通過，涵蓋六頁 × 中英文 × 320／390／835／1440px、產品選單鍵盤行為、語言切換及能源產品互動。本機封裝、staged 各 34 組通過；正式站先通過 20 組，核對入口 hash 仍屬同一發布後再續跑 14 組，合計 34 組全部通過。正式入口啟用後另完成 90 項檔案與網址核對；10 個快取檢查皆為 `no-cache, must-revalidate`。舊版 baseline 72 檔、新版上傳 75 檔已核對，sitemap 擴為 16 個 canonical URL。
+
+瀏覽器矩陣以正常 Node HTTPS 取得真實公開回應，再交由 Chromium 檢查排版與操作；同一 run 內的版本化靜態資源首次取得後重用，HTML 每次重新取得。未關閉憑證鏈或主機名稱驗證。Codex 內建瀏覽器另以原生 HTTPS 核對 EMS／PVsim 的內容、站內跳轉與互動，詳見 native-browser-*.json。本次沒有更改系統憑證信任設定。
+
+正式路由 SHA-256：`460472c0bca83a297831a65bd1d023b75c13e5bcc489c6f8238f121a9a6f2bd7`；發布前路由：`31ef59d9d8bc259ca556f42304ee981a42d3bf176048a30caefa897b7de31d75`。回退前須確認即時路由仍符合本次已知值，再執行 `node out/synaiq-release-20260930-solutions/release.mjs rollback`，恢復 `synaiq-release-20260930-kip-name`；私有維護入口另依 guide-before.txt 還原並核對現值。未刪除歷史目錄，主機暫保留五個版本；後續歸檔仍須先備份與驗證。
+
+本次正式驗收第一次在 Node 自帶 CA 信任庫遇到 `DEPTH_ZERO_SELF_SIGNED_CERT`，未改動路由或忽略憑證。改以 `node --use-system-ca` 讀取 Windows 既有信任庫後，10 項快取檢查與前 20 組正式瀏覽器驗收通過，但之後仍出現間歇性信任錯誤。已保留失敗紀錄與 20 組通過結果；`smoke-resume-live.mjs` 先核對正式入口 hash，再補跑剩餘 14 組。內建瀏覽器另完成 10 組補查後也曾遇信任錯誤，未略過警告。因此不宣稱本機的憑證信任問題已根治。此設定只用於命令程序，不安裝憑證、不修改 Windows 信任設定。行為依據：[Node v24.11.0 官方說明](https://nodejs.org/download/release/v24.11.0/docs/api/cli.html#--use-system-ca)。
+
+主機私有維護入口已同步，公開請求仍為 410；新 SHA-256：`5590c04e51fcb09cc2429b0e41a6ddb25d6096dfb4ba8bfd65827da08cc76402`。
 
 ## 2026-09-30 KIP 中文名稱修正（已上線）
 
