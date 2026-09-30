@@ -596,12 +596,14 @@ section.advantages .advantage-scenario span {
 .language-select option {
   color: var(--ink);
 }
-/* 主導覽：首頁、KIP 平台；含目前頁面狀態 */
-.page-navigation a {
+/* 主導覽：首頁、智慧方案；含目前頁面狀態 */
+.page-navigation a,
+.product-navigation > summary {
   font-size: var(--nav-text-size);
   color: var(--muted);
 }
-.page-navigation a[aria-current="page"] {
+.page-navigation a[aria-current="page"],
+body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navigation > summary {
   color: var(--ink);
   font-weight: 500;
 }
@@ -1733,3 +1735,33 @@ html:lang(en) .editorial-section h2 { line-height: 1.25; }
 
 /* Product identity next to the approved Synaiq mark. */
 .product-identity span { font-size: 15px; line-height: 1.5; }
+/* EMS / PVsim product story typography. */
+.energy-product { color: var(--ink); }
+.energy-opening h1 { font: 300 clamp(38px, 4.3vw, 66px)/1.35 var(--display); letter-spacing: -.02em; }
+html[lang='en'] .energy-opening h1 { font-size: clamp(36px, 3.5vw, 55px); }
+.energy-product h2 { font: 300 clamp(29px, 3.1vw, 46px)/1.5 var(--display); }
+.energy-intro, .energy-story-copy { font-size: 17px; line-height: 1.95; color: #575950; }
+.energy-status, .energy-kicker, .energy-scene-top, .energy-workbook-top, .energy-demo-note, .energy-external p { font-size: 12px; line-height: 1.7; color: #636652; }
+.energy-kicker { letter-spacing: .06em; }
+.energy-scene figcaption { font: italic 20px/1.65 var(--display); color: #68765c; }
+.energy-scene-nodes { font-size: 12px; line-height: 1.6; color: #5f6657; }
+.energy-drawing { color: #6b6a5d; }
+.energy-section-number, .energy-step-number { font: italic 26px/1.3 var(--display); color: #838264; }
+.energy-steps h3 { font: 400 25px/1.5 var(--display); }
+.energy-steps p, .energy-capabilities p, .energy-capability-list dd, .energy-demo-heading p, .energy-stage-copy > p:last-child { font-size: 16px; line-height: 1.9; color: #626458; }
+.energy-capability-list dt { font: 400 23px/1.5 var(--display); }
+.energy-capability-list dt span { font: italic 16px/2 var(--display); color: #81806b; }
+.energy-stage-buttons button { font: 400 14px/1.5 var(--body); color: #5a6252; }
+.energy-stage-buttons button > span { font: italic 14px/1.4 var(--display); color: #747b67; }
+.energy-stage-buttons button[aria-pressed='true'] { color: #2f482d; }
+.energy-progress { font: 12px/1 var(--body); color: #7b806d; }
+.energy-progress li.is-active { color: #fffdf5; }
+.energy-stage-copy h3 { font: 400 clamp(24px, 2.3vw, 33px)/1.5 var(--display); }
+.energy-flow { font-size: 14px; line-height: 1.7; color: #53634d; }
+@media (max-width: 639px) {
+  .energy-intro, .energy-story-copy { font-size: 16px; }
+  .energy-scene-top, .energy-scene-nodes { font-size: 11px; }
+  .energy-scene figcaption { font-size: 18px; }
+  .energy-stage-buttons button { font-size: 13px; }
+  .energy-capability-list dt, .energy-steps h3 { font-size: 22px; }
+}

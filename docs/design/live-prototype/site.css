@@ -470,6 +470,53 @@ section.advantages .advantage-scenario span {
   height: 2px;
   background: #64754f;
 }
+.product-navigation {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+.product-navigation > summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  height: 100%;
+  padding: 0 4px;
+  white-space: nowrap;
+  list-style: none;
+  cursor: pointer;
+}
+.product-navigation > summary::-webkit-details-marker { display: none; }
+body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navigation > summary::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: #64754f;
+}
+.product-navigation[open] .product-navigation-chevron { transform: rotate(180deg); }
+.product-navigation-links {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  min-width: 200px;
+  max-width: calc(100vw - 2 * var(--gutter));
+  padding: 8px;
+  background: var(--paper);
+  border: 1px solid #b4b4ac66;
+  box-shadow: 0 12px 24px #28282514;
+}
+.page-navigation .product-navigation-links a {
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 14px;
+  min-height: 44px;
+}
+.product-navigation-links a:hover,
+.product-navigation-links a:focus-visible { background: #b4b4ac22; }
 .page-context {
   position: relative;
   z-index: 4;
@@ -3472,4 +3519,94 @@ body[data-page="kip"] .kip-capability-list dd {
   .film-wordmark { flex-wrap: wrap; justify-content: flex-end; white-space: normal; max-width: 58%; gap: 4px 8px; }
   .film-product-logo { width: 88px; }
   .film-wordmark-label { text-align: right; }
+}
+/* EMS / PVsim: editorial product stories and illustrative workflow. */
+.energy-product { background: var(--kip-paper); }
+.energy-opening { padding: clamp(56px, 6vw, 94px) 0 104px; overflow: clip; }
+.energy-opening-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: clamp(28px, 5vw, 78px); align-items: center; }
+.energy-opening h1 { margin: 28px 0; }
+.energy-intro { max-width: 520px; margin: 28px 0; }
+.energy-opening-actions { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.energy-status { display: inline-flex; gap: 7px; align-items: center; }
+.energy-status::before { content: ''; width: 6px; height: 6px; background: #877343; border-radius: 50%; }
+.energy-scene { margin: 0; position: relative; padding: 24px 22px 28px; background: #faf8f0; border: 1px solid #b5b0a67a; box-shadow: 8px 10px 0 #dbd7ca55, 0 22px 38px #2828250d; transform: rotate(-2deg); }
+.energy-scene-top, .energy-workbook-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid #b5b0a66b; }
+.energy-drawing { width: 100%; height: auto; display: block; }
+.energy-scene figcaption { text-align: center; margin: -4px 0 22px; }
+.energy-scene-nodes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; margin: 0; gap: 10px; }
+.energy-scene-nodes li { padding: 12px 4px 0; border-top: 1px solid #a4a58f; text-align: center; }
+.energy-torn { position: relative; }
+.energy-torn::before { content: ''; position: absolute; inset: -40px 0 auto; height: 44px; background: inherit; mask: var(--kip-tear-image) center top / max(980px, 100%) 110px no-repeat; pointer-events: none; }
+.energy-story { background: #e9e8de; padding: 86px 0; }
+.energy-story-layout { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(32px, 8vw, 120px); }
+.energy-story h2 { margin: 25px 0 0; }
+.energy-story-copy p { margin: 0 0 24px; }
+.energy-story-copy p:last-child { margin-bottom: 0; }
+.energy-process, .energy-demo { padding: 100px 0; }
+.energy-section-heading { display: flex; gap: 26px; align-items: baseline; margin-bottom: 56px; }
+.energy-section-heading h2 { margin: 0; }
+.energy-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 42px; }
+.energy-steps article { padding-top: 22px; border-top: 1px solid #a1a28b; }
+.energy-steps h3 { margin: 15px 0; }
+.energy-steps p { margin: 0; }
+.energy-capabilities { padding: 92px 0; background: #eeede4; }
+.energy-capabilities-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(40px, 8vw, 116px); }
+.energy-capabilities h2 { margin: 25px 0; }
+.energy-capabilities p { max-width: 430px; }
+.energy-capability-list { margin: 0; }
+.energy-capability-list > div { padding: 23px 0; border-bottom: 1px solid #c3c3b5; }
+.energy-capability-list > div:first-child { padding-top: 0; }
+.energy-capability-list dt { display: flex; gap: 20px; }
+.energy-capability-list dd { margin: 12px 0 0 42px; }
+.energy-demo-heading { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: end; margin-bottom: 48px; }
+.energy-demo-heading h2, .energy-demo-heading p { margin: 0; }
+.energy-workbook { background: #fbfaf3; border: 1px solid #b7b8a8; box-shadow: 0 18px 45px #2828250b; }
+.energy-workbook-top { padding: 22px 30px; }
+.energy-stage-buttons { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); padding: 0 28px; gap: 8px; }
+.energy-stage-buttons button { display: flex; flex-direction: column; gap: 9px; text-align: left; padding: 22px 8px 16px; background: transparent; border: 0; border-bottom: 2px solid transparent; min-height: 76px; cursor: pointer; }
+.energy-stage-buttons button[aria-pressed='true'] { border-bottom-color: #687d66; background: #e7eadf; }
+.energy-stage-buttons button:hover { background: #e7eadf80; }
+.energy-stage-buttons button:focus-visible { outline: 2px solid #687d66; outline-offset: 2px; }
+.energy-stage-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 30px; padding: 30px 38px 40px; min-height: 370px; }
+.energy-stage-art { min-width: 0; }
+.energy-stage-art .energy-drawing { max-height: 270px; }
+.energy-progress { display: flex; padding: 0 18px; margin: 0; list-style: none; justify-content: space-between; gap: 8px; }
+.energy-progress li { display: grid; place-items: center; border: 1px solid #c0c1b0; border-radius: 50%; width: 32px; height: 32px; }
+.energy-progress li.is-active { background: #65795f; border-color: #65795f; }
+.energy-stage-copy h3 { margin: 16px 0 24px; }
+.energy-stage-copy > p:last-child { margin: 12px 0 0; }
+.energy-flow { border-block: 1px solid #c2c7b8; padding: 16px 0; margin: 0 0 25px; }
+.energy-demo-note { padding: 20px 30px; margin: 0; border-top: 1px solid #d4d4c7; }
+.energy-external { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 28px; }
+.energy-external p { margin: 0; }
+@media (max-width: 899px) {
+  .energy-opening-layout { grid-template-columns: 1fr; gap: 52px; }
+  .energy-opening-copy { max-width: 660px; }
+  .energy-scene { width: min(100% - 14px, 590px); justify-self: center; }
+  .energy-story-layout, .energy-capabilities-layout { gap: 36px; }
+  .energy-steps { gap: 26px; }
+  .energy-stage-buttons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .energy-stage-layout { gap: 20px; padding: 28px 24px; }
+}
+@media (max-width: 639px) {
+  .energy-opening { padding: 44px 0 76px; }
+  .energy-opening h1 { margin: 24px 0; }
+  .energy-scene { padding: 18px 14px; }
+  .energy-story, .energy-capabilities { padding: 60px 0; }
+  .energy-story-layout, .energy-capabilities-layout, .energy-demo-heading { grid-template-columns: 1fr; gap: 26px; }
+  .energy-process, .energy-demo { padding: 64px 0; }
+  .energy-section-heading { gap: 16px; margin-bottom: 34px; }
+  .energy-steps { grid-template-columns: 1fr; gap: 28px; }
+  .energy-steps article { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 12px 14px; }
+  .energy-steps h3 { margin: 0; }
+  .energy-steps p { grid-column: 2; }
+  .energy-capability-list dd { margin-left: 0; }
+  .energy-demo-heading { margin-bottom: 30px; }
+  .energy-workbook-top { padding: 20px; }
+  .energy-stage-buttons { padding: 0 12px; gap: 4px; }
+  .energy-stage-buttons button { padding: 14px 6px; }
+  .energy-stage-layout { grid-template-columns: 1fr; padding: 18px 20px 28px; gap: 30px; min-height: 0; }
+  .energy-stage-art .energy-drawing { max-height: 220px; }
+  .energy-demo-note { padding: 20px; }
+  .energy-external { align-items: flex-start; flex-direction: column; gap: 14px; }
 }

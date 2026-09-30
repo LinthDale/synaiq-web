@@ -24,7 +24,7 @@ function createNavigation({ page = 'home', compact = false, locale = 'zh-Hant', 
       ...extra,
     };
   }
-  const links = ['home', 'kip', 'cases', 'about'].map(pageLink => element({ dataset: { pageLink } }));
+  const links = ['home', 'kip', 'ems', 'pvsim', 'cases', 'about'].map(pageLink => element({ dataset: { pageLink } }));
   const menu = element({ focused: false, focus() { this.focused = true; } });
   const contextNav = element();
   const contextLabel = element();
@@ -49,11 +49,12 @@ function createNavigation({ page = 'home', compact = false, locale = 'zh-Hant', 
   return { links, menu, contextNav, contextLabel, contextLinks, document, media, properties, resize };
 }
 
-test('all four primary page switches are present; context directory is outside sticky header', () => {
+test('all six page destinations are present; context directory is outside sticky header', () => {
   const primary = html.match(/<nav class="page-navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
   assert.ok(primary);
-  assert.equal((primary.match(/<a /g) || []).length, 4);
-  for (const page of ['home', 'kip', 'cases', 'about']) {
+  assert.equal((primary.match(/data-page-link=/g) || []).length, 6);
+  assert.equal((primary.match(/<a /g) || []).length, 6);
+  for (const page of ['home', 'kip', 'ems', 'pvsim', 'cases', 'about']) {
     assert.ok(primary.includes(`href="?page=${page}" data-page-link="${page}"`));
   }
   assert.match(primary, /navigation\.casesPage/);
@@ -68,10 +69,25 @@ test('all four primary page switches are present; context directory is outside s
   assert.ok(hasDeclaration('site.css', '.page-context', 'inset', 'var(--header-height,112px) 0 auto', '(max-width:899px)'));
 });
 
+test('solutions disclosure leads to three internal product stories', () => {
+  const products = html.match(/<details class="product-navigation">([\s\S]*?)<\/details>/)?.[1];
+  assert.ok(products);
+  assert.match(products, /<summary>[\s\S]*navigation\.products/);
+  assert.match(products, /href="\?page=kip" data-page-link="kip">Synaiq KIP/);
+  for (const page of ['ems', 'pvsim']) {
+    assert.ok(products.includes(`href="?page=${page}" data-page-link="${page}"`));
+  }
+  assert.doesNotMatch(products, /https:\/\/synaiq-ai/);
+  assert.equal(getMessages('zh-Hant').common.navigation.products, '智慧方案');
+  assert.equal(getMessages('en').common.navigation.products, 'Solutions');
+});
+
 // The work page now defaults to its overview; one case's own sections are covered below.
 const pageSections = {
   home: ['wally', 'proof', 'footer'],
   kip: ['process', 'architecture', 'advantages', 'proof'],
+  ems: ['story', 'process', 'capabilities', 'proof'],
+  pvsim: ['story', 'process', 'capabilities', 'proof'],
   cases: ['cases-list'],
   about: ['approach', 'leadership', 'technical'],
 };

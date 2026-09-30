@@ -1,5 +1,6 @@
 import { renderHome, initHome } from './home-design.js';
 import { renderKip, initKip } from './kip-design.js';
+import { renderEms, renderPvsim, initEnergy } from './energy-design.js';
 import { renderCases, initCases, caseSectionIds } from './cases-design.js';
 import { renderAbout, initAbout } from './about-design.js';
 import { renderAdvantageSection, renderContact } from './shared-design.js';
@@ -11,6 +12,8 @@ const page = resolvePage(query.get('page'));
 const pages = {
   home: { render: renderHome, init: initHome },
   kip: { render: renderKip, init: initKip },
+  ems: { render: renderEms, init: initEnergy },
+  pvsim: { render: renderPvsim, init: initEnergy },
   cases: { render: renderCases, init: initCases },
   about: { render: renderAbout, init: initAbout },
 };
@@ -33,7 +36,7 @@ if (legacySection && typeof history !== 'undefined') {
   history.replaceState(null, '', pageHref({ page, locale, caseId, hash: location.hash }));
 }
 
-// One document answers eight page/locale addresses, so page.html carries no canonical and
+// One document answers all page/locale addresses, so page.html carries no canonical and
 // no per-page description; they are written here for the address actually requested.
 // Every tag is updated in place, so a language switch or page link never duplicates one.
 function upsertHeadTag(tag, identity, attributes) {
@@ -102,6 +105,31 @@ if (location.hash) {
   const destination = document.getElementById(location.hash.slice(1));
   if (destination) requestAnimationFrame(() => destination.scrollIntoView({ behavior: 'instant' }));
 }
+function initProductNavigation() {
+  const products = document.querySelector('.product-navigation');
+  if (!products) return;
+  const summary = products.querySelector('summary');
+  const contextMenu = document.getElementById('menu');
+  summary.addEventListener('click', () => {
+    if (contextMenu?.getAttribute('aria-expanded') === 'true') contextMenu.click();
+  });
+  document.addEventListener('click', event => {
+    if (!products.contains(event.target)) products.open = false;
+  });
+  products.addEventListener('focusout', event => {
+    if (!products.contains(event.relatedTarget)) products.open = false;
+  });
+  products.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && products.open) {
+      event.preventDefault();
+      products.open = false;
+      summary.focus();
+    }
+  });
+  products.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { products.open = false; }));
+}
+initProductNavigation();
+
 export function initPageNavigation(pageName, navigation = getMessages().common.navigation, caseSections = null) {
   const page = resolvePage(pageName);
   // The work page's directory depends on the address: the overview lists itself, a case
@@ -122,6 +150,8 @@ export function initPageNavigation(pageName, navigation = getMessages().common.n
   const sections = {
     home: [['wally', navigation.wally], ['proof', navigation.proof], ['footer', navigation.about]],
     kip: [['process', navigation.process], ['architecture', navigation.architecture], ['advantages', navigation.advantages], ['proof', navigation.demo]],
+    ems: [['story', navigation.productStory], ['process', navigation.energyWorkflow], ['capabilities', navigation.capabilities], ['proof', navigation.demo]],
+    pvsim: [['story', navigation.productStory], ['process', navigation.solarWorkflow], ['capabilities', navigation.capabilities], ['proof', navigation.demo]],
     cases: (caseSections ?? ['cases-list']).map(id => [id, caseLabels[id]]),
     about: [['approach', navigation.approach], ['leadership', navigation.leadership], ['technical', navigation.technical]],
   }[page];

@@ -20,7 +20,7 @@ test('each supplied language has every semantic message key and array entry', ()
 });
 
 test('page links and language changes preserve page and section without choosing arbitrary resources', () => {
-  assert.deepEqual(SUPPORTED_PAGES, ['home', 'kip', 'cases', 'about']);
+  assert.deepEqual(SUPPORTED_PAGES, ['home', 'kip', 'ems', 'pvsim', 'cases', 'about']);
   for (const page of SUPPORTED_PAGES) {
     assert.equal(resolvePage(page), page);
     assert.equal(pageHref({ page, locale: 'en', hash: 'contact' }), `?page=${page}&lang=en#contact`);

@@ -39,7 +39,7 @@ for (const page of SUPPORTED_PAGES) {
       };
       // The bootstrap registers page functions but must not invoke them before
       // the translated shared shell has been populated.
-      const pageFunctions = Object.fromEntries(['Home', 'Kip', 'Cases', 'About'].flatMap(name =>
+      const pageFunctions = Object.fromEntries(['Home', 'Kip', 'Ems', 'Pvsim', 'Energy', 'Cases', 'About'].flatMap(name =>
         ['render', 'init'].map(prefix => [`${prefix}${name}`, () => { throw new Error('Page initialization must follow shell translation'); }])));
       vm.runInNewContext(shellBootstrap, {
         location: new URL(`https://example.test/page.html?page=${page}&lang=${locale}`),

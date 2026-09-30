@@ -24,12 +24,16 @@ const DESCRIPTION_LIMIT = Object.freeze({ 'zh-Hant': 80, en: 160 });
 const brandRoot = new URL('../../../public/brand/', import.meta.url);
 
 test('canonical addresses keep one stable form: page before language, bare root for the default page', () => {
-  assert.equal(combinations.length, 8);
+  assert.equal(combinations.length, 12);
   assert.deepEqual(combinations.map(pair => canonicalUrl(pair)), [
     'https://taistro.com.tw/',
     'https://taistro.com.tw/?page=home&lang=en',
     'https://taistro.com.tw/?page=kip&lang=zh-Hant',
     'https://taistro.com.tw/?page=kip&lang=en',
+    'https://taistro.com.tw/?page=ems&lang=zh-Hant',
+    'https://taistro.com.tw/?page=ems&lang=en',
+    'https://taistro.com.tw/?page=pvsim&lang=zh-Hant',
+    'https://taistro.com.tw/?page=pvsim&lang=en',
     'https://taistro.com.tw/?page=cases&lang=zh-Hant',
     'https://taistro.com.tw/?page=cases&lang=en',
     'https://taistro.com.tw/?page=about&lang=zh-Hant',
@@ -46,6 +50,10 @@ test('canonical addresses keep one stable form: page before language, bare root 
     'https://taistro.com.tw/?page=home&lang=en',
     'https://taistro.com.tw/?page=kip&lang=zh-Hant',
     'https://taistro.com.tw/?page=kip&lang=en',
+    'https://taistro.com.tw/?page=ems&lang=zh-Hant',
+    'https://taistro.com.tw/?page=ems&lang=en',
+    'https://taistro.com.tw/?page=pvsim&lang=zh-Hant',
+    'https://taistro.com.tw/?page=pvsim&lang=en',
     'https://taistro.com.tw/?page=cases&lang=zh-Hant',
     'https://taistro.com.tw/?page=cases&lang=en',
     'https://taistro.com.tw/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant',
@@ -149,7 +157,7 @@ test('every page and language resolves one absolute canonical, three alternates 
     assert.doesNotMatch(crawl.title, PREVIEW_WORDING, label);
     assert.deepEqual(crawl.og.localeAlternate, [locale === 'en' ? 'zh_TW' : 'en_US'], label);
   }
-  assert.equal(canonicals.size, 8);
+  assert.equal(canonicals.size, 12);
 });
 
 test('the published markup carries static home metadata and never a static canonical', () => {
@@ -205,7 +213,7 @@ test('robots.txt invites crawling and never blocks the release folder Googlebot 
   for (const line of directives) assert.doesNotMatch(line, /synaiq-release/);
 });
 
-test('the sitemap lists exactly the canonical addresses of the four pages and every published case', async () => {
+test('the sitemap lists exactly the canonical addresses of the six pages and every published case', async () => {
   const xml = await read('sitemap.xml');
   const decode = value => value.replaceAll('&amp;', '&');
   const entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, block]) => ({
@@ -232,7 +240,7 @@ const bootstrap = (() => {
   const source = readFileSync(new URL('./prototype.js', import.meta.url), 'utf8');
   return source.slice(source.indexOf('const query ='), source.indexOf('const sections ='));
 })();
-const pageFunctions = Object.fromEntries(['Home', 'Kip', 'Cases', 'About']
+const pageFunctions = Object.fromEntries(['Home', 'Kip', 'Ems', 'Pvsim', 'Energy', 'Cases', 'About']
   .flatMap(name => ['render', 'init'].map(prefix => [`${prefix}${name}`, () => ''])));
 
 /** Run the bootstrap against a head shim and hand back its metadata writer. */

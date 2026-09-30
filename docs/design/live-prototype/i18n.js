@@ -1,5 +1,7 @@
 import { zhHant as homeZh, en as homeEn } from './locale-home.js?v=20260922-cases-expansion';
 import { zhHant as kipZh, en as kipEn } from './locale-kip.js?v=20260922-cases-expansion';
+import { zhHant as emsZh, en as emsEn } from './locale-ems.js';
+import { zhHant as pvsimZh, en as pvsimEn } from './locale-pvsim.js';
 import { zhHant as casesZh, en as casesEn } from './locale-cases.js?v=20260922-cases-expansion';
 import { zhHant as aboutZh, en as aboutEn } from './locale-about.js?v=20260922-cases-expansion';
 import { zhHant as demoZh, en as demoEn } from './locale-demo.js?v=20260922-cases-expansion';
@@ -8,10 +10,10 @@ import { BRAND, PRODUCT_BRAND } from './brand.js';
 
 // Add a reviewed language bundle here; no language parameter is used as a file path.
 const catalog = {
-  'zh-Hant': { label: '繁體中文', shortLabel: 'ZH', dir: 'ltr', messages: { home: homeZh, kip: kipZh, cases: casesZh, about: aboutZh, demo: demoZh, common: commonZh } },
-  en: { label: 'English', shortLabel: 'EN', dir: 'ltr', messages: { home: homeEn, kip: kipEn, cases: casesEn, about: aboutEn, demo: demoEn, common: commonEn } },
+  'zh-Hant': { label: '繁體中文', shortLabel: 'ZH', dir: 'ltr', messages: { home: homeZh, kip: kipZh, ems: emsZh, pvsim: pvsimZh, cases: casesZh, about: aboutZh, demo: demoZh, common: commonZh } },
+  en: { label: 'English', shortLabel: 'EN', dir: 'ltr', messages: { home: homeEn, kip: kipEn, ems: emsEn, pvsim: pvsimEn, cases: casesEn, about: aboutEn, demo: demoEn, common: commonEn } },
 };
-export const SUPPORTED_PAGES = Object.freeze(['home', 'kip', 'cases', 'about']);
+export const SUPPORTED_PAGES = Object.freeze(['home', 'kip', 'ems', 'pvsim', 'cases', 'about']);
 export function resolvePage(value) { return SUPPORTED_PAGES.includes(value) ? value : 'home'; }
 export const DEFAULT_LOCALE = 'zh-Hant';
 export const SUPPORTED_LOCALES = Object.freeze(Object.entries(catalog).map(([code, entry]) => Object.freeze({ code, label: entry.label, shortLabel: entry.shortLabel, dir: entry.dir })));
