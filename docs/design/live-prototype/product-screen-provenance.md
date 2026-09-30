@@ -17,3 +17,18 @@
 | assets/pvsim-shading-demo.webp | 1600 × 896 | 640a64e6770f29e3ca746d074599a1099169835aefcc3e632b8297ef00cd9379 |
 | assets/pvsim-generation-demo.webp | 1600 × 574 | 7321e83833587b6fa61f584a2499bd96a3fbbe67e36f044b425a51ec5a6fbb91 |
 | assets/pvsim-wiring-demo.webp | 1438 × 944 | 7ce9a79f1546135a72d6e8cb2c31874a3a634033d5ff5525a235926a01b6d309 |
+
+## 2026-09-30 可操作的三維示範模型
+
+「01 三維場域與配置」採用上述同一示範案件中，原生檢視器已載入的 `preview.glb` 與 `panels.glb`，保留場域、周邊環境與模組的真實幾何關係。只讀取既有成果，未保存案件或送算。
+
+發布前移除所有節點／網格名稱、extras、generator 與其他中繼資料；兩份幾何以同一模組中心平移至局部原點，座標取毫米精度，不保留原座標原點。檔案不含外部 URI、影像紋理、帳密、案件 ID、案名或地理參考欄位。此處是示範模型的唯讀空間檢視，不執行工程計算。
+
+| 檔案 | 大小 | SHA-256 |
+|---|---|---|
+| assets/pvsim-site-demo.glb | 9,029,388 bytes | 91d1c82992070528f20b4bfb5169e56245ec272582351a0b419cdcd699e33e85 |
+| assets/pvsim-panels-demo.glb | 16,220 bytes | 1a2e345279f02af5b46eb09d58810bb56e43675b5d5e55b5975b01e6a84c0b5b |
+
+私人原始模型與來源紀錄留在忽略目錄 `out/pvsim-3d-source/`。重製指令為 `node scripts/prepare-pvsim-demo-model.mjs <原始模型目錄>`；腳本只接受本次無材質、無節點變換的三角網格格式，其他模型需重新檢查。原始模型不可直接加入公開白名單。
+
+檢視器沿用原生示範模型的表面與模組配色，使用固定的 Three.js 0.186.1；`vendor/pvsim-three.js` 由 `npm run build:pvsim-viewer` 產生，MIT 授權位於 `vendor/three-LICENSE.txt`。模組與模型均隨站發布，不依賴第三方 CDN、登入工作區或公開示範密碼。訪客點擊「啟用 3D 模型」才載入約 9 MB 幾何，失敗時保留原始截圖並允許重試。

@@ -1,0 +1,86 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {chromium} from 'playwright';
+import {createPreviewServer} from '../docs/design/live-prototype/share-preview.mjs';
+const folder='out/pvsim-3d-checks';await mkdir(folder,{recursive:true});
+const server=createPreviewServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const origin=`http://127.0.0.1:${server.address().port}`;
+const browser=await chromium.launch({channel:'chrome',headless:true});const results=[];
+const fingerprint=async locator=>{
+ await locator.scrollIntoViewIfNeeded();const b=await locator.boundingBox();
+ const screenshot=await locator.page().screenshot({clip:{x:b.x+6,y:b.y+6,width:b.width-12,height:b.height-12}});
+ return createHash('sha256').update(screenshot).digest('hex');
+};
+try{
+ for(const locale of ['zh-Hant','en'])for(const width of [320,390,835,1440]){
+  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[],requests=[];
+  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
+  const response=await page.goto(`${origin}/live-prototype/page.html?page=pvsim&lang=${locale}#proof`,{waitUntil:'networkidle'});assert.equal(response.status(),200);
+  const gallery=page.locator('[data-product-screens]'),start=page.locator('[data-pvsim-start]'),viewer=page.locator('[data-pvsim-viewer]');
+  await gallery.scrollIntoViewIfNeeded();assert.equal(requests.filter(url=>url.endsWith('.glb')).length,0);
+  await start.click();await viewer.waitFor({state:'visible',timeout:30000});
+  const canvas=viewer.locator('canvas');await canvas.scrollIntoViewIfNeeded();
+  assert.equal(requests.filter(url=>url.endsWith('.glb')).length,2);
+  const initial=await fingerprint(canvas);
+  await page.locator('[data-pvsim-action="in"]').click();assert.notEqual(await fingerprint(canvas),initial,'Zoom changes rendered geometry');
+  await page.locator('[data-pvsim-action="home"]').click();assert.equal(await fingerprint(canvas),initial,'Reset restores view');
+  await page.locator('[data-pvsim-action="top"]').click();assert.notEqual(await fingerprint(canvas),initial,'Top view changes projection');
+  await page.locator('[data-pvsim-action="home"]').click();
+  let box=await canvas.boundingBox();
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2+70,box.y+box.height/2+25,{steps:8});await page.mouse.up();
+  const rotated=await fingerprint(canvas);assert.notEqual(rotated,initial,'Drag rotates actual geometry');
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.wheel(0,-180);assert.notEqual(await fingerprint(canvas),rotated,'Wheel zoom works');
+  await canvas.focus();const beforePan=await fingerprint(canvas);await page.keyboard.press('ArrowRight');assert.notEqual(await fingerprint(canvas),beforePan,'Keyboard pan works');
+  await page.keyboard.press('Home');assert.equal(await fingerprint(canvas),initial);
+  const beforeRightPan=await fingerprint(canvas);box=await canvas.boundingBox();
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down({button:'right'});await page.mouse.move(box.x+box.width/2+35,box.y+box.height/2+15,{steps:5});await page.mouse.up({button:'right'});
+  assert.notEqual(await fingerprint(canvas),beforeRightPan,'Right-button pan works');
+  await page.locator('[data-pvsim-action="home"]').click();
+  await page.locator('[data-product-screen="1"]').click();assert.equal(await viewer.isVisible(),false);assert.equal(await gallery.locator('.product-screen-open').isVisible(),true);
+  await page.locator('[data-product-screen="0"]').click();assert.equal(await viewer.isVisible(),true);assert.equal(requests.filter(url=>url.endsWith('.glb')).length,2);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  await viewer.scrollIntoViewIfNeeded();await viewer.screenshot({path:`${folder}/${locale}-${width}.png`});
+  await page.locator('[data-pvsim-action="exit"]').click();assert.equal(await start.isVisible(),true);assert.equal(await gallery.locator('.product-screen-open').isVisible(),true);
+  await start.click();assert.equal(await viewer.isVisible(),true);assert.equal(requests.filter(url=>url.endsWith('.glb')).length,2);
+  assert.deepEqual(errors,[]);assert.ok(!requests.some(url=>url.includes('synaiq-ai.com')));
+  results.push({locale,width,status:'passed'});console.log(JSON.stringify(results.at(-1)));await context.close();
+ }
+ const touchContext=await browser.newContext({viewport:{width:390,height:1000},hasTouch:true,isMobile:true}),touchPage=await touchContext.newPage();
+ await touchPage.goto(`${origin}/live-prototype/page.html?page=pvsim&lang=zh-Hant#proof`);
+ await touchPage.locator('[data-pvsim-start]').click();await touchPage.locator('[data-pvsim-viewer]').waitFor({state:'visible'});
+ const touchCanvas=touchPage.locator('[data-pvsim-canvas] canvas');await touchCanvas.scrollIntoViewIfNeeded();
+ const session=await touchContext.newCDPSession(touchPage),touchBox=await touchCanvas.boundingBox();
+ const x=touchBox.x+touchBox.width/2,y=touchBox.y+touchBox.height/2;
+ const gesture=async points=>session.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:points});
+ const touchBefore=await fingerprint(touchCanvas);
+ await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:0}]});
+ await gesture([{x:x+60,y:y+20,id:0}]);await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ const touchRotated=await fingerprint(touchCanvas);assert.notEqual(touchRotated,touchBefore,'Single touch rotates');
+ await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x-30,y,id:0},{x:x+30,y,id:1}]});
+ await gesture([{x:x-65,y,id:0},{x:x+65,y,id:1}]);await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ const pinched=await fingerprint(touchCanvas);assert.notEqual(pinched,touchRotated,'Pinch zoom changes view');
+ await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x-30,y,id:0},{x:x+30,y,id:1}]});
+ await gesture([{x:x-10,y:y+30,id:0},{x:x+50,y:y+30,id:1}]);await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ assert.notEqual(await fingerprint(touchCanvas),pinched,'Two-finger pan changes view');await touchContext.close();results.push({scenario:'touch rotate pinch and pan',status:'passed'});
+ // A failed GLB must restore the picture, allow retry, and leave other gallery panels usable.
+ const context=await browser.newContext(),page=await context.newPage();
+ await page.route('**/*.glb',r=>r.fulfill({status:503,body:'Unavailable'}));
+ await page.goto(`${origin}/live-prototype/page.html?page=pvsim&lang=zh-Hant#proof`);
+ await page.locator('[data-pvsim-start]').click();await page.locator('[data-pvsim-status]').waitFor({state:'visible'});
+ assert.equal(await page.locator('.product-screen-open').isVisible(),true);
+ await page.locator('[data-product-screen="3"]').click();assert.match(await page.locator('[data-screen-title]').innerText(),/U 字型/);
+  await page.unroute('**/*.glb');
+  await page.locator('[data-product-screen="0"]').click();await page.locator('[data-pvsim-start]').click();
+  await page.locator('[data-pvsim-viewer]').waitFor({state:'visible'});
+  assert.equal(await page.locator('[data-pvsim-status]').isVisible(),false);
+ await context.close();results.push({scenario:'failed asset fallback and retry',status:'passed'});
+ const noGpuContext=await browser.newContext(),noGpu=await noGpuContext.newPage();
+ await noGpu.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return /webgl/.test(type)?null:original.call(this,type,...args);};});
+ await noGpu.goto(`${origin}/live-prototype/page.html?page=pvsim&lang=zh-Hant#proof`);
+ await noGpu.locator('[data-pvsim-start]').click();await noGpu.locator('[data-pvsim-status]').waitFor({state:'visible'});
+ assert.equal(await noGpu.locator('.product-screen-open').isVisible(),true);
+ await noGpuContext.close();results.push({scenario:'WebGL unavailable fallback',status:'passed'});
+ await writeFile(`${folder}/report.json`,JSON.stringify({at:new Date().toISOString(),status:'passed',results},null,2));
+}catch(error){await writeFile(`${folder}/failed-${Date.now()}.json`,JSON.stringify({results,error:error.stack},null,2));throw error;}
+finally{await browser.close();server.close();}

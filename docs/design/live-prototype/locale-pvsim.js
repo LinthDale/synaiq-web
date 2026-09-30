@@ -1,13 +1,20 @@
 export const zhHant = {
   screens: {
   "label": "從模型，到看得見的設計成果",
-  "note": "實際介面截圖 · 已去識別化 · 屋頂示範案例",
+  "note": "實際模型與介面 · 已去識別化 · 屋頂示範案例",
   "group": "PVsim 產品畫面",
   "enlarge": "放大查看原圖",
+  viewer: {
+    start: '啟用 3D 模型', loading: '正在載入 3D 模型…',
+    controls: '三維模型操作', canvas: '可旋轉、縮放與平移的 PVsim 示範模型',
+    in: '放大 ＋', out: '縮小 −', top: '俯視', home: '配置復位', site: '全場景', exit: '回到截圖',
+    help: '拖曳旋轉 · 右鍵平移 · 滾輪縮放；觸控：單指旋轉、雙指縮放與平移。鍵盤：方向鍵平移、＋／− 縮放、Home 復位。',
+    unavailable: '暫時無法開啟 3D 模型。可重試，或先查看原始截圖。',
+  },
   "items": [
     [
       "三維場域與配置",
-      "把場域模型、周邊環境與模組配置放在同一個三維視角裡核對。"
+      "啟用原始示範模型，透過旋轉、縮放、平移與俯視，把場域環境和模組配置放在同一個三維視角裡核對。"
     ],
     [
       "全年遮陰分布",
@@ -68,13 +75,20 @@ export const zhHant = {
 export const en = {
   screens: {
   "label": "From a model to visible design results",
-  "note": "Actual demo captures · De-identified · Rooftop example in Chinese",
+  "note": "Actual model and demo captures · De-identified · Rooftop example",
   "group": "PVsim product screens",
   "enlarge": "View full-size image",
+  viewer: {
+    start: 'Explore in 3D', loading: 'Loading 3D model…',
+    controls: '3D model controls', canvas: 'PVsim demo model with rotation, zoom and pan',
+    in: 'Zoom in ＋', out: 'Zoom out −', top: 'Top view', home: 'Reset layout', site: 'Whole site', exit: 'Back to image',
+    help: 'Drag to rotate · Right-drag to pan · Scroll to zoom. Touch: one finger to rotate, two to pinch and pan. Keyboard: arrows to pan, + / − to zoom, Home to reset.',
+    unavailable: 'The 3D model is unavailable right now. Try again or view the original image.',
+  },
   "items": [
     [
       "3D site and layout",
-      "Review the site model, surrounding environment and module placement in one 3D view."
+      "Explore the original demo model: rotate, zoom, pan or switch to a top view to review the site and module placement together."
     ],
     [
       "Annual shading distribution",

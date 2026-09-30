@@ -13,6 +13,8 @@ const runtimeFiles = [
   'demo-animation.js',
   'kip-design.js',
   'energy-design.js', 'energy-screens.js', 'locale-ems.js', 'locale-pvsim.js',
+  'pvsim-viewer.js', 'vendor/pvsim-three.js', 'vendor/three-LICENSE.txt',
+  'assets/pvsim-site-demo.glb', 'assets/pvsim-panels-demo.glb',
   'assets/ems-main-demo.webp', 'assets/ems-demand-demo.webp', 'assets/ems-storage-demo.webp',
   'assets/pvsim-model-demo.webp', 'assets/pvsim-shading-demo.webp', 'assets/pvsim-generation-demo.webp', 'assets/pvsim-wiring-demo.webp',
   'cases-design.js', 'about-design.js', 'ink-photo.js',
@@ -70,6 +72,7 @@ const contentTypes = Object.freeze({
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp',
+  '.glb': 'model/gltf-binary',
   '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml; charset=utf-8',
 });
 const securityHeaders = Object.freeze({
@@ -83,7 +86,7 @@ const securityHeaders = Object.freeze({
     "default-src 'none'", "script-src 'self' 'unsafe-inline'",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     'font-src https://fonts.gstatic.com', "img-src 'self' data: https://taistro.com.tw",
-    "connect-src 'none'", "frame-src 'self'", "frame-ancestors 'self'",
+    "connect-src 'self'", "frame-src 'self'", "frame-ancestors 'self'",
     "base-uri 'none'", "form-action 'none'", "object-src 'none'",
   ].join('; '),
 });

@@ -40,7 +40,7 @@ function fetchRaw(port, path, method = 'GET') {
 
 test('serves the review shell at both public entry points and resolves its relative dependencies', async t => {
   const { port } = await fixture(t);
-  assert.equal(PUBLIC_FILES.length, 84);
+  assert.equal(PUBLIC_FILES.length, 89);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
   for (const file of ['page-metadata.js', 'cases-data.js', 'robots.txt', 'sitemap.xml']) {
@@ -66,7 +66,7 @@ test('uses no-store, noindex, same-origin framing and a narrow content security 
   assert.equal(headers['x-content-type-options'], 'nosniff');
   assert.equal(headers['x-frame-options'], 'SAMEORIGIN');
   assert.equal(headers['referrer-policy'], 'no-referrer');
-  assert.match(headers['content-security-policy'], /connect-src 'none'/);
+  assert.match(headers['content-security-policy'], /connect-src 'self'/);
   assert.match(headers['content-security-policy'], /frame-ancestors 'self'/);
   assert.doesNotMatch(headers['content-security-policy'], /unsafe-eval|\*|https:;/);
   // The published robots.txt allows crawling; this loopback review server must not.

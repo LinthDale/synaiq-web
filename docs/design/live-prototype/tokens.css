@@ -1775,3 +1775,5 @@ html[lang='en'] .energy-opening h1 { font-size: clamp(36px, 3.5vw, 55px); }
 
 :root { --navigation-arrow-duration: 180ms; }
 .product-screen-view figcaption > a { text-underline-offset: 5px; }
+.pvsim-toolbar button { font: 400 13px/1.5 var(--body); color: #31442a; }
+.pvsim-help, .pvsim-status { font: 400 13px/1.7 var(--body); color: #515749; }
