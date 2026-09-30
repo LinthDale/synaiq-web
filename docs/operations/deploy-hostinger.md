@@ -19,13 +19,21 @@
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
-## 2026-09-30 去識別化產品畫面與 U 字型串接（待完成上架）
+## 2026-09-30 智慧方案小尺寸 tAistro A（待完成上架）
 
-最新來源 `7c690351b7e62a9a61dcb6c8e5bebaf1888179c8` 已推送 `origin/main`。新增 EMS 三張、PVsim 四張實際介面，已排除客戶／案場名稱、專案標頭、帳號及地理座標文字；PVsim 使用同一既有完成案件的模型、遮陰、月發電與 u-20 串接成果，選取一組 16 片的 U 字型往返串列顯示順序。智慧方案箭頭及底線改成雙筆觸手繪樣式，PVsim 敘事範圍擴為場域。沒有修改 DGX 案件、儲存設定或重新送算。
+最新來源 `811675f492ace998629395f9cf33039fcc44ff23` 已推送 `origin/main`。智慧方案／Solutions 旁的圖樣改用 tAistro Logo 原始 A 的兩筆 SVG 路徑，從 24 × 22px 縮為 11 × 10px；展開時旋轉 180 度，保留手繪底線與原有完整選單點擊範圍。此前去識別化產品畫面、場域敘事與 PVsim u-20 修改一併保留。
 
-最新發布包 `out/synaiq-release-20260930-u-screens/`：192 項設計測試通過、5 略過；封裝本機 28 組通過，涵蓋六頁中英文、390／1440px，及兩產品 320／835px 的圖片切換、放大、流程與語言切換。83 個檔案已完整上傳，但 stage 公開 HTTPS 檢查失敗，**尚未完成 staged／live 驗收，不是正式版本**。工具已恢復 solutions 入口，API audit 確認正式路由仍為 `460472c0bca83a297831a65bd1d023b75c13e5bcc489c6f8238f121a9a6f2bd7`。
+本次 192 項設計測試通過、5 略過；Chrome 實際渲染中英文 × 320／390／835／1440px 共 8 組導覽驗證通過，包括原始 A 路徑、11 × 10px 實際尺寸、至少 44px 高點擊範圍、鍵盤開合、三項產品連結與無水平溢出。證據：`out/small-a-design-tests.txt`、`out/small-a-navigation/report.json` 與同目錄桌面／手機截圖。
 
-Node（含 Windows 系統 CA）及 Windows curl/Schannel 均曾間歇遇到不受信任憑證；曾成功的正常 HTTPS 請求不代表信任問題已修復。沒有忽略憑證、安裝根憑證或改動信任設定。待可信網路恢復後，依本次 `RESUME.md` 及 `resume-release.mjs` 重新核對既有檔案與路由；不能重跑原 stage 的上傳，也不能跳過公開驗收。私有維護入口仍正確指向 solutions。
+正常 Windows curl/Schannel 複查官網仍回報 `SEC_E_UNTRUSTED_ROOT`（exit 60）；未停用憑證驗證、未更動信任設定，本次未上傳或切換正式入口。待可信連線恢復後，以最新來源及即時路由基準建立新 release，完成封裝、staged／live、快取與私有維護入口驗收。舊 `u-screens` 發布包不含此圖樣，不可當作最新來源啟用；其 `RESUME.md`／`resume-release.mjs` 僅保留作原嘗試證據。
+
+## 2026-09-30 去識別化產品畫面與 U 字型串接（先前未完成的發布嘗試）
+
+當次來源 `7c690351b7e62a9a61dcb6c8e5bebaf1888179c8` 已推送 `origin/main`。新增 EMS 三張、PVsim 四張實際介面，已排除客戶／案場名稱、專案標頭、帳號及地理座標文字；PVsim 使用同一既有完成案件的模型、遮陰、月發電與 u-20 串接成果，選取一組 16 片的 U 字型往返串列顯示順序。智慧方案箭頭及底線改成雙筆觸手繪樣式（箭頭後續由上節小 A 取代），PVsim 敘事範圍擴為場域。沒有修改 DGX 案件、儲存設定或重新送算。
+
+當次發布包 `out/synaiq-release-20260930-u-screens/`：192 項設計測試通過、5 略過；封裝本機 28 組通過，涵蓋六頁中英文、390／1440px，及兩產品 320／835px 的圖片切換、放大、流程與語言切換。83 個檔案已完整上傳，但 stage 公開 HTTPS 檢查失敗，**尚未完成 staged／live 驗收，不是正式版本**。工具已恢復 solutions 入口，API audit 確認正式路由仍為 `460472c0bca83a297831a65bd1d023b75c13e5bcc489c6f8238f121a9a6f2bd7`。
+
+Node（含 Windows 系統 CA）及 Windows curl/Schannel 均曾間歇遇到不受信任憑證；曾成功的正常 HTTPS 請求不代表信任問題已修復。沒有忽略憑證、安裝根憑證或改動信任設定。原 `RESUME.md` 及 `resume-release.mjs` 僅對應當次來源；後續已新增小 A，須按上節建立新發布包，不能重跑原 stage 的上傳或跳過公開驗收。私有維護入口仍指向 solutions。
 
 前兩次發布嘗試 `synaiq-release-20260930-product-screens`、`synaiq-release-20260930-screens-anon` 及最新包均保留原始失敗／復原證據，不覆寫或刪除。root 路由不開放這三包；前者含未去識別化素材，不可重新公開。當前主機共八個發布目錄，實際正式版仍以上方 solutions 路徑及即時 `.htaccess` 為準。
 
