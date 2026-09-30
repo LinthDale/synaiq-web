@@ -21,6 +21,16 @@
 
 ## 2026-09-30 PVsim 3D、去識別化產品畫面與小 A 導覽（已上線）
 
+### 同日 17:06 緊急入口修復
+
+手動上傳原始碼後，現行目錄的 `index.html` 被本機預覽外框覆蓋，正式首頁雖回應 200，卻顯示 Local preview 並載入不存在的 `preview.js`；`locale-common.js` 的素材路徑也回到未封裝的相對路徑。即時 `.htaccess` hash 未變，故障並非刪除舊失敗發布包造成。
+
+已備份被覆蓋檔案，以 `d618931` 的 `page.html` 封裝成正式 `page.html`／`index.html`，並修正 `locale-common.js` 的 release 素材路徑、核對 `locale-pvsim.js`。四檔以暫存上傳、原檔 hash 保護及 rename 替換，保留 EMS／PVsim 簡稱及月發電量文案；路由不變，兩網域快取清除均回 200。現行 release 因此次修復包含增量內容，舊完整發布 manifest 不再代表這四檔；此次精確 hash、修復前備份及驗證工具在 `out/hostinger-incident-20260930/`。正式 `page.html`／`index.html` SHA-256 為 `b48cc8cd7919be93bc525af11b12c93eaf84a256b1a51d624fc21fb101ab1a4d`。
+
+不可把 `docs/design/live-prototype/index.html` 上傳為正式入口。一般更新仍走新 release 流程；此次原目錄修復僅用於恢復被手動覆蓋的現行站。
+
+修復後已取得正式首頁正常 HTTPS 200，並以 Node 系統信任庫取得真實公開回應交給 Chrome，成功渲染繁中首頁、核對 EMS 導覽，未見 JS 錯誤或破圖。後續六頁矩陣受本機間歇性 `ERR_CERT_AUTHORITY_INVALID`／`DEPTH_ZERO_SELF_SIGNED_CERT` 阻擋，不能宣稱全頁驗收通過；未略過 TLS 或使用本機內容替代正式站。失敗補查紀錄在同目錄 `verification.log`。
+
 正式網址 https://taistro.com.tw/；發布目錄 `public_html/synaiq-release-20260930-pvsim-3d/`，完整封裝來源 `26a4a2d6327109b3ed664a7617934a73afac7498` 已推送 origin/main（功能提交 1b47767，後續提交為維護紀錄）。工具、manifest、逐檔 hash、路由備份與驗收證據在 `out/synaiq-release-20260930-pvsim-3d/`。
 
 本次正式發布 EMS 三張與 PVsim 四張去識別化畫面、PVsim u-20 的 U 字型串接、場域敘事及 11 × 10px tAistro A 導覽。「01 三維場域與配置」可啟用真實示範模型，操作旋轉、縮放、平移、俯視、配置復位與全場景；觸控及鍵盤均可操作。模型名稱與中繼資料已移除，轉成局部座標，使用者啟用後才下載同站模型，不需登入或連接 DGX。模型失敗可重試，也可保留截圖閱讀。

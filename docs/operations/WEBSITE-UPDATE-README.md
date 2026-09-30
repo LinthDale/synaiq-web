@@ -21,7 +21,7 @@
 
 2026-09-23 已切換主網址為 `https://taistro.com.tw/`；Hostinger API 的既有主機識別仍用 `domain: synaiq.com`。修改網域轉址後需清除 synaiq.com 與 taistro.com.tw 的 Hostinger CDN 快取，避免沿用先前的 301。CDN 會最佳化圖片，來源檔案仍需精確 hash 核對，CDN 圖片則另驗證比例與可見內容，不能直接要求壓縮後檔案 hash 等於來源。
 
-`index.html` 是本機預覽外框；正式入口由 `page.html` 封裝成發布包的 `index.html`。不能直接上傳本機外框，也不能上傳整個 repo 或 `out/`。
+`index.html` 是本機預覽外框；正式入口由 `page.html` 封裝成發布包的 `index.html`。不能直接上傳本機外框，也不能上傳整個 repo 或 `out/`。2026-09-30 曾因手動覆蓋此檔造成正式首頁顯示 Local preview；同日已原目錄緊急修復，保留 `d618931` 文案。當前包四個修復檔的 hash 以 `out/hostinger-incident-20260930/repair-result.json` 為準，詳見部署指南。
 
 ## 給 AI：授權與權限怎麼處理
 
