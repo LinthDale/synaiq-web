@@ -6,12 +6,12 @@
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260930-solutions/`，主網址為 https://taistro.com.tw/。**
+**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260930-pvsim-3d/`，主網址為 https://taistro.com.tw/。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260930-solutions/locale-about.js` |
+| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260930-pvsim-3d/locale-about.js` |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
@@ -19,15 +19,35 @@
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
-## 2026-09-30 PVsim 三維檢視器（待完成上架）
+## 2026-09-30 PVsim 3D、去識別化產品畫面與小 A 導覽（已上線）
 
-最新來源 `1b4776742e9113727ea4cf0b2d0cb5f8b19e493b` 已推送 `origin/main`。PVsim「01 三維場域與配置」新增真正可操作的原始示範模型：滑鼠／觸控旋轉、縮放、平移、俯視、配置復位、全場景，以及鍵盤操作。先點啟用才載入模型，切換圖頁保留視角，可返回截圖；模型讀取或 WebGL 失敗時保留截圖並可重試。模型名稱、中繼資料及原座標原點已移除，約 9 MB 幾何與固定 Three.js 模組均從官網自身載入，不在公開頁放帳密或連接 DGX。
+正式網址 https://taistro.com.tw/；發布目錄 `public_html/synaiq-release-20260930-pvsim-3d/`，完整封裝來源 `26a4a2d6327109b3ed664a7617934a73afac7498` 已推送 origin/main（功能提交 1b47767，後續提交為維護紀錄）。工具、manifest、逐檔 hash、路由備份與驗收證據在 `out/synaiq-release-20260930-pvsim-3d/`。
+
+本次正式發布 EMS 三張與 PVsim 四張去識別化畫面、PVsim u-20 的 U 字型串接、場域敘事及 11 × 10px tAistro A 導覽。「01 三維場域與配置」可啟用真實示範模型，操作旋轉、縮放、平移、俯視、配置復位與全場景；觸控及鍵盤均可操作。模型名稱與中繼資料已移除，轉成局部座標，使用者啟用後才下載同站模型，不需登入或連接 DGX。模型失敗可重試，也可保留截圖閱讀。
+
+194 項設計測試通過、5 略過；Astro 建置及 32 項 repo 測試通過；原始碼 3D 專用驗收 11 組通過。88 檔封裝（38,838,471 bytes），舊站 baseline 75 檔一致；本機封裝、staged、正式站各 28 組瀏覽器驗收全部通過，涵蓋六頁中英文、手機／桌面、圖片切換、導覽、3D 實際縮放及語言切換。staged 與正式站另各完成 4 組原生 Chrome HTTPS 驗收，包含 EMS／PVsim 的手機繁中與桌面英文及 3D 縮放／復位。啟用後 103 項公開檔案及入口核對通過；10 項快取檢查均有 no-cache；清快取後，前三次失敗發布包的 21 個網址均回應 410，未去識別化素材沒有重新開放。
+
+舊站 baseline 與 staged 公開檔案驗證使用 Node --use-system-ca 與預設憑證／主機名稱驗證。切換前 Node 再遇間歇性信任錯誤，兩次均在改動正式入口前停止；後續啟用及正式站檢查改用原生 Chrome 正常 HTTPS 讀取真實公開回應，並先以 HTML／3D 模型雜湊及不跟隨轉址測試確認傳輸。瀏覽器矩陣渲染這些真實公開回應，另以原生 Chrome 直接導覽補查。沒有略過 TLS、安裝根憑證、改動信任庫或使用本機內容替代公開驗收。所有失敗證據保留；本次成功不代表所有環境的憑證問題已根治。
+
+正式路由 SHA-256：`baf517aea5155e9820bb53c46751cc7397a49b5ab259ca3eb939f69cdfd1917b`；發布前路由：`460472c0bca83a297831a65bd1d023b75c13e5bcc489c6f8238f121a9a6f2bd7`。回退前確認即時路由仍為本次已知值，再執行 `node --use-system-ca out/synaiq-release-20260930-pvsim-3d/release.mjs rollback` 恢復 solutions；私有維護入口另按 guide-before.txt 還原並核對現值。主機私有維護入口已同步，公開網址仍為 410；新 SHA-256：`8c0341c35b4a15cd9422cec6b150374035933268ef66dab91711b9bedabe6cc1`。本次未刪除歷史檔案，主機保留六個正式歷史／現行版本與三個失敗發布包，共九個 release 目錄。
+
+Chrome 取得的既有案例照片由 CDN 轉為 WebP，tokyo-5、tainan-tech-forum-2026-cover、tainan-tech-forum-2026-panel 的平均畫素差異分別為 5.2616、3.1526、4.0454，超過原門檻，導致兩次驗收在入口切換前停止。已一次比對全部 46 張公開圖片，並逐張目視確認上述三張原圖與 WebP 的內容及構圖一致。僅對已核對來源與回應的精確 SHA-256 配對放行，沒有放寬其他圖片或未來 CDN 變體的門檻；證據為 cdn-image-comparison.json 與 cdn-images-visual-reviewed.json。
+
+原有 Wally PNG 的瀏覽器回應也由 CDN 轉成 WebP，尺寸仍為 696 × 870，與發布前封存畫素的平均差異 1.6130，通過原本一般圖片門檻 3；參見 wally-cdn-comparison.json。此格式差異亦曾在改入口前觸發停止，未改動原圖或舊站資料。
+
+切換後發現已撤下的 screens-anon 圖片仍命中 CDN 舊快取，已依 Hostinger 官方 Hosting Cache API 清除 synaiq.com 與 taistro.com.tw 的快取，兩次均回 200；隨後原生 Chrome 直接導覽確認 21 個舊網址全部 410（withdrawn-after.json）。私有維護說明更新後，原生 Chrome 曾實際確認其網址 410，後續重驗及 Codex 內建瀏覽器又遇 ERR_CERT_AUTHORITY_INVALID。已保存成功輸出的人工補充紀錄 guide-public-native-observation.json 及後續失敗 guide-confirm-later-failures.json；最終以新的唯讀 API 再確認維護檔與正式路由雜湊未變。guide-clarified.json 明確標示此證據組合，沒有將失敗重驗標成通過。本機間歇性信任問題仍未根治。
+
+## 2026-09-30 PVsim 三維檢視器（前次準備與阻擋紀錄，已由上節完成發布）
+
+以下保留當時的準備與阻擋狀態；目前正式版本及驗收結果以上節為準。
+
+當次來源 `1b4776742e9113727ea4cf0b2d0cb5f8b19e493b` 已推送 `origin/main`。PVsim「01 三維場域與配置」新增真正可操作的原始示範模型：滑鼠／觸控旋轉、縮放、平移、俯視、配置復位、全場景，以及鍵盤操作。先點啟用才載入模型，切換圖頁保留視角，可返回截圖；模型讀取或 WebGL 失敗時保留截圖並可重試。模型名稱、中繼資料及原座標原點已移除，約 9 MB 幾何與固定 Three.js 模組均從官網自身載入，不在公開頁放帳密或連接 DGX。
 
 驗證：194 項設計測試通過、5 略過；Astro 建置及 32 項 repo 測試通過。`npm run test:pvsim-viewer` 11 組通過，包含中英文 × 320／390／835／1440px、真實畫面隨旋轉／縮放／平移改變、復位、選圖保留、延後載入，以及雙指操作、載入失敗重試與無 WebGL 備援。證據在 `out/pvsim-3d-checks/`、`out/pvsim-3d-design-tests.txt`、`out/pvsim-3d-repo-tests.txt`；模型來源與 hash 見 [產品畫面紀錄](../design/live-prototype/product-screen-provenance.md)。
 
 新工具位於 `out/synaiq-release-20260930-pvsim-3d/`，預期發布 88 檔。2026-09-30T07:17:53Z 的 Hostinger API audit 確認仍為 solutions 及原路由 hash `460472c0bca83a297831a65bd1d023b75c13e5bcc489c6f8238f121a9a6f2bd7`；雖然一次 root HTTPS HEAD 返回 200，隨後 baseline GET 再度因 Windows curl/Schannel `SEC_E_UNTRUSTED_ROOT`（exit 60）失敗。**本次沒有上傳、切換路由或更新主機維護入口，不能把單次 200 視為信任已修復。** 待可信連線恢復，依該目錄 RESUME.md 重查基準並繼續；前述三個舊失敗包與最新工具都保留。
 
-## 2026-09-30 智慧方案小尺寸 tAistro A（已併入最新待發布來源）
+## 2026-09-30 智慧方案小尺寸 tAistro A（已併入本次正式版本）
 
 當次來源 `811675f492ace998629395f9cf33039fcc44ff23` 已推送 `origin/main`。智慧方案／Solutions 旁的圖樣改用 tAistro Logo 原始 A 的兩筆 SVG 路徑，從 24 × 22px 縮為 11 × 10px；展開時旋轉 180 度，保留手繪底線與原有完整選單點擊範圍。此前去識別化產品畫面、場域敘事與 PVsim u-20 修改一併保留。
 

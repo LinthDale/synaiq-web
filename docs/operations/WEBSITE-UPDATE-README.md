@@ -11,13 +11,13 @@
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
 | 驗收網址 | https://taistro.com.tw/，六頁的 `?page=home/kip/ems/pvsim/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260930-solutions/`；本次最終切換由 `release.mjs` 完成，供讀取參考，不可原地重跑新發布 |
+| 本機發布工具與證據 | `out/synaiq-release-20260930-pvsim-3d/`；本次最終切換由 `release.mjs` 完成，供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
 **Git push 不會自動部署官網。正式站來源是 live-prototype，不是 Astro `dist/`。**
 
-2026-09-30 待發布更新：去識別化 EMS／PVsim 畫面、PVsim u-20（U 字型）串接、11 × 10px 的 tAistro A 導覽，以及「01 三維場域與配置」真正可操作的 3D 模型；最新來源 `1b47767` 已 push。`out/synaiq-release-20260930-pvsim-3d/` 已準備新發布工具，但 baseline 再次遇 HTTPS 憑證信任錯誤，尚未封裝、上傳或切入口。**上述更新尚未上線，現行目錄仍見上表。** 接續先讀新目錄 `RESUME.md`，正常信任連線恢復後重查即時路由、完成 baseline 與後續驗收。先前已上傳的 u-screens 不含小 A／3D，不可當最新版啟用或覆寫，亦不能略過憑證驗證。
+2026-09-30 已完成發布：去識別化 EMS／PVsim 畫面、PVsim U 字型串接、11 × 10px tAistro A 導覽，以及真正可操作的 PVsim 3D 模型。正式目錄為 public_html/synaiq-release-20260930-pvsim-3d/，來源 26a4a2d6327109b3ed664a7617934a73afac7498；88 檔、本機／staged／正式各 28 組驗收，另各 4 組原生 HTTPS staged／live 補查通過。詳細回退 hash 與紀錄見部署指南；保留所有先前失敗證據，不啟用舊產品截圖包。
 
 2026-09-23 已切換主網址為 `https://taistro.com.tw/`；Hostinger API 的既有主機識別仍用 `domain: synaiq.com`。修改網域轉址後需清除 synaiq.com 與 taistro.com.tw 的 Hostinger CDN 快取，避免沿用先前的 301。CDN 會最佳化圖片，來源檔案仍需精確 hash 核對，CDN 圖片則另驗證比例與可見內容，不能直接要求壓縮後檔案 hash 等於來源。
 
@@ -49,7 +49,7 @@ git remote -v
 git diff --stat
 git diff --check
 Test-Path .env.hostinger.local
-Test-Path out/synaiq-release-20260930-solutions/release.mjs
+Test-Path out/synaiq-release-20260930-pvsim-3d/release.mjs
 ```
 
 不要列印環境檔內容。依 `package.json` 安裝 Node／依賴；缺少 `node_modules` 才需要 `npm ci`。瀏覽器驗證使用 Playwright 與已安裝的 Chrome（`channel: 'chrome'`）。
@@ -154,7 +154,7 @@ node "$releaseDir/update-guide.mjs"
 
 ## 主機版本保留與歸檔
 
-2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成，當時保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。2026-09-30 新增正式版 `synaiq-release-20260930-kip-name`，同日再新增 `synaiq-release-20260930-solutions`，本次未執行刪除，暫保留五版；超出三版保留目標的歷史版本待另依下列流程歸檔。
+2026-09-29 使用者核准採用「現行版＋最近兩個正式版本」保留規則，首次清理已完成，當時保留 `synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`。更早 13 包已完成下載、ZIP 逐檔 SHA-256 核對、保留版本相依檢查及刪前遠端內容重驗，才從主機移除。2026-09-30 依序新增正式版 `synaiq-release-20260930-kip-name`、`synaiq-release-20260930-solutions` 與 `synaiq-release-20260930-pvsim-3d`。當日均未刪除歷史版本，合計保留六個正式歷史／現行版本，另保留三個未公開的失敗發布包；超出三版保留目標的歷史版本待另依下列流程歸檔。
 
 - 離線備份與清理證據：`out/hostinger-cleanup-20260929/`；`releases-backup.zip`、`manifest.json`、`RESTORE.md`。這些檔案未進 Git，也尚未複製至其他備份服務，需由維護者保管。
 - 後續歸檔須先確認真正發布順序、即時路由與所有保留版本的素材依賴；不能只看資料夾日期。未有可還原備份與逐檔校驗的版本不得刪除。保留原始發布 manifest、路由與驗證證據。
