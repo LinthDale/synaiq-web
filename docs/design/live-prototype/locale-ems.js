@@ -1,10 +1,30 @@
 // Product direction confirmed by the owner; examples describe a demo, not a live site.
 export const zhHant = {
+  screens: {
+  "label": "來自示範環境的產品畫面",
+  "note": "實際介面截圖 · 畫面數值為示意資料",
+  "group": "EMS 產品畫面",
+  "enlarge": "放大查看原圖",
+  "items": [
+    [
+      "能源總覽",
+      "從電網、太陽能、儲能到廠區負載，同一個畫面掌握能源流向與用電趨勢。"
+    ],
+    [
+      "需量管理",
+      "把用電趨勢與契約容量放在一起，查看尖峰時段與需量管理的判讀依據。"
+    ],
+    [
+      "儲能管理",
+      "查看儲能狀態、充放電安排與運轉資訊，讓調度討論回到具體介面。"
+    ]
+  ]
+},
   productLabel: 'EMS 能源管理系統',
   title: ['看見用電，', '理解變化，', '把能源管起來。'],
   intro: '一個場域的能源，不只是一張電費單。從即時監控、需量管理到儲能調度，Synaiq EMS 以完整的能源管理流程為目標，讓每一次判斷，都能回到現場資料。',
   status: '示範環境', cta: '看看管理流程',
-  sceneLabel: '從現場，走向全局', sceneNote: '能源管理流程示意',
+  sceneLabel: '從現場，走向全局', sceneNote: '示範環境實際介面',
   sceneNodes: ['現場設備', '用電趨勢', '管理決策'],
   storyLabel: '先從一個工作日說起',
   storyTitle: ['電表一直在走，', '問題卻不只一個。'],
@@ -43,11 +63,31 @@ export const zhHant = {
 };
 
 export const en = {
+  screens: {
+  "label": "Inside the demo environment",
+  "note": "Actual interface captures · Sample data",
+  "group": "EMS product screens",
+  "enlarge": "View full-size image",
+  "items": [
+    [
+      "Energy overview",
+      "Review grid, solar, storage and site load together, with energy composition and demand trends."
+    ],
+    [
+      "Demand management",
+      "Read demand trends alongside contracted capacity to identify the periods that need attention."
+    ],
+    [
+      "Storage management",
+      "Review storage state, charge and discharge schedules, and operating information."
+    ]
+  ]
+},
   productLabel: 'EMS · Energy Management System',
   title: ['See the energy.', 'Understand the change.', 'Manage the whole site.'],
   intro: 'A site’s energy story goes beyond its electricity bill. From live monitoring and demand management to storage dispatch, Synaiq EMS is designed around a complete management cycle, with site data behind each decision.',
   status: 'Demo environment', cta: 'Explore the workflow',
-  sceneLabel: 'From equipment to the whole site', sceneNote: 'Energy management illustration',
+  sceneLabel: 'From equipment to the whole site', sceneNote: 'Actual demo interface',
   sceneNodes: ['Site equipment', 'Energy trends', 'Management decisions'],
   storyLabel: 'Start with an ordinary workday',
   storyTitle: ['The meter keeps running.', 'So do the questions.'],

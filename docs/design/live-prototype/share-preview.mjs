@@ -12,7 +12,9 @@ const runtimeFiles = [
   'home-design.js',
   'demo-animation.js',
   'kip-design.js',
-  'energy-design.js', 'locale-ems.js', 'locale-pvsim.js',
+  'energy-design.js', 'energy-screens.js', 'locale-ems.js', 'locale-pvsim.js',
+  'assets/ems-main-demo.webp', 'assets/ems-demand-demo.webp', 'assets/ems-storage-demo.webp',
+  'assets/pvsim-model-demo.webp', 'assets/pvsim-shading-demo.webp', 'assets/pvsim-generation-demo.webp', 'assets/pvsim-wiring-demo.webp',
   'cases-design.js', 'about-design.js', 'ink-photo.js',
   'i18n.js', 'page-metadata.js', 'cases-data.js', 'brand.js', 'shared-design.js', 'preview.js',
   // Published crawl files. The release packaging ships them; site routing serves them from

@@ -492,10 +492,13 @@ body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navi
   content: "";
   position: absolute;
   inset: auto 0 0;
-  height: 2px;
+  height: 5px;
   background: #64754f;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M2 3Q32 1 60 3T118 2M7 5Q51 3 104 4' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
-.product-navigation[open] .product-navigation-chevron { transform: rotate(180deg); }
+.product-navigation-chevron { width: 24px; height: 22px; flex: 0 0 24px; transform: rotate(-4deg); transition: transform var(--navigation-arrow-duration) ease; }
+.product-navigation[open] .product-navigation-chevron { transform: rotate(176deg); }
+@media (prefers-reduced-motion: reduce) { .product-navigation-chevron { transition: none; } }
 .product-navigation-links {
   position: absolute;
   top: 100%;
@@ -3531,7 +3534,6 @@ body[data-page="kip"] .kip-capability-list dd {
 .energy-status::before { content: ''; width: 6px; height: 6px; background: #877343; border-radius: 50%; }
 .energy-scene { margin: 0; position: relative; padding: 24px 22px 28px; background: #faf8f0; border: 1px solid #b5b0a67a; box-shadow: 8px 10px 0 #dbd7ca55, 0 22px 38px #2828250d; transform: rotate(-2deg); }
 .energy-scene-top, .energy-workbook-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid #b5b0a66b; }
-.energy-drawing { width: 100%; height: auto; display: block; }
 .energy-scene figcaption { text-align: center; margin: -4px 0 22px; }
 .energy-scene-nodes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; margin: 0; gap: 10px; }
 .energy-scene-nodes li { padding: 12px 4px 0; border-top: 1px solid #a4a58f; text-align: center; }
@@ -3567,9 +3569,8 @@ body[data-page="kip"] .kip-capability-list dd {
 .energy-stage-buttons button[aria-pressed='true'] { border-bottom-color: #687d66; background: #e7eadf; }
 .energy-stage-buttons button:hover { background: #e7eadf80; }
 .energy-stage-buttons button:focus-visible { outline: 2px solid #687d66; outline-offset: 2px; }
-.energy-stage-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 30px; padding: 30px 38px 40px; min-height: 370px; }
+.energy-stage-layout { display: grid; grid-template-columns: minmax(180px, .6fr) 1.4fr; align-items: center; gap: 30px; padding: 30px 38px 40px; min-height: 280px; }
 .energy-stage-art { min-width: 0; }
-.energy-stage-art .energy-drawing { max-height: 270px; }
 .energy-progress { display: flex; padding: 0 18px; margin: 0; list-style: none; justify-content: space-between; gap: 8px; }
 .energy-progress li { display: grid; place-items: center; border: 1px solid #c0c1b0; border-radius: 50%; width: 32px; height: 32px; }
 .energy-progress li.is-active { background: #65795f; border-color: #65795f; }
@@ -3606,7 +3607,32 @@ body[data-page="kip"] .kip-capability-list dd {
   .energy-stage-buttons { padding: 0 12px; gap: 4px; }
   .energy-stage-buttons button { padding: 14px 6px; }
   .energy-stage-layout { grid-template-columns: 1fr; padding: 18px 20px 28px; gap: 30px; min-height: 0; }
-  .energy-stage-art .energy-drawing { max-height: 220px; }
   .energy-demo-note { padding: 20px; }
   .energy-external { align-items: flex-start; flex-direction: column; gap: 14px; }
+}
+/* Captured product screens sit on the same paper as the story, with a pencilled edge. */
+.energy-scene-screen { display: block; margin: 20px -8px 24px; }
+.energy-scene-screen img { display: block; width: 100%; height: auto; border-radius: 3px; box-shadow: 0 8px 22px #25292118; }
+.energy-scene::after { content: ''; position: absolute; inset: 7px -5px -5px 6px; border: 1px solid #81876a88; border-radius: 1% 2% 1% 2%; transform: rotate(.7deg); pointer-events: none; }
+.product-screens { margin-bottom: 62px; position: relative; }
+.product-screens-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.product-screen-select { display: flex; flex-wrap: wrap; gap: 12px 30px; margin-bottom: 22px; }
+.product-screen-select button { min-height: 44px; position: relative; display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 8px 0; cursor: pointer; }
+.product-screen-select button::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: #63744f; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 7' preserveAspectRatio='none'%3E%3Cpath d='M2 4Q60 1 100 3T158 2M8 6Q77 4 148 5' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat; opacity: 0; }
+.product-screen-select button[aria-pressed='true']::after { opacity: 1; }
+.product-screen-select button:focus-visible, .product-screen-open:focus-visible { outline: 2px solid #63744f; outline-offset: 5px; }
+.product-screen-view { margin: 0; }
+.product-screen-open { display: grid; place-items: center; background: #eceee9; border: 1px solid #b4b6a7; border-radius: 4px; padding: 12px; box-shadow: 6px 8px 0 #d5d8cc66; min-height: 320px; }
+.product-screen-open img { display: block; width: 100%; height: auto; max-height: 760px; object-fit: contain; }
+.product-screen-view figcaption { display: flex; gap: 24px; align-items: baseline; justify-content: space-between; margin: 26px 0 0; }
+.product-screen-view figcaption > div { max-width: 760px; }
+.product-screen-view figcaption p { margin: 8px 0 0; }
+.product-screen-view figcaption > a { white-space: nowrap;  }
+@media (max-width: 639px) {
+  .product-screens { margin-bottom: 42px; }
+  .product-screen-select { gap: 8px 24px; }
+  .product-screen-open { min-height: 0; padding: 5px; }
+  .product-screen-view figcaption { display: block; margin-top: 22px; }
+  .product-screen-view figcaption > a { display: inline-flex; align-items: center; min-height: 44px; margin-top: 8px; }
+  .energy-progress { padding: 0; }
 }

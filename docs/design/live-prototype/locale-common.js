@@ -58,7 +58,7 @@ export const zhHant = {
     "home": "散落的企業文件，變成隨問隨答的知識中樞。從一個問題開始，每個答案，都有出處可以追溯。",
     "kip": "問得到、答得準、接得上。把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。",
     "ems": "從即時監控、需量管理到儲能調度，探索 Synaiq EMS 的完整能源管理流程與示範情境。",
-    "pvsim": "從屋面建模、模組配置到遮陰、發電評估與串接檢核，探索 Synaiq PVsim 的光電設計流程與示範情境。",
+    "pvsim": "從場域建模、模組配置到遮陰、發電評估與串接檢核，探索 Synaiq PVsim 的光電設計流程與示範情境。",
     "cases": "讓 AI 走進現場，讓對話跨越語言。科技的價值，在相遇時發生。",
     "about": "讓科技充滿溫度，讓 AI 走入生活。我們是星洋智能科技，把 AI 系統整合、知識管理與數位人技術，做成讓人願意使用的日常工具。"
   },
@@ -223,7 +223,7 @@ export const en = {
     "home": "Scattered company documents become a knowledge hub you can ask. Start with a question. Every answer has a source you can trace.",
     "kip": "Ask naturally. Answer precisely. Stay connected. Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
     "ems": "Explore the Synaiq EMS demo workflow: live monitoring, demand management, storage dispatch, event tracking and management review.",
-    "pvsim": "Explore the Synaiq PVsim demo workflow: roof modeling, module layout, shading and generation assessment, and electrical string checks.",
+    "pvsim": "Explore the Synaiq PVsim demo workflow: site modeling, module layout, shading and generation assessment, and electrical string checks.",
     "cases": "AI in the field. Conversations beyond language. Technology finds meaning when people connect.",
     "about": "Technology with warmth. AI for everyday life. tAistro brings AI integration, knowledge management and digital humans together in tools people want to use."
   },

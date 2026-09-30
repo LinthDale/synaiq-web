@@ -15,6 +15,7 @@
 | 首頁文字、CEO quote | [locale-home.js](locale-home.js)；搜尋 `ceo:`，中英文分別修改 |
 | KIP 文字／共用導覽、優勢、聯絡、頁尾 | [locale-kip.js](locale-kip.js)／[locale-common.js](locale-common.js) |
 | EMS／PVsim 敘事頁 | `energy-design.js` 共用版型與六步互動示意；`locale-ems.js`／`locale-pvsim.js` 維護中英文產品故事、流程、核心能力、示範說明與聯絡文案；外部示範入口位於頁面後段，均需帳號 |
+| EMS／PVsim 實際介面截圖 | `energy-screens.js` 維護畫面清單、鍵盤可操作的切換及原圖連結；各 locale 的 `screens` 維護中英圖說。素材來源及 hash 見 [產品畫面紀錄](product-screen-provenance.md)。截圖是示範環境，不是客戶上線實績；PVsim 以場域設計為主軸，屋頂只是本次示範案例。 |
 | 智慧方案／Solutions 產品選單 | `locale-common.js` 的 `navigation.products` 改標籤；`page.html` 維護導覽及頁尾的 Synaiq KIP／EMS／PVsim 連結，`prototype.js` 處理收合與鍵盤操作；三個產品皆連至站內介紹頁 |
 | 實績總覽文字、各案例故事與圖說 | [locale-cases.js](locale-cases.js) 的 `overview`／`tags`／`cases.<識別碼>`，中英同步 |
 | 案例日期、排序、精選、照片路徑、封面取景與報導網址 | [cases-data.js](cases-data.js)；版型在 [cases-design.js](cases-design.js)，不為單一案例改版型 |

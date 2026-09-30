@@ -13,7 +13,11 @@ for (const [product, render, destination] of [
     for (const id of ['story', 'process', 'capabilities', 'proof', 'contact']) assert.ok(html.includes(`id="${id}"`));
     assert.equal((html.match(/<h1 /g) ?? []).length, 1);
     assert.equal((html.match(/data-energy-step=/g) ?? []).length, 6);
-    assert.equal((html.match(/aria-pressed="true"/g) ?? []).length, 1);
+    assert.equal((html.match(/aria-pressed="true"/g) ?? []).length, 2);
+    assert.equal((html.match(/data-product-screen=/g) ?? []).length, product === 'ems' ? 3 : 4);
+    assert.ok(html.includes(m.screens.note));
+    assert.ok(html.includes('class="product-screen-open"'));
+    assert.ok(html.includes('data-screen-enlarge'));
     assert.ok(html.includes(m.demoNote));
     assert.ok(html.includes(m.status));
     assert.ok(html.indexOf(destination) > html.indexOf('id="proof"'));
