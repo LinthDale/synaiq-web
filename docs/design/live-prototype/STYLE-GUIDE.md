@@ -311,7 +311,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 | 第一段側欄最近問題、上方路徑、搜尋中提示 | 最外層 `warrantyTopic`、`breadcrumb`、`thinking`；`warrantyTopic` 是保留的舊欄位名，目前內容是採購筆電申請，不是保固問題 |
 | 第一段引用檔名與「查看原文」 | 最外層 `citationFilename`、`citationPage`；`citationPage` 是保留的舊欄位名，目前顯示查看原文，不是頁碼 |
 | 展開的引用原文 | 最外層 `sourceLabel`、`sourceTitle`、`sourceHeading`、`sourceNote`、`sourceScribble`（手繪圈註）；原文的標記段落共用 `answerHighlight` |
-| 寄出／Send、右上智慧知識平台／Knowledge Platform、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locale-demo.js`，不要把圖示字元加回 `send` |
+| 寄出／Send、右上知識智慧平台／Knowledge Platform、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locale-demo.js`，不要把圖示字元加回 `send` |
 | 最後一幕知識中心的文件列表 | 最外層 `tableRows`；第一筆檔名需與 `citationFilename` 相同 |
 | 第一段下方 01／02／03 的步驟文字 | 最外層 `chapters`；不是 `booth` 裡的章節 |
 | 三段片名、說明 | `booth.titles`、`booth.descriptions`，依知識問答／自然語言找圖／以圖搜圖排序 |
@@ -330,7 +330,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 | 畫面上的字 | 在 `tokens.css` 搜尋 |
 |---|---|
-| 上排右側智慧知識平台／Knowledge Platform | `.film-wordmark-label`；左側仍使用品牌原版 SynaiQ，KIP 為獨立字標 |
+| 上排右側知識智慧平台／Knowledge Platform | `.film-wordmark-label`；左側仍使用品牌原版 SynaiQ，KIP 為獨立字標 |
 | 左側最近問題／知識中心 | `.film-sidebar`／`.film-sidebar > button` |
 | 手機對話紀錄／收合 | `.film-mobilebar button`／`.film-sidebar-heading button` |
 | 寄出文字／手繪筆 | `.film-input`／`.film-send`；筆寬 `--demo-send-pen-width` |
@@ -345,7 +345,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 ### 紙質 Demo 的維護位置
 
-2026-09-11 核准樣稿：黑金外部框架不變；原版 SynaiQ 在左上，KIP 字標與產品名稱在右上（當時為智慧知識搜尋，現已更名為智慧知識平台／Knowledge Platform）。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
+2026-09-11 核准樣稿：黑金外部框架不變；原版 SynaiQ 在左上，KIP 字標與產品名稱在右上（當時為智慧知識搜尋，現已更名為知識智慧平台／Knowledge Platform）。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
 
 | 調整項目 | 位置 |
 |---|---|

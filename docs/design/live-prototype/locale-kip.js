@@ -2,7 +2,7 @@
 import { zhHant as demoZh, en as demoEn } from './locale-demo.js';
 export const zhHant = {
   eyebrow: 'Synaiq KIP',
-  productLabel: 'KIP 智慧知識平台',
+  productLabel: 'KIP 知識智慧平台',
   title: ['問得到、', '答得準、', '接得上。'],
   intro: '把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。',
   cta: '預約導入評估',
