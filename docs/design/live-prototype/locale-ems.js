@@ -2,7 +2,7 @@
 export const zhHant = {
   screens: {
   "label": "來自示範環境的產品畫面",
-  "note": "實際介面截圖 · 畫面數值為示意資料",
+  "note": "實際介面截圖 · 已去識別化 · 示意資料",
   "group": "EMS 產品畫面",
   "enlarge": "放大查看原圖",
   "items": [
@@ -65,7 +65,7 @@ export const zhHant = {
 export const en = {
   screens: {
   "label": "Inside the demo environment",
-  "note": "Actual interface captures · Sample data",
+  "note": "Actual interface captures · De-identified · Sample data",
   "group": "EMS product screens",
   "enlarge": "View full-size image",
   "items": [

@@ -1,7 +1,7 @@
 export const zhHant = {
   screens: {
   "label": "從模型，到看得見的設計成果",
-  "note": "示範工作區實際截圖 · 本組畫面為屋頂案例",
+  "note": "實際介面截圖 · 已去識別化 · 屋頂示範案例",
   "group": "PVsim 產品畫面",
   "enlarge": "放大查看原圖",
   "items": [
@@ -68,7 +68,7 @@ export const zhHant = {
 export const en = {
   screens: {
   "label": "From a model to visible design results",
-  "note": "Actual demo workspace captures · Rooftop example in Chinese",
+  "note": "Actual demo captures · De-identified · Rooftop example in Chinese",
   "group": "PVsim product screens",
   "enlarge": "View full-size image",
   "items": [
