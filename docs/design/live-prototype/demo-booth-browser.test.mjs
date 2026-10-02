@@ -21,7 +21,7 @@ test('cinema booth switches all three animations responsively with one active sc
         try {
           // These are behavior checks; visual review separately loads the actual fonts.
           await context.route('https://**/*', route => route.abort());
-          await context.route('**/tokens.css', route => route.fulfill({ contentType: 'text/css', body: `${css}\n[data-demo-animation] {${fast} --demo-play-count:1;}` }));
+          await context.route('**/tokens.css*', route => route.fulfill({ contentType: 'text/css', body: `${css}\n[data-demo-animation] {${fast} --demo-play-count:1;}` }));
           const page = await context.newPage();
           const errors = [], requests = [];
           page.on('pageerror', error => errors.push(error.message));
@@ -83,7 +83,7 @@ test('cinema booth switches all three animations responsively with one active sc
       const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
       try {
         await context.route('https://**/*', route => route.abort());
-        await context.route('**/tokens.css', route => route.fulfill({ contentType:'text/css', body:`${css}\n[data-demo-animation] {${fast} --demo-source-hold:1.5s!important; --demo-play-count:1;}` }));
+        await context.route('**/tokens.css*', route => route.fulfill({ contentType:'text/css', body:`${css}\n[data-demo-animation] {${fast} --demo-source-hold:1.5s!important; --demo-play-count:1;}` }));
         const page = await context.newPage();
         await page.goto(`${origin}/live-prototype/page.html?page=home&lang=zh-Hant`);
         const booth = page.locator('[data-demo-animation]');

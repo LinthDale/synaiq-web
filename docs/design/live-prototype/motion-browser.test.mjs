@@ -18,7 +18,7 @@ test('motion settings control real reveal, repeat, pause and final-frame behavio
     async function open(overrides = '', viewport = { width: 1440, height: 900 }, locale = 'zh-Hant', init) {
       const context = await browser.newContext({ viewport, reducedMotion: 'no-preference' });
       await context.route('https://**/*', route => route.abort());
-      await context.route('**/tokens.css', route => route.fulfill({ contentType: 'text/css', body: `${css}\n:root {${overrides}}` }));
+      await context.route('**/tokens.css*', route => route.fulfill({ contentType: 'text/css', body: `${css}\n:root {${overrides}}` }));
       if (init) await context.addInitScript(init);
       const page = await context.newPage();
       const errors = [];

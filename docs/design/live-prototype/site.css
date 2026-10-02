@@ -3,7 +3,7 @@
    此檔依序：BASE、COMPONENTS、HOME、DEMO、HOME PAPER、KIP、EDITORIAL。
    搜尋 BEGIN 或區塊名稱；保留各區既有 RWD 順序，避免重排造成畫面變形。
    所有動畫時間與播放設定只改 tokens.css 的對應段落，此檔不另填時間常數。 */
-@import url("tokens.css");
+@import url("tokens.css?v=20261002-products");
 
 /* BEGIN BASE / 文件預設 */
 * {

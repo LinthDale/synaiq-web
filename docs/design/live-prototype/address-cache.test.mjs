@@ -6,9 +6,15 @@ import { PUBLIC_FILES } from './share-preview.mjs';
 // One shared token for every versioned edge; the cases expansion restructured the work
 // page's copy, so returning visitors must not keep a half-old module set.
 const CONTENT_VERSION = '20260922-cases-expansion';
+const PRODUCT_VERSION = '20261002-products';
 const root = new URL('.', import.meta.url);
 const edges = [
-  ['page.html', /<script\s+type="module"\s+src="([^"]+)"/, 'prototype.js', CONTENT_VERSION],
+  ['page.html', /<script\s+type="module"\s+src="([^"]+)"/, 'prototype.js', PRODUCT_VERSION],
+  ['page.html', /href="(site\.css[^" ]*)"/, 'site.css', PRODUCT_VERSION],
+  ['site.css', /@import url\("([^"]+)"\)/, 'tokens.css', PRODUCT_VERSION],
+  ['prototype.js', /from ['"]([^'"]*energy-design\.js[^'"]*)['"]/, 'energy-design.js', PRODUCT_VERSION],
+  ['energy-design.js', /from ['"]([^'"]*energy-screens\.js[^'"]*)['"]/, 'energy-screens.js', PRODUCT_VERSION],
+  ['energy-screens.js', /from ['"]([^'"]*pvsim-viewer\.js[^'"]*)['"]/, 'pvsim-viewer.js', PRODUCT_VERSION],
   ['prototype.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', CONTENT_VERSION],
   ['prototype.js', /from ['"]([^'"]*page-metadata\.js[^'"]*)['"]/, 'page-metadata.js', CONTENT_VERSION],
   ['prototype.js', /from ['"]([^'"]*cases-data\.js[^'"]*)['"]/, 'cases-data.js', CONTENT_VERSION],

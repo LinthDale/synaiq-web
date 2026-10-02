@@ -99,9 +99,9 @@ test('visible Banner text has independent font controls, including its English e
 
 test('the live website has exactly two CSS files and one settings import', async () => {
   const page = await read('page.html');
-  assert.match(page, /href="site\.css"/);
+  assert.match(page, /href="site\.css\?v=[\w-]+"/);
   const entry = await read('site.css');
-  const imports = [...entry.matchAll(/@import url\("([^"]+)"\)/g)].map(match => match[1]);
+  const imports = [...entry.matchAll(/@import url\("([^"]+)"\)/g)].map(match => match[1].split('?')[0]);
   assert.deepEqual(imports, ['tokens.css']);
   const files = (await readdir(new URL('.', import.meta.url))).filter(name => name.endsWith('.css')).sort();
   assert.deepEqual(files, ['site.css', 'tokens.css']);

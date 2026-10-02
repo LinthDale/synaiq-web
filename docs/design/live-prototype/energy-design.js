@@ -1,6 +1,6 @@
 import { getMessages, escapeHtml as e } from './i18n.js';
 import { renderContact } from './shared-design.js';
-import { productScreens, screenPath, renderProductScreens, initProductScreens } from './energy-screens.js';
+import { productScreens, screenPath, renderProductScreens, initProductScreens } from './energy-screens.js?v=20261002-products';
 
 const destinations = Object.freeze({ ems: 'https://synaiq-ai.com/ems/#Monitor', pvsim: 'https://synaiq-ai.com/solar/' });
 

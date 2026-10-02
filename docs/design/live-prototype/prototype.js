@@ -1,6 +1,6 @@
 import { renderHome, initHome } from './home-design.js';
 import { renderKip, initKip } from './kip-design.js';
-import { renderEms, renderPvsim, initEnergy } from './energy-design.js';
+import { renderEms, renderPvsim, initEnergy } from './energy-design.js?v=20261002-products';
 import { renderCases, initCases, caseSectionIds } from './cases-design.js';
 import { renderAbout, initAbout } from './about-design.js';
 import { renderAdvantageSection, renderContact } from './shared-design.js';

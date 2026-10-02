@@ -24,7 +24,7 @@ test('site header and footer use the supplied official mark instead of a typogra
   assert.equal((page.match(/class="brand"/g) || []).length, 2);
   assert.equal((page.match(/class="brand-logo"/g) || []).length, 2);
   assert.doesNotMatch(page, /SynaiQ<span>⌁<\/span>/);
-  assert.match(page, /href="site\.css"/);
+  assert.match(page, /href="site\.css\?v=[\w-]+"/);
   assert.match(read('site.css'), /\/\* BEGIN KIP \//);
   assert.match(page, /class="brand-logo" src="assets\/taistro-logo-ink\.svg"/);
   assert.doesNotMatch(read('site.css'), /background:\s*#151515/);

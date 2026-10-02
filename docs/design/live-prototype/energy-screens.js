@@ -1,5 +1,5 @@
 import { escapeHtml as e } from './i18n.js';
-import { renderPvsimViewer, initPvsimViewer } from './pvsim-viewer.js';
+import { renderPvsimViewer, initPvsimViewer } from './pvsim-viewer.js?v=20261002-products';
 
 // Captured from the owner's DGX demonstration sites. These are product screens,
 // not commissioned-site evidence. See product-screen-provenance.md.
