@@ -1,6 +1,6 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-09-30。
+給工程師及新的 AI session。最後核對：2026-10-02。
 
 ## 先看這張表
 
@@ -16,6 +16,8 @@
 | Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
 
 **Git push 不會自動部署官網。正式站來源是 live-prototype，不是 Astro `dist/`。**
+
+2026-10-02 依使用者明確要求，在既有 pvsim-3d 正式目錄增量更新 11 檔，沒有建立完整發布包。產品名稱改為 EMS／PVsim，模型入口新增白色箭頭及右側提示。來源 `0144bac`、`8adde03`；前後 hash 與備份在 `out/hostinger-patch-20261002-products/`、`out/hostinger-patch-20261002-cache/`，後者覆蓋同名記錄。後續核對不能只依 9/30 完整 manifest。詳見部署指南 10/02 紀錄。
 
 2026-09-30 已完成發布：去識別化 EMS／PVsim 畫面、PVsim U 字型串接、11 × 10px tAistro A 導覽，以及真正可操作的 PVsim 3D 模型。正式目錄為 public_html/synaiq-release-20260930-pvsim-3d/，來源 26a4a2d6327109b3ed664a7617934a73afac7498；88 檔、本機／staged／正式各 28 組驗收，另各 4 組原生 HTTPS staged／live 補查通過。詳細回退 hash 與紀錄見部署指南；保留所有先前失敗證據，不啟用舊產品截圖包。
 

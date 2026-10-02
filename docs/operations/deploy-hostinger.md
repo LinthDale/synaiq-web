@@ -1,6 +1,6 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-09-30（Asia/Taipei）。
+最後更新：2026-10-02（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
@@ -18,6 +18,20 @@
 修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
+
+## 2026-10-02 產品命名及模型提示增量更新（已上線）
+
+使用者明確要求不建立完整發布包，直接更新 Hostinger 對應檔案。本次沿用 `public_html/synaiq-release-20260930-pvsim-3d/`，未切換 `.htaccess`、未刪除歷史版本。來源提交 `0144bac`（產品命名及提示）及 `8adde03`（快取版本）均已推送 origin/main。
+
+中英文 EMS／PVsim 的導覽、頁尾、標題、介紹及示範區移除 Synaiq 前綴；KIP 名稱保留。PVsim 啟用模型入口加入白色手繪箭頭，文字「可以玩玩看」位於箭頭右側，英文為 Give it a try。因公開 CSS 的快取為 604800 秒，另更新 HTML→CSS→tokens 與 HTML→prototype→energy-design→energy-screens→pvsim-viewer 的版本參數 `20261002-products`。
+
+共更新 11 個不同正式檔案：`locale-common.js`、`locale-ems.js`、`locale-pvsim.js`、`tokens.css`、`site.css`、`pvsim-viewer.js`、`energy-design.js`、`energy-screens.js`、`prototype.js`、`page.html`、`index.html`。正式 index 仍由 page.html 轉製並保留 release 素材路徑，沒有上傳本機預覽外框。每檔先下載備份、比對 Git 基準，再暫存上傳及 hash 保護替換，核對主機內容一致後清除兩網域快取。
+
+驗證：199 項設計測試通過、5 跳過；31 項正式 HTTPS／SHA-256／快取檢查通過，包含六頁中英文入口、11 檔及版本 URL、私有維護檔公開回應 410。正式瀏覽器檢查首頁／EMS／PVsim 中英六組均無舊前綴、頁尾正確及無水平溢出；PVsim 白色文字在箭頭右側，模型啟用及返回截圖實測正常。本機另確認 320px 預覽提示無溢出。私有維護入口已同步。
+
+精確前後 hash、備份、工具與驗證在 `out/hostinger-patch-20261002-products/`、`out/hostinger-patch-20261002-cache/`。本次原目錄更新使舊完整發布 manifest 的對應檔案不再代表現值；以兩份 audit.json 合併後，cache 記錄優先。原路由 SHA-256 仍為 `baf517aea5155e9820bb53c46751cc7397a49b5ab259ca3eb939f69cdfd1917b`。
+
+若需還原本次更新，先重驗即時路由及 11 檔符合上述最終 hash，再從 products/before 還原 9 檔，另從 cache/before 還原 `energy-screens.js`、`prototype.js`；不得用 cache/before 覆蓋全部檔案冒充最初版本。維護入口使用 guide-before.txt。還原後清除快取並驗證正式網址，保留所有本次證據。
 
 ## 2026-09-30 PVsim 3D、去識別化產品畫面與小 A 導覽（已上線）
 
