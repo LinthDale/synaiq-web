@@ -3625,6 +3625,10 @@ body[data-page="kip"] .kip-capability-list dd {
 .product-screen-media { position: relative; }
 .product-screen-open[hidden], .pvsim-viewer[hidden], .pvsim-start[hidden], .pvsim-status[hidden] { display: none; }
 .pvsim-start { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); white-space: nowrap; box-shadow: 0 3px 18px #10253244; }
+.pvsim-start-hint { position: absolute; bottom: calc(100% + 8px); left: 50%; display: flex; align-items: flex-start; pointer-events: none; }
+.pvsim-start-hint svg { order: -1; width: 64px; height: 48px; margin: 0 8px 0 0; filter: drop-shadow(0 2px 3px #102532); }
+.pvsim-start:disabled .pvsim-start-hint { visibility: hidden; }
+.pvsim-start:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 .pvsim-viewer { overflow: hidden; border: 1px solid #b4b6a7; border-radius: 4px; background: #eceee9; box-shadow: 6px 8px 0 #d5d8cc66; }
 .pvsim-toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; }
 .pvsim-toolbar button { min-height: 44px; padding: 8px 14px; border: 1px solid #b4b6a7; border-radius: 2px; background: var(--paper); cursor: pointer; }

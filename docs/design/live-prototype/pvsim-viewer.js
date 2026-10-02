@@ -1,7 +1,7 @@
 import { escapeHtml as e } from './i18n.js';
 
 export function renderPvsimViewer(m) {
-  return `<button class="pvsim-start button" type="button" data-pvsim-start>${e(m.start)}</button>
+  return `<button class="pvsim-start button" type="button" data-pvsim-start><span class="pvsim-start-hint" aria-hidden="true">${e(m.hint)}<svg viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M73 4C53 7 29 17 31 31c2 12 20 10 18-1C46 15 19 24 12 52M7 43l5 9 10-5"/><path d="M69 2C53 6 41 11 35 18" stroke-width=".7" opacity=".5"/></svg></span><span data-pvsim-start-label>${e(m.start)}</span></button>
     <div class="pvsim-viewer" data-pvsim-viewer hidden>
       <div class="pvsim-toolbar" role="group" aria-label="${e(m.controls)}">${['in', 'out', 'top', 'home', 'site', 'exit'].map(action => `<button type="button" data-pvsim-action="${action}">${e(m[action])}</button>`).join('')}</div>
       <div class="pvsim-canvas" data-pvsim-canvas></div>
@@ -135,7 +135,7 @@ export function initPvsimViewer(gallery, m) {
     poster.hidden = visible;
     start.hidden = !selected || visible;
     start.disabled = loading;
-    start.textContent = loading ? m.loading : m.start;
+    start.querySelector('[data-pvsim-start-label]').textContent = loading ? m.loading : m.start;
     status.hidden = !selected || !failed;
     status.textContent = failed ? m.unavailable : '';
     runtime?.resize();
