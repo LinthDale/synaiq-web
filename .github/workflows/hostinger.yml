@@ -33,7 +33,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '24'
+          node-version: '24.21.0'
           cache: npm
       - run: npm ci
       - run: npm run test:deploy
@@ -63,7 +63,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '24'
+          node-version: '24.21.0'
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
@@ -73,7 +73,18 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           current=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)
-          if [ "$current" = "$GITHUB_SHA" ]; then echo "current=true" >> "$GITHUB_OUTPUT"; fi
+          # A documentation-only push must not suppress a pending website update.
+          # Compare complete Git trees, avoiding the API's changed-file truncation.
+          if [ "$current" != "$GITHUB_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$current"
+          fi
+          if git diff --quiet "$GITHUB_SHA" "$current" -- docs/design/live-prototype public/brand scripts/hostinger .github/workflows/hostinger.yml package.json package-lock.json; then
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          else
+            result=$?
+            if [ "$result" -ne 1 ]; then exit "$result"; fi
+            echo "Deployment inputs superseded by a newer main commit; skipping."
+          fi
       - name: Package and check immutable deployment inputs
         if: steps.head.outputs.current == 'true'
         env:
