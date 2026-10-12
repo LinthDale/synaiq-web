@@ -2,7 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：程式與本機驗證已完成；啟用前必須補上有效的 Hostinger API token 並完成首次主機驗證。既有 `.env.hostinger.local` 在 2026-10-12 回傳 HTTP 401。`HOSTINGER_DEPLOY_ENABLED` 保持 `false` 時只執行 CI，不會寫入主機或刪除版本。
+目前狀態：**已啟用並完成首次正式部署與清理**。[Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 的 test／deploy 均成功。來源 `56ae861516927e7ae77234b0880be31730bc1ef6`，正式目錄 `synaiq-release-ci-38197100197-1`。2026-10-12 11:03（Asia/Taipei）獨立重驗三個保留版本逐檔雜湊、四個舊版已刪除及正式 HTTPS 通過。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
+
+加密備份位於草稿 Release `hostinger-backup-38197100197-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`；Actions 產物日誌確認僅上傳這兩個檔案。詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
 
 ## 平常如何更新
 
@@ -13,7 +15,7 @@
 - Workflow：`.github/workflows/hostinger.yml`；[執行紀錄](https://github.com/LinthDale/synaiq-web/actions/workflows/hostinger.yml)。
 - PR 執行測試及封裝預覽，沒有部署密鑰。正式部署只允許此 repository 的 `main`。
 - 官網來源、品牌素材、部署工具、workflow 或 package 檔案變更會觸發自動部署。純文件、EMS 獨立服務及 Astro 原始碼變更不會上架官網。
-- Actions 頁面的 **Run workflow** 可手動發布 `main`。舊 commit 的重跑會在寫入主機前跳過。
+- Actions 頁面的 **Run workflow** 可手動發布 `main`。若 main 已有較新的部署輸入，舊 commit 的重跑會在寫入主機前跳過；只有純文件等無關變更時，仍可完成原本待部署的網站更新。
 - 正常更新不必手動上傳檔案；不要把本機預覽 `index.html` 當成正式入口。
 
 ## 發布及保留流程
@@ -23,7 +25,7 @@
 3. 本機 28 組瀏覽器測試：六頁 × 中英 × 手機／桌面，另加 EMS／PVsim 的 320／835px；包含圖片、語言切換及 PVsim 3D。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
 5. 上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，authenticated raw 下載逐檔核對 SHA-256。
-6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 28 組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。CDN 壓縮圖片核對尺寸、比例與畫素誤差；先前已目視確認的三張照片只接受 `cdn-approved-images.json` 中精確的來源／回應 hash 配對，不放寬新變體。
+6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 28 組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
 7. 清除兩網域快取，正式網址檢查及 28 組瀏覽器驗證成功後，更新主機私有維護說明及 `.hostinger-ci-state.json`。
 8. 按**實際成功啟用順序**保留現行版＋最近兩版。先重驗保留檔案及跨版本相依，完整下載待刪版本並建立逐檔清單。
 9. 備份 tar.gz 以 AES-256-GCM 加密，解包核對每個檔案，存至 GitHub **草稿 Release**，重新下載、比對 SHA-256 並驗證解密後才允許刪除。
@@ -61,10 +63,19 @@ node --use-system-ca --env-file=.env.hostinger.local scripts/hostinger/cli.mjs a
 - Actions job summary 記錄來源 SHA、正式目錄、保留／清理版本和 backup tag；CI 不自行 commit 維護紀錄，避免循環觸發。
 - 私有主機維護入口是 `00-SYNAIQ-START-HERE.txt`；`.hostinger-ci-state.json` 保存成功發布順序及檔案 hash。兩者公開請求必須回 410。
 - 每次成功流程的草稿 Release `hostinger-backup-<run_id>-<attempt>` 保存 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。保留為草稿，不發布；不自動刪除備份。
-- Actions artifacts 只上傳 `.enc`，保留 90 天，是方便存取的副本，不能取代草稿 Release 的持久備份。公開 repository 的 artifacts 可供有讀取權限的已登入使用者下載，因此不得上傳未加密主機備份。
+- Actions artifacts 僅以明確檔名上傳三種加密封存（backup／evidence／failure-evidence），保留 90 天，是方便存取的副本，不能取代草稿 Release 的持久備份。禁止使用 `*.enc` 通配符；解密驗證目錄以 `.restored` 結尾，避免目錄被遞迴收集。公開 repository 的 artifacts 可供有讀取權限的已登入使用者下載，因此不得上傳未加密主機備份。
 - 加密備份內包括封裝 artifact、路由前後檔、維護入口前文、state、逐檔清理備份、manifest、驗證及 archive inventory；不包含 token、session 或 backup key。
 
 ## 失敗與復原
+
+### 2026-10-12 導入期間的已處理問題
+
+- 修正新版 npm 乾淨安裝所需的兩筆 lockfile 依賴，固定 Node／npm 版本；內嵌 SVG logo 統一 LF，讓 Windows 與 Linux 的生成圖一致。
+- Run `38196226321` 在公開圖片驗證停止，未切換正式首頁。已核對 `rollback.json`，原路由 SHA-256 恢復為 `baf517aea5155e9820bb53c46751cc7397a49b5ab259ca3eb939f69cdfd1917b`。失敗目錄保留供調查，不列入成功版本清理。
+- 該 run 的 Actions 產物曾因 `*.enc` 同時匹配解密驗證目錄而包含明文資料（網站封裝、hash 清單及主機維護說明等）。雲端 artifact `11723712588` 已刪除，API 確認該 run 剩餘產物數為 0；本機保留完整證據。檢查其中 99 個檔案，未包含 Hostinger token 或備份 key。無法從現有紀錄確認刪除前是否有其他人下載。
+- 已改為明確列出加密檔名、將解密目錄改用 `.restored` 後綴，並新增回歸測試；Run `38196905733` 在測試階段取消，尚未寫入主機。
+
+### 復原原則
 
 測試、上傳或 staged 檢查失敗不切換正式版本。已切換但尚未完成正式驗證時，僅在即時路由仍為本次已知 hash 的前提下自動恢復舊路由、清快取並核對首頁。已確認成功的發布若後續備份／清理失敗，保留新站並將 workflow 標示失敗；不要為清理故障回退正常網站。
 
@@ -92,7 +103,7 @@ $env:HOSTINGER_BROWSER_CHANNEL='chrome'
 node scripts/hostinger/cli.mjs local local-check-UNIQUE
 ```
 
-GitHub runner 使用安裝的 Chromium；Windows 可使用現有 Chrome。TLS 使用預設驗證，不設定 ignoreHTTPSErrors 或停用 certificate validation。
+GitHub runner 固定 Node 24.21.0（npm 11.19.0），使用安裝的 Chromium；Windows 可使用現有 Chrome。更新依賴時須用相同 npm 版本更新 lockfile，並以乾淨安裝確認完整性。TLS 使用預設驗證，不設定 ignoreHTTPSErrors 或停用 certificate validation。
 
 - [GitHub deployment concurrency 與 environment](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments)
 - [GitHub artifact 存取與期限](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts)

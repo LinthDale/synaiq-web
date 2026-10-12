@@ -4,7 +4,7 @@
 
 ## GitHub 自動部署入口
 
-已新增 [GitHub Actions CI/CD 操作說明](hostinger-cicd.md) 與 `.github/workflows/hostinger.yml`。GitHub `main` 的網站更新／合併會執行 CI；repository variable `HOSTINGER_DEPLOY_ENABLED=true` 時才會部署，成功驗證後自動備份並保留現行版＋最近兩版。2026-10-12 現有 Hostinger token 回傳 401，尚待有效 token 及首次正式驗證，開關保持關閉。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 的網站更新／合併會自動測試、部署、清快取，再加密備份並保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；[首次完整成功執行](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 已在 2026-10-12 完成，另以主機逐檔雜湊及正式 HTTPS 獨立核對通過。現行目錄為 `public_html/synaiq-release-ci-38197100197-1/`，後續以主機 `.htaccess` 及 Actions summary 為準。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
@@ -17,7 +17,7 @@
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
 | 驗收網址 | https://taistro.com.tw/，六頁的 `?page=home/kip/ems/pvsim/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
-| 本機發布工具與證據 | `out/synaiq-release-20260930-pvsim-3d/`；本次最終切換由 `release.mjs` 完成，供讀取參考，不可原地重跑新發布 |
+| 發布工具與證據 | `scripts/hostinger/`；首次成功本機核對在 `out/hostinger-ci/38197100197-1/`，雲端完整證據在加密草稿 Release。歷史 `out/synaiq-release-*` 只供參考，不可原地重跑 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
 | Git 遠端 | `github`：GitHub `LinthDale/synaiq-web`（CI/CD）；`origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；分支 `main` |
 
@@ -29,7 +29,7 @@
 
 2026-09-23 已切換主網址為 `https://taistro.com.tw/`；Hostinger API 的既有主機識別仍用 `domain: synaiq.com`。修改網域轉址後需清除 synaiq.com 與 taistro.com.tw 的 Hostinger CDN 快取，避免沿用先前的 301。CDN 會最佳化圖片，來源檔案仍需精確 hash 核對，CDN 圖片則另驗證比例與可見內容，不能直接要求壓縮後檔案 hash 等於來源。
 
-`index.html` 是本機預覽外框；正式入口由 `page.html` 封裝成發布包的 `index.html`。不能直接上傳本機外框，也不能上傳整個 repo 或 `out/`。2026-09-30 曾因手動覆蓋此檔造成正式首頁顯示 Local preview；同日已原目錄緊急修復，保留 `d618931` 文案。當前包四個修復檔的 hash 以 `out/hostinger-incident-20260930/repair-result.json` 為準，詳見部署指南。
+`index.html` 是本機預覽外框；正式入口由 `page.html` 封裝成發布包的 `index.html`。不能直接上傳本機外框，也不能上傳整個 repo 或 `out/`。2026-09-30 曾因手動覆蓋此檔造成正式首頁顯示 Local preview；同日已原目錄緊急修復，保留 `d618931` 文案。該次修復 hash 在 `out/hostinger-incident-20260930/repair-result.json`；CI 版本以自己的 manifest 與主機 state 為準。
 
 ## 給 AI：授權與權限怎麼處理
 
@@ -76,7 +76,9 @@ Test-Path out/synaiq-release-20260930-pvsim-3d/release.mjs
 
 API 已可用時，直接使用既有實作，不必每次重新走 Hostinger 瀏覽器登入。上述是本專案已驗證實作，不代表任意 Hostinger 主機都可套用。
 
-## 每次新發布：固定流程
+## 手動緊急發布：歷史流程
+
+日常更新走上方 GitHub Actions。以下只供暫停 CI 後的緊急處理與歷史查閱；不得與自動部署同時執行。
 
 ### 1. 測試與提交
 
@@ -87,15 +89,15 @@ npm test
 git diff --check
 ```
 
-依改動檢查中英文、圖片與生成素材。KIP 介面圖片改動需同步 `docs/design/live-prototype/scripts/sync-brand-screens.mjs`產生的 SVG；不能只改動畫文字。
+依改動檢查中英文、圖片與生成素材。KIP 介面圖片改動需同步 `docs/design/live-prototype/scripts/sync-brand-screens.mjs` 產生的 SVG；不能只改動畫文字。產生器會將內嵌 SVG 換行統一為 LF，確保 Windows 與 Linux 產出一致。
 
-測試通過後，明確 `git add <本次檔案>`，commit，`git push origin main`。推送遭遠端新提交拒絕時先 fetch、檢查差異並整合，不 force push。記錄完整來源 commit。
+測試通過後，明確 `git add <本次檔案>`，commit，`git push github main`。日常流程由此觸發自動部署；若要執行下方手動緊急流程，必須先暫停 CI 部署。推送遭遠端新提交拒絕時先 fetch、檢查差異並整合，不 force push。記錄完整來源 commit。
 
 ### 2. 建立新發布目錄與工具
 
 例如 `out/synaiq-release-YYYYMMDD-<簡短名稱>/`；同日第二次發布另取唯一名稱。不要覆蓋既有證據。
 
-**現況限制：repo 尚無通用的 `npm run deploy`。** 9/21 的腳本是單次發布腳本，放在 Git 忽略的 `out/`。本次工具沿用正常 TLS 驗證；若此 Windows 工作機的 Node 自帶 CA 出現憑證錯誤，可在明確的本次腳本命令加 `--use-system-ca` 使用既有系統信任庫。本次 cache／live smoke 使用此方法，但仍可能遇到間歇性信任錯誤；保留失敗紀錄，核對入口版本後僅補跑未通過部分，不停用憑證驗證。此方法不代表瀏覽器或系統憑證設定已修改。新的 clone 不會自帶這些工具、manifest 或憑證；需從原工作機／團隊保管的發布備份取得，不能當成已存在。此 README 沒有建立 CI 自動部署或通用 CLI。
+**此節只描述歷史單次工具。** 9/21 的腳本放在 Git 忽略的 `out/`，新的 clone 不會自帶它們、manifest 或憑證，必須從原工作機／發布備份取得。日常 CI 已改用受版本控制的 `scripts/hostinger/cli.mjs`，正式變更只允許在 GitHub production job 執行。Windows 唯讀核對若遇 Node CA 錯誤，可加 `--use-system-ca` 使用既有系統信任庫；若仍失敗，保留證據並停止，不停用憑證驗證、不把失敗標成通過。
 
 在新目錄準備下列工具，以 9/21 最終檔案為參考：
 

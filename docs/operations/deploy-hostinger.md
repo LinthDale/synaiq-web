@@ -4,26 +4,32 @@
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
-## 2026-10-12 GitHub CI/CD 建置（正式部署待啟用）
+## 2026-10-12 GitHub CI/CD 已啟用、首次上線與清理完成
 
-新增 `.github/workflows/hostinger.yml` 與 `scripts/hostinger/`，詳見 [CI/CD 操作說明](hostinger-cicd.md)。支援 GitHub main push／merge 自動驗證、唯一版本封裝、staged／live 瀏覽器檢查、受 hash 保護的路由切換與失敗回退、加密持久備份，以及成功後保留現行版＋最近兩版。PR 不取得部署 secrets。
+`.github/workflows/hostinger.yml` 與 `scripts/hostinger/` 已實際完成自動部署，詳見 [CI/CD 操作說明](hostinger-cicd.md) 及 [成功 Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197)。GitHub main 的官網更新 push／merge 會自動驗證、封裝、上架、清快取、加密備份及清理。Production environment 只允許 main，部署開關已開啟；PR 不取得部署 secrets。
 
-本機驗證：15 項部署防護測試、199 項設計測試通過（5 項跳過）、32 項 repository 測試及 Astro 建置、28 組封裝後 Chrome 驗證通過；加密備份已實際解密、解包並核對逐檔 hash。即時 Hostinger audit 在 session 建立時回覆 401，沒有變更主機路由、上傳檔案或刪除版本。須補上有效 API token 並完成首次 GitHub deployment 後，才能宣稱自動上架已啟用。
+本次正式目錄：`public_html/synaiq-release-ci-38197100197-1/`；來源 commit：`56ae861516927e7ae77234b0880be31730bc1ef6`，已推送 GitHub main。88 個正式檔案上傳後逐檔核對 SHA-256；公開 88 個資源驗證通過。雲端測試：16 項部署防護、201 項設計測試通過（4 項跳過）、32 項 repository 測試及 Astro 建置通過；test job／deploy job 的本機封裝各 28 組、staged 28 組、正式站 28 組瀏覽器檢查全數成功。
 
-舊發布目錄與 hash 以下列 2026-10-02 紀錄為歷史基準；本次尚未取得可驗證的即時主機狀態。自動化啟用後，正式目錄以主機 `.htaccess`、CI state 與 Actions summary 為準，勿套用下方歷史固定目錄做增量上傳。
+保留：本次 CI 版本、`synaiq-release-20260930-pvsim-3d`、`synaiq-release-20260930-solutions`。已備份並清除 `synaiq-release-20260930-kip-name`、`synaiq-release-20260929-tainan-photos`、`synaiq-release-20260923-domain`、`synaiq-release-20260923-taistro`，共 288 檔、113,684,006 bytes。未納管的 `screens-anon` 及本次圖片驗證失敗的 `synaiq-release-ci-38196226321-1` 保留供調查；WordPress 未動。
+
+備份草稿 Release：`hostinger-backup-38197100197-1`，已重新下載、核對 SHA-256 並解密驗證後才刪除舊版。`backup.tar.gz.enc`：142,531,581 bytes，SHA-256 `5e7fa747acaee88ec18113aeaa530d3e1415af8578375f302bd95b0b1cbec18c`；`evidence.tar.gz.enc`：142,532,024 bytes，SHA-256 `3018b1e6d2f5a9d688e92dfaa1e354ef91fab4eebe7bef563b51c289bc157fda`。Actions 僅上傳這兩個加密檔。導入期間的失敗、回退及已處理產物問題另記於 CI/CD 操作說明。
+
+2026-10-12 11:03（Asia/Taipei）獨立重驗三個保留版本逐檔 hash、四個目錄不存在、首頁與 crawl 檔案正確、私有維護檔與退役路徑 410，全部通過。正式路由 SHA-256：`3ece210ad91cb7de41080c8f298d87081b23f50827ac8143a251d9eafb75396b`；私有維護入口 SHA-256：`b7c68df60fcad60e4bdba92a23c0b5fc87534c80dd1ade148de79e39d7ca3888`。證據在 `out/hostinger-ci/38197100197-1/independent-verification.json`、`out/hostinger-ci-setup/run-38197100197.log` 與上述加密備份。
+
+回退優先以 GitHub main revert 問題 commit 後重新發布；緊急原目錄回退須先暫停 CI，依備份核對即時路由、同步 state／維護入口並驗證。不要套用下方歷史固定目錄的單次腳本。
 
 ## 平常更新團隊文字，只看這裡
 
-**目前官網唯一使用的目錄是 `public_html/synaiq-release-20260930-pvsim-3d/`，主網址為 https://taistro.com.tw/。**
+**主網址為 https://taistro.com.tw/；官網目錄由 CI 每次建立，不再手動覆寫固定目錄。**
 
 | 要做的事 | 唯一位置 |
 |---|---|
 | 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
-| Hostinger 覆蓋更新 | `public_html/synaiq-release-20260930-pvsim-3d/locale-about.js` |
+| 發布更新 | commit 後 `git push github main`，或 merge PR 到 GitHub main，等待 Actions 成功 |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
-修改 `locale-about.js` 中英文內容後 commit／push，先下載主機原檔備份，再覆蓋上述現行目錄的同名檔案。一般重新整理即可重新驗證文案。**Git push 不會自動部署 Hostinger。** 單檔覆蓋只適用於 About 純文字；其他 locale、HTML、JS、CSS、圖片或新頁面仍須封裝完整發布包、驗證直接網址，再切換路由。本機預覽外框 `index.html` 不可直接覆蓋正式入口。
+修改 `locale-about.js` 中英文內容後 commit，推送 GitHub main，由 CI 完整封裝與上架，再用上列中英文網址驗證。**本機 origin 是 Azure DevOps，請使用 `git push github main` 觸發官網部署。** 不在 CI 執行期間手動覆寫 Hostinger；本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
