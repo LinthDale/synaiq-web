@@ -31,7 +31,11 @@ export async function verifyPublicAssets(config, manifest, work) {
         const source = await readFile(join(work, 'artifact', file.path));
         assert.equal(sha(source), file.sha256);
         const approved = approvals.some(p => p.path === file.path && p.sourceSha256 === file.sha256 && p.sha256 === actual);
-        Object.assign(result, await imageEquivalent(source, bytes, approved));
+        try { Object.assign(result, await imageEquivalent(source, bytes, approved)); }
+        catch (error) {
+          if (error instanceof assert.AssertionError) assert.fail(`${file.path}: ${error.message}; source ${file.sha256}; CDN ${actual}`);
+          throw error;
+        }
       } else assert.equal(actual, file.sha256, `${file.path}: public content differs`);
       if (/^locale-.*\.js$/.test(file.path)) assert.match(response.headers.get('cache-control') || '', /no-cache/, 'Locale cache policy missing');
       return result;

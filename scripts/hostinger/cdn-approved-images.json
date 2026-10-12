@@ -5,6 +5,13 @@
     "sha256": "74c3495eecb47f127e97e0c64c060d07e9e8e4c8d4a0e858dae0f7a9c8bc6764"
   },
   {
+    "path": "assets/cases/tokyo-5.jpg",
+    "sourceSha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5",
+    "sha256": "ec02272e4cbe0897356b6778343647cf75302be4003adab4c13d615227a48e45",
+    "reviewedAt": "2026-10-12",
+    "review": "Original 1774x2364 and CDN 1600x2132 visually compared: same people, signs, framing and content; recompression and resizing only."
+  },
+  {
     "path": "assets/cases/tainan-tech-forum-2026-cover.jpg",
     "sourceSha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570",
     "sha256": "be2b48ad3cfe8b363b71c34d62bea26c5a209cf644c215a03ca87bd5413f4da1"
