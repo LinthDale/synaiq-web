@@ -41,6 +41,7 @@ npm run test:all    # Astro 建置／測試，再執行設計測試
 | `scripts/`、`tests/` | 素材生成、檢查、內容遷移及 Astro 測試 |
 | `docs/` | [現行文件索引](docs/README.md)、PRD／ADR 與參考資料 |
 | `docs/archive/` | [歷史交接與發布紀錄](docs/archive/README.md)，不用作現行待辦 |
+| `ems/` | [EMS 公開入口](ems/README.md) synaiq-ai.com/ems 的本機轉送服務與上線頁面；不屬於 Hostinger 官網，重開機後需手動啟動 |
 | `out/` | 本機發布包、回退證據、影片及新圖片，忽略於 Git；[保留規則](docs/operations/repository-hygiene.md) |
 | `dist/`、`.astro/`、`.tmp/`、`node_modules/` | 建置、快取、臨時檔與依賴，不進 Git |
 
