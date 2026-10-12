@@ -49,12 +49,13 @@ test('every configured locale generates both screen assets with the current sing
   assert.equal(generated.length, expectedScreenCount);
   const expectedPairs = Object.keys(screenLocaleSuffixes).flatMap(locale => screenNames.map(screen => `${locale}/${screen}`));
   assert.deepEqual(generated.map(({ locale, screen }) => `${locale}/${screen}`).sort(), expectedPairs.sort());
-  const master = readFileSync(new URL(BRAND.ink, import.meta.url));
+  const canonicalLogo = path => Buffer.from(read(path).replaceAll('\r\n', '\n'));
+  const master = canonicalLogo(BRAND.ink);
   for (const { relativePath, source } of generated) {
     const embedded = source.match(/href="data:image\/svg\+xml;base64,([^"]+)"/)?.[1];
     assert.ok(embedded, relativePath);
     assert.deepEqual(Buffer.from(embedded, 'base64'), master, relativePath);
-    assert.ok(source.includes(readFileSync(new URL(PRODUCT_BRAND.ink, import.meta.url)).toString('base64')), relativePath);
+    assert.ok(source.includes(canonicalLogo(PRODUCT_BRAND.ink).toString('base64')), relativePath);
     assert.equal(read(relativePath).replaceAll('\r\n', '\n'), source.replaceAll('\r\n', '\n'), relativePath);
     assert.match(source, /width="1440" height="900" viewBox="0 0 1440 900"/);
     assert.doesNotMatch(source, /\{\{/);
@@ -117,6 +118,13 @@ test('screen templates escape text and reject missing or unused keys', () => {
   assert.throws(() => renderScreen(template, { question: 'Q', extra: 'unused' }, logo), /Unused screen text: extra/);
   assert.throws(() => renderScreen(template, { question: null }, logo), /must be a string/);
   assert.throws(() => renderScreen('<svg>{{bad-key}}</svg>', {}, logo), /Unresolved screen template placeholder/);
+});
+
+test('embedded SVG logos are identical across Windows and Linux line endings', () => {
+  const template = '<svg><image href="{{brand.logoDataUrl}}"/><image href="{{product.logoDataUrl}}"/></svg>';
+  const lf = Buffer.from('<svg>\n<path d="M0 0L1 1"/>\n</svg>\n');
+  const crlf = Buffer.from(lf.toString().replaceAll('\n', '\r\n'));
+  assert.equal(renderScreen(template, {}, crlf, {}, lf), renderScreen(template, {}, lf, {}, crlf));
 });
 
 test('the sync command has a read-only check mode and rejects unexpected arguments', () => {

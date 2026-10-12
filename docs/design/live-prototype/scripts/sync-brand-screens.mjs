@@ -34,10 +34,12 @@ export function resolveBrandAsset(assetPath) {
 }
 
 export function renderScreen(template, messages, logo, art = {}, productLogo = logo, layout = {}) {
+  // Canonical SVG bytes keep embedded logos identical on Windows and Linux.
+  const encodeLogo = bytes => Buffer.from(normalize(bytes.toString('utf8'))).toString('base64');
   const used = new Set();
   const source = template.replace(/\{\{([a-zA-Z][a-zA-Z0-9.]*)\}\}/g, (placeholder, key) => {
-    if (key === 'brand.logoDataUrl') return `data:image/svg+xml;base64,${logo.toString('base64')}`;
-    if (key === 'product.logoDataUrl') return `data:image/svg+xml;base64,${productLogo.toString('base64')}`;
+    if (key === 'brand.logoDataUrl') return `data:image/svg+xml;base64,${encodeLogo(logo)}`;
+    if (key === 'product.logoDataUrl') return `data:image/svg+xml;base64,${encodeLogo(productLogo)}`;
     if (key.startsWith('layout.')) {
       const value = layout[key.slice(7)];
       if (!Number.isFinite(value)) throw new Error(`Missing screen layout value: ${key}`);
