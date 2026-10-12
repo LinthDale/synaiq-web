@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
 import { renderCases, caseSectionIds } from './cases-design.js';
 import { DEFAULT_CASE, publishedCases } from './cases-data.js';
 import { getMessages, escapeHtml } from './i18n.js';
@@ -10,6 +11,10 @@ const ids = markup => [...markup.matchAll(/\sid="([^"]+)"/g)].map(match => match
 // Approved copy contains ampersands and quotes, so it is compared in its escaped form.
 const has = (markup, value) => markup.includes(escapeHtml(value));
 const count = (markup, needle) => markup.split(needle).length - 1;
+const photosOf = entry => [entry.hero, ...(entry.field?.photos ?? [])];
+// Sketches are optional: a cover reveals only when one of the case's photographs is the cover
+// image and declares a sketch. Every other cover is the plain photograph.
+const pairedCover = entry => photosOf(entry).find(photo => photo.photo === entry.cover.image && photo.sketch) ?? null;
 
 test('the overview introduces the work as a whole and leads to each case by its own address', () => {
   for (const locale of ['zh-Hant', 'en']) {
@@ -26,8 +31,13 @@ test('the overview introduces the work as a whole and leads to each case by its 
       assert.ok(has(markup, text.name), `${locale}/${entry.id}`);
       assert.ok(has(markup, text.summary), `${locale}/${entry.id}`);
       assert.ok(has(markup, text.dateLabel), `${locale}/${entry.id}`);
-      assert.ok(markup.includes(`href="${entry.cover.image}"`), `${locale}/${entry.id}`);
-      assert.ok(markup.includes(`href="${entry.hero.sketch}"`), `${locale}/${entry.id} sketch`);
+      const paired = pairedCover(entry);
+      if (paired) {
+        assert.ok(markup.includes(`href="${entry.cover.image}"`), `${locale}/${entry.id}`);
+        assert.ok(markup.includes(`href="${paired.sketch}"`), `${locale}/${entry.id} sketch`);
+      } else {
+        assert.ok(markup.includes(`<img class="case-cover" src="${entry.cover.image}"`), `${locale}/${entry.id} plain cover`);
+      }
       for (const tag of entry.tags) assert.ok(has(markup, copy.tags[tag]), `${locale}/${tag}`);
     }
     // The overview carries no case interior: no story, no field notes, no coverage.
@@ -61,12 +71,13 @@ test('overview reveal controls stay outside navigation links and retain separate
   for (const locale of ['zh-Hant', 'en']) {
     const markup = render({ locale });
     const buttons = [...markup.matchAll(/<button\b[^>]*data-ink-photo[^>]*>/g)];
-    assert.equal(buttons.length, publishedCases().length);
+    assert.equal(buttons.length, publishedCases().filter(pairedCover).length);
     for (const link of markup.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)) {
       assert.doesNotMatch(link[0], /<button\b/);
     }
     for (const entry of publishedCases()) {
-      assert.ok(markup.includes(`id="cover-${entry.id}"`));
+      // Only a revealing cover is a control with its own id; a plain cover is an image.
+      if (pairedCover(entry)) assert.ok(markup.includes(`id="cover-${entry.id}"`));
       assert.ok(markup.includes(`class="case-card-copy case-card-link" href="?page=cases&amp;case=${entry.id}&amp;lang=${locale}"`));
     }
     assert.equal(new Set(ids(markup)).size, ids(markup).length);
@@ -75,7 +86,7 @@ test('overview reveal controls stay outside navigation links and retain separate
 
 test('only the overview covers invite the reveal, and they ship both pointer wordings', () => {
   // Each wording is shipped and CSS shows the one matching the pointer, so both must exist.
-  const revealable = publishedCases().filter(entry => entry.hero.sketch);
+  const revealable = publishedCases().filter(pairedCover);
   assert.ok(revealable.length > 0);
   for (const locale of ['zh-Hant', 'en']) {
     const hint = getMessages(locale).cases.overview.photoHint;
@@ -96,6 +107,26 @@ test('only the overview covers invite the reveal, and they ship both pointer wor
       assert.equal(count(page, 'ink-photo__hint'), 0, `${locale}/${caseId}`);
       assert.ok(!has(page, hint.touch), `${locale}/${caseId}`);
       assert.ok(!has(page, hint.hover), `${locale}/${caseId}`);
+    }
+  }
+});
+
+test('every declared sketch exists and renders as a reveal; a photograph without one stays plain', () => {
+  for (const entry of publishedCases()) {
+    for (const locale of ['zh-Hant', 'en']) {
+      const text = getMessages(locale).cases.cases[entry.id];
+      const markup = render({ locale, caseId: entry.id });
+      for (const photo of photosOf(entry)) {
+        const label = `${locale}/${entry.id}/${photo.key}`;
+        if (photo.sketch) {
+          assert.ok(existsSync(new URL(photo.sketch, import.meta.url)), `${label}: ${photo.sketch} is missing`);
+          assert.ok(markup.includes(`id="case-${entry.id}-${photo.key}"`), `${label}: reveal control`);
+          assert.ok(markup.includes(`href="${photo.sketch}"`), `${label}: sketch`);
+          assert.ok(markup.includes(`aria-label="${escapeHtml(text.photos[photo.key].label)}"`), `${label}: control name`);
+        } else {
+          assert.ok(markup.includes(`<img class="case-photo" src="${photo.photo}"`), `${label}: plain photograph`);
+        }
+      }
     }
   }
 });

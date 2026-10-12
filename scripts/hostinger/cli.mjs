@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { connect } from './client.mjs';
 import { packageSite } from './package.mjs';
-import { smoke } from './browser.mjs';
+import { smoke, smokeMatrix } from './browser.mjs';
 import { audit, deploy, prepareCleanup, prune, publicChecks, save } from './deploy.mjs';
 import { publishBackup, publishEvidence, seal } from './backup.mjs';
 import { decrypt } from './core.mjs';
@@ -50,7 +50,9 @@ export async function main() {
     await prune(client, config, work, state, receipt, id);
     await client.purge(); await publicChecks(config, manifest);
     await publishEvidence(config, work, process.env.HOSTINGER_BACKUP_KEY, id);
-    const summary = `### Hostinger deployment verified\n\n- Website: ${config.origin}/\n- Release: ${manifest.release}\n- Source: ${manifest.sourceCommit}\n- Retained: ${plan.keep.join(', ')}\n- Archived and removed: ${plan.remove.join(', ') || 'none'}\n- Encrypted backup: ${receipt.tag} (draft Release)\n- Browser checks: 28 local + 28 staged + 28 live\n`;
+    // Each browser pass runs the whole matrix or throws, so its size is what every pass verified.
+    const checks = smokeMatrix().length;
+    const summary = `### Hostinger deployment verified\n\n- Website: ${config.origin}/\n- Release: ${manifest.release}\n- Source: ${manifest.sourceCommit}\n- Retained: ${plan.keep.join(', ')}\n- Archived and removed: ${plan.remove.join(', ') || 'none'}\n- Encrypted backup: ${receipt.tag} (draft Release)\n- Browser checks: ${checks} local + ${checks} staged + ${checks} live\n`;
     await save(work, 'summary.md', summary);
     if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
     console.log('Deployment, backup and retention verified.');
