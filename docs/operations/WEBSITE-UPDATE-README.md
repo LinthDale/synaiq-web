@@ -8,6 +8,8 @@
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
+每次部署都建立新的版本目錄，所有資源網址隨之改變，因此日常更新（含新增實績）不要改 `prototype.js`、`page-metadata.js`、`i18n.js` 匯入時的 `?v=` 版本參數；`address-cache.test.mjs` 釘住現值，只改一部分會讓測試失敗。新增實績的步驟見 [網站維護說明](../design/live-prototype/README.md#新增一筆實績)。
+
 ## 先看這張表
 
 | 工作 | 唯一入口 |

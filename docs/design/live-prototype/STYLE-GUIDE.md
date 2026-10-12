@@ -1,10 +1,10 @@
 # 官網樣式維護指南
 
-最後更新：2026-09-18。
+最後更新：2026-10-12。
 
 改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引涵蓋已上線的 Home／KIP／實績展示／關於我們中英版，供日常維護使用。
 
-唯一工作目錄：`C:\Users\User\synaiq\synaiq-web`。核准網站來源在 `docs/design/live-prototype/`，**不是** Astro Phase A 的 `src/styles/`。儲存後重新整理本機預覽；Git push 不會自動更新 Hostinger。
+唯一工作目錄：`C:\Users\User\synaiq\synaiq-web`。核准網站來源在 `docs/design/live-prototype/`，**不是** Astro Phase A 的 `src/styles/`。儲存後重新整理本機預覽；推送到 GitHub `main` 後由 GitHub Actions 自動上架，只推 Azure（`origin`）不會，詳見「上架與發布界線」。
 
 ## 先分清楚：改內容，還是改外觀
 
@@ -18,8 +18,8 @@
 | 案例日期、排序、精選、照片路徑、封面取景與報導 URL | `cases-data.js` 的 `CASES`；版型在 `cases-design.js` |
 | 關於我們的理念、團隊名單、職稱及學經歷 | `locale-about.js` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
 | 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
-| 瀏覽器分頁標題（四頁中英） | `locale-common.js` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
-| 搜尋結果摘要（四頁中英） | `locale-common.js` 的 `description`；詳見「搜尋引擎中繼資料」 |
+| 瀏覽器分頁標題（六頁中英） | `locale-common.js` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
+| 搜尋結果摘要（六頁中英） | `locale-common.js` 的 `description`；詳見「搜尋引擎中繼資料」 |
 | 正規網址、hreflang、og 標籤 | `page-metadata.js` 算出網址與文字，`prototype.js` 寫進 `<head>`；詳見「搜尋引擎中繼資料」 |
 | robots.txt、sitemap.xml | 本目錄的同名檔案；改網址規則要同步 `page-metadata.js` |
 | CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
@@ -46,15 +46,15 @@
 
 ## 搜尋引擎中繼資料
 
-四頁 × 中英共八個網址，再加上每個公開案例的中英兩個網址，實際上都是**同一份 `page.html`**。
+六頁（Home／KIP／EMS／PVsim／實績展示／關於我們）× 中英共 12 個網址，再加上每個公開案例的中英兩個網址，實際上都是**同一份 `page.html`**。
 因此 `page.html` 裡**沒有**靜態 `<link rel="canonical">`——寫死一個就會把 KIP／實績／關於我們併進首頁。
 `page.html` 只保留繁中首頁的靜態 `description` 與 og 標籤（社群爬蟲不跑 JavaScript），
 其餘由 `prototype.js` 依當前頁、語言與案例就地補上。
 
 | 要改什麼 | 改哪裡 |
 |---|---|
-| 四頁中英的搜尋結果摘要 | `locale-common.js` 的 `description`；中文 ≤ 80 字、英文 ≤ 160 字 |
-| 各案例的 title／摘要 | `locale-cases.js` 的 `cases.<識別碼>.name`／`summary`；title 固定為 `${案例名稱} — ${實績展示} — SynaiQ`，摘要就是 `summary`，同樣受字數上限 |
+| 六頁中英的搜尋結果摘要 | `locale-common.js` 的 `description`；中文 ≤ 80 字、英文 ≤ 160 字 |
+| 各案例的 title／摘要 | `locale-cases.js` 的 `cases.<識別碼>.name`／`summary`；title 固定為 `${案例名稱} — ${實績展示} — tAistro`，摘要就是 `summary`，同樣受字數上限 |
 | 正規網址、hreflang 的組法 | `page-metadata.js` 的 `canonicalUrl`／`alternateUrls`；純函式，不碰 DOM |
 | 全部應被收錄的網址清單 | `page-metadata.js` 的 `crawlUrls()`；`sitemap.xml` 必須與它完全相同 |
 | 實際寫進 `<head>` 的動作 | `prototype.js` 的 `applyPageMetadata`；就地更新，不重複新增標籤 |
@@ -62,18 +62,18 @@
 
 - 摘要只能從該頁**既有的**首屏文案節錄，不新增承諾或數字；`page.html` 的靜態 `description`
   必須與繁中首頁那一句完全相同，`seo-metadata.test.mjs` 會比對。
-- 正規網址一律建在 `https://synaiq.com`，與 `location.origin` 無關；從 www 或版本目錄
-  （`/synaiq-release-*/page.html`）開啟時也指回主網域。繁中首頁是 `https://synaiq.com/`，
-  其餘七組固定為 `https://synaiq.com/?page=<頁>&lang=<語言>`，參數順序不可對調。
-- 案例網址固定為 `https://synaiq.com/?page=cases&case=<識別碼>&lang=<語言>`，
+- 正規網址一律建在 `https://taistro.com.tw`（`page-metadata.js` 的 `SITE_ORIGIN`），與 `location.origin` 無關；從 www 或版本目錄
+  （`/synaiq-release-*/page.html`）開啟時也指回主網域。繁中首頁是 `https://taistro.com.tw/`，
+  其餘 11 組固定為 `https://taistro.com.tw/?page=<頁>&lang=<語言>`，參數順序不可對調。
+- 案例網址固定為 `https://taistro.com.tw/?page=cases&case=<識別碼>&lang=<語言>`，
   參數順序是**頁面 → 案例 → 語言**，不可對調。
 - 每頁三個 hreflang：`zh-Hant`、`en`、`x-default`（指向繁中）；案例的三個 hreflang 指向同一個案例。
 - 無效或尚未公開的案例識別碼：`robots` 寫 `noindex, nofollow`，並**移除** canonical、hreflang 與
   `og:url`，不改指到總覽——指過去會把打錯的網址併進總覽。回到正常網址時這些標籤會補回來。
 - `robots.txt` **不可** Disallow `/synaiq-release-`：Googlebot 需要版本目錄裡的 JS／CSS 才能算出頁面；
   下架的舊版本由主機路由回 410，不靠 robots 擋。
-- 改動網址規則或新增公開案例後，`sitemap.xml` 必須跟著改：網址數 = 8 + 每個公開案例 2；
-  兩邊不一致時 `seo-metadata.test.mjs` 會失敗。發布時 `release.mjs` 的 `SITEMAP_URLS` 也要一起更新。
+- 改動網址規則或新增公開案例後，`sitemap.xml` 必須跟著改：網址數 = 12 + 每個公開案例 2；
+  兩邊不一致時 `seo-metadata.test.mjs` 會失敗；該測試寫死的網址清單也要補上新案例。上架由 GitHub Actions 依 `sitemap.xml` 自動封裝，不再修改 `release.mjs`。
 
 ## 平常先改這一個檔案
 
@@ -200,7 +200,7 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 - 900px 以上，總覽與案例頁皆為**圖片 60%、文字 40%**（扣除欄間距後計算）。
   `site.css` 的 `.cases-page` 集中設定 `--case-copy-column`、`--case-image-column` 與 `--case-column-gap`。
-- 直式（例如 `3 / 4`，東京）與橫式（例如 `16 / 9`，臺南）皆使用左右雙欄；案例頁統一文字在左、圖片在右。
+- 直式（例如 `3 / 4`，東京）與橫式（例如 `4 / 3`，臺南的綜合論談主照）皆使用左右雙欄；案例頁統一文字在左、圖片在右。
   `cases-hero-layout--portrait`／`--landscape` 只區分圖片尺寸計算，不將橫圖移到整寬頂端。
 - **直式圖片高度上限 480px**，依比例縮窄並置中；由 `--case-portrait-long-edge` 集中控制總覽、主照與現場照片。橫圖仍填滿圖片欄寬，保留臺南場景的可讀尺寸。
 - **總覽是整寬的左右交替列**（`.case-rows`），不是網格：第一列封面在左（`.case-card--left`），
@@ -248,12 +248,12 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 - `href="tel:+886423931368"` 是點擊後交給電話程式的撥號號碼；沿用 `+`、國碼與數字、不加排版空格的寫法。
 - `>+886 4 2393 1368<` 是網站顯示文字，可以保留空格方便閱讀。
 - 更換號碼時兩處一起改；只改顯示文字，點擊仍會撥舊號碼。
-- 這一個共用頁尾供四頁、中英文使用；電話目前不在 `locale-common.js`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
+- 這一個共用頁尾供六頁、中英文使用；電話目前不在 `locale-common.js`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
 - 調整字級，開 `tokens.css` 搜尋 `--footer-link-size`；會一起影響同組 Email 與導覽連結，並要檢查 639px 以下的覆寫。`--footer-body-color` 控制頁尾段落文字，不是電話連結的獨立色彩設定。
 
-修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；四頁與中英文都要確認。
+修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；六頁與中英文都要確認。
 
-若手動修改主機上的共用 HTML，需同步版本目錄的 `index.html`、`page.html`，並保留封裝後路徑；詳見「Hostinger 手動更新與發布界線」，不要用本機預覽外框覆蓋官網。
+正式站的 `index.html` 由 CI 從 `page.html` 產生並改寫資源路徑；不要手動修改主機上的 HTML，也不要用本機預覽外框覆蓋官網。詳見「上架與發布界線」。
 
 <a id="動畫只改-tokenscss"></a>
 
@@ -420,7 +420,7 @@ npm run dev:design
 
 第一次安裝或 lockfile 更新時，先執行 `npm ci`；日常改字不需要反覆安裝。預覽服務會持續占用終端 A，檢查指令請在另一個終端執行。4318 已有這個預覽服務時沿用即可，不必重開；不要雙擊 HTML 用 `file://` 開網頁。
 
-- [連續縮放預覽](http://127.0.0.1:4318/live-prototype/?page=home&lang=zh-Hant)：選四頁、中英與寬度；外框可縮小整張頁面以配合視窗。
+- [連續縮放預覽](http://127.0.0.1:4318/live-prototype/?page=home&lang=zh-Hant)：選頁面（六頁）、案例、中英與寬度；外框可縮小整張頁面以配合視窗。
 - [獨立網站頁面](http://127.0.0.1:4318/live-prototype/page.html?page=home&lang=zh-Hant)：看真實字級及用 DevTools 找 CSS 時優先使用，不受預覽外框縮放影響。
 - [實績總覽](http://127.0.0.1:4318/live-prototype/page.html?page=cases&lang=zh-Hant)／[東京食品展案例](http://127.0.0.1:4318/live-prototype/page.html?page=cases&case=tokyo-foodex-2026&lang=zh-Hant)／[關於我們](http://127.0.0.1:4318/live-prototype/page.html?page=about&lang=zh-Hant)：新增頁面；可附上前述段落 ID，語言改為 `en` 可檢查英文版。實績另外要看舊錨點 `?page=cases&lang=zh-Hant#story` 會換成案例網址，以及 `?page=cases&case=not-a-case&lang=zh-Hant` 顯示「找不到此案例」。
 - 存檔後重新整理；這個伺服器沒有自動熱更新。DevTools 裡直接調整只作用於當次瀏覽器，必須寫回來源檔才會保留。
@@ -519,15 +519,15 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
 | Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
 | 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`（1440×2560，兼作總覽封面）／`tokyo-2-sketch.webp`（941×1672）、`cases/tokyo-5.jpg`（1774×2364）／`tokyo-5-sketch.webp`（1086×1449）；來源為舊官網回收的活動照片，配對用於顯影。路徑與配對只在 `cases-data.js` 定義 |
-| 臺南市科技產業論壇原照與手繪 | `cases/tainan-tech-forum-2026-cover.jpg`（2400×1350，16:9，261KB，兼作封面與案例主照）／`tainan-tech-forum-2026-cover-sketch.webp`（1600×900，234KB）、`cases/tainan-tech-forum-2026-panel.jpg`（1476×1107，4:3，198KB，綜合論談台上）／`tainan-tech-forum-2026-panel-sketch.webp`（1200×900，173KB）；原照由使用者提供，白底淡褐色手繪以原照作構圖、`ceo-speaking-sketch-v1.webp` 作筆觸參考，由內建 imagegen 生成；配對只在 `cases-data.js` 定義 |
-| 新案例照片 | 放 `assets/cases/`，檔名含案例識別碼。橫式封面 2400×1350（16:9）、直式主照長邊 ≥ 1600px，JPG、sRGB、mozjpeg 品質 85、4:2:0，約 200–700KB。總覽保留原始比例，只有宣告比例與原檔不同時才需要 `cover.focus`。手繪選填，WebP、長邊約 1000px |
+| 臺南市科技產業論壇原照與手繪 | `cases/tainan-tech-forum-2026-panel.jpg`（1476×1107，4:3，198KB，綜合論談台上；兼作總覽封面與案例主照，`hero.key` 為 `panel`）／`tainan-tech-forum-2026-panel-sketch.webp`（1200×900，169KB）、`cases/tainan-tech-forum-2026-cover.jpg`（2400×1350，16:9，261KB，展區 Synaiq KIP 示範；現場紀錄照片，key 為 `hero`）／`tainan-tech-forum-2026-cover-sketch.webp`（1600×900，228KB）；原照由使用者提供，白底淡褐色手繪以原照作構圖、`ceo-speaking-sketch-v1.webp` 作筆觸參考，由內建 imagegen 生成；配對只在 `cases-data.js` 定義 |
+| 新案例照片 | 放 `assets/cases/`，檔名含案例識別碼，只用小寫英數、`-`、`.`。橫式封面 2400×1350（16:9）、直式主照長邊 ≥ 1600px，JPG、sRGB、mozjpeg 品質 85、4:2:0，約 200–700KB。總覽保留原始比例，只有宣告比例與原檔不同時才需要 `cover.focus`。手繪選填；有宣告就必須存在並列入白名單，WebP、白底不透明、與配對照片同比例；現有四張長邊 1200–1672px、約 170–290KB |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |
 | 手撕信紙邊界 | `torn-paper-cotton-v2.webp`；真實 alpha 邊緣，窄版採裁切寬紙帶，不把整條纖維壓縮到手機寬度 |
 | 新聞原截圖 | `investing-cio-20240629.png`；保留標題、日期、照片與 Reuters 署名，不經 AI 重繪或 cover 裁切 |
 | 新聞手繪外框 | `news-sketch-frame-v2.webp`；獨立透明簡線外框，紙墊避免筆觸遮住原圖文字 |
 
-上述手繪素材是 AI 生成插畫，不是產品現場照或委製作品證明。Wally 原色設備圖在 repo 的 `public/brand/`；設備照片中印好的 Logo 不會隨 `brand.js` 自動更換。線上角色圖 `https://synaiq.com/wp-content/uploads/2026/03/toutou-2.png` 仍是網站依賴，下架舊素材時不能誤刪它。
+上述手繪素材是 AI 生成插畫，不是產品現場照或委製作品證明。Wally 原色設備圖在 repo 的 `public/brand/`；設備照片中印好的 Logo 不會隨 `brand.js` 自動更換。線上角色圖 `https://taistro.com.tw/wp-content/uploads/2026/03/toutou-2.png`（`home-design.js`）仍是網站依賴，下架舊素材時不能誤刪它。
 
 新增團隊／場域手繪使用內建 `imagegen`：每張原照分別作為人物或構圖參考，再以首頁 `ceo-speaking-sketch-v1.webp` 作筆觸參考，生成白底、淡褐色疏線與少量排線的獨立插畫。保留人物辨識特徵與場域配置，不能把 CEO 參考圖的麥克風或其他人物帶入新圖。生成後只作網頁尺寸與格式最佳化；人物與場域 hover 顯示的是原照，不是 AI 重建的真照。
 
@@ -545,52 +545,26 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 
 私有產品畫面不得含帳密、公司識別、帳號、對話、文件名或內部時間。若另有授權需截圖，先人工確認，再使用本機不可逆實色遮罩；`sanitize-capture.mjs` 的既有遮罩只適用原先 1280×720 的空白入口，不是通用去識別化工具。網站目前使用品牌化示例介面，不使用私有原始截圖。
 
-## Hostinger 手動更新與發布界線
+## 上架與發布界線
 
-**儲存本機檔案、測試通過、commit／push，都不等於正式站已更新。** `npm run build` 產生的 Astro `dist/` 也不是目前核准設計的上架包。沒有可直接重跑來發布任意改動的通用 npm 指令。
+**儲存本機檔案、測試通過或 commit，都不等於正式站已更新。** 推送到 GitHub `main`（或把 PR merge 進 `main`）後，`.github/workflows/hostinger.yml` 會自動測試、封裝、部署、清兩個網域的 CDN 快取並加密備份；只推 Azure（`origin`）不會觸發。日常步驟見 [官網更新 README](../../operations/WEBSITE-UPDATE-README.md)，CI 細節、失敗與回退見 [CI/CD 說明](../../operations/hostinger-cicd.md)。`npm run build` 產生的 Astro `dist/` 不是上架包。
 
-### 先確認主機正在使用哪一版
+- 觸發範圍：`docs/design/live-prototype/`、`public/brand/`、`scripts/hostinger/`、workflow 與 `package.json`／`package-lock.json`。本目錄的 `README.md` 與本指引也在範圍內，只改文件推上去同樣會跑一次部署。
+- 每次部署建立新目錄 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，再由主機 `.htaccess` 切換入口，主機私有維護入口 `00-SYNAIQ-START-HERE.txt` 也由 CI 同步。現行目錄以 `.htaccess` 與 Actions summary 為準。
+- 不要在 CI 執行時手動修改主機，也不要手動上傳或覆蓋版本目錄。
 
-在 Hostinger 的 `synaiq.com` 檔案管理員確認 `domains/synaiq.com/public_html/`。依 [上架／還原操作索引](../../operations/deploy-hostinger.md)，最近一次記錄的正式版本是 `public_html/synaiq-release-20260914-cases-mobile/`；`synaiq-release-20260911-team-pages/` 是保留的上一版，勿再當作現行網站修改。**實際操作仍要先檢查根目錄 `.htaccess` 的 `/` 轉交目標與首頁載入的資源版本**，不能只認目錄名稱。有人手動改過檔案後，舊 manifest 也不能當成現況證明。
-
-檔案管理員根目錄的 `00-SYNAIQ-START-HERE.txt` 是管理員維護入口，已同步目前正式目錄。這份說明不經官網公開；歷史版本資料夾保留，不必逐個尋找同名檔。
-
-| 本機來源 | 正式包對應位置／限制 |
+| 本機來源 | 封裝結果（`scripts/hostinger/package.mjs`） |
 |---|---|
-| `docs/design/live-prototype/page.html` | 封裝成版本目錄中的 `page.html` 與 `index.html`；根網址讀後者 |
-| `docs/design/live-prototype/index.html`、`preview.js` | 本機連續縮放預覽外框，不上傳成正式首頁 |
-| `site.css`、`tokens.css` | 正式版本目錄內的兩份 CSS；不帶回舊 `prototype.css` 或已刪的分頁 CSS |
-| `robots.txt`、`sitemap.xml` | 一起封裝進版本目錄，內容已是 `https://synaiq.com/` 絕對網址，不做路徑改寫；需由根目錄路由改寫成 `/robots.txt`、`/sitemap.xml` 才會生效 |
-| renderer、詞典、`brand.js`、圖片 | 僅封裝需要的公開檔案；HTML、CSS、JS 及素材引用需對齊版本前綴 |
-| `STYLE-GUIDE.md`、測試、生成／錄製／部署工具、`.env.hostinger.local` | 留在本機，不上傳到公開網站 |
+| `page.html` | 版本目錄中的 `page.html` 與正式入口 `index.html` |
+| `index.html`、`preview.js` | 本機預覽外框，不封裝 |
+| `share-preview.mjs` 的 `PUBLIC_FILES`（含 `public/brand/` 的檔案） | 只封裝這份白名單；HTML、CSS、JS、SVG 內的 `/brand/`、`assets/` 與入口路徑改寫到新版本目錄 |
+| `robots.txt`、`sitemap.xml` | 原樣封裝（網址為 `https://taistro.com.tw/`），由根目錄路由提供 `/robots.txt`、`/sitemap.xml` |
+| 本指引、測試、生成／錄製／部署工具、`.env.*` | 不封裝 |
 
-本機 `page.html` 使用的相對資源路徑，在根網址 `/` 下不一定成立。不能把原始 `page.html` 改名為 `index.html` 就直接蓋上線；也不能把任意原始 JS 都當成免封裝檔案上傳。
+`?v=` 版本參數不因新增案例或日常修改而更動：每次部署的新目錄已讓所有資源網址改變，首頁 HTML 為 `no-cache`；`address-cache.test.mjs` 也釘住現有版本值，只改一部分匯入點會讓測試失敗。這組參數是過去在同一目錄原地覆蓋檔案時留下的。
 
-### 日常團隊文案更新
+部署會在本機封裝、測試網址與正式網址各跑一次相同的瀏覽器檢查（六頁中英的手機與桌面寬度、EMS／PVsim 窄版，以及每個公開案例的中英內頁），並保留 WordPress 舊路徑 410、Wally 角色圖等主機規則，不處理其他網域。上線後仍要親自開受影響的頁面確認。
 
-`locale-about.js` 的團隊純文案可直接更新到目前目錄：
-
-1. 編輯本機 `locale-about.js` 的姓名、職稱與學經歷，同步中英文。
-2. 在檔案管理員先下載**目前正式目錄中的同名檔案**作備份，不覆蓋正在編輯的本機來源。
-3. 將修改後的 `locale-about.js` 上傳到 `public_html/synaiq-release-20260914-cases-mobile/` 並確認覆蓋；檔名是 `locale-about.js`，不是 `local-about.js`。
-4. 一般重新整理官網，檢查中英內容。若仍異常，先比對實際載入網址、主機內容與回應標頭，不要再到其他歷史資料夾嘗試覆蓋。
-
-六份文案目前回傳 `Cache-Control: no-cache, must-revalidate`；已開著的頁面不會自動換字。關於我們的既存快取已透過 `20260911-team-content` 載入鏈切換；日後只改這份團隊文案，不必再改版本參數，一般重新整理即可。上架時保留這項主機快取政策。
-
-其他文案仍要確認素材路徑與相依關係：`locale-common.js` 含需要版本前綴的圖片 URL，`locale-demo.js` 的內容也用於 KIP 與生成 SVG。不能由快取設定推定任意本機 `locale-*.js` 都可直接上傳。
-
-### HTML、其他 JavaScript、CSS 與素材
-
-這些檔案仍須檢查封裝路徑與快取，不能套用上述文案的單檔更新方式。原地修改其他 JS 時，要完整核對 `index.html`／`page.html` 到被修改模組的引用與版本參數；只在首頁網址加參數，不會更新所有 import。CSS 也需處理 `site.css` 到 `tokens.css` 的載入鏈。涉及新增素材、版型或多檔關係時，使用完整新版本流程。
-
-HTML 小修需同步封裝後的 `index.html`、`page.html`，保留版本化資源 URL；不拿本機預覽外框覆蓋。操作前備份實際主機檔案，完成後驗證公開頁面與快取；Ctrl+Shift+R 只影響自己的瀏覽器。
-
-### 完整新版本發布
-
-依 [上架／還原操作索引](../../operations/deploy-hostinger.md) 另建版本目錄，封裝核准公開檔案並重寫資源 URL，核對清單與 hash，再上傳。先讓新版本的直接網址通過經審核的 `.htaccess` 白名單與頁面驗證，備妥精確還原路由，最後才切換根網址 `/`；不能先切入口再補素材。
-
-既有 `out/synaiq-release-*/release.mjs` 固定了當次版本名與主機預期 hash，是一次發布的工具，不是日常通用部署器。已完成的 `package`／`stage`／`activate` 不要重跑，也不要覆寫既有 `out/synaiq-deploy-*`、`out/synaiq-address-*`、`out/synaiq-release-*` 的封存與還原資料。
-
-發布後驗證根網址、當次核准發布的所有頁面／語言組合、素材與動畫；同時確認 `/home.html` 仍導向根網址，舊 WordPress 路徑仍下架。每次發布需完整驗證四頁 × 中英共八組，不能只驗首頁／KIP。不能為了發布恢復 `index.php` fallback，不能刪掉新版仍使用的 Wally 角色圖，也不觸碰 `synaiq-ai.com` 的產品服務。還原使用當次已核對的備份；不要把更早的 WordPress 路由當成新版回退。
+緊急與歷史：`out/` 的 `release.mjs` 等單次腳本綁定歷史版本，只供暫停 CI 後的緊急處理，步驟見官網更新 README「手動緊急發布：歷史流程」。不要原地重跑，也不要覆寫既有 `out/synaiq-release-*` 等封存與還原資料。
 
 日常更新直接維護本指引，不再新增日期驗證報告或製作紀錄；不要在指引中累加每輪測試通過數、歷史 PID、過期網址或舊 quote。

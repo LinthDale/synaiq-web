@@ -14,7 +14,8 @@
 - `origin` 是 Azure DevOps；`git push origin main` 不會觸發 GitHub Actions。
 - Workflow：`.github/workflows/hostinger.yml`；[執行紀錄](https://github.com/LinthDale/synaiq-web/actions/workflows/hostinger.yml)。
 - PR 執行測試及封裝預覽，沒有部署密鑰。正式部署只允許此 repository 的 `main`。
-- 官網來源、品牌素材、部署工具、workflow 或 package 檔案變更會觸發自動部署。純文件、EMS 獨立服務及 Astro 原始碼變更不會上架官網。
+- 官網來源、品牌素材、部署工具、workflow 或 package 檔案變更會觸發自動部署。`docs/design/live-prototype/` 以外的文件、EMS 獨立服務及 Astro 原始碼變更不會上架官網；該目錄內的 `README.md`、`STYLE-GUIDE.md` 等說明也在觸發範圍內，推送後同樣會跑一次部署。
+- 不需要為快取更動 `?v=` 版本參數：每次部署的新目錄已讓所有資源網址改變；`address-cache.test.mjs` 釘住現值。
 - Actions 頁面的 **Run workflow** 可手動發布 `main`。若 main 已有較新的部署輸入，舊 commit 的重跑會在寫入主機前跳過；只有純文件等無關變更時，仍可完成原本待部署的網站更新。
 - 正常更新不必手動上傳檔案；不要把本機預覽 `index.html` 當成正式入口。
 
@@ -22,11 +23,11 @@
 
 1. 設計測試、部署防護測試、Astro／repository 測試全部成功。
 2. 按公開 allowlist 從 Git commit 封裝 88 個檔案（數量隨 allowlist 調整），正式 `index.html` 由 `page.html` 產生。CSS、JS、圖片指向唯一的新版本目錄。
-3. 本機 28 組瀏覽器測試：六頁 × 中英 × 手機／桌面，另加 EMS／PVsim 的 320／835px；包含圖片、語言切換及 PVsim 3D。
+3. 本機瀏覽器測試：六頁 × 中英 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的中英內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 36 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
 5. 上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，authenticated raw 下載逐檔核對 SHA-256。
-6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 28 組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
-7. 清除兩網域快取，正式網址檢查及 28 組瀏覽器驗證成功後，更新主機私有維護說明及 `.hostinger-ci-state.json`。
+6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 同一組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
+7. 清除兩網域快取，正式網址檢查及同一組瀏覽器驗證成功後，更新主機私有維護說明及 `.hostinger-ci-state.json`。
 8. 按**實際成功啟用順序**保留現行版＋最近兩版。先重驗保留檔案及跨版本相依，完整下載待刪版本並建立逐檔清單。
 9. 備份 tar.gz 以 AES-256-GCM 加密，解包核對每個檔案，存至 GitHub **草稿 Release**，重新下載、比對 SHA-256 並驗證解密後才允許刪除。
 10. 再次核對路由、保留版本、待刪版本及備份；僅刪除清單內的 `synaiq-release-*` 目錄。清理完成後重新核對公開站，將最終證據加密存入同一份草稿 Release。

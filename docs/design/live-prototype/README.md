@@ -1,10 +1,10 @@
 # 官網維護入口
 
-最後更新：2026-09-30。
+最後更新：2026-10-12。
 
-已上線的 Home／KIP／EMS／PVsim／實績展示／關於我們中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。正式站使用另外封裝的版本，本機修改不會自動上架；現行版本與還原方式見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
+已上線的 Home／KIP／EMS／PVsim／實績展示／關於我們中英版都在這個目錄。工作目錄為 `C:\Users\User\synaiq\synaiq-web`；這是客戶端渲染的靜態網站，不是 `src/` 的 Astro Phase A。本機存檔不會上架；推送到 GitHub `main` 後，由 GitHub Actions 自動測試、封裝、部署、清 CDN 快取並加密備份（[官網更新 README](../../operations/WEBSITE-UPDATE-README.md)、[CI/CD 說明](../../operations/hostinger-cicd.md)）。現行版本與歷史紀錄見 [Hostinger 操作索引](../../operations/deploy-hostinger.md)。
 
-只改團隊文字時，編輯這裡的 `locale-about.js`，同步中英文；備份主機同名檔後，覆蓋 `public_html/synaiq-release-20260930-pvsim-3d/locale-about.js`，再重新整理官網即可。檔名是 **locale-about.js**；文案檔已設定每次重新驗證快取。Hostinger 根目錄的 `00-SYNAIQ-START-HERE.txt` 列出正式更新位置，其他版本資料夾留作還原。版面、CSS、圖片或新增頁面仍依樣式指引的發布流程處理。
+所有修改（含只改團隊文字的 `locale-about.js`，以及版面、CSS、圖片或新增頁面）都走同一流程：本機預覽與測試通過後，明確 `git add` 本次檔案、commit，再 `git push github main`。只推 Azure（`origin`）不會上架；不要再手動覆蓋主機上的版本目錄。
 
 ## 要改什麼，去哪裡
 
@@ -31,7 +31,7 @@
 | 搜尋結果摘要、正規網址、hreflang、robots／sitemap | [locale-common.js](locale-common.js) 的 `description`、[page-metadata.js](page-metadata.js) 的 `crawlUrls`、`robots.txt`／`sitemap.xml`；規則見 [樣式指引：搜尋引擎中繼資料](STYLE-GUIDE.md#搜尋引擎中繼資料) |
 | 中英文、其他語言、統一更換 Logo | [語言與 Logo 指引](localization-and-brand-guide.md) |
 | 插畫、新聞小圖與引用來源 | [樣式指引：素材與引用維護](STYLE-GUIDE.md#素材與引用維護) |
-| 正式站上架、快取與還原 | [Hostinger 操作索引](../../operations/deploy-hostinger.md) |
+| 正式站上架、快取與還原 | [官網更新 README](../../operations/WEBSITE-UPDATE-README.md)、[CI/CD 說明](../../operations/hostinger-cicd.md)；歷次紀錄在 [Hostinger 操作索引](../../operations/deploy-hostinger.md) |
 
 ## 本機預覽
 
@@ -63,12 +63,14 @@ npm run dev:design
 1. **核對內容**：名稱、日期、場域、合作單位可否公開、SynaiQ 實際提供的內容、照片使用依據。未確認的活動訊息或產品介紹不能直接當成實績。
 2. **取固定識別碼**：小寫英數與連字號，例如 `tainan-tech-forum-2026`；一旦發布就不再更動，它是公開網址的一部分。
 3. **加雙語文字**：`locale-cases.js` 的 `cases.<識別碼>`，中英文都要，欄位與既有案例一致。沒有現場紀錄或報導就整段不寫，不放「待補」。
-4. **加一筆案例設定**：`cases-data.js` 的 `CASES`，填 `date`（只寫實際已知精度）、`tags`、`cover`、`hero`，選填 `field`／`media`。`published: false` 的案例不會顯示，也不會進 sitemap。
-5. **放照片並更新白名單**：素材放 `assets/cases/`，再把每個檔名加進 `share-preview.mjs` 的 `PUBLIC_FILES`；沒加進白名單的檔案預覽與正式站都取不到。
+4. **加一筆案例設定**：在 `cases-data.js` 新增一個用 `Object.freeze` 凍結的常數，並把它加進 `CASES` 陣列。填 `id`、`published`、`featured`（兩者都是布林；公開案例最多一筆 `featured: true`，目前是東京）、`date`（只寫實際已知精度）、`tags`、`cover`、`hero`，選填 `field`／`media`。`published: false` 的案例不會顯示，也不會進 sitemap。
+5. **放照片並更新白名單**：素材放 `assets/cases/`，再把每個檔名逐一加進 `share-preview.mjs` 的 `runtimeFiles`（匯出為 `PUBLIC_FILES`）；沒加進白名單的檔案預覽與正式站都取不到。手繪選填；有宣告的手繪必須存在並與照片同比例。
 6. **更新 sitemap**：`sitemap.xml` 為每個公開案例補中英兩筆，網址與 `page-metadata.js` 的 `crawlUrls()` 必須一致。
-7. **驗證**：`npm run test:design`，再開本機預覽看總覽卡片、案例詳情、語言切換與 390／835／1440px；要上架再依 [官網更新 README](../../operations/WEBSITE-UPDATE-README.md) 走發布流程（`release.mjs` 的 `EXPECTED_FILES` 與 `SITEMAP_URLS` 依本次實際數量重算）。
+7. **驗證與上架**：`npm run test:design`，再開本機預覽看總覽卡片、案例詳情、語言切換與 390／835／1440px。新增案例會讓測試裡寫死的預期值失敗，依本次實際值更新：`seo-metadata.test.mjs` 的網址清單、`share-preview.test.mjs` 的公開檔數，以及 `cases-render.test.mjs`／`cases-extensibility.test.mjs` 的總覽列數、左右與直橫。通過後明確 `git add` 本次檔案、commit，再 `git push github main`；`docs/design/live-prototype/` 的變更會由 [GitHub Actions](../../operations/hostinger-cicd.md) 自動測試、部署、清 CDN 快取並加密備份，只推 Azure（`origin`）不會上架。到 [Actions 執行紀錄](https://github.com/LinthDale/synaiq-web/actions/workflows/hostinger.yml) 確認 test 與 deploy 都成功；deploy 的 summary 列出本次正式目錄、來源 commit 與瀏覽器檢查數，檢查範圍包含每個公開案例的中英內頁。deploy 日誌出現 `CDN compression warning`，表示 CDN 重新壓縮後的圖片畫素差異介於 3 至未滿 12，部署照常完成；達 12 會在切換正式首頁前停止並恢復原路由，須人工目視確認內容相同，才把該圖來源與 CDN 回應的精確 hash 配對加入 `scripts/hostinger/cdn-approved-images.json`。`out/` 的 `release.mjs` 手動流程只供緊急處理與歷史查閱，不再重算 `EXPECTED_FILES`／`SITEMAP_URLS`。
 
 實際範例：`tainan-tech-forum-2026` 就是照這七步加進來的——`cases-data.js` 一筆設定（橫式封面、一張現場照片及各自配對手繪、三個報導網址）、`locale-cases.js` 一組雙語文字、顯影按鈕標籤與對應的三則報導標題、`assets/cases/` 四個檔案、白名單四筆、sitemap 兩筆。報導網址放 `cases-data.js` 的 `media`、標題放 `locale-cases.js` 的 `press.links`，兩邊依序一一對應。總覽封面及案例內兩張圖均使用手繪顯影、暫停／繼續與鍵盤操作；總覽圖片是獨立互動按鈕，文字區與「翻開這個故事」連結負責進入內頁。
+
+不要為新增案例更動 `?v=` 版本參數：CI 每次部署都建立新的版本目錄，資源網址本來就會換；`address-cache.test.mjs` 也把 `prototype.js`、`page-metadata.js`、`i18n.js` 的匯入參數釘在同一個值，只改一部分會讓測試失敗。
 
 封面直式或橫式都可以：`hero.aspect` 寫顯示比例。總覽與案例頁在 900px 以上都以圖片欄 60%、文字欄 40% 分配扣除間距後的欄寬；直圖置中且高度上限 480px，套用總覽、主照與現場照片，橫圖仍填滿圖片欄。總覽保留左右交替，案例頁統一文字左、圖片右。899px 以下改單欄、圖片在上，橫圖最大寬 440px、直圖最大高 360px，均不超過容器。配對顯影沿用主照置中取景；沒有配對手繪時，靜態封面用 `cover.focus` 指定取景。排序由 `featured` 與日期決定：目前東京 `featured: true` 置頂，其餘依日期由新到舊。
 
