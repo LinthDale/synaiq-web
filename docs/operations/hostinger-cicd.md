@@ -23,7 +23,7 @@
 3. 本機 28 組瀏覽器測試：六頁 × 中英 × 手機／桌面，另加 EMS／PVsim 的 320／835px；包含圖片、語言切換及 PVsim 3D。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
 5. 上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，authenticated raw 下載逐檔核對 SHA-256。
-6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，staged 28 組瀏覽器檢查成功後才切換 root、robots 與 sitemap。
+6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 28 組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。CDN 壓縮圖片核對尺寸、比例與畫素誤差；先前已目視確認的三張照片只接受 `cdn-approved-images.json` 中精確的來源／回應 hash 配對，不放寬新變體。
 7. 清除兩網域快取，正式網址檢查及 28 組瀏覽器驗證成功後，更新主機私有維護說明及 `.hostinger-ci-state.json`。
 8. 按**實際成功啟用順序**保留現行版＋最近兩版。先重驗保留檔案及跨版本相依，完整下載待刪版本並建立逐檔清單。
 9. 備份 tar.gz 以 AES-256-GCM 加密，解包核對每個檔案，存至 GitHub **草稿 Release**，重新下載、比對 SHA-256 並驗證解密後才允許刪除。

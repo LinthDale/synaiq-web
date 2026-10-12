@@ -8,7 +8,7 @@
 
 新增 `.github/workflows/hostinger.yml` 與 `scripts/hostinger/`，詳見 [CI/CD 操作說明](hostinger-cicd.md)。支援 GitHub main push／merge 自動驗證、唯一版本封裝、staged／live 瀏覽器檢查、受 hash 保護的路由切換與失敗回退、加密持久備份，以及成功後保留現行版＋最近兩版。PR 不取得部署 secrets。
 
-本機驗證：14 項部署防護測試、199 項設計測試通過（5 項跳過）、32 項 repository 測試及 Astro 建置、28 組封裝後 Chrome 驗證通過。即時 Hostinger audit 在 session 建立時回覆 401，沒有變更主機路由、上傳檔案或刪除版本。須補上有效 API token 並完成首次 GitHub deployment 後，才能宣稱自動上架已啟用。
+本機驗證：15 項部署防護測試、199 項設計測試通過（5 項跳過）、32 項 repository 測試及 Astro 建置、28 組封裝後 Chrome 驗證通過；加密備份已實際解密、解包並核對逐檔 hash。即時 Hostinger audit 在 session 建立時回覆 401，沒有變更主機路由、上傳檔案或刪除版本。須補上有效 API token 並完成首次 GitHub deployment 後，才能宣稱自動上架已啟用。
 
 舊發布目錄與 hash 以下列 2026-10-02 紀錄為歷史基準；本次尚未取得可驗證的即時主機狀態。自動化啟用後，正式目錄以主機 `.htaccess`、CI state 與 Actions summary 為準，勿套用下方歷史固定目錄做增量上傳。
 

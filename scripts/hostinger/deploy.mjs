@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { sha, activeRelease, buildRouting, retentionPlan, assertNoDependencies, STATE, GUIDE } from './core.mjs';
 import { request } from './client.mjs';
 import { smoke } from './browser.mjs';
+import { verifyPublicAssets } from './public-assets.mjs';
 
 const json = data => Buffer.from(JSON.stringify(data, null, 2));
 export async function save(work, path, bytes) {
@@ -88,8 +89,10 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
   const inspect = services.audit || audit, browserCheck = services.smoke || smoke;
   const checkPublic = services.publicChecks || publicChecks, getPublic = services.request || request;
   const takeSnapshot = services.snapshot || snapshot;
+  const checkAssets = services.verifyPublicAssets || verifyPublicAssets;
   const local = JSON.parse(await readFile(join(work, 'browser-local.json')));
   assert.equal(local.status, 'passed'); assert.equal(local.release, manifest.release); assert.equal(local.sourceCommit, manifest.sourceCommit);
+  console.log('Auditing current routing and release hashes');
   const before = await inspect(client, config, work);
   assert.equal(await client.meta(manifest.release, true), null, 'Release exists; inspect instead of replaying upload');
   const route = buildRouting(before.route.toString(), manifest.release, manifest.files.map(f => f.path));
@@ -100,8 +103,10 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
       const bytes = await readFile(join(work, 'artifact', file.path)); assert.equal(sha(bytes), file.sha256);
       await client.upload(`${manifest.release}/${file.path}`, bytes);
     }
+    console.log(`Uploaded and hash-verified ${manifest.files.length} files`);
     routeAttempted = true;
     await client.replace('.htaccess', Buffer.from(route.preview), sha(before.route), `${id}-preview`);
+    await checkAssets(config, manifest, work);
     await checkPublic(config, manifest, false);
     await browserCheck(manifest, work, config.origin, 'staged');
     // The old homepage must still be served during staging.

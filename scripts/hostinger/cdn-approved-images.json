@@ -1,0 +1,17 @@
+[
+  {
+    "path": "assets/cases/tokyo-5.jpg",
+    "sourceSha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5",
+    "sha256": "74c3495eecb47f127e97e0c64c060d07e9e8e4c8d4a0e858dae0f7a9c8bc6764"
+  },
+  {
+    "path": "assets/cases/tainan-tech-forum-2026-cover.jpg",
+    "sourceSha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570",
+    "sha256": "be2b48ad3cfe8b363b71c34d62bea26c5a209cf644c215a03ca87bd5413f4da1"
+  },
+  {
+    "path": "assets/cases/tainan-tech-forum-2026-panel.jpg",
+    "sourceSha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca",
+    "sha256": "86f6571b116c7b7e70badff584d948c5f77887a5cee625f1ee682150eb2722a1"
+  }
+]

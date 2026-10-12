@@ -8,7 +8,7 @@ import { save } from './deploy.mjs';
 const gh = args => execFileSync('gh', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 4 * 1024 * 1024 }).trim();
 export async function seal(work, key, filename = 'backup.tar.gz.enc') {
   // Explicit selection: never archive environment files, session URLs, or encryption keys.
-  const entries = (await readdir(work)).filter(name => ['artifact', 'backup'].includes(name) || /^(?:manifest|audit|state-before|state-original|state-deployed|deployed|cleanup-plan|cleanup-complete|cleanup-operations|backup-receipt|rollback|browser-(?:local|staged|live)|failure)\.(?:json|jsonl)$/.test(name) || /^routing-(?:before|preview|live)\.htaccess$/.test(name) || name === 'guide-before.txt');
+  const entries = (await readdir(work)).filter(name => ['artifact', 'backup'].includes(name) || /^(?:manifest|audit|state-before|state-original|state-deployed|deployed|public-assets|cleanup-plan|cleanup-complete|cleanup-operations|backup-receipt|rollback|browser-(?:local|staged|live)|failure)\.(?:json|jsonl)$/.test(name) || /^routing-(?:before|preview|live)\.htaccess$/.test(name) || name === 'guide-before.txt');
   assert.ok(entries.includes('manifest.json'));
   const inventory = [];
   async function collect(path) {

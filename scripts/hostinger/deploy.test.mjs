@@ -74,6 +74,7 @@ test('a failed live check rolls back known routing without deleting releases', a
   const services = {
     audit: async () => before,
     publicChecks: async () => {},
+    verifyPublicAssets: async () => {},
     smoke: async (_manifest, _work, _origin, mode) => { if (mode === 'live') throw Error('simulated broken page'); },
     request: async () => new Response('test'),
   };
