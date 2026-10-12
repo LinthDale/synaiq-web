@@ -23,7 +23,8 @@ export async function seal(work, key, filename = 'backup.tar.gz.enc') {
   const bytes = await readFile(plain), encrypted = encrypt(bytes, key);
   assert.equal(sha(decrypt(encrypted, key)), sha(bytes));
   const target = join(work, filename); await writeFile(target, encrypted, { flag: 'wx' });
-  const verifyDir = join(work, `verify-${filename}`); await mkdir(verifyDir);
+  // Never give a plaintext directory an .enc suffix: artifact globs can recurse into it.
+  const verifyDir = join(work, `verify-${filename}.restored`); await mkdir(verifyDir);
   execFileSync('tar', ['-xzf', plain, '-C', verifyDir]);
   for (const file of inventory) assert.equal(sha(await readFile(join(verifyDir, file.path))), file.sha256, `Archive restore differs: ${file.path}`);
   return { path: target, sha256: sha(encrypted), plaintextSha256: sha(bytes), files: inventory.length };
