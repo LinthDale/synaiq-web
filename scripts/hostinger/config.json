@@ -1,0 +1,19 @@
+{
+  "repository": "LinthDale/synaiq-web",
+  "branch": "main",
+  "username": "u235694681",
+  "domain": "synaiq.com",
+  "origin": "https://taistro.com.tw",
+  "fileOrigin": "https://srv1865-files.hstgr.io",
+  "cacheDomains": ["synaiq.com", "taistro.com.tw"],
+  "keepReleases": 3,
+  "bootstrapRoutingSha256": "baf517aea5155e9820bb53c46751cc7397a49b5ab259ca3eb939f69cdfd1917b",
+  "bootstrapReleasesNewestFirst": [
+    "synaiq-release-20260930-pvsim-3d",
+    "synaiq-release-20260930-solutions",
+    "synaiq-release-20260930-kip-name",
+    "synaiq-release-20260929-tainan-photos",
+    "synaiq-release-20260923-domain",
+    "synaiq-release-20260923-taistro"
+  ]
+}

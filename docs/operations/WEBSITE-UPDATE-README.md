@@ -1,6 +1,12 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-10-02。
+給工程師及新的 AI session。最後核對：2026-10-12。
+
+## GitHub 自動部署入口
+
+已新增 [GitHub Actions CI/CD 操作說明](hostinger-cicd.md) 與 `.github/workflows/hostinger.yml`。GitHub `main` 的網站更新／合併會執行 CI；repository variable `HOSTINGER_DEPLOY_ENABLED=true` 時才會部署，成功驗證後自動備份並保留現行版＋最近兩版。2026-10-12 現有 Hostinger token 回傳 401，尚待有效 token 及首次正式驗證，開關保持關閉。
+
+本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
 ## 先看這張表
 
@@ -13,9 +19,9 @@
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
 | 本機發布工具與證據 | `out/synaiq-release-20260930-pvsim-3d/`；本次最終切換由 `release.mjs` 完成，供讀取參考，不可原地重跑新發布 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
-| Git 遠端 | `origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；目前使用 `main` |
+| Git 遠端 | `github`：GitHub `LinthDale/synaiq-web`（CI/CD）；`origin`：Azure DevOps `SynaiqDev/_git/synaiq-web`；分支 `main` |
 
-**Git push 不會自動部署官網。正式站來源是 live-prototype，不是 Astro `dist/`。**
+**GitHub 自動部署取決於上述啟用開關；Azure push 不部署官網。正式站來源是 live-prototype，不是 Astro `dist/`。**
 
 2026-10-02 依使用者明確要求，在既有 pvsim-3d 正式目錄增量更新 11 檔，沒有建立完整發布包。產品名稱改為 EMS／PVsim，模型入口新增白色箭頭及右側提示。來源 `0144bac`、`8adde03`；前後 hash 與備份在 `out/hostinger-patch-20261002-products/`、`out/hostinger-patch-20261002-cache/`，後者覆蓋同名記錄。後續核對不能只依 9/30 完整 manifest。詳見部署指南 10/02 紀錄。
 

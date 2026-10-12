@@ -1,0 +1,1818 @@
+{
+  "synaiq-release-20260930-pvsim-3d": [
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/about-design.js",
+      "sha256": "9380c83058679808471af03051027f8feeb3c543415093854b3f77f79846ab90"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tainan-tech-forum-2026-cover-sketch.webp",
+      "sha256": "f21d78d5200a00f928ec150365967310997e743e373e2171c01737024944d056"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tainan-tech-forum-2026-cover.jpg",
+      "sha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tainan-tech-forum-2026-panel-sketch.webp",
+      "sha256": "dbfa642d1230f695e88279235d011cf66508a8df05745cbbfc312f178663eac8"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tainan-tech-forum-2026-panel.jpg",
+      "sha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tokyo-2-scaled.jpg",
+      "sha256": "55d91265b1cffb2be73e8b37a9c4694cf02077037d0131879c4f9ab03fc4aa63"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tokyo-2-sketch.webp",
+      "sha256": "ff794642d9db1c7e2ae93a412af7877fe4adbecc4716d6ff446034ce129786ce"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tokyo-5-sketch.webp",
+      "sha256": "69dd0cd22a940ffb619f689a875ff51b57ebd5c2fa27fe750add0a94eba26266"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/cases/tokyo-5.jpg",
+      "sha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/ceo-speaking-sketch-v1.webp",
+      "sha256": "2e19d2c27861fb69339b8b0f12db628ddc11f1263aa103f62ed2551adf3e76d9"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/contact-cat-yarn-v1.webp",
+      "sha256": "fd8983d835b1233e3d988d408ecbc1171cca0b6001d220a6368da2c23fc2a8a2"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/demo-paper-edge.webp",
+      "sha256": "cffbdb75ac665f28c6f3282a8c8bd96124bf82348225d2c0b0bc504d0cd41bd7"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/demo-send-pen.webp",
+      "sha256": "16cb8850df436f9d2bdc49743bcbe66d17ba415f5cdd96a21d99be3c8c22c1ab"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/demo-sidebar-dialogues.webp",
+      "sha256": "34be146e2eb5e5fab0d335dfbd18ce3a856af326df97e4b5d81799a878bb019c"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/ems-demand-demo.webp",
+      "sha256": "3bac35cafe8a335c3c8b54539989e5a14b94d0a6382d62e781a59b28cd71bce9"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/ems-main-demo.webp",
+      "sha256": "b76085b9ac2fbd130d5b7316546eb978bc884886799177e39dd87ca598c97df8"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/ems-storage-demo.webp",
+      "sha256": "dae42108c83da39636b2e6d1a7bca32c9dc712fcc9fdace354f4ddbd66611ec3"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/investing-cio-20240629.png",
+      "sha256": "1a1da86934d5b6397593d41b1e180aaa7be61efed243d2c5ca2518b4352482de"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/kip-connected-work-v1.webp",
+      "sha256": "48641943d5c1083c061a1d6cd006b819951605f61261d14c4b8ba678e8b8b38b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/kip-library-demo-en.svg",
+      "sha256": "dea86c19b3f7df5be76178d9ffd41564c009869af2240b9f613bf6ef829a9734"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/kip-library-demo.svg",
+      "sha256": "39807c971d4ddc078765fd98c394d52f820f33ffd76caad4726192e0585a22f1"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/kip-search-demo-en.svg",
+      "sha256": "34751a428bafb8794892a10b3c3b32ebf8c5b17ab4523b3879de1b703abd6811"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/kip-search-demo.svg",
+      "sha256": "740a311bd266ad66ba81f40cd7c21458e187fa4d496f94f50a23ada43c743457"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/kip-wordmark.png",
+      "sha256": "784f98945dd5d227e734eea91e0a89fe9cd9e110b8d720233aa8bfef56ac646a"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/knowledge-threads-v2.png",
+      "sha256": "9c4b83d9742ccb77e58ec4196a6abe9f3fce441771d32043926a23d5e38750e8"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/news-sketch-frame-v2.webp",
+      "sha256": "74027ed8534b4371651febbe1a5e24a88a000486f724a3bb30ef088acd9a7dae"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/pvsim-generation-demo.webp",
+      "sha256": "7321e83833587b6fa61f584a2499bd96a3fbbe67e36f044b425a51ec5a6fbb91"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/pvsim-model-demo.webp",
+      "sha256": "bd1bd216cd0e06f1709a5e09d2d0fc3a13338bd2a61940a0f11e08af85b5a30d"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/pvsim-panels-demo.glb",
+      "sha256": "1a2e345279f02af5b46eb09d58810bb56e43675b5d5e55b5975b01e6a84c0b5b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/pvsim-shading-demo.webp",
+      "sha256": "640a64e6770f29e3ca746d074599a1099169835aefcc3e632b8297ef00cd9379"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/pvsim-site-demo.glb",
+      "sha256": "91d1c82992070528f20b4bfb5169e56245ec272582351a0b419cdcd699e33e85"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/pvsim-wiring-demo.webp",
+      "sha256": "7ce9a79f1546135a72d6e8cb2c31874a3a634033d5ff5525a235926a01b6d309"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/shared-knowledge-hands-v1.png",
+      "sha256": "86bb3414e6c65ad193881b7d885d886b770954f28bef25595adc2a931790ed1b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/synaiq-logo-ink.svg",
+      "sha256": "927ba8a491b689c6ef4fd65e1101342758497e487cf965e89a28f377932bc26b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/taistro-logo-ink.svg",
+      "sha256": "77adaf9f3f8b0f6b8aad125896020881650b6e73c695469d9352c5892396b2a7"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/taistro-logo-light.svg",
+      "sha256": "8cbfd247094d69021e753a71b19cd4afc6466e6088614fbe0fdd16fe893d5c3b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/celestine-photo.webp",
+      "sha256": "d039410f9e43880b47608da03c8c537a6e2cbbdc267c536d3bc9d1866bffcf45"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/celestine-sketch.webp",
+      "sha256": "0342a38d36bc0142e3f8f9c50d5563271e3ba12cb96b0ef68479f8c2ed929278"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/dale-20260624-photo.webp",
+      "sha256": "1315b9efb3daa747176991d72f3a0bff3672ae2e9e346ca877320b1ce70e5749"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/dale-20260624-sketch.webp",
+      "sha256": "3457766a889e4503fa871673f2ad9486d46233021dccf4b3a4e1c5f8863619a9"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/leef-sketch.webp",
+      "sha256": "975f1690db903e949392bc955f8e108a4c2bdec6409e5e3e44b98eb858e0bba0"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/lou-sketch.webp",
+      "sha256": "f11687d801b6e6171fcd96b36416ce2d436e7f912b225f2fc5d041b98e59507d"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/steve-20260624-photo.webp",
+      "sha256": "91f867e3e3db9293862b2cd391628394e3bbd46f9432c718c32f8e785ae8c07c"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/steve-20260624-sketch.webp",
+      "sha256": "12af5cb97256a054f2a849b073c354ec67c202759a4808481aeaaf49209a5b4e"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/sunny-sketch.webp",
+      "sha256": "b95e95b5ef3885e19a441c89cca89fc035652065ba10123abdfdd7c5577878b3"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/team/wilson-sketch.webp",
+      "sha256": "67d37020912ead684e43d8a8e945dd16874a125b2e463f6fe4de266d378dcafa"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/torn-letter-edge.svg",
+      "sha256": "1251d36f76f67907719d812708fe9ba3564fc9d78ee37385a417883030834bee"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/assets/torn-paper-cotton-v2.webp",
+      "sha256": "8619727744c970b413a748bd8dd4cc53b31865bb09bed1d4553f957d6fd6cf0b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand.js",
+      "sha256": "dba1db51af4454cd1a68c00aab550e8c6032fbf7fd2145ecd9f3c96ac9f0a554"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/synaiq-logo-light.svg",
+      "sha256": "6d111570563a15885039d2cd8df74724660a8e9425122d209c4e92ece7ab7fe8"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/team/daniel-web-1.jpg",
+      "sha256": "019462f5f1dc82cc08413d7b86047cf847b954191184e8fc07d05812b2f024af"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/team/leff-web-1.jpg",
+      "sha256": "e708f44069e21ca17cb246a799b6a911a65a6696db515727e46ede3ad8d0bba4"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/team/lou-web-1.jpg",
+      "sha256": "35e316ccd5b6af77db76c44a956ca11ea0f4b9f953e8db94c0ee4c9863c3d4fe"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/team/sunny-web-1.1.jpg",
+      "sha256": "af484b5f137716b2efdb0c0e858984e83c414135d555d7c8da984c631f751cce"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/team/wilson-web-1.jpg",
+      "sha256": "12edecc20c4403c4ba0d08352e6046a21173e5cef9b39c47f15cd20e5821e11f"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/wally-2-plus.png",
+      "sha256": "66dd513be83fb18f077e49144d827fddd4c4fc1cacedbf400902ac20bf8ec4df"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/wally-mini.png",
+      "sha256": "061216babd7249a8778f26f2988c348da8f7d3f9d70b467c26b71c6362f3d492"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/wally/wally-2.png",
+      "sha256": "f9a76e99486dcf95c2382ec8bc10f0b59aaaf3931ee4d7a30c599e05e99ea573"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/brand/wally/wally-series.png",
+      "sha256": "27d8045903ef4813a365961a139168f01908cd8bdb263e577b0a3789d7f81432"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/cases-data.js",
+      "sha256": "b7d4d7d548a8eaf64561716e93d9a6eef42ce4c49173cdf0b583edbbfd881ce5"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/cases-design.js",
+      "sha256": "387714aef923b1ce7a2c7d4cb83eb1a44f58d0378ce7eca79cf0e02bad3adc8b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/demo-animation.js",
+      "sha256": "67b16556f6b31a3fa2ca035599ad315d5afd6874b875c90c99ec5eb41eb0b81d"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/energy-design.js",
+      "sha256": "77f4661bb528238cf548a9b783df93e5b171a35cf526c19ccc3f7b01dcc9a898"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/energy-screens.js",
+      "sha256": "925896d59ce6571fadf7ed6a13ef2247f5bc5ef3f84c75e2cd69d0caa1384487"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/home-design.js",
+      "sha256": "ae65044d0c1e9c6bb855baa129b23383431833b624f960085193705f877743ff"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/i18n.js",
+      "sha256": "0a354975a5303dc8b1b9bd65cb9acb0154b742833e3cedcc10b472178276e2c8"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/index.html",
+      "sha256": "acd7916aeacf3de4d187eed16128f8969a75cdfb7ccfc201a60d0af4d727ffcd"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/ink-photo.js",
+      "sha256": "bc2d85520f95aa892cb1bde754f43bce9151c8ed5c8305ab64d4a5029a3ab973"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/kip-design.js",
+      "sha256": "08c01090a3f95d7de2bf58cd64b573110423c4b2d2d8c14ac003ed4ad7e3211b"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-about.js",
+      "sha256": "f2a1ab3eaca668a68cf805f087189a2164669b949f833a50206b8293f93391c5"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-cases.js",
+      "sha256": "1c0418a2d91139cc7cc97df472192d152b3c9c454ff6a7c8c3768ca3ec709780"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-common.js",
+      "sha256": "ede2b3fc57a67d3b43bd284582263176003c5c327bcef5c010dc2fc46f75a00c"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-demo.js",
+      "sha256": "403b9ca239ef6d53ce675e56a7a7256d54ac2e5266e01f277ffaa88143578861"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-ems.js",
+      "sha256": "5f73f444b422e4a51147b8822bec26c3734fb636f47f4986ecc90ca88a6f7f18"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-home.js",
+      "sha256": "9fc20d39daa90570b498cc791139afbd7a98bc03cfae1320ef2021c076f81cb7"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-kip.js",
+      "sha256": "eb70196f8a64619561ddc44acc7f89dccaa1740e1a2695fc41cfc19021252616"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/locale-pvsim.js",
+      "sha256": "37074da23139990a64ddb5932f3f07d2ab277050fa6ac9d0884b552929ea168e"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/page-metadata.js",
+      "sha256": "31ff0efa62a47a0329b5af3d3e9de341701a66f76be0ba9ed7eff9d75f448b0c"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/page.html",
+      "sha256": "acd7916aeacf3de4d187eed16128f8969a75cdfb7ccfc201a60d0af4d727ffcd"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/prototype.js",
+      "sha256": "075c61b219c0661133aa08116113a87fabc74c625a63cf8a995b8e6fd76a3c7f"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/pvsim-viewer.js",
+      "sha256": "3ef525fe56e5ee91114fb0fb1245f934c2d3693498748706c4d459db22cd0438"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/robots.txt",
+      "sha256": "c60e009ab0101469ac2adfd57e1127c36081acaa6ad4c1817e04f29e5cc3014c"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/shared-design.js",
+      "sha256": "89f450833a0521d26832b16c8436dcbbfa492b4e57450f9b09592cb75057912f"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/site.css",
+      "sha256": "7ec9e38e380afe56acd58387cc3b8b440e3a56feecebe95a3a1cb188ebd8cb67"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/sitemap.xml",
+      "sha256": "a1db5c5e41840c0605b2916ee55b29551da8cdfba2fc3171c5744fd8f9371d09"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/tokens.css",
+      "sha256": "0e3d538d324bfd5148b7a49e157e1babf1520378c2a76379727302a2d7aadc6a"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/vendor/pvsim-three.js",
+      "sha256": "2da8d2ae8b4bd0643b0fa523921413d6ba28abd792a740c30f6312ff1cda69ad"
+    },
+    {
+      "path": "synaiq-release-20260930-pvsim-3d/vendor/three-LICENSE.txt",
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    }
+  ],
+  "synaiq-release-20260930-solutions": [
+    {
+      "path": "synaiq-release-20260930-solutions/about-design.js",
+      "sha256": "7c289975f4c5c29e9a8df57acf6e15a35714a47390e5c318a50657ab33d4d7fb"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tainan-tech-forum-2026-cover-sketch.webp",
+      "sha256": "f21d78d5200a00f928ec150365967310997e743e373e2171c01737024944d056"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tainan-tech-forum-2026-cover.jpg",
+      "sha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tainan-tech-forum-2026-panel-sketch.webp",
+      "sha256": "dbfa642d1230f695e88279235d011cf66508a8df05745cbbfc312f178663eac8"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tainan-tech-forum-2026-panel.jpg",
+      "sha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tokyo-2-scaled.jpg",
+      "sha256": "55d91265b1cffb2be73e8b37a9c4694cf02077037d0131879c4f9ab03fc4aa63"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tokyo-2-sketch.webp",
+      "sha256": "ff794642d9db1c7e2ae93a412af7877fe4adbecc4716d6ff446034ce129786ce"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tokyo-5-sketch.webp",
+      "sha256": "69dd0cd22a940ffb619f689a875ff51b57ebd5c2fa27fe750add0a94eba26266"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/cases/tokyo-5.jpg",
+      "sha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/ceo-speaking-sketch-v1.webp",
+      "sha256": "2e19d2c27861fb69339b8b0f12db628ddc11f1263aa103f62ed2551adf3e76d9"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/contact-cat-yarn-v1.webp",
+      "sha256": "fd8983d835b1233e3d988d408ecbc1171cca0b6001d220a6368da2c23fc2a8a2"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/demo-paper-edge.webp",
+      "sha256": "cffbdb75ac665f28c6f3282a8c8bd96124bf82348225d2c0b0bc504d0cd41bd7"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/demo-send-pen.webp",
+      "sha256": "16cb8850df436f9d2bdc49743bcbe66d17ba415f5cdd96a21d99be3c8c22c1ab"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/demo-sidebar-dialogues.webp",
+      "sha256": "34be146e2eb5e5fab0d335dfbd18ce3a856af326df97e4b5d81799a878bb019c"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/investing-cio-20240629.png",
+      "sha256": "1a1da86934d5b6397593d41b1e180aaa7be61efed243d2c5ca2518b4352482de"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/kip-connected-work-v1.webp",
+      "sha256": "48641943d5c1083c061a1d6cd006b819951605f61261d14c4b8ba678e8b8b38b"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/kip-library-demo-en.svg",
+      "sha256": "dea86c19b3f7df5be76178d9ffd41564c009869af2240b9f613bf6ef829a9734"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/kip-library-demo.svg",
+      "sha256": "39807c971d4ddc078765fd98c394d52f820f33ffd76caad4726192e0585a22f1"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/kip-search-demo-en.svg",
+      "sha256": "34751a428bafb8794892a10b3c3b32ebf8c5b17ab4523b3879de1b703abd6811"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/kip-search-demo.svg",
+      "sha256": "740a311bd266ad66ba81f40cd7c21458e187fa4d496f94f50a23ada43c743457"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/kip-wordmark.png",
+      "sha256": "784f98945dd5d227e734eea91e0a89fe9cd9e110b8d720233aa8bfef56ac646a"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/knowledge-threads-v2.png",
+      "sha256": "9c4b83d9742ccb77e58ec4196a6abe9f3fce441771d32043926a23d5e38750e8"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/news-sketch-frame-v2.webp",
+      "sha256": "74027ed8534b4371651febbe1a5e24a88a000486f724a3bb30ef088acd9a7dae"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/shared-knowledge-hands-v1.png",
+      "sha256": "86bb3414e6c65ad193881b7d885d886b770954f28bef25595adc2a931790ed1b"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/synaiq-logo-ink.svg",
+      "sha256": "927ba8a491b689c6ef4fd65e1101342758497e487cf965e89a28f377932bc26b"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/taistro-logo-ink.svg",
+      "sha256": "77adaf9f3f8b0f6b8aad125896020881650b6e73c695469d9352c5892396b2a7"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/taistro-logo-light.svg",
+      "sha256": "8cbfd247094d69021e753a71b19cd4afc6466e6088614fbe0fdd16fe893d5c3b"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/celestine-photo.webp",
+      "sha256": "d039410f9e43880b47608da03c8c537a6e2cbbdc267c536d3bc9d1866bffcf45"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/celestine-sketch.webp",
+      "sha256": "0342a38d36bc0142e3f8f9c50d5563271e3ba12cb96b0ef68479f8c2ed929278"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/dale-20260624-photo.webp",
+      "sha256": "1315b9efb3daa747176991d72f3a0bff3672ae2e9e346ca877320b1ce70e5749"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/dale-20260624-sketch.webp",
+      "sha256": "3457766a889e4503fa871673f2ad9486d46233021dccf4b3a4e1c5f8863619a9"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/leef-sketch.webp",
+      "sha256": "975f1690db903e949392bc955f8e108a4c2bdec6409e5e3e44b98eb858e0bba0"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/lou-sketch.webp",
+      "sha256": "f11687d801b6e6171fcd96b36416ce2d436e7f912b225f2fc5d041b98e59507d"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/steve-20260624-photo.webp",
+      "sha256": "91f867e3e3db9293862b2cd391628394e3bbd46f9432c718c32f8e785ae8c07c"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/steve-20260624-sketch.webp",
+      "sha256": "12af5cb97256a054f2a849b073c354ec67c202759a4808481aeaaf49209a5b4e"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/sunny-sketch.webp",
+      "sha256": "b95e95b5ef3885e19a441c89cca89fc035652065ba10123abdfdd7c5577878b3"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/team/wilson-sketch.webp",
+      "sha256": "67d37020912ead684e43d8a8e945dd16874a125b2e463f6fe4de266d378dcafa"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/torn-letter-edge.svg",
+      "sha256": "1251d36f76f67907719d812708fe9ba3564fc9d78ee37385a417883030834bee"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/assets/torn-paper-cotton-v2.webp",
+      "sha256": "8619727744c970b413a748bd8dd4cc53b31865bb09bed1d4553f957d6fd6cf0b"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand.js",
+      "sha256": "62f5c19e897ce3e97095551daf855af80e75d64b3aa003d9a9182e46e15f0e2a"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/synaiq-logo-light.svg",
+      "sha256": "6d111570563a15885039d2cd8df74724660a8e9425122d209c4e92ece7ab7fe8"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/team/daniel-web-1.jpg",
+      "sha256": "019462f5f1dc82cc08413d7b86047cf847b954191184e8fc07d05812b2f024af"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/team/leff-web-1.jpg",
+      "sha256": "e708f44069e21ca17cb246a799b6a911a65a6696db515727e46ede3ad8d0bba4"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/team/lou-web-1.jpg",
+      "sha256": "35e316ccd5b6af77db76c44a956ca11ea0f4b9f953e8db94c0ee4c9863c3d4fe"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/team/sunny-web-1.1.jpg",
+      "sha256": "af484b5f137716b2efdb0c0e858984e83c414135d555d7c8da984c631f751cce"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/team/wilson-web-1.jpg",
+      "sha256": "12edecc20c4403c4ba0d08352e6046a21173e5cef9b39c47f15cd20e5821e11f"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/wally-2-plus.png",
+      "sha256": "66dd513be83fb18f077e49144d827fddd4c4fc1cacedbf400902ac20bf8ec4df"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/wally-mini.png",
+      "sha256": "061216babd7249a8778f26f2988c348da8f7d3f9d70b467c26b71c6362f3d492"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/wally/wally-2.png",
+      "sha256": "f9a76e99486dcf95c2382ec8bc10f0b59aaaf3931ee4d7a30c599e05e99ea573"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/brand/wally/wally-series.png",
+      "sha256": "27d8045903ef4813a365961a139168f01908cd8bdb263e577b0a3789d7f81432"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/cases-data.js",
+      "sha256": "71f868361369e3b2012b5acb227c0eac47c385fdb72f716e4c53c1f660996446"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/cases-design.js",
+      "sha256": "387714aef923b1ce7a2c7d4cb83eb1a44f58d0378ce7eca79cf0e02bad3adc8b"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/demo-animation.js",
+      "sha256": "4c9b12f1892388e043fab0df1504809605fd43178436e9f130caed29d19afc68"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/energy-design.js",
+      "sha256": "156ac801f6427b12167c28e09b8ccd14fa8efc2cb419af6ddc4d9e30471d9d41"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/home-design.js",
+      "sha256": "4b679ec97cbdcd3e3727e52e343b32adb3a6ff09eb350db6f84bf4cd17c15fc8"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/i18n.js",
+      "sha256": "0a354975a5303dc8b1b9bd65cb9acb0154b742833e3cedcc10b472178276e2c8"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/index.html",
+      "sha256": "c2d61b01fae66d6fc9bab0b752ed38553f48ebc5f52d64966bb38bbe78bcff90"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/ink-photo.js",
+      "sha256": "bc2d85520f95aa892cb1bde754f43bce9151c8ed5c8305ab64d4a5029a3ab973"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/kip-design.js",
+      "sha256": "5eb57b01442b5f567b6923a144a52f9e7c3d2fd93b03224e50d6efc2c2f43de1"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-about.js",
+      "sha256": "f2a1ab3eaca668a68cf805f087189a2164669b949f833a50206b8293f93391c5"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-cases.js",
+      "sha256": "1c0418a2d91139cc7cc97df472192d152b3c9c454ff6a7c8c3768ca3ec709780"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-common.js",
+      "sha256": "a95a459103e780d63485141d1626a75b9021b1ae97d8c41c08fce56c982ed248"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-demo.js",
+      "sha256": "403b9ca239ef6d53ce675e56a7a7256d54ac2e5266e01f277ffaa88143578861"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-ems.js",
+      "sha256": "39af8b22bd61c4c7fe585429bd7fc4211383c5fc3ad93c3fc53e97b7f9e68736"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-home.js",
+      "sha256": "9fc20d39daa90570b498cc791139afbd7a98bc03cfae1320ef2021c076f81cb7"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-kip.js",
+      "sha256": "eb70196f8a64619561ddc44acc7f89dccaa1740e1a2695fc41cfc19021252616"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/locale-pvsim.js",
+      "sha256": "966fd5b30ecc49176358b85fe6330737c7d40f1d4bd69a49968d62917aaeadf1"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/page-metadata.js",
+      "sha256": "31ff0efa62a47a0329b5af3d3e9de341701a66f76be0ba9ed7eff9d75f448b0c"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/page.html",
+      "sha256": "c2d61b01fae66d6fc9bab0b752ed38553f48ebc5f52d64966bb38bbe78bcff90"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/prototype.js",
+      "sha256": "2eebc4c4f76bfd34b3ca83ea95ded0b9bb2f05fd844b9280c5186f6a25eccb47"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/robots.txt",
+      "sha256": "c60e009ab0101469ac2adfd57e1127c36081acaa6ad4c1817e04f29e5cc3014c"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/shared-design.js",
+      "sha256": "4915da8dd3db228a2b1a1b14a7d82d4752178303cdc23b0841df437fec217ab4"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/site.css",
+      "sha256": "b5bf20cf9861e325ab24a950dfc033cf9196ee5184a4dd1c9c33f06f3f4127ac"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/sitemap.xml",
+      "sha256": "a1db5c5e41840c0605b2916ee55b29551da8cdfba2fc3171c5744fd8f9371d09"
+    },
+    {
+      "path": "synaiq-release-20260930-solutions/tokens.css",
+      "sha256": "638818d24aa476b2ee2a662497ce90dd8a4cb118816cb63b84d20aedcb69f5fc"
+    }
+  ],
+  "synaiq-release-20260930-kip-name": [
+    {
+      "path": "synaiq-release-20260930-kip-name/about-design.js",
+      "sha256": "ab29a1754b970985c474801243c54ee54b456a26b25f3a0c45834c7e0cb3652b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tainan-tech-forum-2026-cover-sketch.webp",
+      "sha256": "f21d78d5200a00f928ec150365967310997e743e373e2171c01737024944d056"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tainan-tech-forum-2026-cover.jpg",
+      "sha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tainan-tech-forum-2026-panel-sketch.webp",
+      "sha256": "dbfa642d1230f695e88279235d011cf66508a8df05745cbbfc312f178663eac8"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tainan-tech-forum-2026-panel.jpg",
+      "sha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tokyo-2-scaled.jpg",
+      "sha256": "55d91265b1cffb2be73e8b37a9c4694cf02077037d0131879c4f9ab03fc4aa63"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tokyo-2-sketch.webp",
+      "sha256": "ff794642d9db1c7e2ae93a412af7877fe4adbecc4716d6ff446034ce129786ce"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tokyo-5-sketch.webp",
+      "sha256": "69dd0cd22a940ffb619f689a875ff51b57ebd5c2fa27fe750add0a94eba26266"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/cases/tokyo-5.jpg",
+      "sha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/ceo-speaking-sketch-v1.webp",
+      "sha256": "2e19d2c27861fb69339b8b0f12db628ddc11f1263aa103f62ed2551adf3e76d9"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/contact-cat-yarn-v1.webp",
+      "sha256": "fd8983d835b1233e3d988d408ecbc1171cca0b6001d220a6368da2c23fc2a8a2"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/demo-paper-edge.webp",
+      "sha256": "cffbdb75ac665f28c6f3282a8c8bd96124bf82348225d2c0b0bc504d0cd41bd7"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/demo-send-pen.webp",
+      "sha256": "16cb8850df436f9d2bdc49743bcbe66d17ba415f5cdd96a21d99be3c8c22c1ab"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/demo-sidebar-dialogues.webp",
+      "sha256": "34be146e2eb5e5fab0d335dfbd18ce3a856af326df97e4b5d81799a878bb019c"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/investing-cio-20240629.png",
+      "sha256": "1a1da86934d5b6397593d41b1e180aaa7be61efed243d2c5ca2518b4352482de"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/kip-connected-work-v1.webp",
+      "sha256": "48641943d5c1083c061a1d6cd006b819951605f61261d14c4b8ba678e8b8b38b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/kip-library-demo-en.svg",
+      "sha256": "dea86c19b3f7df5be76178d9ffd41564c009869af2240b9f613bf6ef829a9734"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/kip-library-demo.svg",
+      "sha256": "39807c971d4ddc078765fd98c394d52f820f33ffd76caad4726192e0585a22f1"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/kip-search-demo-en.svg",
+      "sha256": "34751a428bafb8794892a10b3c3b32ebf8c5b17ab4523b3879de1b703abd6811"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/kip-search-demo.svg",
+      "sha256": "740a311bd266ad66ba81f40cd7c21458e187fa4d496f94f50a23ada43c743457"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/kip-wordmark.png",
+      "sha256": "784f98945dd5d227e734eea91e0a89fe9cd9e110b8d720233aa8bfef56ac646a"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/knowledge-threads-v2.png",
+      "sha256": "9c4b83d9742ccb77e58ec4196a6abe9f3fce441771d32043926a23d5e38750e8"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/news-sketch-frame-v2.webp",
+      "sha256": "74027ed8534b4371651febbe1a5e24a88a000486f724a3bb30ef088acd9a7dae"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/shared-knowledge-hands-v1.png",
+      "sha256": "86bb3414e6c65ad193881b7d885d886b770954f28bef25595adc2a931790ed1b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/synaiq-logo-ink.svg",
+      "sha256": "927ba8a491b689c6ef4fd65e1101342758497e487cf965e89a28f377932bc26b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/taistro-logo-ink.svg",
+      "sha256": "77adaf9f3f8b0f6b8aad125896020881650b6e73c695469d9352c5892396b2a7"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/taistro-logo-light.svg",
+      "sha256": "8cbfd247094d69021e753a71b19cd4afc6466e6088614fbe0fdd16fe893d5c3b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/celestine-photo.webp",
+      "sha256": "d039410f9e43880b47608da03c8c537a6e2cbbdc267c536d3bc9d1866bffcf45"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/celestine-sketch.webp",
+      "sha256": "0342a38d36bc0142e3f8f9c50d5563271e3ba12cb96b0ef68479f8c2ed929278"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/dale-20260624-photo.webp",
+      "sha256": "1315b9efb3daa747176991d72f3a0bff3672ae2e9e346ca877320b1ce70e5749"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/dale-20260624-sketch.webp",
+      "sha256": "3457766a889e4503fa871673f2ad9486d46233021dccf4b3a4e1c5f8863619a9"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/leef-sketch.webp",
+      "sha256": "975f1690db903e949392bc955f8e108a4c2bdec6409e5e3e44b98eb858e0bba0"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/lou-sketch.webp",
+      "sha256": "f11687d801b6e6171fcd96b36416ce2d436e7f912b225f2fc5d041b98e59507d"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/steve-20260624-photo.webp",
+      "sha256": "91f867e3e3db9293862b2cd391628394e3bbd46f9432c718c32f8e785ae8c07c"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/steve-20260624-sketch.webp",
+      "sha256": "12af5cb97256a054f2a849b073c354ec67c202759a4808481aeaaf49209a5b4e"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/sunny-sketch.webp",
+      "sha256": "b95e95b5ef3885e19a441c89cca89fc035652065ba10123abdfdd7c5577878b3"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/team/wilson-sketch.webp",
+      "sha256": "67d37020912ead684e43d8a8e945dd16874a125b2e463f6fe4de266d378dcafa"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/torn-letter-edge.svg",
+      "sha256": "1251d36f76f67907719d812708fe9ba3564fc9d78ee37385a417883030834bee"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/assets/torn-paper-cotton-v2.webp",
+      "sha256": "8619727744c970b413a748bd8dd4cc53b31865bb09bed1d4553f957d6fd6cf0b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand.js",
+      "sha256": "b02104063517d47086a22029434eeeedfc7be634bb83192e50c52ae463bab41f"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/synaiq-logo-light.svg",
+      "sha256": "6d111570563a15885039d2cd8df74724660a8e9425122d209c4e92ece7ab7fe8"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/team/daniel-web-1.jpg",
+      "sha256": "019462f5f1dc82cc08413d7b86047cf847b954191184e8fc07d05812b2f024af"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/team/leff-web-1.jpg",
+      "sha256": "e708f44069e21ca17cb246a799b6a911a65a6696db515727e46ede3ad8d0bba4"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/team/lou-web-1.jpg",
+      "sha256": "35e316ccd5b6af77db76c44a956ca11ea0f4b9f953e8db94c0ee4c9863c3d4fe"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/team/sunny-web-1.1.jpg",
+      "sha256": "af484b5f137716b2efdb0c0e858984e83c414135d555d7c8da984c631f751cce"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/team/wilson-web-1.jpg",
+      "sha256": "12edecc20c4403c4ba0d08352e6046a21173e5cef9b39c47f15cd20e5821e11f"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/wally-2-plus.png",
+      "sha256": "66dd513be83fb18f077e49144d827fddd4c4fc1cacedbf400902ac20bf8ec4df"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/wally-mini.png",
+      "sha256": "061216babd7249a8778f26f2988c348da8f7d3f9d70b467c26b71c6362f3d492"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/wally/wally-2.png",
+      "sha256": "f9a76e99486dcf95c2382ec8bc10f0b59aaaf3931ee4d7a30c599e05e99ea573"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/brand/wally/wally-series.png",
+      "sha256": "27d8045903ef4813a365961a139168f01908cd8bdb263e577b0a3789d7f81432"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/cases-data.js",
+      "sha256": "0057d9cb6e2a2d17f345f49826cb825abd83089f291351643a3286996cdac4e1"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/cases-design.js",
+      "sha256": "387714aef923b1ce7a2c7d4cb83eb1a44f58d0378ce7eca79cf0e02bad3adc8b"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/demo-animation.js",
+      "sha256": "1bdc879e75673c5dc564ea78553d7241f3dee18d710d9332f51f109153321452"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/home-design.js",
+      "sha256": "032f9c45a58a365b06c6322aef61c633ab745d641e9e9ed154ab164da0e13361"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/i18n.js",
+      "sha256": "0c7d2e5fefc9ea90947081d409c8de1da1d886722cb8f496a79961cddc28fd34"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/index.html",
+      "sha256": "af2e0b31fc5a780c55981d899374cee87fae24b8a7c6340a1439febddbdd6ebb"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/ink-photo.js",
+      "sha256": "bc2d85520f95aa892cb1bde754f43bce9151c8ed5c8305ab64d4a5029a3ab973"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/kip-design.js",
+      "sha256": "c46be3cc0e3afed2ff86f38527d25a32a106da5fb01df085423688e713a2b582"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/locale-about.js",
+      "sha256": "f2a1ab3eaca668a68cf805f087189a2164669b949f833a50206b8293f93391c5"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/locale-cases.js",
+      "sha256": "1c0418a2d91139cc7cc97df472192d152b3c9c454ff6a7c8c3768ca3ec709780"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/locale-common.js",
+      "sha256": "2fb545d55b800838f2d1c562c700c2316beae8b8a86c709daa2006d5da1c21b3"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/locale-demo.js",
+      "sha256": "403b9ca239ef6d53ce675e56a7a7256d54ac2e5266e01f277ffaa88143578861"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/locale-home.js",
+      "sha256": "9fc20d39daa90570b498cc791139afbd7a98bc03cfae1320ef2021c076f81cb7"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/locale-kip.js",
+      "sha256": "eb70196f8a64619561ddc44acc7f89dccaa1740e1a2695fc41cfc19021252616"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/page-metadata.js",
+      "sha256": "31ff0efa62a47a0329b5af3d3e9de341701a66f76be0ba9ed7eff9d75f448b0c"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/page.html",
+      "sha256": "af2e0b31fc5a780c55981d899374cee87fae24b8a7c6340a1439febddbdd6ebb"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/prototype.js",
+      "sha256": "6c4b02f39dfc6594d145274eada5ffbf054a173b5f3ad6ca682039569ef99792"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/robots.txt",
+      "sha256": "c60e009ab0101469ac2adfd57e1127c36081acaa6ad4c1817e04f29e5cc3014c"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/shared-design.js",
+      "sha256": "6a646005e2a0e5ba4dee33f4aa404688c68487a67c169c5dbd0b505efefd28d9"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/site.css",
+      "sha256": "deadeba3d1a00f5fe23406adfa34202429acac18d99d67bf7b47a7874f596a88"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/sitemap.xml",
+      "sha256": "2aaaca662c2c27568cb2ca5f55af34432d3e8cb77dcdcd35ede13d578a4a11a2"
+    },
+    {
+      "path": "synaiq-release-20260930-kip-name/tokens.css",
+      "sha256": "873486b85a9a1a0e5c0a8ce8b0f6fb2c800d2c78e71ec1ac9fec1a55fa6b3b2b"
+    }
+  ],
+  "synaiq-release-20260929-tainan-photos": [
+    {
+      "path": "synaiq-release-20260929-tainan-photos/about-design.js",
+      "sha256": "ec42d190f026f67598cb0be93da0985eacc9a22243242de382c5b7af07778606"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tainan-tech-forum-2026-cover-sketch.webp",
+      "sha256": "f21d78d5200a00f928ec150365967310997e743e373e2171c01737024944d056"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tainan-tech-forum-2026-cover.jpg",
+      "sha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tainan-tech-forum-2026-panel-sketch.webp",
+      "sha256": "dbfa642d1230f695e88279235d011cf66508a8df05745cbbfc312f178663eac8"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tainan-tech-forum-2026-panel.jpg",
+      "sha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tokyo-2-scaled.jpg",
+      "sha256": "55d91265b1cffb2be73e8b37a9c4694cf02077037d0131879c4f9ab03fc4aa63"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tokyo-2-sketch.webp",
+      "sha256": "ff794642d9db1c7e2ae93a412af7877fe4adbecc4716d6ff446034ce129786ce"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tokyo-5-sketch.webp",
+      "sha256": "69dd0cd22a940ffb619f689a875ff51b57ebd5c2fa27fe750add0a94eba26266"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/cases/tokyo-5.jpg",
+      "sha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/ceo-speaking-sketch-v1.webp",
+      "sha256": "2e19d2c27861fb69339b8b0f12db628ddc11f1263aa103f62ed2551adf3e76d9"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/contact-cat-yarn-v1.webp",
+      "sha256": "fd8983d835b1233e3d988d408ecbc1171cca0b6001d220a6368da2c23fc2a8a2"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/demo-paper-edge.webp",
+      "sha256": "cffbdb75ac665f28c6f3282a8c8bd96124bf82348225d2c0b0bc504d0cd41bd7"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/demo-send-pen.webp",
+      "sha256": "16cb8850df436f9d2bdc49743bcbe66d17ba415f5cdd96a21d99be3c8c22c1ab"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/demo-sidebar-dialogues.webp",
+      "sha256": "34be146e2eb5e5fab0d335dfbd18ce3a856af326df97e4b5d81799a878bb019c"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/investing-cio-20240629.png",
+      "sha256": "1a1da86934d5b6397593d41b1e180aaa7be61efed243d2c5ca2518b4352482de"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/kip-connected-work-v1.webp",
+      "sha256": "48641943d5c1083c061a1d6cd006b819951605f61261d14c4b8ba678e8b8b38b"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/kip-library-demo-en.svg",
+      "sha256": "dea86c19b3f7df5be76178d9ffd41564c009869af2240b9f613bf6ef829a9734"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/kip-library-demo.svg",
+      "sha256": "14e62c08c96b310bd487526a53f4216466694b4de1a38e07303280f5c141db77"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/kip-search-demo-en.svg",
+      "sha256": "34751a428bafb8794892a10b3c3b32ebf8c5b17ab4523b3879de1b703abd6811"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/kip-search-demo.svg",
+      "sha256": "0a135809ad5e542f6abf3f19f9e66e0d3aea52fe2c3d7213f9317264eb67d27d"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/kip-wordmark.png",
+      "sha256": "784f98945dd5d227e734eea91e0a89fe9cd9e110b8d720233aa8bfef56ac646a"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/knowledge-threads-v2.png",
+      "sha256": "9c4b83d9742ccb77e58ec4196a6abe9f3fce441771d32043926a23d5e38750e8"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/news-sketch-frame-v2.webp",
+      "sha256": "74027ed8534b4371651febbe1a5e24a88a000486f724a3bb30ef088acd9a7dae"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/shared-knowledge-hands-v1.png",
+      "sha256": "86bb3414e6c65ad193881b7d885d886b770954f28bef25595adc2a931790ed1b"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/synaiq-logo-ink.svg",
+      "sha256": "927ba8a491b689c6ef4fd65e1101342758497e487cf965e89a28f377932bc26b"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/taistro-logo-ink.svg",
+      "sha256": "77adaf9f3f8b0f6b8aad125896020881650b6e73c695469d9352c5892396b2a7"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/taistro-logo-light.svg",
+      "sha256": "8cbfd247094d69021e753a71b19cd4afc6466e6088614fbe0fdd16fe893d5c3b"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/celestine-photo.webp",
+      "sha256": "d039410f9e43880b47608da03c8c537a6e2cbbdc267c536d3bc9d1866bffcf45"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/celestine-sketch.webp",
+      "sha256": "0342a38d36bc0142e3f8f9c50d5563271e3ba12cb96b0ef68479f8c2ed929278"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/dale-20260624-photo.webp",
+      "sha256": "1315b9efb3daa747176991d72f3a0bff3672ae2e9e346ca877320b1ce70e5749"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/dale-20260624-sketch.webp",
+      "sha256": "3457766a889e4503fa871673f2ad9486d46233021dccf4b3a4e1c5f8863619a9"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/leef-sketch.webp",
+      "sha256": "975f1690db903e949392bc955f8e108a4c2bdec6409e5e3e44b98eb858e0bba0"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/lou-sketch.webp",
+      "sha256": "f11687d801b6e6171fcd96b36416ce2d436e7f912b225f2fc5d041b98e59507d"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/steve-20260624-photo.webp",
+      "sha256": "91f867e3e3db9293862b2cd391628394e3bbd46f9432c718c32f8e785ae8c07c"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/steve-20260624-sketch.webp",
+      "sha256": "12af5cb97256a054f2a849b073c354ec67c202759a4808481aeaaf49209a5b4e"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/sunny-sketch.webp",
+      "sha256": "b95e95b5ef3885e19a441c89cca89fc035652065ba10123abdfdd7c5577878b3"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/team/wilson-sketch.webp",
+      "sha256": "67d37020912ead684e43d8a8e945dd16874a125b2e463f6fe4de266d378dcafa"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/torn-letter-edge.svg",
+      "sha256": "1251d36f76f67907719d812708fe9ba3564fc9d78ee37385a417883030834bee"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/assets/torn-paper-cotton-v2.webp",
+      "sha256": "8619727744c970b413a748bd8dd4cc53b31865bb09bed1d4553f957d6fd6cf0b"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand.js",
+      "sha256": "4befb52f9f7d51a7440ad3590200ad58df532983629ef1e36d8877449c1b6000"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/synaiq-logo-light.svg",
+      "sha256": "6d111570563a15885039d2cd8df74724660a8e9425122d209c4e92ece7ab7fe8"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/team/daniel-web-1.jpg",
+      "sha256": "019462f5f1dc82cc08413d7b86047cf847b954191184e8fc07d05812b2f024af"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/team/leff-web-1.jpg",
+      "sha256": "e708f44069e21ca17cb246a799b6a911a65a6696db515727e46ede3ad8d0bba4"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/team/lou-web-1.jpg",
+      "sha256": "35e316ccd5b6af77db76c44a956ca11ea0f4b9f953e8db94c0ee4c9863c3d4fe"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/team/sunny-web-1.1.jpg",
+      "sha256": "af484b5f137716b2efdb0c0e858984e83c414135d555d7c8da984c631f751cce"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/team/wilson-web-1.jpg",
+      "sha256": "12edecc20c4403c4ba0d08352e6046a21173e5cef9b39c47f15cd20e5821e11f"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/wally-2-plus.png",
+      "sha256": "66dd513be83fb18f077e49144d827fddd4c4fc1cacedbf400902ac20bf8ec4df"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/wally-mini.png",
+      "sha256": "061216babd7249a8778f26f2988c348da8f7d3f9d70b467c26b71c6362f3d492"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/wally/wally-2.png",
+      "sha256": "f9a76e99486dcf95c2382ec8bc10f0b59aaaf3931ee4d7a30c599e05e99ea573"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/brand/wally/wally-series.png",
+      "sha256": "27d8045903ef4813a365961a139168f01908cd8bdb263e577b0a3789d7f81432"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/cases-data.js",
+      "sha256": "6b7e60c304debef3608580572d237292be12d9e019e68331ab389064878d1dad"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/cases-design.js",
+      "sha256": "387714aef923b1ce7a2c7d4cb83eb1a44f58d0378ce7eca79cf0e02bad3adc8b"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/demo-animation.js",
+      "sha256": "7264219964dcb0f480b7213598181ff37c3aeb05164b06a54eac5a7dc6e83246"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/home-design.js",
+      "sha256": "3e4c9a08acc5f48f178c955a5589923014137dd0df9b7fca1b1a3f7fa0246345"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/i18n.js",
+      "sha256": "0c7d2e5fefc9ea90947081d409c8de1da1d886722cb8f496a79961cddc28fd34"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/index.html",
+      "sha256": "13d951f2b5e57766ecb1af6a7695b22a1b437146bbbe5fcce03175f60490524c"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/ink-photo.js",
+      "sha256": "bc2d85520f95aa892cb1bde754f43bce9151c8ed5c8305ab64d4a5029a3ab973"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/kip-design.js",
+      "sha256": "9fe45d4f43fbb8600af88fc2da6822ea88066799527cfa0e836b742606173cac"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/locale-about.js",
+      "sha256": "f2a1ab3eaca668a68cf805f087189a2164669b949f833a50206b8293f93391c5"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/locale-cases.js",
+      "sha256": "36049fb4f4d57860ad2c18b4f9d820b91dd52d466d5d410279b60cba4e8b0143"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/locale-common.js",
+      "sha256": "84ed584266b132669dc84454c5cce97f0fea597e68f1d00798959cccd6638050"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/locale-demo.js",
+      "sha256": "f4ab68a10643504af71745a9e300b069d6015e2ef2756aebbcbb44efd29528c9"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/locale-home.js",
+      "sha256": "9fc20d39daa90570b498cc791139afbd7a98bc03cfae1320ef2021c076f81cb7"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/locale-kip.js",
+      "sha256": "94afdf36cbb3ba2d4e6a465e101bef8f4f8c52e3ad06bdd29af86f9ac079d0d9"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/page-metadata.js",
+      "sha256": "31ff0efa62a47a0329b5af3d3e9de341701a66f76be0ba9ed7eff9d75f448b0c"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/page.html",
+      "sha256": "13d951f2b5e57766ecb1af6a7695b22a1b437146bbbe5fcce03175f60490524c"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/prototype.js",
+      "sha256": "6c4b02f39dfc6594d145274eada5ffbf054a173b5f3ad6ca682039569ef99792"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/robots.txt",
+      "sha256": "c60e009ab0101469ac2adfd57e1127c36081acaa6ad4c1817e04f29e5cc3014c"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/shared-design.js",
+      "sha256": "3954d52e508e7263d8c61b0d7e02013e41b4e449fba7b87b483658761bb0da1f"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/site.css",
+      "sha256": "3aaec93051d1839e673cc7dffb8cc7c9b0dcc8e172b0deb91c68cf95c87f1829"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/sitemap.xml",
+      "sha256": "2aaaca662c2c27568cb2ca5f55af34432d3e8cb77dcdcd35ede13d578a4a11a2"
+    },
+    {
+      "path": "synaiq-release-20260929-tainan-photos/tokens.css",
+      "sha256": "0623e0b1c50413da6770090430408e140b7b8dbe8be58e131201ed24cb32ea58"
+    }
+  ],
+  "synaiq-release-20260923-domain": [
+    {
+      "path": "synaiq-release-20260923-domain/about-design.js",
+      "sha256": "210779ea943619a39d05b100226640def950985eb503f981c5970ad9afecc048"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tainan-tech-forum-2026-cover-sketch.webp",
+      "sha256": "f21d78d5200a00f928ec150365967310997e743e373e2171c01737024944d056"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tainan-tech-forum-2026-cover.jpg",
+      "sha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tainan-tech-forum-2026-panel-sketch.webp",
+      "sha256": "dbfa642d1230f695e88279235d011cf66508a8df05745cbbfc312f178663eac8"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tainan-tech-forum-2026-panel.jpg",
+      "sha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tokyo-2-scaled.jpg",
+      "sha256": "55d91265b1cffb2be73e8b37a9c4694cf02077037d0131879c4f9ab03fc4aa63"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tokyo-2-sketch.webp",
+      "sha256": "ff794642d9db1c7e2ae93a412af7877fe4adbecc4716d6ff446034ce129786ce"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tokyo-5-sketch.webp",
+      "sha256": "69dd0cd22a940ffb619f689a875ff51b57ebd5c2fa27fe750add0a94eba26266"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/cases/tokyo-5.jpg",
+      "sha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/ceo-speaking-sketch-v1.webp",
+      "sha256": "2e19d2c27861fb69339b8b0f12db628ddc11f1263aa103f62ed2551adf3e76d9"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/contact-cat-yarn-v1.webp",
+      "sha256": "fd8983d835b1233e3d988d408ecbc1171cca0b6001d220a6368da2c23fc2a8a2"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/demo-paper-edge.webp",
+      "sha256": "cffbdb75ac665f28c6f3282a8c8bd96124bf82348225d2c0b0bc504d0cd41bd7"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/demo-send-pen.webp",
+      "sha256": "16cb8850df436f9d2bdc49743bcbe66d17ba415f5cdd96a21d99be3c8c22c1ab"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/demo-sidebar-dialogues.webp",
+      "sha256": "34be146e2eb5e5fab0d335dfbd18ce3a856af326df97e4b5d81799a878bb019c"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/investing-cio-20240629.png",
+      "sha256": "1a1da86934d5b6397593d41b1e180aaa7be61efed243d2c5ca2518b4352482de"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/kip-connected-work-v1.webp",
+      "sha256": "48641943d5c1083c061a1d6cd006b819951605f61261d14c4b8ba678e8b8b38b"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/kip-library-demo-en.svg",
+      "sha256": "dea86c19b3f7df5be76178d9ffd41564c009869af2240b9f613bf6ef829a9734"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/kip-library-demo.svg",
+      "sha256": "14e62c08c96b310bd487526a53f4216466694b4de1a38e07303280f5c141db77"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/kip-search-demo-en.svg",
+      "sha256": "34751a428bafb8794892a10b3c3b32ebf8c5b17ab4523b3879de1b703abd6811"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/kip-search-demo.svg",
+      "sha256": "0a135809ad5e542f6abf3f19f9e66e0d3aea52fe2c3d7213f9317264eb67d27d"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/kip-wordmark.png",
+      "sha256": "784f98945dd5d227e734eea91e0a89fe9cd9e110b8d720233aa8bfef56ac646a"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/knowledge-threads-v2.png",
+      "sha256": "9c4b83d9742ccb77e58ec4196a6abe9f3fce441771d32043926a23d5e38750e8"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/news-sketch-frame-v2.webp",
+      "sha256": "74027ed8534b4371651febbe1a5e24a88a000486f724a3bb30ef088acd9a7dae"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/shared-knowledge-hands-v1.png",
+      "sha256": "86bb3414e6c65ad193881b7d885d886b770954f28bef25595adc2a931790ed1b"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/synaiq-logo-ink.svg",
+      "sha256": "927ba8a491b689c6ef4fd65e1101342758497e487cf965e89a28f377932bc26b"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/taistro-logo-ink.svg",
+      "sha256": "77adaf9f3f8b0f6b8aad125896020881650b6e73c695469d9352c5892396b2a7"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/taistro-logo-light.svg",
+      "sha256": "8cbfd247094d69021e753a71b19cd4afc6466e6088614fbe0fdd16fe893d5c3b"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/celestine-photo.webp",
+      "sha256": "d039410f9e43880b47608da03c8c537a6e2cbbdc267c536d3bc9d1866bffcf45"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/celestine-sketch.webp",
+      "sha256": "0342a38d36bc0142e3f8f9c50d5563271e3ba12cb96b0ef68479f8c2ed929278"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/dale-20260624-photo.webp",
+      "sha256": "1315b9efb3daa747176991d72f3a0bff3672ae2e9e346ca877320b1ce70e5749"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/dale-20260624-sketch.webp",
+      "sha256": "3457766a889e4503fa871673f2ad9486d46233021dccf4b3a4e1c5f8863619a9"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/leef-sketch.webp",
+      "sha256": "975f1690db903e949392bc955f8e108a4c2bdec6409e5e3e44b98eb858e0bba0"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/lou-sketch.webp",
+      "sha256": "f11687d801b6e6171fcd96b36416ce2d436e7f912b225f2fc5d041b98e59507d"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/steve-20260624-photo.webp",
+      "sha256": "91f867e3e3db9293862b2cd391628394e3bbd46f9432c718c32f8e785ae8c07c"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/steve-20260624-sketch.webp",
+      "sha256": "12af5cb97256a054f2a849b073c354ec67c202759a4808481aeaaf49209a5b4e"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/sunny-sketch.webp",
+      "sha256": "b95e95b5ef3885e19a441c89cca89fc035652065ba10123abdfdd7c5577878b3"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/team/wilson-sketch.webp",
+      "sha256": "67d37020912ead684e43d8a8e945dd16874a125b2e463f6fe4de266d378dcafa"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/torn-letter-edge.svg",
+      "sha256": "1251d36f76f67907719d812708fe9ba3564fc9d78ee37385a417883030834bee"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/assets/torn-paper-cotton-v2.webp",
+      "sha256": "8619727744c970b413a748bd8dd4cc53b31865bb09bed1d4553f957d6fd6cf0b"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand.js",
+      "sha256": "21f55bb373007caf66d900ac3f856b9d0d164445eb3aea470c586842adb01356"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/synaiq-logo-light.svg",
+      "sha256": "6d111570563a15885039d2cd8df74724660a8e9425122d209c4e92ece7ab7fe8"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/team/daniel-web-1.jpg",
+      "sha256": "019462f5f1dc82cc08413d7b86047cf847b954191184e8fc07d05812b2f024af"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/team/leff-web-1.jpg",
+      "sha256": "e708f44069e21ca17cb246a799b6a911a65a6696db515727e46ede3ad8d0bba4"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/team/lou-web-1.jpg",
+      "sha256": "35e316ccd5b6af77db76c44a956ca11ea0f4b9f953e8db94c0ee4c9863c3d4fe"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/team/sunny-web-1.1.jpg",
+      "sha256": "af484b5f137716b2efdb0c0e858984e83c414135d555d7c8da984c631f751cce"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/team/wilson-web-1.jpg",
+      "sha256": "12edecc20c4403c4ba0d08352e6046a21173e5cef9b39c47f15cd20e5821e11f"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/wally-2-plus.png",
+      "sha256": "66dd513be83fb18f077e49144d827fddd4c4fc1cacedbf400902ac20bf8ec4df"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/wally-mini.png",
+      "sha256": "061216babd7249a8778f26f2988c348da8f7d3f9d70b467c26b71c6362f3d492"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/wally/wally-2.png",
+      "sha256": "f9a76e99486dcf95c2382ec8bc10f0b59aaaf3931ee4d7a30c599e05e99ea573"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/brand/wally/wally-series.png",
+      "sha256": "27d8045903ef4813a365961a139168f01908cd8bdb263e577b0a3789d7f81432"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/cases-data.js",
+      "sha256": "608639c97b8ccb1900be77025c61c94fc8791722c722aa15fb423b6f72b6f8d0"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/cases-design.js",
+      "sha256": "387714aef923b1ce7a2c7d4cb83eb1a44f58d0378ce7eca79cf0e02bad3adc8b"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/demo-animation.js",
+      "sha256": "f6191bcf9207b0b29051005f2895ccf87cb85a841d6562e441bdbad64cb74373"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/home-design.js",
+      "sha256": "418c0c4460c9556562940966d1a9ec7cd8e58b78fc9d685b7a115c1f2031ee69"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/i18n.js",
+      "sha256": "0c7d2e5fefc9ea90947081d409c8de1da1d886722cb8f496a79961cddc28fd34"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/index.html",
+      "sha256": "f1ec0a19a55c3744971044d536f09267c154508f2541830cd2d1d620dea6c36d"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/ink-photo.js",
+      "sha256": "bc2d85520f95aa892cb1bde754f43bce9151c8ed5c8305ab64d4a5029a3ab973"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/kip-design.js",
+      "sha256": "b3a94a829f0753b67219adefe9a0778909e7394e52dc0de11dc95722e9f11316"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/locale-about.js",
+      "sha256": "f2a1ab3eaca668a68cf805f087189a2164669b949f833a50206b8293f93391c5"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/locale-cases.js",
+      "sha256": "36049fb4f4d57860ad2c18b4f9d820b91dd52d466d5d410279b60cba4e8b0143"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/locale-common.js",
+      "sha256": "8e4046c182f45158a9de32dc41b0e2cd2f49adba00859591fed08c6e47606ca8"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/locale-demo.js",
+      "sha256": "f4ab68a10643504af71745a9e300b069d6015e2ef2756aebbcbb44efd29528c9"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/locale-home.js",
+      "sha256": "9fc20d39daa90570b498cc791139afbd7a98bc03cfae1320ef2021c076f81cb7"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/locale-kip.js",
+      "sha256": "94afdf36cbb3ba2d4e6a465e101bef8f4f8c52e3ad06bdd29af86f9ac079d0d9"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/page-metadata.js",
+      "sha256": "31ff0efa62a47a0329b5af3d3e9de341701a66f76be0ba9ed7eff9d75f448b0c"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/page.html",
+      "sha256": "f1ec0a19a55c3744971044d536f09267c154508f2541830cd2d1d620dea6c36d"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/prototype.js",
+      "sha256": "6c4b02f39dfc6594d145274eada5ffbf054a173b5f3ad6ca682039569ef99792"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/robots.txt",
+      "sha256": "c60e009ab0101469ac2adfd57e1127c36081acaa6ad4c1817e04f29e5cc3014c"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/shared-design.js",
+      "sha256": "77a4238c8e03aedc5ebed390480d25fd0ab99f63c82a3010c8b240e265c82a4f"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/site.css",
+      "sha256": "f997fa65e58b9519175572e1771e59144ebcda2e47ccdf4781844280cdf2d94a"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/sitemap.xml",
+      "sha256": "2aaaca662c2c27568cb2ca5f55af34432d3e8cb77dcdcd35ede13d578a4a11a2"
+    },
+    {
+      "path": "synaiq-release-20260923-domain/tokens.css",
+      "sha256": "8ebe119752617c15d38fe0391be2445bbd2c1edcc36a6b4a7e88324938dac682"
+    }
+  ],
+  "synaiq-release-20260923-taistro": [
+    {
+      "path": "synaiq-release-20260923-taistro/about-design.js",
+      "sha256": "4c0f5218b0e30e6e03c2e5fe01719e4b4a4e6a6d0380114a0ab0e524631d1c50"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tainan-tech-forum-2026-cover-sketch.webp",
+      "sha256": "f21d78d5200a00f928ec150365967310997e743e373e2171c01737024944d056"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tainan-tech-forum-2026-cover.jpg",
+      "sha256": "b15b5e6d309e0784a67c304ecec53c7764f91ffd7186d8736ba31b585a17f570"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tainan-tech-forum-2026-panel-sketch.webp",
+      "sha256": "dbfa642d1230f695e88279235d011cf66508a8df05745cbbfc312f178663eac8"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tainan-tech-forum-2026-panel.jpg",
+      "sha256": "ba8192ceb8a21a250575b9bc23b045e59d8811997efd672aea1039588bede4ca"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tokyo-2-scaled.jpg",
+      "sha256": "55d91265b1cffb2be73e8b37a9c4694cf02077037d0131879c4f9ab03fc4aa63"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tokyo-2-sketch.webp",
+      "sha256": "ff794642d9db1c7e2ae93a412af7877fe4adbecc4716d6ff446034ce129786ce"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tokyo-5-sketch.webp",
+      "sha256": "69dd0cd22a940ffb619f689a875ff51b57ebd5c2fa27fe750add0a94eba26266"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/cases/tokyo-5.jpg",
+      "sha256": "e5746d1d5e63ffc2e54bbddd548aa1d11ad0c2268da9f3436c8f71c7524d1df5"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/ceo-speaking-sketch-v1.webp",
+      "sha256": "2e19d2c27861fb69339b8b0f12db628ddc11f1263aa103f62ed2551adf3e76d9"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/contact-cat-yarn-v1.webp",
+      "sha256": "fd8983d835b1233e3d988d408ecbc1171cca0b6001d220a6368da2c23fc2a8a2"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/demo-paper-edge.webp",
+      "sha256": "cffbdb75ac665f28c6f3282a8c8bd96124bf82348225d2c0b0bc504d0cd41bd7"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/demo-send-pen.webp",
+      "sha256": "16cb8850df436f9d2bdc49743bcbe66d17ba415f5cdd96a21d99be3c8c22c1ab"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/demo-sidebar-dialogues.webp",
+      "sha256": "34be146e2eb5e5fab0d335dfbd18ce3a856af326df97e4b5d81799a878bb019c"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/investing-cio-20240629.png",
+      "sha256": "1a1da86934d5b6397593d41b1e180aaa7be61efed243d2c5ca2518b4352482de"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/kip-connected-work-v1.webp",
+      "sha256": "48641943d5c1083c061a1d6cd006b819951605f61261d14c4b8ba678e8b8b38b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/kip-library-demo-en.svg",
+      "sha256": "dea86c19b3f7df5be76178d9ffd41564c009869af2240b9f613bf6ef829a9734"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/kip-library-demo.svg",
+      "sha256": "14e62c08c96b310bd487526a53f4216466694b4de1a38e07303280f5c141db77"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/kip-search-demo-en.svg",
+      "sha256": "34751a428bafb8794892a10b3c3b32ebf8c5b17ab4523b3879de1b703abd6811"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/kip-search-demo.svg",
+      "sha256": "0a135809ad5e542f6abf3f19f9e66e0d3aea52fe2c3d7213f9317264eb67d27d"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/kip-wordmark.png",
+      "sha256": "784f98945dd5d227e734eea91e0a89fe9cd9e110b8d720233aa8bfef56ac646a"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/knowledge-threads-v2.png",
+      "sha256": "9c4b83d9742ccb77e58ec4196a6abe9f3fce441771d32043926a23d5e38750e8"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/news-sketch-frame-v2.webp",
+      "sha256": "74027ed8534b4371651febbe1a5e24a88a000486f724a3bb30ef088acd9a7dae"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/shared-knowledge-hands-v1.png",
+      "sha256": "86bb3414e6c65ad193881b7d885d886b770954f28bef25595adc2a931790ed1b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/synaiq-logo-ink.svg",
+      "sha256": "927ba8a491b689c6ef4fd65e1101342758497e487cf965e89a28f377932bc26b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/taistro-logo-ink.svg",
+      "sha256": "77adaf9f3f8b0f6b8aad125896020881650b6e73c695469d9352c5892396b2a7"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/taistro-logo-light.svg",
+      "sha256": "8cbfd247094d69021e753a71b19cd4afc6466e6088614fbe0fdd16fe893d5c3b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/celestine-photo.webp",
+      "sha256": "d039410f9e43880b47608da03c8c537a6e2cbbdc267c536d3bc9d1866bffcf45"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/celestine-sketch.webp",
+      "sha256": "0342a38d36bc0142e3f8f9c50d5563271e3ba12cb96b0ef68479f8c2ed929278"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/dale-20260624-photo.webp",
+      "sha256": "1315b9efb3daa747176991d72f3a0bff3672ae2e9e346ca877320b1ce70e5749"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/dale-20260624-sketch.webp",
+      "sha256": "3457766a889e4503fa871673f2ad9486d46233021dccf4b3a4e1c5f8863619a9"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/leef-sketch.webp",
+      "sha256": "975f1690db903e949392bc955f8e108a4c2bdec6409e5e3e44b98eb858e0bba0"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/lou-sketch.webp",
+      "sha256": "f11687d801b6e6171fcd96b36416ce2d436e7f912b225f2fc5d041b98e59507d"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/steve-20260624-photo.webp",
+      "sha256": "91f867e3e3db9293862b2cd391628394e3bbd46f9432c718c32f8e785ae8c07c"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/steve-20260624-sketch.webp",
+      "sha256": "12af5cb97256a054f2a849b073c354ec67c202759a4808481aeaaf49209a5b4e"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/sunny-sketch.webp",
+      "sha256": "b95e95b5ef3885e19a441c89cca89fc035652065ba10123abdfdd7c5577878b3"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/team/wilson-sketch.webp",
+      "sha256": "67d37020912ead684e43d8a8e945dd16874a125b2e463f6fe4de266d378dcafa"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/torn-letter-edge.svg",
+      "sha256": "1251d36f76f67907719d812708fe9ba3564fc9d78ee37385a417883030834bee"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/assets/torn-paper-cotton-v2.webp",
+      "sha256": "8619727744c970b413a748bd8dd4cc53b31865bb09bed1d4553f957d6fd6cf0b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand.js",
+      "sha256": "5bd87f57e94c6d090eb88a4be9183545d497f8c8e8209f9610a0e5be5841178b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/synaiq-logo-light.svg",
+      "sha256": "6d111570563a15885039d2cd8df74724660a8e9425122d209c4e92ece7ab7fe8"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/team/daniel-web-1.jpg",
+      "sha256": "019462f5f1dc82cc08413d7b86047cf847b954191184e8fc07d05812b2f024af"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/team/leff-web-1.jpg",
+      "sha256": "e708f44069e21ca17cb246a799b6a911a65a6696db515727e46ede3ad8d0bba4"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/team/lou-web-1.jpg",
+      "sha256": "35e316ccd5b6af77db76c44a956ca11ea0f4b9f953e8db94c0ee4c9863c3d4fe"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/team/sunny-web-1.1.jpg",
+      "sha256": "af484b5f137716b2efdb0c0e858984e83c414135d555d7c8da984c631f751cce"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/team/wilson-web-1.jpg",
+      "sha256": "12edecc20c4403c4ba0d08352e6046a21173e5cef9b39c47f15cd20e5821e11f"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/wally-2-plus.png",
+      "sha256": "66dd513be83fb18f077e49144d827fddd4c4fc1cacedbf400902ac20bf8ec4df"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/wally-mini.png",
+      "sha256": "061216babd7249a8778f26f2988c348da8f7d3f9d70b467c26b71c6362f3d492"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/wally/wally-2.png",
+      "sha256": "f9a76e99486dcf95c2382ec8bc10f0b59aaaf3931ee4d7a30c599e05e99ea573"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/brand/wally/wally-series.png",
+      "sha256": "27d8045903ef4813a365961a139168f01908cd8bdb263e577b0a3789d7f81432"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/cases-data.js",
+      "sha256": "90908c5e8df7ad6b22c5f09f02c197a5925feae484884f0d3a858ec7ebb3a602"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/cases-design.js",
+      "sha256": "387714aef923b1ce7a2c7d4cb83eb1a44f58d0378ce7eca79cf0e02bad3adc8b"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/demo-animation.js",
+      "sha256": "54fe146e7fef8323988cf2b3deee32e0b79adb9c3896d9cbd80e1a19ec9c84d9"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/home-design.js",
+      "sha256": "cff20d1aba5e0a727204713dd773a00e75b600974ec37ca468e95642a4c05185"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/i18n.js",
+      "sha256": "0c7d2e5fefc9ea90947081d409c8de1da1d886722cb8f496a79961cddc28fd34"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/index.html",
+      "sha256": "f9ff9de22b5754c0a19a769edd205daa304f5b6d2d6886b7e67c1ac45b72f9c5"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/ink-photo.js",
+      "sha256": "bc2d85520f95aa892cb1bde754f43bce9151c8ed5c8305ab64d4a5029a3ab973"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/kip-design.js",
+      "sha256": "2445136852859ebe5787ae8328e0944394a99e70189efa9805c2a1cfd4369a74"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/locale-about.js",
+      "sha256": "f2a1ab3eaca668a68cf805f087189a2164669b949f833a50206b8293f93391c5"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/locale-cases.js",
+      "sha256": "36049fb4f4d57860ad2c18b4f9d820b91dd52d466d5d410279b60cba4e8b0143"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/locale-common.js",
+      "sha256": "dd9c68309012ff7133a49835ca34d2131bff104490e175ee19d661162bbf9424"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/locale-demo.js",
+      "sha256": "f4ab68a10643504af71745a9e300b069d6015e2ef2756aebbcbb44efd29528c9"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/locale-home.js",
+      "sha256": "9fc20d39daa90570b498cc791139afbd7a98bc03cfae1320ef2021c076f81cb7"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/locale-kip.js",
+      "sha256": "94afdf36cbb3ba2d4e6a465e101bef8f4f8c52e3ad06bdd29af86f9ac079d0d9"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/page-metadata.js",
+      "sha256": "c0e1efd8d91b0a873905cd3e83360fa2d6f7b48d0fbfa527731993cd51c2c9fc"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/page.html",
+      "sha256": "f9ff9de22b5754c0a19a769edd205daa304f5b6d2d6886b7e67c1ac45b72f9c5"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/prototype.js",
+      "sha256": "6c4b02f39dfc6594d145274eada5ffbf054a173b5f3ad6ca682039569ef99792"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/robots.txt",
+      "sha256": "3a4fe917b9b819864c8dd421ec929c2f45b8b1bc9787c4c30a20950e704e22b2"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/shared-design.js",
+      "sha256": "7193bc98d5834a20d413045e5434dddf54ab8ac7b39ecf793fef0c141661b300"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/site.css",
+      "sha256": "d1c748220b233bc1290e245bbaca9ae4416fbd2446b996a87f1159c0ad9e2fe1"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/sitemap.xml",
+      "sha256": "c9677bba716ba7bdcf50b3b41cd51d19d11a766d5a8e6e9aa5c01db7dcee2d3c"
+    },
+    {
+      "path": "synaiq-release-20260923-taistro/tokens.css",
+      "sha256": "4dc44e081aa260896bf3601ab552eb734c8e1b1eeb1129dbed6c7029bb5b12cd"
+    }
+  ]
+}

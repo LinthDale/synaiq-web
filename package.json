@@ -17,6 +17,7 @@
     "pretest": "npm run build",
     "test": "node --test \"tests/**/*.test.mjs\"",
     "test:design": "node --test docs/design/live-prototype/*.test.mjs",
+    "test:deploy": "node --test scripts/hostinger/*.test.mjs",
     "test:all": "npm test && npm run test:design",
     "test:design:visual": "node scripts/check-design-visual.mjs",
     "test:pvsim-viewer": "node scripts/check-pvsim-viewer.mjs"

@@ -1,8 +1,16 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-10-02（Asia/Taipei）。
+最後更新：2026-10-12（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-10-12 GitHub CI/CD 建置（正式部署待啟用）
+
+新增 `.github/workflows/hostinger.yml` 與 `scripts/hostinger/`，詳見 [CI/CD 操作說明](hostinger-cicd.md)。支援 GitHub main push／merge 自動驗證、唯一版本封裝、staged／live 瀏覽器檢查、受 hash 保護的路由切換與失敗回退、加密持久備份，以及成功後保留現行版＋最近兩版。PR 不取得部署 secrets。
+
+本機驗證：14 項部署防護測試、199 項設計測試通過（5 項跳過）、32 項 repository 測試及 Astro 建置、28 組封裝後 Chrome 驗證通過。即時 Hostinger audit 在 session 建立時回覆 401，沒有變更主機路由、上傳檔案或刪除版本。須補上有效 API token 並完成首次 GitHub deployment 後，才能宣稱自動上架已啟用。
+
+舊發布目錄與 hash 以下列 2026-10-02 紀錄為歷史基準；本次尚未取得可驗證的即時主機狀態。自動化啟用後，正式目錄以主機 `.htaccess`、CI state 與 Actions summary 為準，勿套用下方歷史固定目錄做增量上傳。
 
 ## 平常更新團隊文字，只看這裡
 
@@ -192,7 +200,7 @@ stage 與一次有核對既有檔案的 resume-stage 均因 Node 公開 HTTPS �
 
 根因證據：Node 系統解析 taistro.com.tw 與 www 得到 `208.91.112.55`，HTTP 回 403，可見文字為「Web Filter Violation / FortiGuard Intrusion Prevention - Access Blocked」，分類「新註冊域名」。同時 Windows Resolve-DnsName 與 curl 得到 Hostinger CDN IP 並可 HTTPS 200，表示不同解析路徑結果不一致；先前 TLS 錯誤不能直接歸因於 Hostinger 憑證。未改 DNS、hosts、防火牆、proxy，也未停用 TLS 驗證。
 
-待網管放行 taistro.com.tw 與 www.taistro.com.tw 後再恢復：先確認 Node 的正常 HTTPS 驗證與 DNS 不再落到阻擋頁；重新 audit 主機路由，核對完整既有上傳內容，使用新的唯一候選路由檔恢复 staged，不重跑會覆寫既有內容的 stage。通過 staged → activate → live、`check-migration.mjs` 的 20 組轉址／憑證路徑檢查及 cache 後，才更新主機維護入口及現行版本文件。現有 `resume-stage.mjs` 已用過，候選檔名稱不可原地重用。
+待網管放行 taistro.com.tw 與 www.taistro.com.tw 後再恢復：先確認 Node 的正常 HTTPS 驗證與 DNS 不再落到阻擋頁；重新 audit 主機路由，核對完整既有上傳內容，使用新的唯一候選路由檔恢復 staged，不重跑會覆寫既有內容的 stage。通過 staged → activate → live、`check-migration.mjs` 的 20 組轉址／憑證路徑檢查及 cache 後，才更新主機維護入口及現行版本文件。現有 `resume-stage.mjs` 已用過，候選檔名稱不可原地重用。
 
 證據：`out/synaiq-release-20260923-domain/`，包含 manifest／artifact、本機驗收、失敗紀錄、兩次錯誤後 audit 及 routing-after-stage-error／routing-after-resume-error.htaccess。`guide-next.txt` 只是候選檔，尚未套用；`check-migration.mjs` 尚未在正式切換後執行。原始碼目前比正式站超前一個 SEO 發布。
 
