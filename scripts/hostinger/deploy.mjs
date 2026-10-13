@@ -27,10 +27,13 @@ export async function snapshot(client, name, backupDirectory) {
   });
   return { name, dirs: tree.dirs, files };
 }
-export async function verifySnapshot(client, record, onFile = () => {}) {
+export async function verifyTree(client, record) {
   const tree = await client.tree(record.name);
   assert.deepEqual(tree.dirs, record.dirs, `${record.name}: directories changed`);
   assert.deepEqual(tree.files, record.files.map(({ path, size }) => ({ path, size })), `${record.name}: file list changed`);
+}
+export async function verifySnapshot(client, record, onFile = () => {}) {
+  await verifyTree(client, record);
   await mapLimit(record.files, async file => {
     const bytes = await client.read(file.path, file.size);
     assert.equal(sha(bytes), file.sha256, `${file.path}: changed outside CI`);
@@ -47,6 +50,12 @@ export async function audit(client, config, work) {
     assert.equal(state.routingSha256, sha(route), 'Routing differs from last CI deployment');
     retentionPlan(state, route.toString(), config.keepReleases);
     await verifySnapshot(client, state.releases[0]);
+    // A cleanup interrupted after its delete request can leave a recorded release missing or partly
+    // deleted. Stop here, before any upload or route change, and reconcile by hand (hostinger-cicd.md).
+    for (const record of state.releases.slice(1)) {
+      assert.ok(await client.meta(record.name, true), `${record.name}: recorded release is missing; reconcile the interrupted cleanup before deploying`);
+      await verifyTree(client, record);
+    }
   } else {
     assert.equal(sha(route), config.bootstrapRoutingSha256, 'Legacy routing differs from reviewed bootstrap');
     assert.equal(active, config.bootstrapReleasesNewestFirst[0]);
@@ -175,7 +184,10 @@ export async function prune(client, config, work, state, receipt, id) {
   await client.guard('.htaccess', plan.routingSha256); await client.guard(STATE, plan.stateSha256);
   assert.deepEqual(retentionPlan(state, (await client.read('.htaccess')).toString(), config.keepReleases), { keep: plan.keep, remove: plan.remove });
   // Recheck dependencies and retained bytes after the durable backup was uploaded.
-  for (const record of state.releases.filter(r => plan.keep.includes(r.name))) await verifySnapshot(client, record, (path, bytes) => assertNoDependencies([[path, bytes]], plan.remove));
+  for (const record of state.releases.filter(r => plan.keep.includes(r.name))) {
+    await verifySnapshot(client, record, (path, bytes) => assertNoDependencies([[path, bytes]], plan.remove));
+    console.log(`Rechecked retained ${record.name}`);
+  }
   for (const name of plan.remove) {
     const record = state.releases.find(r => r.name === name);
     await verifySnapshot(client, record, async (path, bytes) => assert.equal(sha(await readFile(join(work, 'backup', path))), sha(bytes)));
@@ -183,9 +195,11 @@ export async function prune(client, config, work, state, receipt, id) {
     await appendFile(join(work, 'cleanup-operations.jsonl'), JSON.stringify({ phase: 'delete-intent', name, archiveSha256: receipt.archiveSha256 }) + '\n');
     await client.removeRelease(name);
     await appendFile(join(work, 'cleanup-operations.jsonl'), JSON.stringify({ phase: 'delete-verified', name }) + '\n');
+    console.log(`Removed archived ${name}`);
   }
   const next = { ...state, releases: state.releases.filter(r => plan.keep.includes(r.name)), lastBackup: receipt.tag };
   await client.replace(STATE, json(next), plan.stateSha256, `${id}-pruned-state`);
+  console.log('Recorded pruned retention state');
   await client.guard('.htaccess', plan.routingSha256);
   await save(work, 'cleanup-complete.json', { status: 'verified', ...plan, backup: receipt.tag });
   return next;

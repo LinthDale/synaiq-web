@@ -5,7 +5,21 @@ export async function request(url, options = {}) {
   // No automatic mutation retries. Never include authenticated URLs or response bodies in errors.
   return fetch(url, { ...options, redirect: 'manual', signal: AbortSignal.timeout(60000) });
 }
-export async function connect(config, token, fetcher = request) {
+// Node's fetch rejects a lost connection with TypeError ("fetch failed", or "terminated" while a
+// body is read) and the request timeout with TimeoutError. Only idempotent reads are retried.
+export const isTransportError = error => (error instanceof TypeError && ['fetch failed', 'terminated'].includes(error.message)) || error?.name === 'TimeoutError';
+// A short identifier such as ECONNRESET or UND_ERR_SOCKET; never a message, URL or body.
+export const transportCode = error => (typeof error?.cause?.code === 'string' && /^[A-Z0-9_]{2,40}$/.test(error.cause.code) ? error.cause.code : null);
+export async function retryRead(operation, attempts = 3, delayMs = 1000) {
+  for (let attempt = 1; ; attempt++) {
+    try { return await operation(); } catch (error) {
+      if (attempt >= attempts || !isTransportError(error)) throw error;
+      console.warn(`Transient read failure (${transportCode(error) || error.name}); retry ${attempt} of ${attempts - 1}`);
+      await new Promise(done => setTimeout(done, delayMs * attempt));
+    }
+  }
+}
+export async function connect(config, token, fetcher = request, { retryDelayMs = 1000 } = {}) {
   assert.ok(token && !/[\r\n]/.test(token), 'HOSTINGER_API_TOKEN is missing');
   const login = await fetcher('https://developers.hostinger.com/api/hosting/v1/files/upload-urls', {
     method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -21,21 +35,26 @@ export async function connect(config, token, fetcher = request) {
     if (path) safePath(path);
     return new URL(session.url.replace('/api/tus/', `/api/${kind}/`) + (path ? `/${path}` : ''));
   }
+  const get = operation => retryRead(operation, 3, retryDelayMs);
   async function meta(path = '', missing = false) {
-    const response = await fetcher(url(path), { headers: auth });
-    if (missing && response.status === 404) return null;
-    assert.equal(response.status, 200, `${path || 'root'}: metadata HTTP ${response.status}`);
-    const item = await response.json();
-    assert.equal(item.path, `/public_html${path ? '/' + path : ''}`);
-    assert.equal(item.isSymlink, false, 'Refuse symlink');
-    return item;
+    return get(async () => {
+      const response = await fetcher(url(path), { headers: auth });
+      if (missing && response.status === 404) return null;
+      assert.equal(response.status, 200, `${path || 'root'}: metadata HTTP ${response.status}`);
+      const item = await response.json();
+      assert.equal(item.path, `/public_html${path ? '/' + path : ''}`);
+      assert.equal(item.isSymlink, false, 'Refuse symlink');
+      return item;
+    });
   }
   async function read(path, expectedSize) {
     const item = expectedSize === undefined ? await meta(path) : { size: expectedSize, isDir: false };
     assert.equal(item.isDir, false);
-    const response = await fetcher(url(path, 'raw'), { headers: auth });
-    assert.equal(response.status, 200, `${path}: read HTTP ${response.status}`);
-    const bytes = Buffer.from(await response.arrayBuffer());
+    const bytes = await get(async () => {
+      const response = await fetcher(url(path, 'raw'), { headers: auth });
+      assert.equal(response.status, 200, `${path}: read HTTP ${response.status}`);
+      return Buffer.from(await response.arrayBuffer());
+    });
     assert.equal(bytes.length, item.size, `${path}: size changed during read`);
     return bytes;
   }
@@ -92,7 +111,12 @@ export async function connect(config, token, fetcher = request) {
   }
   async function removeRelease(name) {
     releaseName(name);
-    const response = await fetcher(url(name), { method: 'DELETE', headers: auth });
+    let response;
+    try { response = await fetcher(url(name), { method: 'DELETE', headers: auth }); } catch (error) {
+      // The delete may have run although its response was lost. Reconcile by reading; never resend.
+      if (isTransportError(error) && await meta(name, true) === null) return;
+      throw error;
+    }
     assert.ok(response.ok, `${name}: delete HTTP ${response.status}`);
     assert.equal(await meta(name, true), null, `${name}: still exists after delete`);
   }

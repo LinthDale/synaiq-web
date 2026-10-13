@@ -4,7 +4,7 @@ import { mkdtemp, readFile, mkdir, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { sha, STATE, GUIDE } from './core.mjs';
-import { prepareCleanup, prune, verifySnapshot, deploy } from './deploy.mjs';
+import { prepareCleanup, prune, verifySnapshot, deploy, audit } from './deploy.mjs';
 
 async function setup() {
   const work = await mkdtemp(join(tmpdir(), 'hostinger-test-'));
@@ -53,6 +53,22 @@ test('successful cleanup deletes only the fourth successful release and preserve
   assert.deepEqual(next.releases.map(r => r.name), ['synaiq-release-new', 'synaiq-release-second', 'synaiq-release-third']);
   assert.deepEqual(f.remote.get('.htaccess'), route);
   assert.ok(f.guards.includes('.htaccess') && f.guards.includes(STATE));
+});
+test('audit stops before any upload when a recorded release is missing or changed', async () => {
+  for (const damage of ['none', 'missing', 'changed']) {
+    const f = await setup(); f.remote.set(GUIDE, Buffer.from('guide'));
+    f.client.meta = async (path = '', missing = false) => {
+      if (path === '') return { items: [] };
+      if (f.remote.has(path) || [...f.remote.keys()].some(p => p.startsWith(`${path}/`))) return { isDir: !f.remote.has(path) };
+      if (missing) return null;
+      throw new assert.AssertionError({ message: `${path}: metadata HTTP 404` });
+    };
+    if (damage === 'missing') f.remote.delete('synaiq-release-old/index.html');
+    if (damage === 'changed') f.remote.set('synaiq-release-third/extra.html', Buffer.from('test'));
+    const result = audit(f.client, f.config, f.work);
+    if (damage === 'none') assert.equal((await result).state.releases.length, 4);
+    else await assert.rejects(result, damage === 'missing' ? /recorded release is missing/ : /file list changed/);
+  }
 });
 test('snapshot verification rejects extra files before accepting content hashes', async () => {
   const f = await setup(); f.remote.set('synaiq-release-new/untracked.php', Buffer.from('test'));

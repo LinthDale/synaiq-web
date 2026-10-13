@@ -40,6 +40,36 @@ test('external route edits during upload are preserved', async () => {
   assert.equal(f.files.get('.htaccess').toString(), 'someone else');
   assert.equal(f.mutations.length, 2);
 });
+test('reads retry a lost connection a bounded number of times; a lost delete is reconciled, never resent', async () => {
+  const lost = () => Object.assign(new TypeError('fetch failed'), { cause: { code: 'ECONNRESET' } });
+  const f = fixture(); let drops = 1;
+  const client = await connect(f.config, 'test-token', async (url, options = {}) => {
+    if (String(url).includes('/raw/') && drops-- > 0) throw lost();
+    return f.fetcher(url, options);
+  }, { retryDelayMs: 0 });
+  assert.equal((await client.read('.htaccess')).toString(), 'original');
+  let attempts = 0, serverErrors = 0;
+  const broken = await connect(f.config, 'test-token', async (url, options = {}) => {
+    if (String(url).includes('/raw/')) { attempts++; throw lost(); }
+    return f.fetcher(url, options);
+  }, { retryDelayMs: 0 });
+  await assert.rejects(broken.read('.htaccess'), /fetch failed/); assert.equal(attempts, 3);
+  const failing = await connect(f.config, 'test-token', async (url, options = {}) => {
+    if (String(url).includes('/raw/')) { serverErrors++; return new Response(null, { status: 500 }); }
+    return f.fetcher(url, options);
+  }, { retryDelayMs: 0 });
+  await assert.rejects(failing.read('.htaccess'), /read HTTP 500/); assert.equal(serverErrors, 1);
+  for (const ranOnServer of [true, false]) {
+    const g = fixture(); g.files.set('synaiq-release-a', Buffer.alloc(0)); let deletes = 0;
+    const c = await connect(g.config, 'test-token', async (url, options = {}) => {
+      if (options.method === 'DELETE') { deletes++; if (ranOnServer) g.files.delete('synaiq-release-a'); throw lost(); }
+      return g.fetcher(url, options);
+    }, { retryDelayMs: 0 });
+    if (ranOnServer) await c.removeRelease('synaiq-release-a');
+    else await assert.rejects(c.removeRelease('synaiq-release-a'), /fetch failed/);
+    assert.equal(deletes, 1);
+  }
+});
 test('session redirects, unsafe upload paths and broad deletion targets are rejected', async () => {
   const f = fixture(); f.session.url = 'https://untrusted.example/rest/abcdef/api/tus/public_html';
   await assert.rejects(connect(f.config, 'test-token', f.fetcher));

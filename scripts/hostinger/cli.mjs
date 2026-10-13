@@ -3,7 +3,7 @@ import { readFile, mkdir, appendFile, writeFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { randomUUID } from 'node:crypto';
-import { connect } from './client.mjs';
+import { connect, transportCode } from './client.mjs';
 import { packageSite } from './package.mjs';
 import { smoke, smokeMatrix } from './browser.mjs';
 import { audit, deploy, prepareCleanup, prune, publicChecks, save } from './deploy.mjs';
@@ -23,6 +23,7 @@ export async function main() {
   const work = resolve('out', 'hostinger-ci', id);
   await mkdir(work, { recursive: true });
   const manifestFile = join(work, 'manifest.json');
+  let phase = mode;
   try {
     if (mode === 'package') {
       const name = `synaiq-release-ci-${id}`;
@@ -44,12 +45,12 @@ export async function main() {
     assert.match(process.env.HOSTINGER_BACKUP_KEY || '', /^[a-f0-9]{64}$/i);
     const manifest = JSON.parse(await readFile(manifestFile));
     assert.equal(manifest.sourceCommit, process.env.GITHUB_SHA);
-    const state = await deploy(client, config, work, manifest, id);
-    const plan = await prepareCleanup(client, config, work, state);
-    const receipt = await publishBackup(config, work, manifest, process.env.HOSTINGER_BACKUP_KEY, id);
-    await prune(client, config, work, state, receipt, id);
-    await client.purge(); await publicChecks(config, manifest);
-    await publishEvidence(config, work, process.env.HOSTINGER_BACKUP_KEY, id);
+    phase = 'deploy'; const state = await deploy(client, config, work, manifest, id);
+    phase = 'prepare-cleanup'; const plan = await prepareCleanup(client, config, work, state);
+    phase = 'backup'; const receipt = await publishBackup(config, work, manifest, process.env.HOSTINGER_BACKUP_KEY, id);
+    phase = 'prune'; await prune(client, config, work, state, receipt, id);
+    phase = 'public-checks'; await client.purge(); await publicChecks(config, manifest);
+    phase = 'evidence'; await publishEvidence(config, work, process.env.HOSTINGER_BACKUP_KEY, id);
     // Each browser pass runs the whole matrix or throws, so its size is what every pass verified.
     const checks = smokeMatrix().length;
     const summary = `### Hostinger deployment verified\n\n- Website: ${config.origin}/\n- Release: ${manifest.release}\n- Source: ${manifest.sourceCommit}\n- Retained: ${plan.keep.join(', ')}\n- Archived and removed: ${plan.remove.join(', ') || 'none'}\n- Encrypted backup: ${receipt.tag} (draft Release)\n- Browser checks: ${checks} local + ${checks} staged + ${checks} live\n`;
@@ -57,10 +58,11 @@ export async function main() {
     if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
     console.log('Deployment, backup and retention verified.');
   } catch (error) {
-    // Raw fetch errors/stacks can include signed session URLs. Only controlled assertions
-    // are reported; no API response bodies, environment, command stdout, or tokens.
-    const message = error instanceof assert.AssertionError ? error.message : `Operation failed (${error.code || error.name || 'unknown'}); inspect phase evidence`;
-    await save(work, 'failure.json', { status: 'failed', mode, message, at: new Date().toISOString() });
+    // Raw fetch errors/stacks can include signed session URLs. Only controlled assertions, the phase
+    // and a transport code such as ECONNRESET are reported; no messages, bodies, environment or tokens.
+    const code = [error.code || error.name || 'unknown', transportCode(error)].filter(Boolean).join('/');
+    const message = error instanceof assert.AssertionError ? error.message : `Operation failed during ${phase} (${code}); inspect phase evidence`;
+    await save(work, 'failure.json', { status: 'failed', mode, phase, message, at: new Date().toISOString() });
     console.error(message); process.exitCode = 1;
   }
 }
