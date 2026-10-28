@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：**已啟用並完成首次正式部署與清理**。[Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 的 test／deploy 均成功。來源 `56ae861516927e7ae77234b0880be31730bc1ef6`，正式目錄 `synaiq-release-ci-38197100197-1`。2026-10-12 11:03（Asia/Taipei）獨立重驗三個保留版本逐檔雜湊、四個舊版已刪除及正式 HTTPS 通過。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
+目前狀態：**已啟用，三語版本已上線**。[Run 40656230546](https://github.com/LinthDale/synaiq-web/actions/runs/40656230546) 於 2026-10-28 完成部署、驗證、備份及清理；來源 `96d589a74ec1ba972ea12a902789b6fca6af14c8`，正式目錄 `synaiq-release-ci-40656230546-1`。獨立主機與正式網站驗證結果見 [部署紀錄](deploy-hostinger.md)。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
 
-加密備份位於草稿 Release `hostinger-backup-38197100197-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`；Actions 產物日誌確認僅上傳這兩個檔案。詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
+本次加密備份位於草稿 Release `hostinger-backup-40656230546-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。首次啟用紀錄 [Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 與其備份仍保留；詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
 
 ## 平常如何更新
 

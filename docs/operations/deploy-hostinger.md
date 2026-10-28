@@ -4,7 +4,19 @@
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
-## 2026-10-28 三語版本已推送 GitHub main，部署因主機差異停止
+## 2026-10-28 三語版本已上線，LiteSpeed 路由基準已修復
+
+來源 `96d589a74ec1ba972ea12a902789b6fca6af14c8` 已推送 GitHub `main`，[Run 40656230546](https://github.com/LinthDale/synaiq-web/actions/runs/40656230546) 的 test／deploy 全部成功。正式網站為 <https://taistro.com.tw/>，現行目錄 `public_html/synaiq-release-ci-40656230546-1/`；繁中、英文、德文及瀏覽器語言選擇已上線。
+
+部署只接受本次已審閱的現行版本、state 與路由雜湊組合，重驗全部保留版本後沿用主機原有 LiteSpeed 規則。沒有略過整個供應商區塊，也沒有先覆寫主機 state。驗證成功後，新 state 與正式路由已一致；一般唯讀 audit 通過，後續未知差異仍會阻擋部署。
+
+驗證：37 項部署測試、205 項網站測試（4 項既有跳過）、32 項 repository 測試及 Astro 建置通過；local／staged／live 各 52 組瀏覽器檢查成功。92 個發布檔案已在主機逐檔核對 SHA-256，公開資源（含 CDN 圖片內容）驗證成功。獨立 Chrome 檢查確認三語首頁各只請求選定語言模組、SEO 正確，德語區域設定 `de-AT` 自動選擇德文，切換英文保留案例及錨點，390px 無水平溢出。
+
+2026-10-28 16:42（Asia/Taipei）獨立主機重驗通過：92 檔雜湊、state／路由一致及完整保留 LiteSpeed 區塊。路由 SHA-256：`e742269f2296ef33d00677a238d65542be0b34d50f88c99d770654298b6fa18c`；state SHA-256：`fe051135d34aa950955e04522b4bcfd4166e4fcd26b157b4c57a98f334015baa`。備份草稿 Release 為 `hostinger-backup-40656230546-1`，加密備份與證據已保存並驗證。保留本次版本、`synaiq-release-ci-38330034089-1`、`synaiq-release-ci-38254033687-1`；`synaiq-release-ci-38197100197-1` 已依流程備份後移除。
+
+證據：`out/hostinger-ci/40656230546-1/independent-host-verification.json`、`independent-public-i18n.json`、`public-assets.json`；完整 CI 日誌在 `out/i18n-migration/github-run-40656230546-complete.log`。修復前比對保留於 `out/hostinger-ci/40654021896-1/routing-investigation/` 及 `out/hostinger-ci/routing-repair-20261028/`，不覆寫原失敗紀錄。
+
+## 2026-10-28 首次三語部署因主機差異停止（後續已修復）
 
 三語 i18n、瀏覽器語言選擇、語言建立工具及維護文件已提交至 GitHub `main`，來源 `e9a4cc7e017af7476602ec69264479689a47241a`。[Run 40654021896](https://github.com/LinthDale/synaiq-web/actions/runs/40654021896) 的測試及正式封裝瀏覽器檢查通過，但部署在上傳前的路由基準核對停止；本次尚未上線。
 
