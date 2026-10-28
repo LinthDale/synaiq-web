@@ -3,6 +3,7 @@ import { lstat, open, realpath } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { LOCALE_PUBLIC_FILES } from './locale-config.js';
 
 // This is a public design-only allowlist, not a general repository file server.
 // New assets must be reviewed and explicitly named before they can be shared.
@@ -12,7 +13,7 @@ const runtimeFiles = [
   'home-design.js',
   'demo-animation.js',
   'kip-design.js',
-  'energy-design.js', 'energy-screens.js', 'locale-ems.js', 'locale-pvsim.js',
+  'energy-design.js', 'energy-screens.js',
   'pvsim-viewer.js', 'vendor/pvsim-three.js', 'vendor/three-LICENSE.txt',
   'assets/pvsim-site-demo.glb', 'assets/pvsim-panels-demo.glb',
   'assets/ems-main-demo.webp', 'assets/ems-demand-demo.webp', 'assets/ems-storage-demo.webp',
@@ -22,11 +23,9 @@ const runtimeFiles = [
   // Published crawl files. The release packaging ships them; site routing serves them from
   // the site root. This loopback preview keeps its own noindex robots.txt response below.
   'robots.txt', 'sitemap.xml',
-  'locale-common.js', 'locale-home.js', 'locale-kip.js', 'locale-demo.js',
-  'locale-cases.js', 'locale-about.js',
+  'locale-config.js', 'locale-schema.js', 'locale-store.js', 'locale-bootstrap.js',
+  ...LOCALE_PUBLIC_FILES,
   'assets/knowledge-threads-v2.png', 'assets/shared-knowledge-hands-v1.png',
-  'assets/kip-search-demo.svg', 'assets/kip-library-demo.svg',
-  'assets/kip-search-demo-en.svg', 'assets/kip-library-demo-en.svg',
   'assets/torn-letter-edge.svg', 'assets/torn-paper-cotton-v2.webp',
   'assets/ceo-speaking-sketch-v1.webp',
   'assets/synaiq-logo-ink.svg',

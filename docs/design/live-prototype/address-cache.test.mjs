@@ -9,7 +9,7 @@ const CONTENT_VERSION = '20260922-cases-expansion';
 const PRODUCT_VERSION = '20261002-products';
 const root = new URL('.', import.meta.url);
 const edges = [
-  ['page.html', /<script\s+type="module"\s+src="([^"]+)"/, 'prototype.js', PRODUCT_VERSION],
+  ['page.html', /<script\s+type="module"\s+src="(prototype\.js[^"]*)"/, 'prototype.js', PRODUCT_VERSION],
   ['page.html', /href="(site\.css[^" ]*)"/, 'site.css', PRODUCT_VERSION],
   ['site.css', /@import url\("([^"]+)"\)/, 'tokens.css', PRODUCT_VERSION],
   ['prototype.js', /from ['"]([^'"]*energy-design\.js[^'"]*)['"]/, 'energy-design.js', PRODUCT_VERSION],
@@ -20,12 +20,6 @@ const edges = [
   ['prototype.js', /from ['"]([^'"]*cases-data\.js[^'"]*)['"]/, 'cases-data.js', CONTENT_VERSION],
   ['page-metadata.js', /from ['"]([^'"]*i18n\.js[^'"]*)['"]/, 'i18n.js', CONTENT_VERSION],
   ['page-metadata.js', /from ['"]([^'"]*cases-data\.js[^'"]*)['"]/, 'cases-data.js', CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-about\.js[^'"]*)['"]/, 'locale-about.js', CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-common\.js[^'"]*)['"]/, 'locale-common.js', CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-home\.js[^'"]*)['"]/, 'locale-home.js', CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-kip\.js[^'"]*)['"]/, 'locale-kip.js', CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-cases\.js[^'"]*)['"]/, 'locale-cases.js', CONTENT_VERSION],
-  ['i18n.js', /from ['"]([^'"]*locale-demo\.js[^'"]*)['"]/, 'locale-demo.js', CONTENT_VERSION],
 ];
 
 for (const [source, pattern, target, version] of edges) {

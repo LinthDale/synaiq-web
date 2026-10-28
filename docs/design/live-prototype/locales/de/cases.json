@@ -1,0 +1,203 @@
+{
+  "overview": {
+    "eyebrow": "AUSGEWÄHLTE REFERENZEN",
+    "title": [
+      "KI vor Ort.",
+      "Gespräche",
+      "über Sprachgrenzen hinweg."
+    ],
+    "intro": "Technologie gewinnt Bedeutung, wenn Menschen einander begegnen. Ein vertrautes Gesicht für Informationen. Ein weiterer Weg, Besuchende willkommen zu heißen.",
+    "action": "Geschichten entdecken",
+    "listTitle": "Begleiten Sie uns auf unserem Weg",
+    "readCase": "Geschichte entdecken",
+    "photoHint": {
+      "touch": "Zum Entdecken tippen",
+      "hover": "Mit dem Mauszeiger entdecken"
+    },
+    "back": "Zurück zur Übersicht",
+    "notFound": {
+      "title": "Referenz nicht gefunden",
+      "body": "An dieser Station gibt es noch keine Geschichte. Kehren Sie zur Übersicht zurück und entdecken Sie weitere Einsatzorte."
+    },
+    "closing": "Ihr Einsatzort könnte die nächste Geschichte sein."
+  },
+  "tags": {
+    "exhibition": "Internationale Messe",
+    "multilingual": "Vier Sprachen",
+    "digitalHuman": "Digitaler KI-Mensch",
+    "knowledge-platform": "Synaiq KIP Wissensplattform",
+    "industry-forum": "Industrieforum",
+    "panel": "Podiumsgespräch"
+  },
+  "cases": {
+    "tokyo-foodex-2026": {
+      "name": "FOODEX Japan",
+      "dateLabel": "MÄRZ 2026",
+      "summary": "Von Tainan nach Tokio: Ein vertrautes Gesicht stellt Taiwans kulinarische Vielfalt in vier Sprachen vor.",
+      "chapter": "01 / LEBENSMITTELMESSE IN TOKIO",
+      "journey": "TAINAN → TOKIO",
+      "photos": {
+        "hero": {
+          "label": "Fotoeinblendung der Messe pausieren oder fortsetzen",
+          "alt": "Handgezeichnete Szene eines Besuchers neben dem digitalen KI-Abbild des Bürgermeisters von Tainan auf der Messe in Tokio",
+          "caption": "MÄRZ 2026 · LEBENSMITTELMESSE IN TOKIO"
+        },
+        "team": {
+          "label": "Einblendung des Messegruppenfotos pausieren oder fortsetzen",
+          "alt": "Handgezeichnete Gruppe mit drei Personen neben dem Gerät mit digitalem KI-Menschen am Stand von Tainan",
+          "caption": "STAND VON TAINAN · DIGITALER MENSCH UND TEAM VOR ORT"
+        }
+      },
+      "facts": [
+        [
+          "EINSATZORT",
+          "Internationale Messe",
+          "Tokio · 2026"
+        ],
+        [
+          "INTERAKTION",
+          "Vier Sprachen",
+          "Mandarin / Japanisch / Englisch / Koreanisch"
+        ],
+        [
+          "INTEGRATION",
+          "Digitaler KI-Mensch",
+          "Digitaler Zwilling × Gerät vor Ort"
+        ]
+      ],
+      "story": {
+        "eyebrow": "01 / DIE GESCHICHTE",
+        "title": [
+          "Der digitale Zwilling eines Bürgermeisters.",
+          "Die Einladung einer Stadt."
+        ],
+        "paragraphs": [
+          "Am 10. März 2026 präsentierte sich Tainan auf der Lebensmittelmesse in Tokio. Einkäuferinnen und Einkäufer kamen aus unterschiedlichen Ländern. Wie ließen sich regionale Produkte und ihre Geschichten mehr Menschen näherbringen?",
+          "Mit digitaler Menschendarstellung und integrierter Hard- und Software brachte tAistro ein KI-Abbild von Tainans Bürgermeister Huang Wei-che auf die Messe. Informationen auf Mandarin, Japanisch, Englisch und Koreanisch eröffneten einen neuen Zugang zum Gespräch."
+        ]
+      },
+      "field": {
+        "eyebrow": "02 / VOR ORT",
+        "title": [
+          "In Tokio",
+          "entstanden Gespräche."
+        ],
+        "intro": "Ein vertrautes Gesicht für Informationen. Ein weiterer Weg, Besuchende willkommen zu heißen.",
+        "notes": [
+          [
+            "Bei den Menschen beginnen",
+            "Ein bekannter Vertreter der Stadt bietet einen natürlichen Einstieg ins Gespräch."
+          ],
+          [
+            "Sprache verbindet",
+            "Vier Sprachen in einem Serviceangebot greifen den Kommunikationsbedarf einer internationalen Messe auf."
+          ],
+          [
+            "Die Teile zusammenbringen",
+            "Digitale Inhalte und das Gerät am Messestand wirken zusammen und machen KI für Besuchende erlebbar."
+          ]
+        ]
+      },
+      "press": {
+        "title": "Ein anderer Blick auf die Geschichte.",
+        "links": [
+          [
+            "Yam News",
+            "tAistro bringt das KI-Abbild des Bürgermeisters von Tainan nach Tokio"
+          ],
+          [
+            "ETtoday",
+            "Bericht vom Tainan-Stand in Tokio"
+          ]
+        ]
+      }
+    },
+    "tainan-tech-forum-2026": {
+      "name": "Tainan Technology Industry Forum",
+      "dateLabel": "SEPTEMBER 2026",
+      "summary": "Auf dem Forum in Tainan zeigte tAistro Synaiq KIP: Unternehmensdokumente, nachvollziehbare Antworten und geteilte Erfahrung verbinden.",
+      "chapter": "02 / TECHNOLOGIE- UND INDUSTRIEFORUM TAINAN",
+      "journey": "TAINAN · IN UNSERER HEIMAT",
+      "photos": {
+        "hero": {
+          "alt": "tAistro-Mitarbeitende zeigen Vertreterinnen und Vertretern der Wirtschaftsentwicklungsbehörde Synaiq KIP auf einem Bildschirm auf dem Forum in Tainan",
+          "label": "Einblendung des Ausstellungsfotos aus Tainan pausieren oder fortsetzen",
+          "caption": "16. Sept. 2026 · Ausstellungsfläche, Synaiq KIP-Demo"
+        },
+        "panel": {
+          "alt": "Fünf Teilnehmende auf dem Podium; der Vertreter von tAistro spricht ganz rechts",
+          "label": "Einblendung des Podiumsfotos aus Tainan pausieren oder fortsetzen",
+          "caption": "Podiumsgespräch · tAistro-Vertreter ganz rechts"
+        }
+      },
+      "facts": [
+        [
+          "Veranstaltung",
+          "Tainan Technology Industry Forum",
+          "ICC Tainan · 16.–17. Sept. 2026"
+        ],
+        [
+          "Präsentiert",
+          "Synaiq KIP Wissensplattform",
+          "Unternehmenswissen mit nachvollziehbaren Quellen"
+        ],
+        [
+          "Teilnahme",
+          "Aussteller und Podiumsteilnehmer",
+          "Veranstaltet von der Wirtschaftsentwicklungsbehörde der Stadt Tainan"
+        ]
+      ],
+      "story": {
+        "eyebrow": "01 / DIE GESCHICHTE",
+        "title": [
+          "Unternehmenswissen.",
+          "Gemeinsame Kompetenz im Team."
+        ],
+        "paragraphs": [
+          "Das Tainan Technology Industry Forum mit Ausstellung fand am 16. und 17. September 2026 im ICC Tainan statt. Veranstalter war die Wirtschaftsentwicklungsbehörde der Stadt Tainan. Zwei Tage mit Vorträgen und Präsentationen widmeten sich angewandter KI und grüner Energie.",
+          "tAistro präsentierte Synaiq KIP anhand alltäglicher Anforderungen im Wissensmanagement: verstreute Dokumente, aufwendige Suche und schwer weiterzugebende Erfahrung. Synaiq KIP verbindet Dokumentenimport, Verarbeitung und Bibliotheksverwaltung. Teams können in natürlicher Sprache fragen und Quellenverweisen bis zum Original folgen.",
+          "tAistro nahm auch am Podiumsgespräch teil. Unser Beitrag konzentrierte sich auf betriebliches Wissensmanagement: Dokumente und Erfahrung zu durchsuchbarem, nachvollziehbarem und pflegbarem Wissen ordnen, das tägliche Arbeit und Wissenstransfer unterstützt."
+        ]
+      },
+      "field": {
+        "eyebrow": "02 / VOR ORT",
+        "title": [
+          "Von gespeicherten Informationen",
+          "zu gemeinsamem Wissen."
+        ],
+        "intro": "Synaiq KIP konzentriert sich auf das Wissensmanagement im Unternehmen. Dokumentenintegration, Suche und Quellenprüfung helfen Teams, Organisationswissen zu finden, zu verstehen und wiederzuverwenden.",
+        "notes": [
+          [
+            "Dokumente zusammenführen",
+            "Binden Sie verstreute Dokumente in das Wissenszentrum ein, verarbeiten und ordnen Sie sie in Bibliotheken als gemeinsame Grundlage für das Team."
+          ],
+          [
+            "Jede Antwort an ihrer Quelle prüfen",
+            "Fragen Sie in natürlicher Sprache nach Arbeitsinformationen. Quellenverweise führen zum Original zurück, damit Antwort und Kontext überprüft werden können."
+          ],
+          [
+            "Erfahrung im Unternehmen halten",
+            "Pflegen Sie Abläufe und Erfahrungsaufzeichnungen in einer Wissensbasis, die Zusammenarbeit, Einarbeitung und Übergaben unterstützt."
+          ]
+        ]
+      },
+      "press": {
+        "title": "Ein anderer Blick auf die Geschichte.",
+        "links": [
+          [
+            "Economic Daily News",
+            "Technologieforum „2026 T-AI-NAN“ erhält Lob von Teilnehmenden"
+          ],
+          [
+            "SETN",
+            "Forum „2026 T-AI-NAN“ widmet sich intelligenter Fertigung und unbemannten Fahrzeugen"
+          ],
+          [
+            "CNEWS",
+            "Tainan entwickelt Taiwans einziges goldenes Dreieck aus Halbleitern, KI und Robotik"
+          ]
+        ]
+      }
+    }
+  }
+}

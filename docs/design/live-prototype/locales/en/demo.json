@@ -1,0 +1,115 @@
+{
+  "groupLabel": "Synaiq KIP animated workflow preview using sample data, not a connected product",
+  "playbackLabel": "PRODUCT IN MOTION",
+  "replay": "Replay",
+  "pause": "Pause animation",
+  "play": "Play animation",
+  "reducedMotion": "Reduced motion: still preview",
+  "productTitle": "Synaiq KIP / Knowledge Platform",
+  "productNote": "Branded interface · Sample data",
+  "productLabel": "KIP Knowledge Platform",
+  "history": "Conversations",
+  "close": "Close",
+  "collapse": "Close",
+  "sourceRegion": "Source notes",
+  "sourceScribble": "Approval before purchase",
+  "newChat": "＋ New conversation",
+  "recentQuestions": "Recent questions",
+  "warrantyTopic": "Request a laptop purchase",
+  "knowledgeCenter": "Knowledge Center",
+  "sourceTopic": "How to find a cited source",
+  "workspace": "Demo workspace",
+  "breadcrumb": "Company knowledge / Equipment purchasing",
+  "question": "How do I request a laptop for a new colleague?",
+  "thinking": "Finding the relevant purchasing process",
+  "avatar": "K",
+  "answer": "Start with a purchase request: purpose, specs and budget.",
+  "answerHighlight": "After manager approval, Purchasing gets quotes and orders. Inspect on arrival.",
+  "answerNote": "Follow the application and approval rules in the cited process.",
+  "citationLabel": "SOURCE / 01",
+  "citationFilename": "Equipment_Purchasing_Sample.pdf",
+  "citationPage": "View source ↗",
+  "followUp": "Ask a follow-up question…",
+  "send": "Send",
+  "sourceLabel": "ORIGINAL SOURCE / PURCHASE REQUEST",
+  "sourceTitle": "Equipment Purchasing (Sample)",
+  "sourceHeading": "Request details: purpose, specs and budget",
+  "sourceNote": "Fictional process for this animation, not an actual company purchasing policy.",
+  "libraryLabel": "KNOWLEDGE CENTER",
+  "libraryTitle": "A place for every document.",
+  "libraryIntro": "Organize files and check their status, so knowledge can be found.",
+  "tableHeaders": [
+    "Document name",
+    "Status"
+  ],
+  "tableRows": [
+    [
+      "Equipment_Purchasing_Sample.pdf",
+      "✓ Complete"
+    ],
+    [
+      "Knowledge_Workflow_Sample.docx",
+      "✓ Complete"
+    ],
+    [
+      "Data_Index_Sample.xlsx",
+      "Pending"
+    ]
+  ],
+  "libraryNote": "All content is sample data.",
+  "chaptersLabel": "Steps shown in the animation",
+  "chapters": [
+    "Ask in your own words",
+    "Follow the source",
+    "Organize your documents"
+  ],
+  "note": "Animated clicks and content reveals · Sample data · Not a live product session",
+  "booth": {
+    "label": "Synaiq KIP feature screening room",
+    "previous": "Previous animation",
+    "next": "Next animation",
+    "select": "Choose a feature animation",
+    "nowShowing": "NOW SHOWING",
+    "titles": [
+      "Knowledge Q&A",
+      "Find images with words",
+      "Search by image"
+    ],
+    "descriptions": [
+      "Start with a purchasing need. Find the process and its source.",
+      "Describe the image you need, without remembering its filename.",
+      "Start with a reference image to discover visually related assets."
+    ],
+    "collection": "Sample library / Product assets",
+    "resultLabel": "SEARCH RESULTS",
+    "resultCount": "3 sample images",
+    "candidate": "View asset ↗",
+    "original": "ORIGINAL ASSET",
+    "fileLabel": "Filename",
+    "folderLabel": "Location",
+    "folder": "Sample library / Wally series",
+    "example": "Illustrative workflow, not live search results",
+    "imageAlt": "Wally sample product image",
+    "open": "View original ↗",
+    "textImage": {
+      "query": "A reception robot with a large screen and a mobile base",
+      "loading": "Connecting your description to visual clues…",
+      "matching": "From a description to an image, with its source in reach.",
+      "chapters": [
+        "Describe an image",
+        "Explore matching images",
+        "Find the original asset"
+      ]
+    },
+    "imageImage": {
+      "query": "Find product images with a similar appearance",
+      "loading": "Looking for images with a similar appearance…",
+      "matching": "Explore visually related assets from a reference image.",
+      "chapters": [
+        "Choose a reference",
+        "Compare similar images",
+        "Trace the image source"
+      ]
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "looseLetters": [
+    "備忘錄",
+    "a",
+    "§",
+    "p.012",
+    "知",
+    ".pdf",
+    "n",
+    "簡報",
+    "k",
+    "r",
+    "資料",
+    "e",
+    "03",
+    "b",
+    "s",
+    "經驗",
+    "…",
+    "m",
+    "t",
+    "原文",
+    "a",
+    "第十二頁",
+    "o",
+    "01"
+  ],
+  "hero": {
+    "eyebrow": "KNOWLEDGE INTELLIGENCE PLATFORM",
+    "title": [
+      "散落的企業文件，",
+      "變成隨問隨答的",
+      "知識中樞"
+    ],
+    "intro": [
+      "從一個問題開始。",
+      "每個答案，都有出處可以追溯。"
+    ],
+    "action": "看 Synaiq KIP 怎麼運作",
+    "artAlt": "手繪打字機散出字母與紙片，若隱若現的細線被手牽起，連向簡單抽象的大腦輪廓",
+    "scroll": "順著線索，往下看"
+  },
+  "narrative": {
+    "pretitle": "給每一份",
+    "title": [
+      "組織知識，",
+      "一個被找到的機會。"
+    ],
+    "lead": [
+      "企業獨有的知識，",
+      "往往",
+      "不在公開網路上。"
+    ],
+    "paragraphs": [
+      "電子郵件、備忘錄、內部文件與簡報，承載著組織累積的經驗，卻常散落在不同系統和團隊之間，尚未整理成 AI 能有效運用的知識。",
+      "下一個機會，是讓 AI 連結企業內部的知識與資源。讓員工在需要的時候，找到答案，也找得到它的依據。"
+    ],
+    "action": "了解 Synaiq KIP 的四層架構 ↗",
+    "artAlt": "兩隻手透過紙頁與細線傳遞知識的手繪插畫",
+    "artNote": "讓經驗，接到下一雙手。"
+  },
+  "products": {
+    "label": "Synaiq KIP 與 Wally 產品圖片展示",
+    "note": "線索，慢慢有了形狀。",
+    "title": [
+      "然後，散落的知識",
+      "有了一個入口。"
+    ],
+    "screenAlt": "Synaiq KIP 智慧搜尋品牌化介面示意：問題、答案與引用來源並列；使用示例資料，非原始產品截圖",
+    "screenCaption": "Synaiq KIP 產品介面 / 品牌化示意",
+    "paperLabel": "企業知識來源的文字構圖",
+    "paperEyebrow": "YOUR KNOWLEDGE",
+    "paperTitle": [
+      "答案背後，",
+      "有一份原文。"
+    ],
+    "paperDocuments": "備忘錄、內部文件",
+    "paperCopy": [
+      "組織的經驗，",
+      "不再散落各處。"
+    ],
+    "paperCaption": "企業知識來源 · 文字構圖",
+    "devicesLabel": "Wally 產品並排展示",
+    "deviceAlts": [
+      "Wally 2 原始彩色產品圖",
+      "Wally 2 PLUS 原始彩色產品圖，含完整白色移動底座",
+      "Wally Mini 原始彩色產品圖"
+    ],
+    "stageCopy": "Synaiq KIP 的軟體介面，與走到現場的 Wally。",
+    "stageNote": "設計示意，非實際部署案例。"
+  },
+  "outlook": {
+    "eyebrow": "ENTERPRISE AI / 產業觀察",
+    "dates": "2024 年調查 · 2027 年預期",
+    "title": [
+      "AI 正在改變，",
+      "企業分配預算的方式。"
+    ],
+    "intro": "據 Investing.com 轉述 J.P. Morgan 調查，受訪資訊長當時預期，AI 加速運算硬體將占更高比例的 IT 預算。",
+    "reading": [
+      "2024 年的調查中，33% 的資訊長表示，會刪減其他 IT 專案的資金，支持新的 AI 投資；舊系統升級與基礎設施受到的影響最大。",
+      "不過，62% 的受訪者表示不會刪減其他專案。報導指出，多數 AI 投資可能來自新增預算，而不只是既有支出的重新分配。"
+    ],
+    "chartLabel": "受訪者預期 AI 運算硬體占 IT 預算的比例，從 2024 年的百分之五增至三年後的百分之十四點五",
+    "currentYear": "2024 年當時占比",
+    "futureYear": "2027 年預期占比",
+    "respondents": "166 位資訊長",
+    "spending": "受訪者合計負責每年 1,230 億美元企業 IT 支出。",
+    "caveat": "這是受訪者在 2024 年的預期，並非已實現結果，也不是 Synaiq KIP 的成效數據。",
+    "detailsLabel": "閱讀調查背景與出處",
+    "details": "報導以約 45% 的年複合成長率描述上述三年成長預期。33% 的受訪資訊長表示會刪減其他專案資金，舊系統／升級與基礎設施受影響較大；同時，62% 表示不會刪減其他專案。",
+    "sourceLabel": "Investing.com · 2024 年 6 月 29 日報導 ↗",
+    "sourceCaveat": "資料為媒體轉述，未取得 J.P. Morgan 原始調查全文。",
+    "clippingLabel": "閱讀 Investing.com 原報導（另開分頁）",
+    "clippingAlt": "Investing.com 2024 年 6 月 29 日報導截圖：CIO survey a massive boon for Microsoft - JP Morgan，含原圖與 Reuters 圖片署名"
+  },
+  "showcase": {
+    "title": [
+      "問一個問題，",
+      "看見答案從哪裡來。"
+    ],
+    "copy": [
+      "智慧搜尋把問題連回文件，知識中心管理接入與解析。",
+      "從提問到引用來源，讓每一步都能核對。"
+    ]
+  },
+  "wally": {
+    "title": [
+      "同一套知識，",
+      "走到現場。"
+    ],
+    "intro": [
+      "Wally 是 Synaiq KIP 的現場化身。",
+      "把可以查詢的知識，帶到面對面的互動。"
+    ],
+    "detail": "軟體與設備，在同一段故事裡。",
+    "personaAlt": "官網的紫色應援服數位人角色主視覺",
+    "personaCaption": "官網彩色角色主視覺 / 保留原色",
+    "personaEyebrow": "WALLY MINI",
+    "personaTitle": [
+      "讓知識，",
+      "有個見面的方式。"
+    ],
+    "personaCopy": [
+      "從螢幕裡的問答，到面前的互動。",
+      "以品牌熟悉的角色，承接面對面的交流。"
+    ],
+    "miniAlt": "Wally Mini 迷你數位人設備原始彩色產品圖",
+    "materialNote": "角色及設備為產品素材，非案場照片。",
+    "panoramaLabel": "Wally 五款設備產品圖片，可左右捲動",
+    "panoramaAlt": "Wally 1、1 Plus、2、2 Plus 與 Mini 五款設備的完整彩色產品圖",
+    "panoramaCaption": "原始彩色產品系列圖 / 保留設備全貌",
+    "panoramaHint": "手機可左右滑動，查看完整設備系列。"
+  },
+  "ceo": {
+    "label": "tAistro CEO 引言",
+    "note": "留給每一個，需要答案的人。",
+    "artAlt": "依邱浩煒 Wilson 照片繪製的極簡演講情境素描，手持麥克風、以手勢分享理念；非活動紀實",
+    "quote": [
+      [
+        "AI 的價值，是讓已落後的人",
+        "迎頭趕上。"
+      ],
+      [
+        "我們用 AI，讓企業的知識找得到、用得上；再結合管理的智慧，突破既有框架，",
+        "把答案變成行動。"
+      ]
+    ],
+    "name": "邱浩煒 Wilson",
+    "role": "CEO of tAistro"
+  }
+}

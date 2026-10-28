@@ -4,10 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { SUPPORTED_PAGES, SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, localeHref, pageHref, escapeHtml } from './i18n.js';
-import { pageMetadata, canonicalUrl, crawlTargets, crawlUrls, SITE_ORIGIN, INDEXABLE, NOT_INDEXABLE } from './page-metadata.js';
+import { pageMetadata, canonicalUrl, crawlTargets, crawlUrls, SITE_ORIGIN, INDEXABLE, NOT_INDEXABLE, OG_LOCALES } from './page-metadata.js';
 import { DEFAULT_CASE, resolveCaseId, publishedCases, caseIds } from './cases-data.js';
 import { createHeadShim } from './head-test-helpers.mjs';
 import { PUBLIC_FILES } from './share-preview.mjs';
+import { LOCALE_CONFIG } from './locale-config.js';
 
 const read = name => readFile(new URL(name, import.meta.url), 'utf8');
 const markup = readFileSync(new URL('./page.html', import.meta.url), 'utf8').replace(/<!--[\s\S]*?-->/g, '');
@@ -20,48 +21,63 @@ const staticHead = metaTags.map(attributes => ['meta', attributes]);
 const PREVIEW_WORDING = /設計原型|prototype|live design/i;
 const combinations = SUPPORTED_PAGES.flatMap(page => SUPPORTED_LOCALES.map(({ code }) => ({ page, locale: code })));
 // Roughly what Google shows before truncating; Traditional Chinese needs far fewer characters.
-const DESCRIPTION_LIMIT = Object.freeze({ 'zh-Hant': 80, en: 160 });
+const DESCRIPTION_LIMIT = Object.fromEntries(LOCALE_CONFIG.map(item => [item.code, item.descriptionLimit]));
 const brandRoot = new URL('../../../public/brand/', import.meta.url);
 
-test('canonical addresses keep one stable form: page before language, bare root for the default page', () => {
-  assert.equal(combinations.length, 12);
-  assert.deepEqual(combinations.map(pair => canonicalUrl(pair)), [
-    'https://taistro.com.tw/',
+test('canonical addresses keep one stable form: page before language, explicit language even for the home page', () => {
+  assert.equal(combinations.length, 6 * SUPPORTED_LOCALES.length);
+  for (const { page, locale } of combinations) assert.equal(canonicalUrl({page, locale}), `https://taistro.com.tw/?page=${page}&lang=${locale}`);
+  assert.deepEqual(combinations.filter(pair => ['zh-Hant', 'en', 'de'].includes(pair.locale)).map(pair => canonicalUrl(pair)), [
+    'https://taistro.com.tw/?page=home&lang=zh-Hant',
     'https://taistro.com.tw/?page=home&lang=en',
+    'https://taistro.com.tw/?page=home&lang=de',
     'https://taistro.com.tw/?page=kip&lang=zh-Hant',
     'https://taistro.com.tw/?page=kip&lang=en',
+    'https://taistro.com.tw/?page=kip&lang=de',
     'https://taistro.com.tw/?page=ems&lang=zh-Hant',
     'https://taistro.com.tw/?page=ems&lang=en',
+    'https://taistro.com.tw/?page=ems&lang=de',
     'https://taistro.com.tw/?page=pvsim&lang=zh-Hant',
     'https://taistro.com.tw/?page=pvsim&lang=en',
+    'https://taistro.com.tw/?page=pvsim&lang=de',
     'https://taistro.com.tw/?page=cases&lang=zh-Hant',
     'https://taistro.com.tw/?page=cases&lang=en',
+    'https://taistro.com.tw/?page=cases&lang=de',
     'https://taistro.com.tw/?page=about&lang=zh-Hant',
     'https://taistro.com.tw/?page=about&lang=en',
+    'https://taistro.com.tw/?page=about&lang=de',
   ]);
   // Unknown input falls back to the default address instead of inventing a new one.
-  for (const pair of [undefined, {}, { page: '../../private', locale: '<script>' }, { page: '__proto__', locale: 'de' }]) {
-    assert.equal(canonicalUrl(pair), 'https://taistro.com.tw/');
+  for (const pair of [undefined, {}, { page: '../../private', locale: '<script>' }, { page: '__proto__', locale: 'not-a-locale' }]) {
+    assert.equal(canonicalUrl(pair), 'https://taistro.com.tw/?page=home&lang=zh-Hant');
   }
   // Each published case adds one address per language, inserted after the overview pair.
-  assert.equal(crawlTargets().length, combinations.length + 2 * publishedCases().length);
-  assert.deepEqual(crawlUrls(), [
-    'https://taistro.com.tw/',
+  assert.equal(crawlTargets().length, combinations.length + SUPPORTED_LOCALES.length * publishedCases().length);
+  assert.deepEqual(crawlUrls().filter(url => ['zh-Hant', 'en', 'de'].includes(new URL(url).searchParams.get('lang'))), [
+    'https://taistro.com.tw/?page=home&lang=zh-Hant',
     'https://taistro.com.tw/?page=home&lang=en',
+    'https://taistro.com.tw/?page=home&lang=de',
     'https://taistro.com.tw/?page=kip&lang=zh-Hant',
     'https://taistro.com.tw/?page=kip&lang=en',
+    'https://taistro.com.tw/?page=kip&lang=de',
     'https://taistro.com.tw/?page=ems&lang=zh-Hant',
     'https://taistro.com.tw/?page=ems&lang=en',
+    'https://taistro.com.tw/?page=ems&lang=de',
     'https://taistro.com.tw/?page=pvsim&lang=zh-Hant',
     'https://taistro.com.tw/?page=pvsim&lang=en',
+    'https://taistro.com.tw/?page=pvsim&lang=de',
     'https://taistro.com.tw/?page=cases&lang=zh-Hant',
     'https://taistro.com.tw/?page=cases&lang=en',
+    'https://taistro.com.tw/?page=cases&lang=de',
     'https://taistro.com.tw/?page=cases&case=tokyo-foodex-2026&lang=zh-Hant',
     'https://taistro.com.tw/?page=cases&case=tokyo-foodex-2026&lang=en',
+    'https://taistro.com.tw/?page=cases&case=tokyo-foodex-2026&lang=de',
     'https://taistro.com.tw/?page=cases&case=tainan-tech-forum-2026&lang=zh-Hant',
     'https://taistro.com.tw/?page=cases&case=tainan-tech-forum-2026&lang=en',
+    'https://taistro.com.tw/?page=cases&case=tainan-tech-forum-2026&lang=de',
     'https://taistro.com.tw/?page=about&lang=zh-Hant',
     'https://taistro.com.tw/?page=about&lang=en',
+    'https://taistro.com.tw/?page=about&lang=de',
   ]);
   assert.equal(new Set(crawlUrls()).size, crawlUrls().length);
   // A case identifier that is unknown, unpublished or malformed never reaches an address.
@@ -89,7 +105,7 @@ test('every published case has its own crawl identity and keeps the section page
       assert.ok([...crawl.description].length <= DESCRIPTION_LIMIT[code], `${label}: ${[...crawl.description].length} characters`);
       assert.doesNotMatch(crawl.title, PREVIEW_WORDING, label);
       assert.doesNotMatch(crawl.description, PREVIEW_WORDING, label);
-      assert.deepEqual(crawl.alternates.map(item => item.hreflang), ['zh-Hant', 'en', 'x-default'], label);
+      assert.deepEqual(crawl.alternates.map(item => item.hreflang), [...SUPPORTED_LOCALES.map(item => item.code), 'x-default'], label);
       assert.equal(crawl.alternates.find(item => item.hreflang === code).href, crawl.canonical, label);
       assert.equal(crawl.alternates.at(-1).href, canonicalUrl({ page: 'cases', locale: 'zh-Hant', caseId: entry.id }), label);
       // A case keeps its own address; it never collapses into the overview.
@@ -133,7 +149,7 @@ test('an unknown case identifier states the miss, leaves the index and carries n
   }
 });
 
-test('every page and language resolves one absolute canonical, three alternates and a usable description', () => {
+test('every page and language resolves one absolute canonical, four alternates and a usable description', () => {
   const canonicals = new Set();
   for (const { page, locale } of combinations) {
     const label = `${page}/${locale}`;
@@ -143,7 +159,7 @@ test('every page and language resolves one absolute canonical, three alternates 
     assert.equal(crawl.og.url, crawl.canonical, label);
     canonicals.add(crawl.canonical);
 
-    assert.deepEqual(crawl.alternates.map(item => item.hreflang), ['zh-Hant', 'en', 'x-default'], label);
+    assert.deepEqual(crawl.alternates.map(item => item.hreflang), [...SUPPORTED_LOCALES.map(item => item.code), 'x-default'], label);
     for (const alternate of crawl.alternates) assert.equal(new URL(alternate.href).origin, SITE_ORIGIN, label);
     assert.equal(crawl.alternates.find(item => item.hreflang === locale).href, crawl.canonical, label);
     assert.equal(crawl.alternates.at(-1).href, canonicalUrl({ page, locale: 'zh-Hant' }), label);
@@ -155,9 +171,9 @@ test('every page and language resolves one absolute canonical, three alternates 
     assert.ok([...crawl.description].length <= DESCRIPTION_LIMIT[locale], `${label}: ${[...crawl.description].length} characters`);
     assert.doesNotMatch(crawl.description, PREVIEW_WORDING, label);
     assert.doesNotMatch(crawl.title, PREVIEW_WORDING, label);
-    assert.deepEqual(crawl.og.localeAlternate, [locale === 'en' ? 'zh_TW' : 'en_US'], label);
+    assert.deepEqual(crawl.og.localeAlternate, SUPPORTED_LOCALES.filter(item => item.code !== locale).map(item => OG_LOCALES[item.code]), label);
   }
-  assert.equal(canonicals.size, 12);
+  assert.equal(canonicals.size, 6 * SUPPORTED_LOCALES.length);
 });
 
 test('the published markup carries static home metadata and never a static canonical', () => {
@@ -171,11 +187,11 @@ test('the published markup carries static home metadata and never a static canon
   assert.equal(byKey.get('og:type'), 'website');
   assert.equal(byKey.get('og:site_name'), 'tAistro');
   assert.equal(byKey.get('og:locale'), 'zh_TW');
-  assert.equal(byKey.get('og:locale:alternate'), 'en_US');
+  assert.deepEqual(metaTags.filter(tag => tag.property === 'og:locale:alternate').map(tag => tag.content), LOCALE_CONFIG.filter(item => item.code !== 'zh-Hant').map(item => item.og));
   assert.equal(byKey.get('twitter:card'), 'summary');
   assert.match(markup, /<html lang="zh-Hant">/);
 
-  // One document answers eight addresses, so a fixed canonical or hreflang would merge them.
+  // One document answers all pages and languages, so fixed crawl links would merge them.
   assert.equal(/<link\b[^>]*rel\s*=\s*"canonical"/i.test(markup), false, 'canonical belongs to the runtime, not the markup');
   assert.equal(/<link\b[^>]*hreflang/i.test(markup), false, 'hreflang alternates belong to the runtime');
 });
@@ -319,7 +335,7 @@ test('the shell withdraws canonical, alternates and og:url for a case that does 
   const real = pageMetadata({ page: 'cases', locale: 'en', caseId: DEFAULT_CASE });
   apply(real);
   assert.equal(head.querySelectorAll('link[rel="canonical"]').length, 1);
-  assert.equal(head.querySelectorAll('link[rel="alternate"]').length, 3);
+  assert.equal(head.querySelectorAll('link[rel="alternate"]').length, SUPPORTED_LOCALES.length + 1);
   assert.equal(head.querySelectorAll('meta[property="og:url"]').length, 1);
   assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), real.canonical);
   assert.equal(head.querySelector('meta[name="robots"]').getAttribute('content'), INDEXABLE);
@@ -358,8 +374,8 @@ test('re-applying metadata rewrites the existing tags instead of adding a second
   assert.equal(head.querySelector('link[rel="canonical"]').getAttribute('href'), last.canonical);
   assert.equal(head.querySelector('meta[property="og:url"]').getAttribute('content'), last.canonical);
   assert.equal(head.querySelectorAll('link[rel="canonical"]').length, 1);
-  assert.equal(head.querySelectorAll('link[rel="alternate"]').length, 3);
+  assert.equal(head.querySelectorAll('link[rel="alternate"]').length, SUPPORTED_LOCALES.length + 1);
   assert.equal(head.querySelectorAll('meta[name="description"]').length, 1);
-  assert.equal(head.querySelectorAll('meta[property="og:locale:alternate"]').length, 1);
+  assert.equal(head.querySelectorAll('meta[property="og:locale:alternate"]').length, 2);
   assert.equal(head.querySelector('meta[property="og:locale:alternate"]').getAttribute('content'), 'zh_TW');
 });

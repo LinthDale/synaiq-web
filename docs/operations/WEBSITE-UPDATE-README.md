@@ -17,7 +17,7 @@
 | 修改正式網站 | `docs/design/live-prototype/`，品牌素材在 `public/brand/` |
 | 公開檔案白名單 | `docs/design/live-prototype/share-preview.mjs` 的 `PUBLIC_FILES` |
 | 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
-| 驗收網址 | https://taistro.com.tw/，六頁的 `?page=home/kip/ems/pvsim/cases/about&lang=zh-Hant/en` 組合；舊網域 HTTPS 應 301 轉到新網址 |
+| 驗收網址 | https://taistro.com.tw/，六頁的 `?page=home/kip/ems/pvsim/cases/about&lang=zh-Hant/en/de` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
 | 發布工具與證據 | `scripts/hostinger/`；首次成功本機核對在 `out/hostinger-ci/38197100197-1/`，雲端完整證據在加密草稿 Release。歷史 `out/synaiq-release-*` 只供參考，不可原地重跑 |
 | 本機憑證 | `.env.hostinger.local` 的 `HOSTINGER_API_TOKEN`；由程式讀取，不顯示值 |
@@ -154,7 +154,7 @@ node "$releaseDir/update-guide.mjs"
 | live | 正式網址瀏覽器報告 passed；title 無預覽字樣、圖片、導覽、語言、排版正常 |
 | guide | 主機私有 `00-SYNAIQ-START-HERE.txt` 指向新目錄；其公開網址仍為 410 |
 
-封裝會改寫 `/brand/`、`assets/`、入口 CSS／JS 路徑到新 release，保留模組載入關係。檢查完整 `page.html → prototype.js → i18n.js → locale-*.js` 鏈；locale 的 `Cache-Control` 應為 `no-cache, must-revalidate`。保留既有 LiteSpeed、WordPress 舊站 410、Wally 圖片白名單。歷史版本依下列保留規則歸檔，不在一般發布過程直接刪除。
+封裝會改寫 `/brand/`、`assets/`、入口 CSS／JS 路徑到新 release，保留模組載入關係。檢查完整 `page.html → prototype.js → locale-bootstrap.js → locale-store.js → locales/generated/<語言>.js` 鏈（2026-10-28 本機改造，尚未發布）；JSON 原檔不公開，生成模組必須先提交，封裝前執行 `npm run check:locales`；locale 的 `Cache-Control` 應為 `no-cache, must-revalidate`。保留既有 LiteSpeed、WordPress 舊站 410、Wally 圖片白名單。歷史版本依下列保留規則歸檔，不在一般發布過程直接刪除。
 
 9/21 的三階段瀏覽器檢查各有 17 組：四頁 × 中英文 × 390／1440px，再加 835px 導覽。這是當次基準；本次改到其他斷點或互動時，增加相應驗證，不把舊報告複製成新 passed。
 

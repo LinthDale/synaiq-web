@@ -1,0 +1,159 @@
+{
+  "navigation": {
+    "home": "Home",
+    "kip": "KIP",
+    "products": "Solutions",
+    "ems": "EMS",
+    "pvsim": "PVsim",
+    "emsContext": "Inside EMS",
+    "pvsimContext": "Inside PVsim",
+    "emsSections": "EMS sections",
+    "pvsimSections": "PVsim sections",
+    "productStory": "Product story",
+    "energyWorkflow": "Energy workflow",
+    "solarWorkflow": "Design workflow",
+    "capabilities": "Core capabilities",
+    "casesPage": "Our Work",
+    "aboutPage": "About Us",
+    "site": "Website pages",
+    "homeLabel": "tAistro home",
+    "homeContext": "On this page",
+    "kipContext": "Inside Synaiq KIP",
+    "casesContext": "Our work contents",
+    "aboutContext": "About us contents",
+    "homeSections": "Home sections",
+    "kipSections": "Synaiq KIP sections",
+    "casesSections": "Our work sections",
+    "aboutSections": "About us sections",
+    "casesList": "The journey",
+    "caseStory": "Case story",
+    "fieldnotes": "Field notes",
+    "casePress": "Coverage",
+    "approach": "Our approach",
+    "leadership": "Leadership",
+    "technical": "Technical team",
+    "wally": "Wally",
+    "proof": "Product tour",
+    "about": "About tAistro",
+    "process": "Knowledge flow",
+    "architecture": "Architecture",
+    "advantages": "Eight advantages",
+    "demo": "Product demo",
+    "menu": "Contents",
+    "language": "Language",
+    "skip": "Skip to main content"
+  },
+  "title": {
+    "home": "tAistro — Knowledge stays with you.",
+    "kip": "Synaiq KIP Platform — tAistro",
+    "ems": "EMS — tAistro",
+    "pvsim": "PVsim — tAistro",
+    "cases": "Our Work — tAistro",
+    "about": "About Us — tAistro"
+  },
+  "description": {
+    "home": "Scattered company documents become a knowledge hub you can ask. Start with a question. Every answer has a source you can trace.",
+    "kip": "Ask naturally. Answer precisely. Stay connected. Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
+    "ems": "Explore the EMS demo workflow: live monitoring, demand management, storage dispatch, event tracking and management review.",
+    "pvsim": "Explore the PVsim demo workflow: site modeling, module layout, shading and generation assessment, and electrical string checks.",
+    "cases": "AI in the field. Conversations beyond language. Technology finds meaning when people connect.",
+    "about": "Technology with warmth. AI for everyday life. tAistro brings AI integration, knowledge management and digital humans together in tools people want to use."
+  },
+  "contact": {
+    "heading": [
+      "Tell us your scenario.",
+      "Let’s find a way forward."
+    ],
+    "description": [
+      "Start with your sources, your users and their questions.",
+      "Together, we’ll define a knowledge workflow you can verify."
+    ],
+    "cta": "Let’s talk"
+  },
+  "footer": {
+    "company": "tAistro",
+    "address": "10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan"
+  },
+  "advantages": {
+    "eyebrow": "Built around your knowledge.",
+    "title": "Eight core advantages",
+    "intro": [
+      "From bringing in documents to checking answers,",
+      "make organizational knowledge part of everyday work."
+    ],
+    "scenario": "Illustrative work scenario",
+    "items": [
+      [
+        "Grounded answers, fewer hallucinations",
+        "Evidence before answers",
+        "When no matching information is found, the response makes the gap clear, so users understand the limits of the answer.",
+        "Answers start with the company documents connected to the platform. Users can check the cited material to distinguish documented information from questions that still need more evidence.",
+        "When asking about an equipment warranty, check the terms stated in the document. If an extension is not documented, confirm it with the responsible team instead of treating a guess as a commitment."
+      ],
+      [
+        "Find the information you need",
+        "From documents to answers",
+        "Search across scattered documents while keeping sources available for verification.",
+        "Start with a question without first remembering a filename, folder or the team that holds a document. Viewing results alongside the relevant sources reduces repeated searching and comparison.",
+        "When preparing a purchase request, ask which attachments and approvals are required, then check the linked forms and policies instead of opening every document in turn."
+      ],
+      [
+        "Ask in natural language",
+        "Use complete questions",
+        "Describe what you need without guessing which keywords a document uses.",
+        "Ask a real work question in your own words. Add the context, audience or constraints to focus on the task you need to solve, rather than simply finding documents containing the same term.",
+        "A new colleague can ask, “What should I prepare for my first business-trip request?” They can find the relevant policy without knowing the internal name of the form."
+      ],
+      [
+        "Keep knowledge up to date",
+        "Keep policies and answers aligned",
+        "Update organizational documents so the information used for answers follows the document version.",
+        "Manage changed documents in the knowledge center and track ingestion and parsing. Once the updated documents have been processed, they can inform queries as part of ongoing knowledge maintenance.",
+        "After a travel policy changes, update the document and confirm parsing is complete. Then ask about accommodation rules and check that the answer cites the revised content."
+      ],
+      [
+        "Connect multiple knowledge sources",
+        "Find information across teams",
+        "Bring documents from different teams into one knowledge workflow.",
+        "Organize knowledge by source so documents from different systems and teams can support queries. Use one entry point to find related information, then check each original document.",
+        "When preparing a product proposal, look up specifications, service descriptions and FAQs in the same conversation, reducing repeated requests to different teams."
+      ],
+      [
+        "Verify the source",
+        "Go back to the original",
+        "Responses include source references and indexes, so results can be checked against their documents.",
+        "An answer is not the end of a search: its document and page references make further checking possible. Read the surrounding text before quoting, sharing or deciding, so you understand the conditions and scope.",
+        "After asking about an acceptance deadline in a contract, open the cited page to check how the period starts and which exceptions apply before sharing the clause with a colleague."
+      ],
+      [
+        "Continue the conversation",
+        "Ask a follow-up",
+        "Build on the context of a question to clarify the answer step by step.",
+        "Move from a broad question to the details without repeating the background each time. Follow up on conditions, procedures or related documents, much as you would when talking with a colleague.",
+        "Start with “What are the steps for a purchase request?” Then ask “Which documents are needed?” and “Who handles it?” to build a process you can verify."
+      ],
+      [
+        "Work across media formats",
+        "More than text documents",
+        "PDFs, scans, handwriting, tables and images have corresponding ingestion workflows.",
+        "Ingestion covers text documents, images and tables, with progress and parsing failures available to track. Organize material that was difficult to search and check the interpreted content against the original.",
+        "Bring scanned manuals, inspection sheets and site photos into an equipment-maintenance knowledge base. After finding relevant information, revisit the original page or image to confirm the details."
+      ]
+    ]
+  },
+  "preview": {
+    "title": "tAistro / Local preview",
+    "page": "Page",
+    "case": "Case",
+    "language": "Language",
+    "width": "Width",
+    "fit": "Fit window",
+    "direct": "Open page",
+    "frame": "tAistro continuously resizable local preview",
+    "status": "Page width {width}px · Preview {scale}% · Refresh after changes · Scroll inside the page",
+    "metrics": "Layout: content {width}px / scroll width {scroll}px · {result}",
+    "overflow": "Horizontal overflow",
+    "fits": "No horizontal overflow",
+    "waiting": "Waiting for the preview"
+  }
+}

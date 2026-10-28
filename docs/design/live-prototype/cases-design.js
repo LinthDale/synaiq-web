@@ -4,7 +4,7 @@ import { CASES, publishedCases, findCase, parseAspect, aspectOrientation } from 
 
 // One shared overview and one shared detail template render every case from cases-data.js;
 // no case has its own copy of the markup. Assets and media addresses come from that module,
-// all wording from locale-cases.js, both keyed by the same identifier.
+// all wording from locales/<language>/cases.json, both keyed by the same identifier.
 
 const PAPER_PLANE = `<svg class="editorial-paper-plane" viewBox="0 0 180 100" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 79c20-24 52-20 51-4-1 16-28 13-23-4 5-16 26-19 46-24" stroke-width="1.1" stroke-dasharray="3 5"/><path d="m89 38 74-23-34 60-11-25-29-12Z" stroke-width="1.4"/><path d="m118 50 45-35-54 30M118 50l-4 16 10-7" stroke-width="1.1"/><path d="m92 35 68-23M133 75l31-56" stroke-width=".65" opacity=".4"/></svg>`;
 // The overview lists cases as full-width alternating rows, so each cover keeps its own

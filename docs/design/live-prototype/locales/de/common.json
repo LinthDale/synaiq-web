@@ -1,0 +1,159 @@
+{
+  "navigation": {
+    "home": "Startseite",
+    "kip": "KIP",
+    "products": "Lösungen",
+    "ems": "EMS",
+    "pvsim": "PVsim",
+    "emsContext": "Einblick in EMS",
+    "pvsimContext": "Einblick in PVsim",
+    "emsSections": "EMS-Abschnitte",
+    "pvsimSections": "PVsim-Abschnitte",
+    "productStory": "Produktgeschichte",
+    "energyWorkflow": "Energieablauf",
+    "solarWorkflow": "Planungsablauf",
+    "capabilities": "Kernfunktionen",
+    "casesPage": "Referenzen",
+    "aboutPage": "Über uns",
+    "site": "Webseiten",
+    "homeLabel": "tAistro-Startseite",
+    "homeContext": "Auf dieser Seite",
+    "kipContext": "Einblick in Synaiq KIP",
+    "casesContext": "Unsere Referenzen",
+    "aboutContext": "Über unser Unternehmen",
+    "homeSections": "Abschnitte der Startseite",
+    "kipSections": "Synaiq KIP-Abschnitte",
+    "casesSections": "Referenzabschnitte",
+    "aboutSections": "Abschnitte über uns",
+    "casesList": "Unser Weg",
+    "caseStory": "Die Geschichte",
+    "fieldnotes": "Vor Ort",
+    "casePress": "Medienberichte",
+    "approach": "Unser Ansatz",
+    "leadership": "Geschäftsleitung",
+    "technical": "Technisches Team",
+    "wally": "Wally",
+    "proof": "Produkteinblick",
+    "about": "Über tAistro",
+    "process": "Wissensfluss",
+    "architecture": "Architektur",
+    "advantages": "Acht Vorteile",
+    "demo": "Produktdemo",
+    "menu": "Inhalt",
+    "language": "Sprache",
+    "skip": "Zum Hauptinhalt springen"
+  },
+  "title": {
+    "home": "tAistro — Wissen bleibt im Unternehmen.",
+    "kip": "Synaiq KIP Plattform — tAistro",
+    "ems": "EMS — tAistro",
+    "pvsim": "PVsim — tAistro",
+    "cases": "Referenzen — tAistro",
+    "about": "Über uns — tAistro"
+  },
+  "description": {
+    "home": "Verstreute Unternehmensdokumente werden zu einer Wissenszentrale. Stellen Sie Fragen und erhalten Sie Antworten mit nachvollziehbaren Quellen.",
+    "kip": "Natürlich fragen, präzise antworten. Synaiq KIP macht aus verstreuten Unternehmensdokumenten eine Wissenszentrale mit überprüfbaren Quellen.",
+    "ems": "Entdecken Sie den EMS-Demoablauf: Echtzeitüberwachung, Lastmanagement, Speichereinsatz, Ereignisverfolgung und Managementbewertung.",
+    "pvsim": "Entdecken Sie den PVsim-Planungsablauf: Standortmodellierung, Modulbelegung, Verschattungs- und Ertragsbewertung sowie elektrische Stringprüfung.",
+    "cases": "KI vor Ort. Gespräche über Sprachgrenzen hinweg. Technologie gewinnt Bedeutung, wenn Menschen einander begegnen.",
+    "about": "tAistro verbindet KI-Integration, Wissensmanagement und digitale Menschen zu Werkzeugen für den Alltag. Lernen Sie unser Team kennen."
+  },
+  "contact": {
+    "heading": [
+      "Erzählen Sie uns von Ihrem Vorhaben.",
+      "Gemeinsam finden wir einen Weg."
+    ],
+    "description": [
+      "Beginnen wir mit Ihren Quellen, Nutzenden und deren Fragen.",
+      "Gemeinsam entwickeln wir einen überprüfbaren Wissensablauf."
+    ],
+    "cta": "Kontakt aufnehmen"
+  },
+  "footer": {
+    "company": "tAistro",
+    "address": "10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan"
+  },
+  "advantages": {
+    "eyebrow": "Rund um Ihr Wissen entwickelt.",
+    "title": "Acht zentrale Vorteile",
+    "intro": [
+      "Vom Import der Dokumente bis zur Prüfung der Antworten –",
+      "Unternehmenswissen wird Teil des Arbeitsalltags."
+    ],
+    "scenario": "Beispiel aus dem Arbeitsalltag",
+    "items": [
+      [
+        "Fundierte Antworten, weniger KI-Halluzinationen",
+        "Erst Belege, dann Antworten",
+        "Wenn passende Informationen fehlen, benennt die Antwort diese Lücke ausdrücklich. So bleiben ihre Grenzen erkennbar.",
+        "Antworten beruhen auf den eingebundenen Unternehmensdokumenten. Anhand der Quellen können Nutzende prüfen, welche Informationen belegt sind und wo noch Angaben fehlen.",
+        "Bei einer Frage zum Garantieumfang eines Geräts werden zuerst die dokumentierten Bedingungen geprüft. Fehlen Angaben zur Verlängerung, wird die zuständige Stelle gefragt, statt eine Vermutung als Zusage auszugeben."
+      ],
+      [
+        "Informationen schneller finden",
+        "Von Dokumenten zu Antworten",
+        "Durchsuchen Sie verstreute Dokumente und behalten Sie die überprüfbaren Quellen im Blick.",
+        "Beginnen Sie mit einer Frage, ohne Dateinamen, Ordner oder die zuständige Abteilung kennen zu müssen. Relevante Quellen neben den Ergebnissen verringern wiederholtes Suchen und Vergleichen.",
+        "Fragen Sie beim Vorbereiten eines Beschaffungsantrags nach benötigten Anlagen und Freigaben. Prüfen Sie anschließend die verknüpften Formulare und Richtlinien, statt jede Datei einzeln zu öffnen."
+      ],
+      [
+        "In natürlicher Sprache fragen",
+        "Ganze Fragen stellen",
+        "Beschreiben Sie Ihren Bedarf, ohne die verwendeten Suchbegriffe eines Dokuments erraten zu müssen.",
+        "Stellen Sie Ihre Arbeitsfrage in eigenen Worten. Kontext, Zielgruppe und Einschränkungen helfen, die tatsächliche Aufgabe einzugrenzen, statt nur Dokumente mit demselben Begriff zu finden.",
+        "Neue Mitarbeitende können fragen: „Was muss ich für meinen ersten Dienstreiseantrag vorbereiten?“ So finden sie die passende Regelung, ohne den internen Formularnamen kennen zu müssen."
+      ],
+      [
+        "Wissen aktuell halten",
+        "Regeln und Antworten im Einklang",
+        "Aktualisieren Sie Unternehmensdokumente, damit die Antwortgrundlage dem jeweiligen Dokumentstand folgt.",
+        "Verwalten Sie geänderte Dateien im Wissenszentrum und verfolgen Sie Import und Verarbeitung. Nach erfolgreicher Verarbeitung können aktualisierte Dokumente die Grundlage weiterer Fragen bilden.",
+        "Wird die Reiserichtlinie geändert, aktualisieren Sie zuerst die Datei und prüfen Sie den Verarbeitungsstatus. Fragen Sie anschließend nach Übernachtungsregeln und kontrollieren Sie, ob die neue Fassung zitiert wird."
+      ],
+      [
+        "Mehrere Wissensquellen verbinden",
+        "Abteilungsübergreifend suchen",
+        "Führen Sie Dokumente verschiedener Teams in einem gemeinsamen Wissensablauf zusammen.",
+        "Ordnen Sie Wissen nach Quellen, damit Dokumente aus verschiedenen Systemen und Abteilungen Fragen beantworten können. Suchen Sie zusammenhängende Informationen an einem Ort und prüfen Sie danach die Originalquellen.",
+        "Für einen Produktvorschlag lassen sich Spezifikationen, Servicebeschreibungen und häufige Fragen im selben Gespräch recherchieren. Das reduziert Rückfragen bei verschiedenen Teams."
+      ],
+      [
+        "Quellen überprüfen",
+        "Zurück zum Original",
+        "Antworten enthalten Quellen und Verweise, sodass sich die Angaben anhand der Dokumente prüfen lassen.",
+        "Eine Antwort ist nicht das Ende der Suche. Dokument- und Seitenverweise ermöglichen weitere Prüfungen. Lesen Sie vor dem Zitieren, Weitergeben oder Entscheiden auch den Kontext, die Bedingungen und den Geltungsbereich.",
+        "Öffnen Sie nach einer Frage zur vertraglichen Abnahmefrist die zitierte Seite. Prüfen Sie Fristbeginn und Ausnahmen, bevor Sie die Klausel an Beteiligte weitergeben."
+      ],
+      [
+        "Gespräche fortsetzen",
+        "Gezielt nachfragen",
+        "Knüpfen Sie an den bisherigen Kontext an, um eine Antwort schrittweise zu präzisieren.",
+        "Gehen Sie von einer allgemeinen Frage zu Details über, ohne den Hintergrund jedes Mal zu wiederholen. Fragen Sie nach Bedingungen, Abläufen oder verwandten Dokumenten – wie im Gespräch mit Kolleginnen und Kollegen.",
+        "Beginnen Sie mit „Welche Schritte umfasst ein Beschaffungsantrag?“ Fragen Sie anschließend „Welche Unterlagen sind nötig?“ und „Wer ist zuständig?“, um einen überprüfbaren Ablauf zusammenzustellen."
+      ],
+      [
+        "Verschiedene Medien nutzen",
+        "Mehr als Textdokumente",
+        "Für PDFs, Scans, Handschrift, Tabellen und Bilder gibt es entsprechende Importabläufe.",
+        "Der Import umfasst Textdokumente, Bilder und Tabellen; Fortschritt und Verarbeitungsfehler lassen sich verfolgen. Erschließen Sie schwer durchsuchbares Material und prüfen Sie die erkannten Inhalte am Original.",
+        "Binden Sie gescannte Handbücher, Prüfbögen und Standortfotos in das Wartungswissen ein. Kehren Sie nach der Suche zur Originalseite oder zum Bild zurück, um Details zu bestätigen."
+      ]
+    ]
+  },
+  "preview": {
+    "title": "tAistro / Lokale Vorschau",
+    "page": "Seite",
+    "case": "Referenz",
+    "language": "Sprache",
+    "width": "Breite",
+    "fit": "An Fenster anpassen",
+    "direct": "Seite öffnen",
+    "frame": "Stufenlos skalierbare lokale tAistro-Vorschau",
+    "status": "Seitenbreite {width}px · Vorschau {scale}% · Nach Änderungen neu laden · Innerhalb der Seite scrollen",
+    "metrics": "Layout: Inhalt {width}px / Scrollbreite {scroll}px · {result}",
+    "overflow": "Horizontaler Überlauf",
+    "fits": "Kein horizontaler Überlauf",
+    "waiting": "Vorschau wird geladen"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "looseLetters": ["Notiz", "a", "§", "S.012", "W", ".pdf", "n", "Folien", "k", "r", "Daten", "e", "03", "b", "s", "Erfahrung", "…", "m", "t", "Quelle", "a", "Seite 12", "o", "01"],
+  "hero": {
+    "eyebrow": "PLATTFORM FÜR INTELLIGENTES WISSEN",
+    "title": ["Verstreute Unternehmensdokumente", "werden zu einer Wissenszentrale, ", "die Antworten gibt."],
+    "intro": ["Am Anfang steht eine Frage.", "Jede Antwort hat eine nachvollziehbare Quelle."],
+    "action": "So funktioniert Synaiq KIP",
+    "artAlt": "Eine handgezeichnete Schreibmaschine verstreut Buchstaben und Papier; Hände greifen feine Fäden auf, die zu einem abstrakten Gehirnumriss führen",
+    "scroll": "Folgen Sie dem Faden"
+  },
+  "narrative": {
+    "pretitle": "Geben wir jedem Stück",
+    "title": ["Unternehmenswissen", "die Chance, gefunden zu werden."],
+    "lead": ["Das besondere Wissen Ihres Unternehmens", "liegt oft ", "jenseits des öffentlichen Internets."],
+    "paragraphs": [
+      "E-Mails, Notizen, interne Dokumente und Präsentationen bewahren die Erfahrung Ihrer Organisation. Doch häufig liegen sie verstreut in unterschiedlichen Systemen und Teams und sind noch nicht so aufbereitet, dass KI sie wirksam nutzen kann.",
+      "Die nächste Chance liegt darin, KI mit dem Wissen und den Ressourcen im Unternehmen zu verbinden. Damit Mitarbeitende bei Bedarf Antworten finden – und die Belege dahinter."
+    ],
+    "action": "Die vier Architekturebenen von Synaiq KIP entdecken ↗",
+    "artAlt": "Handgezeichnete Darstellung zweier Hände, die Wissen über Papierblätter und feine Fäden weitergeben",
+    "artNote": "Erfahrung in die nächsten Hände geben."
+  },
+  "products": {
+    "label": "Produktdarstellungen von Synaiq KIP und Wally",
+    "note": "Die Fäden nehmen Gestalt an.",
+    "title": ["Verstreutes Wissen", "findet einen gemeinsamen Zugang."],
+    "screenAlt": "Gestaltungsstudie der Synaiq KIP-Suche mit Frage, Antwort und Quelle; Beispieldaten, kein Original-Screenshot des Produkts",
+    "screenCaption": "Synaiq KIP-Oberfläche / Gestaltungsstudie",
+    "paperLabel": "Typografische Darstellung von Wissensquellen im Unternehmen",
+    "paperEyebrow": "IHR WISSEN",
+    "paperTitle": ["Hinter jeder Antwort", "steht eine Originalquelle."],
+    "paperDocuments": "Notizen. Interne Dokumente.",
+    "paperCopy": ["Die Erfahrung Ihrer Organisation –", "nicht länger verstreut."],
+    "paperCaption": "Unternehmenswissen · Typografische Studie",
+    "devicesLabel": "Wally-Produkte nebeneinander",
+    "deviceAlts": ["Originales Farbbild des Wally 2", "Originales Farbbild des Wally 2 PLUS mit vollständiger weißer mobiler Basis", "Originales Farbbild des Wally Mini"],
+    "stageCopy": "Synaiq KIP auf dem Bildschirm. Wally im direkten Gespräch.",
+    "stageNote": "Gestaltungsdarstellungen, keine Kundeninstallationen."
+  },
+  "outlook": {
+    "eyebrow": "KI IM UNTERNEHMEN / BRANCHENAUSBLICK",
+    "dates": "Umfrage 2024 · Erwartungen für 2027",
+    "title": ["KI verändert,", "wie Unternehmen Budgets verteilen."],
+    "intro": "Laut Investing.coms Bericht über eine Umfrage von J.P. Morgan erwarteten die befragten IT-Verantwortlichen, dass Hardware für KI-beschleunigtes Rechnen einen größeren Anteil der IT-Budgets einnehmen würde.",
+    "reading": [
+      "In der Umfrage von 2024 gaben 33 % der CIOs an, Mittel für andere IT-Projekte zu kürzen, um KI-Investitionen zu unterstützen. Besonders betroffen waren Altsysteme, Modernisierungen und Infrastruktur.",
+      "62 % gaben hingegen an, andere Projekte nicht zu kürzen. Dem Bericht zufolge könnten KI-Investitionen überwiegend durch zusätzliche Budgets statt durch eine reine Umschichtung bestehender Ausgaben finanziert werden."
+    ],
+    "chartLabel": "Die Befragten erwarteten, dass der Anteil von KI-Rechenhardware am IT-Budget von 5 Prozent im Jahr 2024 auf 14,5 Prozent drei Jahre später steigen würde",
+    "currentYear": "Angegebener Anteil 2024",
+    "futureYear": "Erwarteter Anteil 2027",
+    "respondents": "166 CIOs",
+    "spending": "Die Befragten verantworteten zusammen jährliche IT-Ausgaben von 123 Milliarden US-Dollar.",
+    "caveat": "Dies waren Erwartungen aus dem Jahr 2024 – keine bereits erreichten Ergebnisse oder Leistungsnachweise für Synaiq KIP.",
+    "detailsLabel": "Hintergrund und Quelle der Umfrage lesen",
+    "details": "Der Bericht beschrieb die erwartete Entwicklung über drei Jahre als durchschnittliches jährliches Wachstum von rund 45 %. 33 % der CIOs wollten Mittel für andere Projekte kürzen, insbesondere für Altsysteme, Modernisierungen und Infrastruktur; 62 % wollten andere Projekte nicht kürzen.",
+    "sourceLabel": "Investing.com · Bericht vom 29. Juni 2024 ↗",
+    "sourceCaveat": "Grundlage ist ein Medienbericht; die vollständige Originalumfrage von J.P. Morgan lag zur Prüfung nicht vor.",
+    "clippingLabel": "Originalbericht auf Investing.com lesen (öffnet in einem neuen Tab)",
+    "clippingAlt": "Screenshot des Investing.com-Berichts vom 29. Juni 2024: CIO survey a massive boon for Microsoft - JP Morgan, einschließlich Originalfoto und Reuters-Bildnachweis"
+  },
+  "showcase": {
+    "title": ["Stellen Sie eine Frage.", "Sehen Sie, woher die Antwort kommt."],
+    "copy": ["Die intelligente Suche verbindet Fragen mit Dokumenten. Das Wissenszentrum verwaltet Import und Verarbeitung.", "Von der Frage bis zur Quelle lässt sich jeder Schritt prüfen."]
+  },
+  "wally": {
+    "title": ["Dasselbe Wissen.", "Jetzt im direkten Gespräch."],
+    "intro": ["Wally bringt Synaiq KIP vor Ort.", "Damit durchsuchbares Wissen Teil persönlicher Gespräche wird."],
+    "detail": "Software und Geräte erzählen dieselbe Geschichte.",
+    "personaAlt": "Digitale Figur im violetten Cheerleading-Outfit aus dem offiziellen Internetauftritt",
+    "personaCaption": "Offizielle Figurendarstellung / Originalfarben",
+    "personaEyebrow": "WALLY MINI",
+    "personaTitle": ["Wissen bekommt", "ein Gesicht."],
+    "personaCopy": ["Von Fragen am Bildschirm zu Gesprächen vor Ort.", "Eine vertraute Markenfigur trägt das Gespräch in den Raum."],
+    "miniAlt": "Originales Farbbild des Wally Mini-Geräts mit digitalem Menschen",
+    "materialNote": "Figuren- und Produktdarstellungen, keine Fotos eines realisierten Einsatzorts.",
+    "panoramaLabel": "Fünf Wally-Produktbilder; zum Ansehen horizontal scrollen",
+    "panoramaAlt": "Vollständige Produktreihe in Originalfarben: Wally 1, 1 Plus, 2, 2 Plus und Mini",
+    "panoramaCaption": "Produktreihe in Originalfarben / Vollständige Geräte",
+    "panoramaHint": "Auf dem Smartphone seitlich wischen, um die gesamte Produktreihe zu sehen."
+  },
+  "ceo": {
+    "label": "Ein Zitat des CEO von tAistro",
+    "note": "Für alle, die eine Antwort suchen.",
+    "artAlt": "Reduzierte Skizze nach einem Foto von 邱浩煒 Wilson mit Mikrofon und Handgeste; keine Dokumentation einer tatsächlichen Veranstaltung",
+    "quote": [
+      ["Der Wert von KI liegt darin, Menschen, die zurückgeblieben sind, zu helfen, ", "aufzuholen."],
+      ["Wir nutzen KI, um Wissen leicht auffindbar und nutzbar zu machen. Verbunden mit menschlicher Urteilskraft können wir über bestehende Denkmuster hinausgehen und Antworten ", "in Handeln übersetzen."]
+    ],
+    "name": "邱浩煒 Wilson",
+    "role": "CEO von tAistro"
+  }
+}

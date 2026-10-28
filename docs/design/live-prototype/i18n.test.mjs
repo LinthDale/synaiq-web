@@ -4,7 +4,7 @@ import { SUPPORTED_LOCALES, SUPPORTED_PAGES, resolveLocale, resolvePage, getMess
 import { CASE_ID_PATTERN } from './cases-data.js';
 
 test('locale selection is explicit, canonical and safely falls back to Traditional Chinese', () => {
-  for (const value of ['', undefined, 'de', '../../private', '<script>', 'zh', 'zh-TW']) assert.equal(resolveLocale(value), 'zh-Hant');
+  for (const value of ['', undefined, 'not-a-locale', '../../private', '<script>']) assert.equal(resolveLocale(value), 'zh-Hant');
   assert.equal(resolveLocale('EN'), 'en');
   assert.equal(resolveLocale('zh-Hant'), 'zh-Hant');
   assert.ok(SUPPORTED_LOCALES.some(item => item.code === 'zh-Hant'));

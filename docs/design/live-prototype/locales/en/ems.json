@@ -1,0 +1,157 @@
+{
+  "screens": {
+    "label": "Inside the demo environment",
+    "note": "Actual interface captures · De-identified · Sample data",
+    "group": "EMS product screens",
+    "enlarge": "View full-size image",
+    "items": [
+      [
+        "Energy overview",
+        "Review grid, solar, storage and site load together, with energy composition and demand trends."
+      ],
+      [
+        "Demand management",
+        "Read demand trends alongside contracted capacity to identify the periods that need attention."
+      ],
+      [
+        "Storage management",
+        "Review storage state, charge and discharge schedules, and operating information."
+      ]
+    ]
+  },
+  "productLabel": "EMS · Energy Management System",
+  "title": [
+    "See the energy.",
+    "Understand the change.",
+    "Manage the whole site."
+  ],
+  "intro": "A site’s energy story goes beyond its electricity bill. From live monitoring and demand management to storage dispatch, EMS is designed around a complete management cycle, with site data behind each decision.",
+  "status": "Demo environment",
+  "cta": "Explore the workflow",
+  "sceneLabel": "From equipment to the whole site",
+  "sceneNote": "Actual demo interface",
+  "sceneNodes": [
+    "Site equipment",
+    "Energy trends",
+    "Management decisions"
+  ],
+  "storyLabel": "Start with an ordinary workday",
+  "storyTitle": [
+    "The meter keeps running.",
+    "So do the questions."
+  ],
+  "story": [
+    "Equipment starts up and demand rises. At peak time, the team needs to know: what changed, does demand need attention, and could storage help?",
+    "When readings, alarms and reports live in different places, each question takes several searches. EMS brings observation, interpretation, management and review into one connected workflow."
+  ],
+  "processTitle": [
+    "From a reading",
+    "to an informed decision."
+  ],
+  "steps": [
+    [
+      "See the present",
+      "Start with the site and its equipment. Review current readings, status and alarms to find changes that need attention."
+    ],
+    [
+      "Understand the change",
+      "Compare trends, demand and equipment records. Establish when and under what conditions a change occurred before discussing a strategy."
+    ],
+    [
+      "Manage and review",
+      "Bring storage dispatch, event tracking and reporting into one cycle, reviewing how each strategy relates to site operation."
+    ]
+  ],
+  "capabilitiesTitle": [
+    "Understand each device.",
+    "See the entire site."
+  ],
+  "capabilitiesIntro": "Six connected areas define the intended EMS scope. The demo supports workflow discussions; data connections, control conditions and delivery scope are confirmed for each site.",
+  "capabilities": [
+    [
+      "Energy overview and live monitoring",
+      "Move from a site overview to equipment readings through a shared starting point for daily checks."
+    ],
+    [
+      "Historical trends and equipment analysis",
+      "Place a change on a timeline and compare operating periods with original records to understand its context."
+    ],
+    [
+      "Demand management",
+      "Consider peaks, demand trends and site objectives together to inform management strategies."
+    ],
+    [
+      "Storage management and dispatch",
+      "Review storage status, charging needs and site use together to establish workable dispatch conditions."
+    ],
+    [
+      "Alarms and event tracking",
+      "Follow an event from detection through the underlying records to its handling and review."
+    ],
+    [
+      "Reports and management review",
+      "Organize operating and management records for a period so different teams can discuss the same evidence."
+    ]
+  ],
+  "demoTitle": [
+    "Follow a day’s energy.",
+    "Explore the management cycle."
+  ],
+  "demoIntro": "Choose a step to see the question it addresses and the information to check next.",
+  "demoLabel": "Interactive workflow illustration · Not live monitoring",
+  "demoNote": "This illustration does not connect to or control equipment. The EMS demo currently uses simulator data; viewing it requires an account.",
+  "stageGroup": "Energy management workflow steps",
+  "questionLabel": "The question to answer",
+  "actionLabel": "What to check next",
+  "stages": [
+    [
+      "Survey the site",
+      "Does today’s energy use look familiar?",
+      "Review the overview, then select the equipment and period that need attention.",
+      "Site readings → Site overview"
+    ],
+    [
+      "Trace the change",
+      "When did energy use begin to rise?",
+      "Compare current readings with historical records to locate the change.",
+      "Historical trends → Equipment records"
+    ],
+    [
+      "Review demand",
+      "What options do we have at peak time?",
+      "Compare demand trends with site objectives before reviewing the operating schedule.",
+      "Demand trends → Site objectives"
+    ],
+    [
+      "Assess dispatch",
+      "How could storage support the site?",
+      "Check storage status, equipment limits and control permissions before discussing a charging strategy.",
+      "Storage status → Dispatch conditions"
+    ],
+    [
+      "Follow the event",
+      "What happened after the alarm?",
+      "Connect alarm times, equipment records and handling status to review the sequence.",
+      "Alarm events → Handling records"
+    ],
+    [
+      "Review the period",
+      "What should we consider adjusting next?",
+      "Bring trends and events together as evidence for the next management review.",
+      "Management reports → Further improvement"
+    ]
+  ],
+  "external": "Open the EMS demo",
+  "externalNote": "Opens in a new tab · Demo account required",
+  "contact": {
+    "heading": [
+      "Tell us about your site.",
+      "Let’s map its energy workflow."
+    ],
+    "description": [
+      "Start with equipment, data sources and management objectives.",
+      "Together, define a demonstration and an implementation scope."
+    ],
+    "cta": "Discuss an EMS demo"
+  }
+}

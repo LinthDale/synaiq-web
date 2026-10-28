@@ -1,0 +1,203 @@
+{
+  "overview": {
+    "eyebrow": "SELECTED WORK",
+    "title": [
+      "AI in the field.",
+      "Conversations",
+      "beyond language."
+    ],
+    "intro": "Technology finds meaning when people connect. A familiar face for information. Another way for front-line teams to welcome people.",
+    "action": "Explore the stories",
+    "listTitle": "Walk the journey with us",
+    "readCase": "Explore the story",
+    "photoHint": {
+      "touch": "Tap to peek",
+      "hover": "Hover to peek"
+    },
+    "back": "Back to the journey",
+    "notFound": {
+      "title": "Case not found",
+      "body": "No story at this stop yet. Return to the journey and see the other fields."
+    },
+    "closing": "Your setting could be the next story."
+  },
+  "tags": {
+    "exhibition": "International exhibition",
+    "multilingual": "Four languages",
+    "digitalHuman": "AI digital human",
+    "knowledge-platform": "Synaiq KIP Knowledge Platform",
+    "industry-forum": "Industry forum",
+    "panel": "Panel"
+  },
+  "cases": {
+    "tokyo-foodex-2026": {
+      "name": "FOODEX Japan",
+      "dateLabel": "MARCH 2026",
+      "summary": "From Tainan to Tokyo, a familiar face introduces the flavors of Taiwan in four languages.",
+      "chapter": "01 / TOKYO FOOD EXHIBITION",
+      "journey": "TAINAN → TOKYO",
+      "photos": {
+        "hero": {
+          "label": "Pause or resume the exhibition photograph reveal",
+          "alt": "Hand-drawn scene of a visitor beside the Tainan mayor’s AI digital human at the Tokyo exhibition",
+          "caption": "MARCH 2026 · TOKYO FOOD EXHIBITION"
+        },
+        "team": {
+          "label": "Pause or resume the exhibition group photograph reveal",
+          "alt": "Hand-drawn group of three visitors beside the AI digital-human device in the Tainan booth",
+          "caption": "TAINAN BOOTH · DIGITAL HUMAN & ON-SITE TEAM"
+        }
+      },
+      "facts": [
+        [
+          "SETTING",
+          "International exhibition",
+          "Tokyo · 2026"
+        ],
+        [
+          "INTERACTION",
+          "Four languages",
+          "Mandarin / Japanese / English / Korean"
+        ],
+        [
+          "INTEGRATION",
+          "AI digital human",
+          "Digital twin × On-site device"
+        ]
+      ],
+      "story": {
+        "eyebrow": "01 / THE STORY",
+        "title": [
+          "A mayor’s digital twin.",
+          "An invitation from a city."
+        ],
+        "paragraphs": [
+          "On March 10, 2026, Tainan arrived at the Tokyo food exhibition. With buyers visiting from different countries, how could more people connect with its local produce and the stories behind it?",
+          "tAistro brought an AI digital twin of Tainan Mayor Huang Wei-che to the exhibition through digital-human technology and hardware–software integration. Guidance in Mandarin, Japanese, English and Korean opened a new way to interact with visitors."
+        ]
+      },
+      "field": {
+        "eyebrow": "02 / IN THE FIELD",
+        "title": [
+          "In Tokyo,",
+          "the conversations happened."
+        ],
+        "intro": "A familiar face for information. Another way for front-line teams to welcome people.",
+        "notes": [
+          [
+            "Begin with people",
+            "A familiar city representative gives visitors a natural starting point for a conversation."
+          ],
+          [
+            "Let language connect",
+            "Four languages in one service setting respond to the communication needs of an international exhibition."
+          ],
+          [
+            "Bring the pieces together",
+            "Digital-human content and the exhibition device work together to put AI in front of visitors."
+          ]
+        ]
+      },
+      "press": {
+        "title": "Another view of the story.",
+        "links": [
+          [
+            "Yam News",
+            "tAistro brings the Tainan mayor’s AI digital twin to Tokyo"
+          ],
+          [
+            "ETtoday",
+            "Coverage from the Tainan booth in Tokyo"
+          ]
+        ]
+      }
+    },
+    "tainan-tech-forum-2026": {
+      "name": "Tainan Technology Industry Forum",
+      "dateLabel": "SEPTEMBER 2026",
+      "summary": "At the Tainan forum, tAistro presented Synaiq KIP for enterprise knowledge management: connecting company documents, traceable answers, and shared experience.",
+      "chapter": "02 / TAINAN TECHNOLOGY INDUSTRY FORUM",
+      "journey": "TAINAN · HOME GROUND",
+      "photos": {
+        "hero": {
+          "alt": "tAistro staff presenting Synaiq KIP on a screen to Bureau of Economic Development officials on the Tainan forum exhibition floor",
+          "label": "Pause or resume the Tainan forum exhibition photograph reveal",
+          "caption": "16 Sep 2026 · Exhibition floor, Synaiq KIP demo"
+        },
+        "panel": {
+          "alt": "Five panelists on the forum stage; the tAistro panelist speaks at far right",
+          "label": "Pause or resume the Tainan forum panel photograph reveal",
+          "caption": "Forum panel · tAistro panelist at far right"
+        }
+      },
+      "facts": [
+        [
+          "Venue",
+          "Tainan Technology Industry Forum",
+          "ICC Tainan · 16–17 Sep 2026"
+        ],
+        [
+          "On show",
+          "Synaiq KIP Knowledge Platform",
+          "Enterprise knowledge management with traceable sources"
+        ],
+        [
+          "Role",
+          "Exhibitor and panelist",
+          "Hosted by the Bureau of Economic Development, Tainan City Government"
+        ]
+      ],
+      "story": {
+        "eyebrow": "01 / THE STORY",
+        "title": [
+          "Company knowledge,",
+          "shared team capability."
+        ],
+        "paragraphs": [
+          "The 2026 Tainan Technology Industry Forum and Exhibition, hosted by the Bureau of Economic Development, Tainan City Government, ran on 16–17 September 2026 at ICC Tainan. Two days of talks and showcases focused on applied AI and green energy.",
+          "tAistro presented Synaiq KIP around everyday knowledge management needs: scattered documents, time spent searching, and experience that is difficult to pass on. Synaiq KIP connects document ingestion, parsing, and library management, so teams can ask questions in natural language and follow citations back to the original material.",
+          "tAistro also joined the forum panel. Our contribution focused on enterprise knowledge management: organizing documents and experience into knowledge that can be searched, traced, and maintained to support daily work and knowledge transfer."
+        ]
+      },
+      "field": {
+        "eyebrow": "02 / IN THE FIELD",
+        "title": [
+          "From stored information",
+          "to shared knowledge."
+        ],
+        "intro": "Synaiq KIP focuses on knowledge management within the enterprise. Document integration, search, and source verification help teams find, understand, and reuse what their organization knows.",
+        "notes": [
+          [
+            "Bring documents together",
+            "Connect scattered documents to the knowledge center, then parse and organize them into libraries that provide a shared foundation for the team."
+          ],
+          [
+            "Check every answer against its source",
+            "Ask for work information in natural language. Citations lead back to the original material so people can verify the answer and its context."
+          ],
+          [
+            "Keep experience in the organization",
+            "Maintain procedures and records of experience in a knowledge base that supports collaboration, onboarding, and handovers."
+          ]
+        ]
+      },
+      "press": {
+        "title": "Another view of the story.",
+        "links": [
+          [
+            "Economic Daily News",
+            "Tainan's \"2026 T-AI-NAN\" technology forum wins praise from attendees"
+          ],
+          [
+            "SETN",
+            "\"2026 T-AI-NAN\" forum focuses on smart manufacturing and unmanned vehicles"
+          ],
+          [
+            "CNEWS",
+            "Tainan builds Taiwan's only semiconductor, AI and robotics golden triangle"
+          ]
+        ]
+      }
+    }
+  }
+}

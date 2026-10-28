@@ -1,29 +1,7 @@
-import { zhHant as homeZh, en as homeEn } from './locale-home.js?v=20260922-cases-expansion';
-import { zhHant as kipZh, en as kipEn } from './locale-kip.js?v=20260922-cases-expansion';
-import { zhHant as emsZh, en as emsEn } from './locale-ems.js';
-import { zhHant as pvsimZh, en as pvsimEn } from './locale-pvsim.js';
-import { zhHant as casesZh, en as casesEn } from './locale-cases.js?v=20260922-cases-expansion';
-import { zhHant as aboutZh, en as aboutEn } from './locale-about.js?v=20260922-cases-expansion';
-import { zhHant as demoZh, en as demoEn } from './locale-demo.js?v=20260922-cases-expansion';
-import { zhHant as commonZh, en as commonEn } from './locale-common.js?v=20260922-cases-expansion';
-import { BRAND, PRODUCT_BRAND } from './brand.js';
-
-// Add a reviewed language bundle here; no language parameter is used as a file path.
-const catalog = {
-  'zh-Hant': { label: '繁體中文', shortLabel: 'ZH', dir: 'ltr', messages: { home: homeZh, kip: kipZh, ems: emsZh, pvsim: pvsimZh, cases: casesZh, about: aboutZh, demo: demoZh, common: commonZh } },
-  en: { label: 'English', shortLabel: 'EN', dir: 'ltr', messages: { home: homeEn, kip: kipEn, ems: emsEn, pvsim: pvsimEn, cases: casesEn, about: aboutEn, demo: demoEn, common: commonEn } },
-};
+import { DEFAULT_LOCALE, resolveLocale } from './locale-store.js';
+export { DEFAULT_LOCALE, SUPPORTED_LOCALES, resolveLocale, selectLocale, getMessages, loadMessages, hasMessages } from './locale-store.js';
 export const SUPPORTED_PAGES = Object.freeze(['home', 'kip', 'ems', 'pvsim', 'cases', 'about']);
 export function resolvePage(value) { return SUPPORTED_PAGES.includes(value) ? value : 'home'; }
-export const DEFAULT_LOCALE = 'zh-Hant';
-export const SUPPORTED_LOCALES = Object.freeze(Object.entries(catalog).map(([code, entry]) => Object.freeze({ code, label: entry.label, shortLabel: entry.shortLabel, dir: entry.dir })));
-export function resolveLocale(value) {
-  return SUPPORTED_LOCALES.find(item => item.code.toLowerCase() === String(value ?? '').toLowerCase())?.code ?? DEFAULT_LOCALE;
-}
-export function getMessages(locale = DEFAULT_LOCALE) {
-  const messages = catalog[resolveLocale(locale)].messages;
-  return { ...messages, common: { ...messages.common, brand: BRAND, productBrand: PRODUCT_BRAND } };
-}
 // A case identifier travels in the address, so only this fixed shape is carried over; the
 // published identifiers themselves belong to cases-data.js, which this module never imports.
 export const CASE_PARAM_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;

@@ -8,8 +8,8 @@
 <rect x="287" y="328" width="44" height="44" rx="6" fill="#282825"/><text x="297" y="359" font-size="23" fill="#f4f4f2">{{avatar}}</text>
 <text x="360" y="359" font-size="25">{{answerHeading}}</text>
 <text x="360" y="412" font-size="24">{{answerClause}}</text>
-<path d="M358 430Q837 439 1314 429" fill="none" stroke="#637859" stroke-width="2"/>
-<text x="360" y="477" font-size="17" fill="#64645e">{{answerNote}}</text>
+<path d="M358 430Q837 439 1314 429" transform="translate(0 {{layout.answerUnderlineOffset}})" fill="none" stroke="#637859" stroke-width="2"/>
+<text x="360" y="{{layout.answerNoteY}}" font-size="17" fill="#64645e">{{answerNote}}</text>
 <rect x="360" y="523" width="994" height="142" rx="8" fill="#e3e9dc" stroke="#819b70"/>
 <text x="386" y="562" font-size="14" fill="#64645e">{{sourceLabel}}</text>
 <text x="386" y="602" font-size="22">{{sourceFilename}}</text><text x="1326" y="602" text-anchor="end" font-size="17">{{sourcePage}}</text>

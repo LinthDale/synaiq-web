@@ -1,14 +1,16 @@
-import { SUPPORTED_LOCALES, getMessages, resolveLocale, resolvePage, pageHref, escapeHtml } from './i18n.js';
+import './locale-bootstrap.js';
+import { showLocaleStatus } from './locale-bootstrap.js';
+import { SUPPORTED_LOCALES, getMessages, loadMessages, hasMessages, selectLocale, resolveLocale, resolvePage, pageHref, escapeHtml } from './i18n.js';
 import { caseIds, resolveCaseId } from './cases-data.js';
 
-export function readPreviewRoute(href) {
+export function readPreviewRoute(href, browserLanguages = []) {
   const url = new URL(href, 'https://preview.invalid/');
   let hash = url.hash.slice(1);
   try { hash = decodeURIComponent(hash); } catch { /* Keep a malformed fragment as literal text. */ }
   return {
     page: resolvePage(url.searchParams.get('page')),
     caseId: resolveCaseId(url.searchParams.get('case')),
-    locale: resolveLocale(url.searchParams.get('lang')),
+    locale: selectLocale(url.searchParams.get('lang'), browserLanguages),
     hash,
   };
 }
@@ -21,7 +23,8 @@ export function initPreview({ document = globalThis.document, window = globalThi
   const ids = ['stage', 'viewport', 'preview', 'width', 'page', 'case', 'language', 'fit', 'readout', 'direct', 'status', 'metrics'];
   const nodes = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
   const { stage, viewport, preview: frame, width, page, case: caseSelect, language } = nodes;
-  let route = readPreviewRoute(window.location.href);
+  let route = readPreviewRoute(window.location.href, window.navigator?.languages ?? []);
+  let navigationVersion = 0;
   let frameWindow;
   let copy;
   language.innerHTML = SUPPORTED_LOCALES.map(item => `<option value="${escapeHtml(item.code)}">${escapeHtml(item.label)}</option>`).join('');
@@ -86,7 +89,16 @@ export function initPreview({ document = globalThis.document, window = globalThi
   }
 
   function navigate(nextRoute) {
+    const version = ++navigationVersion;
+    if (!hasMessages(nextRoute.locale)) {
+      return loadMessages(nextRoute.locale).then(() => {
+        if (version === navigationVersion) navigate(nextRoute);
+      }).catch(() => {
+        if (version === navigationVersion) showLocaleStatus(nextRoute.locale, { error: true, document, window });
+      });
+    }
     route = nextRoute;
+    document.getElementById('locale-status')?.remove();
     localize();
     updateShellUrl();
     frame.src = previewPageHref(route);
@@ -98,6 +110,7 @@ export function initPreview({ document = globalThis.document, window = globalThi
       // Ignore the initial about:blank document and any navigation outside this preview.
       if (url.origin !== window.location.origin || url.pathname !== new URL('page.html', window.location.href).pathname) return;
       route = readPreviewRoute(url.href);
+      if (!hasMessages(route.locale)) { navigate(route); return; }
       localize();
       updateShellUrl();
     } catch { nodes.metrics.textContent = copy.waiting; }
@@ -149,4 +162,8 @@ export function initPreview({ document = globalThis.document, window = globalThi
   };
 }
 
-if (typeof document !== 'undefined' && document.getElementById('preview')) initPreview();
+if (typeof document !== 'undefined' && document.getElementById('preview')) {
+  initPreview();
+  document.getElementById('locale-status')?.remove();
+  document.documentElement.dataset.i18nReady = 'true';
+}

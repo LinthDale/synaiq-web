@@ -1,15 +1,14 @@
 // Static illustrations share purchasing copy with the animated interface.
-// Edit locale-demo.js for questions, answers, source filenames and send labels.
-import { zhHant, en } from './locale-demo.js';
+// Generated from JSON via the same catalog as the animated interface. Node build only.
+import { LOCALE_CONFIG } from './locale-config.js';
+import { loadMessages } from './locale-store.js';
 
-export const screenLocaleSuffixes = Object.freeze({ 'zh-Hant': '', en: '-en' });
-const captions = {
-  'zh-Hant': { searchTitle: 'Synaiq KIP 智慧搜尋介面示意', libraryTitle: 'Synaiq KIP 知識中心介面示意', description: '品牌化介面與虛構採購流程示意，並非真實產品截圖或客戶資料。', format: '格式', search: '搜尋文件名稱', add: '＋ 接入文件', pdf: 'PDF', word: 'Word', excel: 'Excel' },
-  en: { searchTitle: 'Synaiq KIP knowledge search interface concept', libraryTitle: 'Synaiq KIP knowledge center interface concept', description: 'Branded interface and fictional purchasing process, not a live product screenshot or customer data.', format: 'Format', search: 'Search document names', add: '＋ Add files', pdf: 'PDF', word: 'Word', excel: 'Excel' },
-};
+export const screenLocaleSuffixes = Object.freeze(Object.fromEntries(LOCALE_CONFIG.map(({ code, suffix }) => [code, suffix])));
+const catalogs = Object.fromEntries(await Promise.all(LOCALE_CONFIG.map(async ({ code }) => [code, await loadMessages(code)])));
 
-export const screenMessages = Object.fromEntries(Object.entries({ 'zh-Hant': zhHant, en }).map(([locale, demo]) => {
-  const c = captions[locale];
+export const screenMessages = Object.fromEntries(Object.entries(catalogs).map(([locale, catalog]) => {
+  const demo = catalog.demo;
+  const c = catalog.screens;
   const common = {
     description: c.description, productLabel: demo.productLabel,
     newChat: demo.newChat, recentQuestions: demo.recentQuestions,
