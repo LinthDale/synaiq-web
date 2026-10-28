@@ -5,9 +5,10 @@ import { join } from 'node:path';
 import { chromium } from 'playwright';
 import { canonicalUrl, crawlTargets } from '../../docs/design/live-prototype/page-metadata.js';
 import { sha } from './core.mjs';
+import { SUPPORTED_LOCALES } from '../../docs/design/live-prototype/locale-store.js';
 
 const PAGES = ['home', 'kip', 'ems', 'pvsim', 'cases', 'about'];
-const LANGS = ['zh-Hant', 'en'];
+const LANGS = SUPPORTED_LOCALES.map(({ code }) => code);
 const WIDTHS = [390, 1440];
 
 /**
@@ -97,7 +98,7 @@ export async function smoke(manifest, work, origin, mode) {
         assert.equal(await canvas.isVisible(), false);
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'Horizontal overflow');
-      const opposite = item.lang === 'en' ? 'zh-Hant' : 'en';
+      const opposite = LANGS[(LANGS.indexOf(item.lang) + 1) % LANGS.length];
       await page.locator('#language').selectOption(opposite);
       await page.waitForURL(url => url.searchParams.get('lang') === opposite);
       assert.equal(new URL(page.url()).searchParams.get('page'), item.page);

@@ -1,3 +1,4 @@
+import './locale-bootstrap.js';
 import { renderHome, initHome } from './home-design.js';
 import { renderKip, initKip } from './kip-design.js';
 import { renderEms, renderPvsim, initEnergy } from './energy-design.js?v=20261002-products';
@@ -101,6 +102,8 @@ for (const link of document.querySelectorAll('a[href^="?page="]')) {
   link.setAttribute('href', pageHref({ page: target.searchParams.get('page'), caseId: target.searchParams.get('case'), locale, hash: target.hash }));
 }
 pages[page].init({ locale, messages });
+document.getElementById('locale-status')?.remove();
+document.documentElement.dataset.i18nReady = 'true';
 if (location.hash) {
   const destination = document.getElementById(location.hash.slice(1));
   if (destination) requestAnimationFrame(() => destination.scrollIntoView({ behavior: 'instant' }));

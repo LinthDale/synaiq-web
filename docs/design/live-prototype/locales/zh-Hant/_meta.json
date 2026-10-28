@@ -1,0 +1,9 @@
+{
+  "label": "繁體中文",
+  "shortLabel": "ZH",
+  "og": "zh_TW",
+  "browserLanguages": ["zh"],
+  "order": 0,
+  "descriptionLimit": 80,
+  "screen": { "labelWidth": 98.359375, "answerLineLength": 0, "answerUnderlineOffset": 0, "answerNoteY": 477 }
+}

@@ -1,0 +1,81 @@
+{
+  "screens": {
+    "label": "Vom Modell zu sichtbaren Entwurfsergebnissen",
+    "note": "Originalmodell und Demo-Aufnahmen · Anonymisiert · Dachbeispiel",
+    "group": "PVsim-Produktansichten",
+    "enlarge": "Bild in voller Größe ansehen",
+    "viewer": {
+      "hint": "Probieren Sie es aus",
+      "start": "In 3D erkunden",
+      "loading": "3D-Modell wird geladen…",
+      "controls": "3D-Modellsteuerung",
+      "canvas": "PVsim-Demomodell zum Drehen, Zoomen und Verschieben",
+      "in": "Vergrößern ＋",
+      "out": "Verkleinern −",
+      "top": "Draufsicht",
+      "home": "Ansicht zurücksetzen",
+      "site": "Gesamter Standort",
+      "exit": "Zurück zum Bild",
+      "help": "Ziehen: drehen · Rechte Maustaste und ziehen: verschieben · Scrollen: zoomen. Touch: mit einem Finger drehen, mit zwei Fingern zoomen und verschieben. Tastatur: Pfeiltasten zum Verschieben, + / − zum Zoomen, Pos1 zum Zurücksetzen.",
+      "unavailable": "Das 3D-Modell ist derzeit nicht verfügbar. Versuchen Sie es erneut oder sehen Sie sich das Originalbild an."
+    },
+    "items": [
+      ["3D-Standort und Belegung", "Erkunden Sie das originale Demomodell: Drehen, zoomen und verschieben Sie die Ansicht oder wechseln Sie zur Draufsicht, um Standort und Modulbelegung gemeinsam zu prüfen."],
+      ["Jährliche Verschattungsverteilung", "Erkennen Sie die Verschattung auf den Modulen und prüfen Sie, welche Belegungs- und Stringentscheidungen nochmals betrachtet werden sollten."],
+      ["Monatlicher Ertragsvergleich", "Vergleichen Sie bei gleicher Modulposition verschiedene Stringanordnungen anhand typischer Wetterdaten und Modellannahmen."],
+      ["U-förmige Stringführung", "Prüfen Sie einen U-förmigen Rückweg. Wählen Sie einen String aus, um die Modulreihenfolge sowie den zugeordneten MPPT-Eingang und Wechselrichter nachzuvollziehen."]
+    ]
+  },
+  "productLabel": "PVsim · PV-Simulation und Planung",
+  "title": ["Am Standort beginnen.", "Den gesamten Entwurf", "durchdenken."],
+  "intro": "Die Modulanzahl ist erst der Anfang. PVsim verbindet Standortmodellierung, Modulbelegung, Verschattungs- und Ertragsbewertung sowie Stringprüfungen, damit räumliche, solare und elektrische Bedingungen gemeinsam betrachtet werden können.",
+  "status": "Demo-Umgebung",
+  "cta": "Planungsablauf entdecken",
+  "sceneLabel": "Jede Belegung nachvollziehbar begründen",
+  "sceneNote": "Originalansicht des Demo-Arbeitsbereichs",
+  "sceneNodes": ["Standortbedingungen", "Solarbewertung", "Stringprüfungen"],
+  "storyLabel": "Gute Planung beginnt mit dem Standort",
+  "storyTitle": ["Es muss passen.", "Und durchdacht sein."],
+  "story": [
+    "Eine andere Belegung am selben Standort ergibt einen anderen Entwurf. Hindernisse, verfügbare Fläche und Sonnenlicht beeinflussen die Platzierung; diese wirkt sich wiederum auf Ertragsschätzungen und elektrische Strings aus.",
+    "PVsim bündelt diese zusammenhängenden Fragen in einem Projekt: die Szene aufbauen, eine Variante anpassen und anschließend Annahmen und Prüfungen nachvollziehen, um den Entwurf zu begründen."
+  ],
+  "processTitle": ["Von der Standortidee", "zum durchdachten Entwurf."],
+  "steps": [
+    ["Szene aufbauen", "Erfassen Sie Standortgrenzen und Hindernisse, um ein gemeinsames Modell und die Planungsgrenzen festzulegen."],
+    ["Belegen und bewerten", "Untersuchen Sie Modulbelegungen und beziehen Sie Verschattungs- und Ertragsbewertungen wieder in die Planung ein."],
+    ["Verschalten und prüfen", "Prüfen Sie die elektrischen Stringbedingungen und bereiten Sie Entwurf und Ergebnisse für die nächste Besprechung auf."]
+  ],
+  "capabilitiesTitle": ["Raum, Sonne, Elektrik.", "Eine gemeinsame Planung."],
+  "capabilitiesIntro": "Sechs Bereiche beschreiben die Produktausrichtung von PVsim – von der Belegung bis zur Entwurfsprüfung. Eine Demo-Umgebung ist verfügbar; Berechnungsbedingungen, Gerätedaten und Lieferumfang werden je Projekt vereinbart.",
+  "capabilities": [
+    ["Standortmodellierung und Szenenvorbereitung", "Erfassen Sie Standort und Hindernisse, damit jede Belegungsvariante auf denselben Szenendaten aufbaut."],
+    ["Modulbelegung und Variantenanpassung", "Untersuchen Sie Anordnungen innerhalb der verfügbaren Fläche und beziehen Sie Platzierungsentscheidungen auf die Standortbedingungen."],
+    ["Verschattungsbewertung", "Beziehen Sie umliegende Hindernisse und Sonnenlicht ein, um Bereiche mit weiterem Prüfbedarf zu erkennen."],
+    ["Ertragsbewertung", "Betrachten Sie Belegung und Berechnungsannahmen gemeinsam, um den geschätzten Ertrag und seine Voraussetzungen zu verstehen."],
+    ["Elektrische Stringprüfung", "Führen Sie die räumliche Belegung in die Stringplanung über und prüfen Sie Modul-, Wechselrichter- und Stringbedingungen."],
+    ["Projekt- und Ergebnisverwaltung", "Bewahren Sie den Planungskontext je Projekt auf, damit Varianten, Annahmen und Ergebnisse später nachvollzogen und besprochen werden können."]
+  ],
+  "demoTitle": ["Ein Standort.", "Der gesamte Planungsablauf."],
+  "demoIntro": "Wählen Sie einen Schritt und entdecken Sie die Fragen hinter Standortvorbereitung, Belegung, Bewertung und Stringprüfung.",
+  "demoLabel": "Interaktive Ablaufdarstellung · Keine technischen Berechnungsergebnisse",
+  "demoNote": "Diese Darstellung berechnet weder Energieertrag noch elektrische Leistung. Für den PVsim-Demo-Arbeitsbereich ist ein von der Administration bereitgestelltes Konto erforderlich.",
+  "stageGroup": "Schritte der PV-Planung",
+  "questionLabel": "Die zentrale Frage",
+  "actionLabel": "Der nächste Prüfschritt",
+  "stages": [
+    ["Standort verstehen", "Welche Flächen sind verfügbar und wo bestehen Einschränkungen?", "Erfassen Sie Grenzen, Hindernisse und Standortbedingungen, um den Planungsbereich festzulegen.", "Standortbedingungen → Szenenmodell"],
+    ["Module platzieren", "Welche Anordnung passt zu dieser Szene?", "Untersuchen Sie die verfügbare Fläche und vergleichen Sie die Platzierung mit räumlichen Einschränkungen.", "Verfügbare Fläche → Modulbelegung"],
+    ["Verschattung prüfen", "Wo sollten wir die Sonneneinstrahlung genauer betrachten?", "Beziehen Sie Hindernisse erneut in die Belegungsplanung ein, um Bereiche mit Prüfbedarf zu erkennen.", "Hindernisse → Belegungsanpassungen"],
+    ["Ertrag bewerten", "Auf welchen Annahmen beruht diese Schätzung?", "Betrachten Sie Belegung, Berechnungsannahmen und Schätzwerte gemeinsam, bevor Sie Varianten vergleichen.", "Belegung und Annahmen → Ertragsbewertung"],
+    ["Strings prüfen", "Passen die elektrischen Bedingungen zur Belegung?", "Prüfen Sie Modul- und Wechselrichterdaten gemeinsam mit Stringanordnung und offenen Fragen.", "Gerätebedingungen → Stringprüfungen"],
+    ["Entwurf dokumentieren", "Kann die nächste Person die Planung nachvollziehen?", "Halten Sie Szene, Variante und Prüfpunkte im Projekt für spätere Besprechungen fest.", "Planungsergebnisse → Projektunterlagen"]
+  ],
+  "external": "PVsim-Demo öffnen",
+  "externalNote": "Öffnet in einem neuen Tab · Demo-Konto erforderlich",
+  "contact": {
+    "heading": ["Bringen Sie Ihren Standort mit.", "Gemeinsam erkunden wir den Entwurf."],
+    "description": ["Beginnen wir mit Standortbedingungen, Belegungsbedarf und Bewertungszielen.", "Gemeinsam legen wir ein Demoprojekt und den Planungsablauf fest."],
+    "cta": "PVsim-Demo besprechen"
+  }
+}

@@ -56,7 +56,7 @@ export function renderAbout({ contact, locale = 'zh-Hant', messages = getMessage
     <section class="editorial-hero about-hero" aria-labelledby="about-title">
       <div class="wrap">
         <p class="editorial-kicker">${esc(copy.hero.eyebrow)}</p>
-        <h1 class="about-title" id="about-title">${copy.hero.title.map(text => `<span>${esc(text)}</span>`).join(locale === 'en' ? ' ' : '')}</h1>
+        <h1 class="about-title" id="about-title">${copy.hero.title.map(text => `<span>${esc(text)}</span>`).join(locale === 'zh-Hant' ? '' : ' ')}</h1>
         <div class="about-hero-bottom">
           <p class="about-intro">${esc(copy.hero.intro)}</p>
           <a class="editorial-link" href="#leadership">${esc(copy.hero.action)} <span aria-hidden="true">↘</span></a>

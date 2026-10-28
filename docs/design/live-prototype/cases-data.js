@@ -1,5 +1,5 @@
 // Published case registry: fixed identifiers, dates, ordering, assets and media addresses.
-// No translated prose (locale-cases.js owns every string) and no private evidence: material
+// No translated prose (locales/<language>/cases.json owns every string) and no private evidence: material
 // that is not cleared for publication stays out of this file instead of being hidden behind
 // a flag. Pure data — no imports, no DOM, no location.
 
@@ -15,7 +15,7 @@ const TOKYO_FOODEX_2026 = Object.freeze({
   featured: true,
   // Real precision only; a case known to the month never gains an invented day.
   date: Object.freeze({ start: '2026-03-10', end: '2026-03-10', precision: 'day' }),
-  // Label text for each tag lives in locale-cases.js under the same key.
+  // Label text for each tag lives in locales/<language>/cases.json under the same key.
   tags: Object.freeze(['exhibition', 'multilingual', 'digitalHuman']),
   // Paired covers share the hero reveal; focus is retained for the plain-photo fallback.
   cover: Object.freeze({ image: 'assets/cases/tokyo-2-scaled.jpg', focus: '50% 32%' }),
@@ -29,7 +29,7 @@ const TOKYO_FOODEX_2026 = Object.freeze({
       sketch: 'assets/cases/tokyo-5-sketch.webp', aspect: '3 / 4', kind: 'scene',
     })]),
   }),
-  // Index-matched to press.links in locale-cases.js; each case manages its own coverage.
+  // Index-matched to press.links in locales/<language>/cases.json; each case manages its own coverage.
   media: Object.freeze([
     'https://n.yam.com/Article/20260311616052',
     'https://www.ettoday.net/news/20260311/3130564.htm',
@@ -56,7 +56,7 @@ const TAINAN_TECH_FORUM_2026 = Object.freeze({
       aspect: '16 / 9', kind: 'scene',
     })]),
   }),
-  // Index-matched to press.links in locale-cases.js; each article names 鑫揚智能 in its text.
+  // Index-matched to press.links in locales/<language>/cases.json; each article names 鑫揚智能 in its text.
   media: Object.freeze([
     'https://money.udn.com/money/story/5635/9766564',
     'https://www.setn.com/news/1906433',

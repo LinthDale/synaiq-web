@@ -1,0 +1,108 @@
+{
+  "hero": {
+    "eyebrow": "THE PEOPLE BEHIND tAistro",
+    "title": [
+      "Technology with warmth.",
+      "AI for everyday life."
+    ],
+    "intro": "We are tAistro. From knowledge inside an organization to a conversation in the field, we bring AI integration, knowledge management and digital humans together in tools people want to use.",
+    "action": "Meet the team",
+    "note": "Good technology begins with understanding people."
+  },
+  "approach": {
+    "eyebrow": "01 / OUR APPROACH",
+    "title": "Understand the setting. Then build for it.",
+    "intro": "Practicality, stability and room to grow guide every service we design.",
+    "principles": [
+      {
+        "title": "Designed around people",
+        "description": "We begin with how people speak and work, turning complex technology into clear, approachable interactions."
+      },
+      {
+        "title": "Built for the field",
+        "description": "We learn how public services and businesses operate, then connect AI to the work already happening."
+      },
+      {
+        "title": "Security from the start",
+        "description": "We consider information security in system design, with architecture that supports gradual adoption and expansion."
+      }
+    ]
+  },
+  "leadership": {
+    "eyebrow": "02 / LEADERSHIP",
+    "title": "The people who turn ideas into practice.",
+    "intro": "Across operations, finance and business development, we keep technical decisions connected to real needs.",
+    "members": [
+      {
+        "name": "Wilson Chiu",
+        "nativeName": "",
+        "role": "Chief Executive Officer, tAistro",
+        "credentials": [
+          "Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"
+        ]
+      },
+      {
+        "name": "Sunny Kang",
+        "nativeName": "",
+        "role": "Chief Operating Officer, tAistro",
+        "credentials": [
+          "General Manager, Ju-Xun Sustainability Strategy",
+          "Master’s Degree, Institute of Industrial Engineering and Management, National Chiao Tung University"
+        ]
+      },
+      {
+        "name": "Leef Lee",
+        "nativeName": "",
+        "role": "Chief Financial Officer",
+        "credentials": [
+          "Department of Accountancy, National Cheng Kung University",
+          "Associate Director, Finance and Accounting"
+        ]
+      },
+      {
+        "name": "Yi Shyang Lou",
+        "nativeName": "",
+        "role": "Associate Director, tAistro",
+        "credentials": [
+          "Ph.D., Institute of Information Management, National Central University",
+          "ISO 27001:2022 Information Security Management System Lead Auditor"
+        ]
+      }
+    ]
+  },
+  "technical": {
+    "eyebrow": "03 / TECHNICAL TEAM",
+    "title": "Making complex things work simply.",
+    "intro": "Across information management, software and firmware, we connect knowledge, systems and the places they serve.",
+    "members": [
+      {
+        "name": "Daniel Shih",
+        "nativeName": "",
+        "role": "Patent Strategist and Business Development Director",
+        "credentials": [
+          "Master’s Degree, Institute of Technology Management, National Yang Ming Chiao Tung University"
+        ]
+      },
+      {
+        "name": "Steve Chiang",
+        "nativeName": "",
+        "role": "Full-Stack Systems Architect",
+        "credentials": [
+          "Doctoral Program in Information Engineering, Feng Chia University"
+        ]
+      },
+      {
+        "name": "Dale Lin",
+        "nativeName": "",
+        "role": "Chief Full-Stack and Firmware Engineer",
+        "credentials": [
+          "Graduate Institute of Sustainability and Green Energy Technology, National Central University"
+        ]
+      }
+    ]
+  },
+  "portrait": {
+    "alt": "Color portrait of {name}",
+    "credentials": "Background"
+  }
+}

@@ -4,8 +4,10 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { PUBLIC_FILES } from '../../docs/design/live-prototype/share-preview.mjs';
 import { sha, transformSource, safePath, releaseName } from './core.mjs';
+import { syncLocales } from '../../docs/design/live-prototype/scripts/sync-locales.mjs';
 
 export async function packageSite(work, name) {
+  syncLocales({ check: true });
   releaseName(name);
   const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
   if (process.env.GITHUB_SHA) assert.equal(sourceCommit, process.env.GITHUB_SHA);

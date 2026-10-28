@@ -1,0 +1,176 @@
+{
+  "screens": {
+    "label": "From a model to visible design results",
+    "note": "Actual model and demo captures · De-identified · Rooftop example",
+    "group": "PVsim product screens",
+    "enlarge": "View full-size image",
+    "viewer": {
+      "hint": "Give it a try",
+      "start": "Explore in 3D",
+      "loading": "Loading 3D model…",
+      "controls": "3D model controls",
+      "canvas": "PVsim demo model with rotation, zoom and pan",
+      "in": "Zoom in ＋",
+      "out": "Zoom out −",
+      "top": "Top view",
+      "home": "Reset layout",
+      "site": "Whole site",
+      "exit": "Back to image",
+      "help": "Drag to rotate · Right-drag to pan · Scroll to zoom. Touch: one finger to rotate, two to pinch and pan. Keyboard: arrows to pan, + / − to zoom, Home to reset.",
+      "unavailable": "The 3D model is unavailable right now. Try again or view the original image."
+    },
+    "items": [
+      [
+        "3D site and layout",
+        "Explore the original demo model: rotate, zoom, pan or switch to a top view to review the site and module placement together."
+      ],
+      [
+        "Annual shading distribution",
+        "See where shading falls across modules to identify layout and string decisions to revisit."
+      ],
+      [
+        "Monthly yield comparison",
+        "Compare string arrangements for the same module positions using typical weather and model assumptions."
+      ],
+      [
+        "U-shaped string design",
+        "Review a U-shaped return path. Select a string to follow its module sequence and check its assigned MPPT input and inverter."
+      ]
+    ]
+  },
+  "productLabel": "PVsim · Solar Simulation & Design",
+  "title": [
+    "Start with a site.",
+    "Work through",
+    "the whole design."
+  ],
+  "intro": "Panel count is only the beginning. PVsim connects site modeling, module layout, shading and generation assessment, and string checks so spatial, solar and electrical conditions can be reviewed together.",
+  "status": "Demo environment",
+  "cta": "Explore the design process",
+  "sceneLabel": "Give every layout a design rationale",
+  "sceneNote": "Actual demo workspace",
+  "sceneNodes": [
+    "Site conditions",
+    "Solar assessment",
+    "String checks"
+  ],
+  "storyLabel": "Design starts with understanding the site",
+  "storyTitle": [
+    "It needs to fit.",
+    "It also needs thought."
+  ],
+  "story": [
+    "A different layout on the same site creates a different design. Obstacles, available space and sunlight affect placement; placement in turn affects generation estimates and electrical strings.",
+    "PVsim brings these connected questions into one project: build the scene, adjust a scheme, then revisit the assumptions and checks to explain why the design makes sense."
+  ],
+  "processTitle": [
+    "Turn an idea for a site",
+    "into a considered scheme."
+  ],
+  "steps": [
+    [
+      "Build the scene",
+      "Start with site boundaries and obstacles to create a shared model and establish the design limits."
+    ],
+    [
+      "Lay out and assess",
+      "Explore module arrangements, bringing shading and generation assessments back into layout decisions."
+    ],
+    [
+      "Connect and review",
+      "Review electrical string conditions and organize the scheme and findings for the next discussion."
+    ]
+  ],
+  "capabilitiesTitle": [
+    "Space, sunlight, electricity.",
+    "One design conversation."
+  ],
+  "capabilitiesIntro": "Six areas define the PVsim product direction, from layout to design checks. A demo environment is available; calculation conditions, equipment data and delivery scope are confirmed for each project.",
+  "capabilities": [
+    [
+      "Site modeling and scene preparation",
+      "Establish site and obstacle conditions so every layout begins with the same scene information."
+    ],
+    [
+      "Module layout and scheme adjustments",
+      "Explore arrangements within the available space, relating placement choices to site conditions."
+    ],
+    [
+      "Shading assessment",
+      "Bring surrounding obstructions and sunlight into the discussion to identify areas that need another look."
+    ],
+    [
+      "Generation assessment",
+      "Read the layout alongside calculation assumptions to understand a scheme’s estimated performance and conditions."
+    ],
+    [
+      "Electrical string checks",
+      "Continue from spatial layout to string planning, reviewing module, inverter and string design conditions."
+    ],
+    [
+      "Project and result organization",
+      "Keep design context with each project so schemes, assumptions and results can be reviewed and discussed later."
+    ]
+  ],
+  "demoTitle": [
+    "Follow one site",
+    "through the design process."
+  ],
+  "demoIntro": "Choose a step to explore the questions behind site preparation, layout, assessment and string checks.",
+  "demoLabel": "Interactive workflow illustration · Not engineering results",
+  "demoNote": "This illustration does not calculate energy yield or electrical performance. The PVsim demo workspace requires an account provided by an administrator.",
+  "stageGroup": "Solar design workflow steps",
+  "questionLabel": "The question to answer",
+  "actionLabel": "What to check next",
+  "stages": [
+    [
+      "Understand the site",
+      "Which parts of this site are available or constrained?",
+      "Gather site boundaries, obstacles and site conditions to establish the design area.",
+      "Site conditions → Scene model"
+    ],
+    [
+      "Place the modules",
+      "Which arrangement works with this scene?",
+      "Explore the available area and compare placement with spatial constraints.",
+      "Available space → Module layout"
+    ],
+    [
+      "Review shading",
+      "Which areas need a closer look at sunlight?",
+      "Bring obstruction conditions back into the layout discussion to identify areas to review.",
+      "Obstructions → Layout adjustments"
+    ],
+    [
+      "Assess generation",
+      "Which assumptions support this estimate?",
+      "Read the layout, calculation assumptions and estimates together before comparing schemes.",
+      "Layout and assumptions → Generation assessment"
+    ],
+    [
+      "Check strings",
+      "Do the electrical conditions fit the layout?",
+      "Review module and inverter data alongside string arrangements and open questions.",
+      "Equipment conditions → String checks"
+    ],
+    [
+      "Organize the scheme",
+      "Can the next person understand the design?",
+      "Keep the scene, scheme and review points with the project for future discussion.",
+      "Design results → Project records"
+    ]
+  ],
+  "external": "Open the PVsim demo workspace",
+  "externalNote": "Opens in a new tab · Demo account required",
+  "contact": {
+    "heading": [
+      "Bring your site to the table.",
+      "Let’s explore its design."
+    ],
+    "description": [
+      "Start with site conditions, layout needs and assessment goals.",
+      "Together, define a demo project and a design workflow."
+    ],
+    "cta": "Discuss a PVsim demo"
+  }
+}

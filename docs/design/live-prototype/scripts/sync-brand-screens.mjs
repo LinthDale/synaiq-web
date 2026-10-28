@@ -5,6 +5,7 @@ import { lstatSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { isAbsolute, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { screenLocaleSuffixes, screenMessages } from '../locale-screens.js';
+import { LOCALE_CONFIG } from '../locale-config.js';
 import { BRAND, PRODUCT_BRAND } from '../brand.js';
 
 const root = new URL('../', import.meta.url);
@@ -53,6 +54,16 @@ export function renderScreen(template, messages, logo, art = {}, productLogo = l
     if (!Object.hasOwn(messages, key)) throw new Error(`Missing screen text: ${key}`);
     if (typeof messages[key] !== 'string') throw new TypeError(`Screen text ${key} must be a string`);
     used.add(key);
+    if (key === 'answerClause' && layout.answerLineLength) {
+      const lines = [''];
+      for (const word of messages[key].split(' ')) {
+        const last = lines.length - 1;
+        if (lines[last] && lines[last].length + word.length + 1 > layout.answerLineLength) lines.push(word);
+        else lines[last] += `${lines[last] ? ' ' : ''}${word}`;
+      }
+      if (lines.length > 2) throw new Error('Screen answer needs more than two lines; review the illustration layout');
+      return lines.map((line, index) => `<tspan x="360" dy="${index ? 32 : 0}">${escapeXml(line)}</tspan>`).join('');
+    }
     return escapeXml(messages[key]);
   });
   for (const key of Object.keys(messages)) {
@@ -82,12 +93,16 @@ export function buildScreens() {
   for (const [locale, suffix] of Object.entries(screenLocaleSuffixes)) {
     // Match the desktop film header at 1240px, normalized to this 1440px canvas:
     // 24px right padding, 120px product logo, 11px gap, 12px label.
-    // Label widths measured with the actual Manrope/Noto Sans TC demo fonts.
-    const labelWidths = { 'zh-Hant': 98.359375, en: 146.21875 };
-    const productLabelWidth = labelWidths[locale] * 1440 / 1240;
+    // Existing reviewed geometry lives in JSON. New languages get conservative defaults.
+    const settings = LOCALE_CONFIG.find(item => item.code === locale).screen;
+    const estimatedWidth = [...screenMessages[locale].search.productLabel].reduce((width, character) => width + (/[^\u0000-\u00ff]/.test(character) ? 12 : 7), 0);
+    const productLabelWidth = (settings.labelWidth ?? estimatedWidth) * 1440 / 1240;
     const layout = {
       productLabelWidth,
       productLogoX: (1440 - 24 * 1440 / 1240) - productLabelWidth - (120 + 11) * 1440 / 1240,
+      answerLineLength: settings.answerLineLength ?? 76,
+      answerUnderlineOffset: settings.answerUnderlineOffset ?? 32,
+      answerNoteY: settings.answerNoteY ?? 493,
     };
     // Locale suffixes are explicit local configuration, never user-supplied paths.
     if (suffix !== '' && !/^-[a-zA-Z0-9-]+$/.test(suffix)) throw new Error(`Invalid screen locale suffix: ${locale}`);

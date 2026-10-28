@@ -7,7 +7,9 @@ import { fileURLToPath } from 'node:url';
 import { buildScreens, renderScreen, resolveBrandAsset, syncBrandScreens } from './scripts/sync-brand-screens.mjs';
 import { screenLocaleSuffixes, screenMessages } from './locale-screens.js';
 import { BRAND, PRODUCT_BRAND } from './brand.js';
-import { zhHant, en } from './locale-demo.js';
+import { getMessages as readCatalog } from './i18n.js';
+const zhHant = readCatalog('zh-Hant').demo;
+const en = readCatalog('en').demo;
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const screenNames = ['search', 'library'];
@@ -26,7 +28,7 @@ test('every screen locale supplies the same semantic text keys as Chinese', () =
 
 test('all static product screens use the approved shared paper chrome and current purchasing copy', () => {
   for (const { locale, screen, source } of buildScreens()) {
-    const demo = locale === 'en' ? en : zhHant;
+    const demo = readCatalog(locale).demo;
     assert.match(source, /id="paper-header"/);
     assert.match(source, /id="sidebar-dialogues"/);
     assert.match(source, /id="product-logo"/);
@@ -107,6 +109,14 @@ test('English screenshots translate all visible and accessible text, including e
     assert.match(source, /Equipment_Purchasing_Sample\.pdf/);
     assert.match(source, /sample|Sample|fictional/);
   }
+});
+
+test('German answer wraps without losing words or accepting raw SVG markup', () => {
+  const search = buildScreens().find(item => item.locale === 'de' && item.screen === 'search').source;
+  const lines = [...search.matchAll(/<tspan x="360" dy="(?:0|32)">([^<]+)<\/tspan>/g)].map(match => match[1]);
+  assert.equal(lines.length, 2);
+  assert.equal(lines.join(' '), readCatalog('de').demo.answerHighlight);
+  assert.ok(lines.every(line => line.length <= 76));
 });
 
 test('screen templates escape text and reject missing or unused keys', () => {

@@ -2,13 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { smokeMatrix, smokeQuery } from './browser.mjs';
+import { SUPPORTED_LOCALES } from '../../docs/design/live-prototype/i18n.js';
 
 const check = item => `${smokeQuery(item)}@${item.width}`;
 
 test('the browser smoke keeps every page check and adds each case page listed in the sitemap', async () => {
   const matrix = smokeMatrix();
   const pages = matrix.filter(item => !item.caseId);
-  const expected = ['home', 'kip', 'ems', 'pvsim', 'cases', 'about'].flatMap(page => ['zh-Hant', 'en'].flatMap(lang => [390, 1440].map(width => ({ page, lang, width }))));
+  const expected = ['home', 'kip', 'ems', 'pvsim', 'cases', 'about'].flatMap(page => SUPPORTED_LOCALES.flatMap(({code: lang}) => [390, 1440].map(width => ({ page, lang, width }))));
   expected.push(...['ems', 'pvsim'].flatMap(page => [320, 835].map(width => ({ page, lang: 'zh-Hant', width }))));
   assert.deepEqual(pages, expected);
   // The published sitemap is the reference: every case address in it, at phone and desktop width.

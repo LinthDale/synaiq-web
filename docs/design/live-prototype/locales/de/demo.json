@@ -1,0 +1,115 @@
+{
+  "groupLabel": "Animierte Synaiq KIP-Ablaufvorschau mit Beispieldaten, kein verbundenes Produkt",
+  "playbackLabel": "DAS PRODUKT IN AKTION",
+  "replay": "Wiederholen",
+  "pause": "Animation pausieren",
+  "play": "Animation abspielen",
+  "reducedMotion": "Reduzierte Bewegung: Standbildvorschau",
+  "productTitle": "Synaiq KIP / Wissensplattform",
+  "productNote": "Gestaltungsstudie · Beispieldaten",
+  "productLabel": "KIP Wissensplattform",
+  "history": "Gespräche",
+  "close": "Schließen",
+  "collapse": "Schließen",
+  "sourceRegion": "Quellennotizen",
+  "sourceScribble": "Freigabe vor dem Einkauf",
+  "newChat": "＋ Neues Gespräch",
+  "recentQuestions": "Letzte Fragen",
+  "warrantyTopic": "Laptop beantragen",
+  "knowledgeCenter": "Wissenszentrum",
+  "sourceTopic": "Eine zitierte Quelle finden",
+  "workspace": "Demo-Arbeitsbereich",
+  "breadcrumb": "Unternehmenswissen / Gerätebeschaffung",
+  "question": "Wie beantrage ich einen Laptop für neue Mitarbeitende?",
+  "thinking": "Passenden Beschaffungsablauf suchen",
+  "avatar": "K",
+  "answer": "Beginnen Sie mit dem Antrag: Zweck, Spezifikation und Budget.",
+  "answerHighlight": "Nach Freigabe durch die Führungskraft holt der Einkauf Angebote ein und bestellt. Bei Lieferung prüfen.",
+  "answerNote": "Beachten Sie die Antrags- und Freigaberegeln des zitierten Ablaufs.",
+  "citationLabel": "QUELLE / 01",
+  "citationFilename": "Geraetebeschaffung_Beispiel.pdf",
+  "citationPage": "Quelle ansehen ↗",
+  "followUp": "Eine weitere Frage stellen…",
+  "send": "Senden",
+  "sourceLabel": "ORIGINALQUELLE / BESCHAFFUNGSANTRAG",
+  "sourceTitle": "Gerätebeschaffung (Beispiel)",
+  "sourceHeading": "Antrag: Zweck, Spezifikation und Budget",
+  "sourceNote": "Fiktiver Ablauf für diese Animation, keine tatsächliche Beschaffungsrichtlinie eines Unternehmens.",
+  "libraryLabel": "WISSENSZENTRUM",
+  "libraryTitle": "Ein Platz für jedes Dokument.",
+  "libraryIntro": "Dateien ordnen und ihren Status prüfen, damit Wissen auffindbar wird.",
+  "tableHeaders": [
+    "Dokumentname",
+    "Status"
+  ],
+  "tableRows": [
+    [
+      "Geraetebeschaffung_Beispiel.pdf",
+      "✓ Abgeschlossen"
+    ],
+    [
+      "Wissensablauf_Beispiel.docx",
+      "✓ Abgeschlossen"
+    ],
+    [
+      "Datenindex_Beispiel.xlsx",
+      "Ausstehend"
+    ]
+  ],
+  "libraryNote": "Alle Inhalte sind Beispieldaten.",
+  "chaptersLabel": "Schritte der Animation",
+  "chapters": [
+    "In eigenen Worten fragen",
+    "Der Quelle folgen",
+    "Dokumente organisieren"
+  ],
+  "note": "Animierte Klicks und Einblendungen · Beispieldaten · Keine Live-Produktsitzung",
+  "booth": {
+    "label": "Synaiq KIP-Vorführraum",
+    "previous": "Vorherige Animation",
+    "next": "Nächste Animation",
+    "select": "Funktionsanimation auswählen",
+    "nowShowing": "JETZT ZU SEHEN",
+    "titles": [
+      "Fragen zum Wissen",
+      "Bilder mit Worten finden",
+      "Mit einem Bild suchen"
+    ],
+    "descriptions": [
+      "Vom Beschaffungsbedarf zum passenden Ablauf und seiner Quelle.",
+      "Beschreiben Sie das gesuchte Bild, ohne den Dateinamen kennen zu müssen.",
+      "Finden Sie anhand eines Referenzbilds visuell verwandte Inhalte."
+    ],
+    "collection": "Beispielsammlung / Produktbilder",
+    "resultLabel": "SUCHERGEBNISSE",
+    "resultCount": "3 Beispielbilder",
+    "candidate": "Datei ansehen ↗",
+    "original": "ORIGINALDATEI",
+    "fileLabel": "Dateiname",
+    "folderLabel": "Speicherort",
+    "folder": "Beispielsammlung / Wally-Serie",
+    "example": "Beispielhafter Ablauf, keine Live-Suchergebnisse",
+    "imageAlt": "Wally-Produktbild als Beispiel",
+    "open": "Original ansehen ↗",
+    "textImage": {
+      "query": "Ein Empfangsroboter mit großem Bildschirm und mobiler Basis",
+      "loading": "Beschreibung mit visuellen Merkmalen verbinden…",
+      "matching": "Von der Beschreibung zum Bild – die Quelle bleibt erreichbar.",
+      "chapters": [
+        "Ein Bild beschreiben",
+        "Passende Bilder entdecken",
+        "Originaldatei finden"
+      ]
+    },
+    "imageImage": {
+      "query": "Produktbilder mit ähnlichem Aussehen finden",
+      "loading": "Bilder mit ähnlichem Aussehen suchen…",
+      "matching": "Visuell verwandte Inhalte anhand eines Referenzbilds entdecken.",
+      "chapters": [
+        "Referenzbild auswählen",
+        "Ähnliche Bilder vergleichen",
+        "Bildquelle nachvollziehen"
+      ]
+    }
+  }
+}

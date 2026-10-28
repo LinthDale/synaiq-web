@@ -3,6 +3,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {createPreviewServer} from '../docs/design/live-prototype/share-preview.mjs';
+import {SUPPORTED_LOCALES} from '../docs/design/live-prototype/i18n.js';
 const folder='out/pvsim-3d-checks';await mkdir(folder,{recursive:true});
 const server=createPreviewServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));
 const origin=`http://127.0.0.1:${server.address().port}`;
@@ -13,7 +14,7 @@ const fingerprint=async locator=>{
  return createHash('sha256').update(screenshot).digest('hex');
 };
 try{
- for(const locale of ['zh-Hant','en'])for(const width of [320,390,835,1440]){
+ for(const {code:locale} of SUPPORTED_LOCALES)for(const width of [320,390,835,1440]){
   const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[],requests=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
   const response=await page.goto(`${origin}/live-prototype/page.html?page=pvsim&lang=${locale}#proof`,{waitUntil:'networkidle'});assert.equal(response.status(),200);

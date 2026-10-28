@@ -276,7 +276,7 @@
   :root { --advantages-hint-size: 13px; }
 }
 
-/* ── 09 CEO 引言：「AI 的價值…」／邱浩煒 Wilson；改文案請開 locale-home.js 的 ceo.quote ── */
+/* ── 09 CEO 引言：「AI 的價值…」／邱浩煒 Wilson；改文案請開 locales/<language>/home.json 的 ceo.quote ── */
 :root {
   --ceo-quote-size: clamp(30px, 3vw, 43px); /* 引言大小 */
   --ceo-quote-leading: 1.7;               /* 引言行高 */
@@ -1778,5 +1778,9 @@ html[lang='en'] .energy-opening h1 { font-size: clamp(36px, 3.5vw, 55px); }
 .pvsim-toolbar button { font: 400 13px/1.5 var(--body); color: #31442a; }
 .pvsim-help, .pvsim-status { font: 400 13px/1.7 var(--body); color: #515749; }
 
+#locale-status { font: 400 16px/1.6 var(--body); }
+#locale-status button, #locale-status select { font: inherit; }
+/* German product headings retain the same hierarchy without seven-line hero blocks. */
+html:lang(de) body[data-page="kip"] { --kip-title-size: clamp(38px, 3.9vw, 56px); }
 /* PVsim model invitation: white handwriting on the dark model poster. */
 .pvsim-start-hint { color: #fff; text-shadow: 0 2px 5px #102532; }
