@@ -5,6 +5,7 @@ import { sha, activeRelease, buildRouting, retentionPlan, assertNoDependencies, 
 import { request } from './client.mjs';
 import { smoke } from './browser.mjs';
 import { verifyPublicAssets } from './public-assets.mjs';
+import { reviewedRoutingRepair } from './reviewed-routing-repair.mjs';
 
 const json = data => Buffer.from(JSON.stringify(data, null, 2));
 export async function save(work, path, bytes) {
@@ -40,21 +41,31 @@ export async function verifySnapshot(client, record, onFile = () => {}) {
     await onFile(file.path, bytes);
   });
 }
-export async function audit(client, config, work) {
+export async function audit(client, config, work, repair = null) {
   const route = await client.read('.htaccess'), active = activeRelease(route.toString());
   const stateItem = await client.meta(STATE, true);
-  let state, stateBytes = null;
+  let state, stateBytes = null, repaired = false;
   if (stateItem) {
     stateBytes = await client.read(STATE); state = JSON.parse(stateBytes);
     assert.equal(state.schema, 1); assert.equal(state.active, active);
-    assert.equal(state.routingSha256, sha(route), 'Routing differs from last CI deployment');
+    if (state.routingSha256 !== sha(route)) {
+      assert.ok(repair, 'Routing differs from last CI deployment');
+      assert.equal(active, repair.active, 'Routing repair: unreviewed active release');
+      assert.equal(sha(stateBytes), repair.stateSha256, 'Routing repair: state changed since review');
+      assert.equal(state.routingSha256, repair.previousRoutingSha256, 'Routing repair: unreviewed prior routing');
+      assert.equal(sha(route), repair.observedRoutingSha256, 'Routing repair: unreviewed host routing');
+      assert.equal(state.releases[0].name, active, 'Routing repair: active snapshot mismatch');
+      // No host write here. Preserve original state bytes for guarded replacement/rollback.
+      state = { ...state, routingSha256: sha(route) }; repaired = true;
+    }
     retentionPlan(state, route.toString(), config.keepReleases);
     await verifySnapshot(client, state.releases[0]);
     // A cleanup interrupted after its delete request can leave a recorded release missing or partly
     // deleted. Stop here, before any upload or route change, and reconcile by hand (hostinger-cicd.md).
     for (const record of state.releases.slice(1)) {
       assert.ok(await client.meta(record.name, true), `${record.name}: recorded release is missing; reconcile the interrupted cleanup before deploying`);
-      await verifyTree(client, record);
+      if (repaired) await verifySnapshot(client, record);
+      else await verifyTree(client, record);
     }
   } else {
     assert.equal(sha(route), config.bootstrapRoutingSha256, 'Legacy routing differs from reviewed bootstrap');
@@ -71,9 +82,14 @@ export async function audit(client, config, work) {
     state = { schema: 1, active, routingSha256: sha(route), releases };
   }
   await client.guard('.htaccess', sha(route));
+  if (stateBytes) await client.guard(STATE, sha(stateBytes));
   const guide = await client.read(GUIDE);
   await save(work, 'routing-before.htaccess', route); await save(work, 'guide-before.txt', guide);
   await save(work, 'state-before.json', state); if (stateBytes) await save(work, 'state-original.json', stateBytes);
+  if (repaired) {
+    await save(work, 'routing-repair.json', { ...repair, status: 'verified-for-deployment', verifiedReleases: state.releases.map(r => r.name), at: new Date().toISOString() });
+    console.log(`Verified reviewed routing repair: ${repair.id}; host rules preserved`);
+  }
   const root = await client.meta();
   const unmanaged = root.items.filter(i => i.isDir && i.name.startsWith('synaiq-release-') && !state.releases.some(r => r.name === i.name)).map(i => i.name);
   await save(work, 'audit.json', { active, routingSha256: sha(route), stateSha256: stateBytes ? sha(stateBytes) : null, guideSha256: sha(guide), unmanaged });
@@ -102,7 +118,7 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
   const local = JSON.parse(await readFile(join(work, 'browser-local.json')));
   assert.equal(local.status, 'passed'); assert.equal(local.release, manifest.release); assert.equal(local.sourceCommit, manifest.sourceCommit);
   console.log('Auditing current routing and release hashes');
-  const before = await inspect(client, config, work);
+  const before = await inspect(client, config, work, reviewedRoutingRepair);
   assert.equal(await client.meta(manifest.release, true), null, 'Release exists; inspect instead of replaying upload');
   const route = buildRouting(before.route.toString(), manifest.release, manifest.files.map(f => f.path));
   await save(work, 'routing-preview.htaccess', route.preview); await save(work, 'routing-live.htaccess', route.live);

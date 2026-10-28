@@ -69,6 +69,14 @@ node --use-system-ca --env-file=.env.hostinger.local scripts/hostinger/cli.mjs a
 
 ## 失敗與復原
 
+### 2026-10-28 已審閱的 LiteSpeed 路由基準修復
+
+Run `40654021896` 在上傳前發現 `.htaccess` 與 state 不符。解密前次成功備份並逐行比對，確認僅 LSCACHE 區塊新增 REST AUTH／POSTPASS 不快取條件及擴充設定檔保護規則；官網路由未變。使用者已授權保留這些規則並修復發布。
+
+`scripts/hostinger/reviewed-routing-repair.mjs` 固定此次現行版本、原始 state 檔 SHA-256、原路由 SHA-256 與已審閱主機路由 SHA-256。正式 deploy 的 audit 只有四項全部一致才接受此差異；額外逐檔核對所有保留版本，再重驗路由與 state 沒有並行變更。一般唯讀 `audit` 仍拒絕路由差異，不會自動接受其他 LiteSpeed 更新。
+
+核對過程只在記憶體調整基準，保存 `routing-repair.json`、原始 `routing-before.htaccess` 與 `state-original.json`，不先寫入主機 state。正常部署沿用現有主機規則；新站驗證成功後才寫入新的部署紀錄。失敗時依既有雜湊保護回復本次開始時的路由及 state。上述證據隨發布或失敗資料加密保存。成功部署後版本與 state 已改變，這筆修復紀錄無法套用到後續版本；未來差異須重新比對，不可擴大成略過整個 LSCACHE 區塊的檢查。
+
 ### 2026-10-12 導入期間的已處理問題
 
 - 修正新版 npm 乾淨安裝所需的兩筆 lockfile 依賴，固定 Node／npm 版本；內嵌 SVG logo 統一 LF，讓 Windows 與 Linux 的生成圖一致。
