@@ -1,8 +1,16 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-10-12（Asia/Taipei）。
+最後更新：2026-10-28（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-10-28 三語版本已推送 GitHub main，部署因主機差異停止
+
+三語 i18n、瀏覽器語言選擇、語言建立工具及維護文件已提交至 GitHub `main`，來源 `e9a4cc7e017af7476602ec69264479689a47241a`。[Run 40654021896](https://github.com/LinthDale/synaiq-web/actions/runs/40654021896) 的測試及正式封裝瀏覽器檢查通過，但部署在上傳前的路由基準核對停止；本次尚未上線。
+
+唯讀核對確認正式首頁 HTTPS 200，仍指向 `synaiq-release-ci-38330034089-1`。CI state 記錄的路由 SHA-256 為 `80ac7d057e272fc80cf9e63132f30e4aa43bb41a76f91e79354be8563e8eca72`，主機目前為 `81c9ba2bf763941eb9c38af82f13aea15572ef2c06eecaf4de37892aa86503a8`。下載並解密上次成功的 `hostinger-backup-38330034089-1` 證據，比對確認差異僅在 LSCACHE 區塊：擴充 `.litespeed_conf` 保護規則，新增 REST AUTH 與 POSTPASS 不快取條件。官網入口、版本白名單及其他路由規則一致；目前無證據確認變更操作者。
+
+未覆蓋主機規則、未修改 state 雜湊，亦未重跑部署。恢復部署前須先依這份具體差異完成基準協調，保留現有保護規則及原始證據，不能直接改 hash 掩蓋差異。比對資料在 `out/hostinger-ci/40654021896-1/routing-investigation/`；Actions 已保存加密失敗證據。GitHub `main` 是日常發布入口；Azure `origin` 的功能分支已推送，但 Azure `main` 未同步。
 
 ## 2026-10-12 GitHub CI/CD 已啟用、首次上線與清理完成
 
@@ -24,12 +32,12 @@
 
 | 要做的事 | 唯一位置 |
 |---|---|
-| 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
+| 本機修改「關於我們」各語言內容 | `docs/design/live-prototype/locales/<語言>/about.json`；完整流程見 [翻譯維護指南](../design/live-prototype/localization-and-brand-guide.md) |
 | 發布更新 | commit 後 `git push github main`，或 merge PR 到 GitHub main，等待 Actions 成功 |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
-修改 `locale-about.js` 中英文內容後 commit，推送 GitHub main，由 CI 完整封裝與上架，再用上列中英文網址驗證。**本機 origin 是 Azure DevOps，請使用 `git push github main` 觸發官網部署。** 不在 CI 執行期間手動覆寫 Hostinger；本機預覽外框 `index.html` 不可直接覆蓋正式入口。
+修改 JSON 後執行 `npm run i18n:sync` 與 `npm run check:locales`，將翻譯及生成檔一起 commit，推送 GitHub main，由 CI 完整封裝與上架，再驗證各語言網址。**本機 origin 是 Azure DevOps，請使用 `git push github main` 觸發官網部署。** 不在 CI 執行期間手動覆寫 Hostinger；本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 
