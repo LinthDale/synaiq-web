@@ -88,6 +88,14 @@ EMS 資料庫、帳號與密碼都留在 WSL 的 EMS 專案（`\\wsl.localhost\U
 
 ## 更新版本與回退
 
+### 2026-10-29：新版發布包納入 main
+
+目前版本為 `20261013-booth-qr-v1`，包含警報中心 Telegram 訪客 QR Code 綁定、目前綁定對象與今日觸發人數。發布包和 `server-config.json` 必須一起納入 `main`，不要只留在功能分支。
+
+2026-10-28 從 `feat/ems-booth-qr-release` 切回 `main` 時，Git 還原了 9/29 的發布設定與檔案；之後手動啟動載入舊版。已恢復 10/13 發布包，41 個公開檔案通過 manifest SHA256 驗證，含 manifest 的 42 個檔案與原功能分支逐位元組一致。2026-10-29 唯讀檢查公開警報程式回應 HTTP 200 且包含新版綁定功能；本次提交未重啟服務或發送通知。
+
+啟動服務前先核對目前分支的 `server-config.json` 與其 release 目錄；切換到仍保留舊設定的歷史分支，仍會改變下次啟動版本。
+
 發布包在 EMS 專案的 `output/ems-public-local` 用 `build.mjs <release-id>` 建置，那裡也保留所有歷史版本與 QA 腳本。
 
 1. 把新的 `releases/<release-id>/` 複製到這裡的 `releases/`。

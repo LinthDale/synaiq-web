@@ -1,0 +1,211 @@
+{
+  "release": "20261013-booth-qr-v1",
+  "builtAt": "2026-10-13T03:39:36.934Z",
+  "files": [
+    {
+      "path": "live/Monitor.html",
+      "bytes": 11186,
+      "sha256": "6ab129b448fd4f52fa2a3aeecc3251c7ecfeab4a3b9f448a219c4bb4dc26eafb"
+    },
+    {
+      "path": "live/alarm-demo.mjs",
+      "bytes": 14376,
+      "sha256": "4b12d54a21e1b4270142240ea3e450a997ad9fb2b3bfd08b6e9ebb3cbe6b9e1d"
+    },
+    {
+      "path": "live/charts.mjs",
+      "bytes": 4105,
+      "sha256": "35af6dfadef5ee1229239e9d20fb979f1d00695927565aace943ba7aceccc834"
+    },
+    {
+      "path": "live/live.css",
+      "bytes": 4869,
+      "sha256": "e72a6be0da4a4ab313f4a3832459d81c499d3805050e1dcd98d33391f7620ab9"
+    },
+    {
+      "path": "live/Monitor.history.html",
+      "bytes": 11186,
+      "sha256": "6ab129b448fd4f52fa2a3aeecc3251c7ecfeab4a3b9f448a219c4bb4dc26eafb"
+    },
+    {
+      "path": "live/history.css",
+      "bytes": 2236,
+      "sha256": "c6433eed3079b7951e5b89cfd5606480087da333e709e7183eec41c9cf0565c0"
+    },
+    {
+      "path": "live/model.mjs",
+      "bytes": 1501,
+      "sha256": "94eec49266a8f0460455c6fb1f014fccbbaf479486bbffc4838c6296e9afe97e"
+    },
+    {
+      "path": "live/history-live.mjs",
+      "bytes": 11061,
+      "sha256": "347dd3ce4af6798cb473828529c8b8196c64e5159389820870b60e519c921aca"
+    },
+    {
+      "path": "live/qr-svg.mjs",
+      "bytes": 1547,
+      "sha256": "c84569238727722c27a9173850809aa7155eee50eb7e95c297f97ee2a19b827e"
+    },
+    {
+      "path": "live/live.mjs",
+      "bytes": 8848,
+      "sha256": "9cdc0c30aa745b7e121d0c3c61fa58c5a34ed9ecb69bea0a34fc4cad376726bb"
+    },
+    {
+      "path": "live/alarm-demo.css",
+      "bytes": 3737,
+      "sha256": "ec7a620ed51220ac13b4d8d9cb8e1fe73c3bd53b7a2e9f84c0449042e7399b68"
+    },
+    {
+      "path": "live/history-model.mjs",
+      "bytes": 3008,
+      "sha256": "323e40c0b78aaad86145603f31c0d8616380a27c6281db387831dc5fa005be09"
+    },
+    {
+      "path": "brand-header.css",
+      "bytes": 2179,
+      "sha256": "f0aa4a7c3c7abfedb3e444c82196cf8ec77e4256f6cb831d41e1beafefbc1e65"
+    },
+    {
+      "path": "favicon-a.svg",
+      "bytes": 273,
+      "sha256": "ae5b52c1a91bfe8306062de29ed4cd093ce2b12dd30ba3442589942841286ba2"
+    },
+    {
+      "path": "boards/Storage.dc.html",
+      "bytes": 49513,
+      "sha256": "61674c4c571b6142b6c8be16f9e2940fc4cb0a50372223ed50dda5a32d1eb006"
+    },
+    {
+      "path": "boards/Reports.compiled.js",
+      "bytes": 6771,
+      "sha256": "c67fd91a6e07f8833deecb7a2b3ce06f5cb90a00a2b233fd8537a76ced62fb34"
+    },
+    {
+      "path": "boards/Devices.dc.html",
+      "bytes": 37757,
+      "sha256": "f4bdb2f3c2a093a31790f8043eb8cd65b3a4dfe02377ebfbde385233ccfded73"
+    },
+    {
+      "path": "boards/Alarms.compiled.js",
+      "bytes": 7537,
+      "sha256": "706615695e7e56b760316eb99862793a7c47e14b48dbf3049ebcb432508f46f8"
+    },
+    {
+      "path": "boards/Demand.dc.html",
+      "bytes": 41853,
+      "sha256": "db470d3f87f101cfb988b0bd288cca3d6b9ccc16519dbd674ec6e2e5cf7a410b"
+    },
+    {
+      "path": "boards/Devices.compiled.js",
+      "bytes": 5275,
+      "sha256": "9357764c40673cb3bec265131aadf0d874589a8860b3ef76a1e3f14e0b1fc5b2"
+    },
+    {
+      "path": "boards/Reports.dc.html",
+      "bytes": 47136,
+      "sha256": "4e1431c15fa298cd64199e2b2e7e75beefcbc9290c105bbf42cbdbaafdaeea71"
+    },
+    {
+      "path": "boards/Monitor.dc.html",
+      "bytes": 47589,
+      "sha256": "0fff19c3613201026c92899fc0b7906e5884f19681d7c1f961d56dd2db005148"
+    },
+    {
+      "path": "boards/Alarms.dc.html",
+      "bytes": 41493,
+      "sha256": "4a31159b819d313532836d7c11bc1b88bc4af57c8823826a28cd789b5333b8ec"
+    },
+    {
+      "path": "boards/Storage.compiled.js",
+      "bytes": 6734,
+      "sha256": "57d261bd0e9e906515cde5d4aeeb35965066baa0132b55b9b30841d659e6dc7f"
+    },
+    {
+      "path": "boards/support.js",
+      "bytes": 185902,
+      "sha256": "d4ac245a1798b6f13a35b28ca6e35409b3f62185e3aa58956fbf94dc9b161281"
+    },
+    {
+      "path": "boards/Demand.compiled.js",
+      "bytes": 5548,
+      "sha256": "0face0cb628be69c320e23dc58c43a0f50b6cf0535e7cbc76212c3ea354c9faa"
+    },
+    {
+      "path": "boards/Monitor.compiled.js",
+      "bytes": 8676,
+      "sha256": "829a31644d523e890143eb18b44eddf2c98bf9f1b66ee55f2bf77890bdad0728"
+    },
+    {
+      "path": "boards/Main.dc.html",
+      "bytes": 52563,
+      "sha256": "320903425a6bfe1d4b66ab589a7ebc9acfbeb29e54073d716ddbde69ce3ab6a4"
+    },
+    {
+      "path": "boards/Main.compiled.js",
+      "bytes": 7283,
+      "sha256": "67c73c2e8734808b38a98bc3ef76634dbd11639463b2ab199816504b167d279f"
+    },
+    {
+      "path": "preview.css",
+      "bytes": 740,
+      "sha256": "cc00d032111a2d5dc1399fe9ce11782608400c5a779f70daba39ae4cc8fbfbe9"
+    },
+    {
+      "path": "apple-touch-icon-a.png",
+      "bytes": 4576,
+      "sha256": "c225635d69af886900310f0970075d8c6b2e7ae395ef7aff698a509858a89363"
+    },
+    {
+      "path": "favicon-a-32.png",
+      "bytes": 775,
+      "sha256": "70c227e22b3c53635f1cdde4197fe6b506464e0c7e71d45ab33d55d3921b13de"
+    },
+    {
+      "path": "responsive.css",
+      "bytes": 14005,
+      "sha256": "add82c05789f72dac7a0dd6833dc57158061e2bcdee8d0163aaba86dc7d98687"
+    },
+    {
+      "path": "preview.js",
+      "bytes": 4234,
+      "sha256": "4d4fa4a74b9cc63423f22aa24662907f0c910baf66488a75fbfe6b526ce57eb9"
+    },
+    {
+      "path": "index.html",
+      "bytes": 986,
+      "sha256": "9bd0367bf9d938c1599ca1a35d0ac1ffb59a8cca88d163f5085e5869ab9a3629"
+    },
+    {
+      "path": "assets/UQR-LICENSE.txt",
+      "bytes": 1123,
+      "sha256": "b39d50e24727f341a0ebdb2ab040c57efaf4076a8ad5b1d0c8c45beb975b4571"
+    },
+    {
+      "path": "assets/echarts-5.6.0.min.js",
+      "bytes": 1034102,
+      "sha256": "bf4a223524e40b77c304bec67e1222cf551f14880cf42c69dc046558e11c07b1"
+    },
+    {
+      "path": "assets/energy-illustrations-v3.png",
+      "bytes": 1450852,
+      "sha256": "fdf43bcba92ae1cc0670684f722fb90aa60dc3f80941027d8e30eda998f1c6a2"
+    },
+    {
+      "path": "assets/ECHARTS-LICENSE.txt",
+      "bytes": 11990,
+      "sha256": "634293835b43a6dd2094fa39182a3d9a6b9ca43b7fdb9ac354e8037af2a3093a"
+    },
+    {
+      "path": "assets/ems-wordmark-03.svg",
+      "bytes": 1050,
+      "sha256": "4301efbe6def98a335a2fe863a6aeb266ba5e8f60f691d7bb3d4f70760f90aa9"
+    },
+    {
+      "path": "assets/uqr-0.1.3.mjs",
+      "bytes": 27482,
+      "sha256": "7f0e61c2f13bb3724edee7bfb876e13c54ac9ee4fcfa283c9fa93cfb1241c325"
+    }
+  ]
+}
