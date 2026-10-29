@@ -1,8 +1,28 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-10-12（Asia/Taipei）。
+最後更新：2026-10-28（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-10-28 三語版本已上線，LiteSpeed 路由基準已修復
+
+來源 `96d589a74ec1ba972ea12a902789b6fca6af14c8` 已推送 GitHub `main`，[Run 40656230546](https://github.com/LinthDale/synaiq-web/actions/runs/40656230546) 的 test／deploy 全部成功。正式網站為 <https://taistro.com.tw/>，現行目錄 `public_html/synaiq-release-ci-40656230546-1/`；繁中、英文、德文及瀏覽器語言選擇已上線。
+
+部署只接受本次已審閱的現行版本、state 與路由雜湊組合，重驗全部保留版本後沿用主機原有 LiteSpeed 規則。沒有略過整個供應商區塊，也沒有先覆寫主機 state。驗證成功後，新 state 與正式路由已一致；一般唯讀 audit 通過，後續未知差異仍會阻擋部署。
+
+驗證：37 項部署測試、205 項網站測試（4 項既有跳過）、32 項 repository 測試及 Astro 建置通過；local／staged／live 各 52 組瀏覽器檢查成功。92 個發布檔案已在主機逐檔核對 SHA-256，公開資源（含 CDN 圖片內容）驗證成功。獨立 Chrome 檢查確認三語首頁各只請求選定語言模組、SEO 正確，德語區域設定 `de-AT` 自動選擇德文，切換英文保留案例及錨點，390px 無水平溢出。
+
+2026-10-28 16:42（Asia/Taipei）獨立主機重驗通過：92 檔雜湊、state／路由一致及完整保留 LiteSpeed 區塊。路由 SHA-256：`e742269f2296ef33d00677a238d65542be0b34d50f88c99d770654298b6fa18c`；state SHA-256：`fe051135d34aa950955e04522b4bcfd4166e4fcd26b157b4c57a98f334015baa`。備份草稿 Release 為 `hostinger-backup-40656230546-1`，加密備份與證據已保存並驗證。保留本次版本、`synaiq-release-ci-38330034089-1`、`synaiq-release-ci-38254033687-1`；`synaiq-release-ci-38197100197-1` 已依流程備份後移除。
+
+證據：`out/hostinger-ci/40656230546-1/independent-host-verification.json`、`independent-public-i18n.json`、`public-assets.json`；完整 CI 日誌在 `out/i18n-migration/github-run-40656230546-complete.log`。修復前比對保留於 `out/hostinger-ci/40654021896-1/routing-investigation/` 及 `out/hostinger-ci/routing-repair-20261028/`，不覆寫原失敗紀錄。
+
+## 2026-10-28 首次三語部署因主機差異停止（後續已修復）
+
+三語 i18n、瀏覽器語言選擇、語言建立工具及維護文件已提交至 GitHub `main`，來源 `e9a4cc7e017af7476602ec69264479689a47241a`。[Run 40654021896](https://github.com/LinthDale/synaiq-web/actions/runs/40654021896) 的測試及正式封裝瀏覽器檢查通過，但部署在上傳前的路由基準核對停止；本次尚未上線。
+
+唯讀核對確認正式首頁 HTTPS 200，仍指向 `synaiq-release-ci-38330034089-1`。CI state 記錄的路由 SHA-256 為 `80ac7d057e272fc80cf9e63132f30e4aa43bb41a76f91e79354be8563e8eca72`，主機目前為 `81c9ba2bf763941eb9c38af82f13aea15572ef2c06eecaf4de37892aa86503a8`。下載並解密上次成功的 `hostinger-backup-38330034089-1` 證據，比對確認差異僅在 LSCACHE 區塊：擴充 `.litespeed_conf` 保護規則，新增 REST AUTH 與 POSTPASS 不快取條件。官網入口、版本白名單及其他路由規則一致；目前無證據確認變更操作者。
+
+未覆蓋主機規則、未修改 state 雜湊，亦未重跑部署。恢復部署前須先依這份具體差異完成基準協調，保留現有保護規則及原始證據，不能直接改 hash 掩蓋差異。比對資料在 `out/hostinger-ci/40654021896-1/routing-investigation/`；Actions 已保存加密失敗證據。GitHub `main` 是日常發布入口；Azure `origin` 的功能分支已推送，但 Azure `main` 未同步。
 
 ## 2026-10-12 GitHub CI/CD 已啟用、首次上線與清理完成
 
@@ -24,12 +44,12 @@
 
 | 要做的事 | 唯一位置 |
 |---|---|
-| 本機修改「關於我們」中英文內容 | `docs/design/live-prototype/locale-about.js` |
+| 本機修改「關於我們」各語言內容 | `docs/design/live-prototype/locales/<語言>/about.json`；完整流程見 [翻譯維護指南](../design/live-prototype/localization-and-brand-guide.md) |
 | 發布更新 | commit 後 `git push github main`，或 merge PR 到 GitHub main，等待 Actions 成功 |
 | 在 Hostinger 查維護入口 | `public_html/00-SYNAIQ-START-HERE.txt`，只供檔案管理員閱讀，已同步目前正式目錄，不對官網公開 |
 | 檢查結果 | [中文關於我們](https://taistro.com.tw/?page=about&lang=zh-Hant)、[英文關於我們](https://taistro.com.tw/?page=about&lang=en) |
 
-修改 `locale-about.js` 中英文內容後 commit，推送 GitHub main，由 CI 完整封裝與上架，再用上列中英文網址驗證。**本機 origin 是 Azure DevOps，請使用 `git push github main` 觸發官網部署。** 不在 CI 執行期間手動覆寫 Hostinger；本機預覽外框 `index.html` 不可直接覆蓋正式入口。
+修改 JSON 後執行 `npm run i18n:sync` 與 `npm run check:locales`，將翻譯及生成檔一起 commit，推送 GitHub main，由 CI 完整封裝與上架，再驗證各語言網址。**本機 origin 是 Azure DevOps，請使用 `git push github main` 觸發官網部署。** 不在 CI 執行期間手動覆寫 Hostinger；本機預覽外框 `index.html` 不可直接覆蓋正式入口。
 
 以 `public_html/.htaccess` 的 `RewriteRule ^$` 指向判定現行目錄；其他 release 是歷史版本，不可覆寫，清理須遵循已核准的備份與保留規則。正式網站來源仍是 `docs/design/live-prototype/`，不是 Astro `dist/`。
 

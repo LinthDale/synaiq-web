@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { sha, STATE, GUIDE } from './core.mjs';
 import { prepareCleanup, prune, verifySnapshot, deploy, audit } from './deploy.mjs';
+import { reviewedRoutingRepair } from './reviewed-routing-repair.mjs';
 
 async function setup() {
   const work = await mkdtemp(join(tmpdir(), 'hostinger-test-'));
@@ -75,9 +76,77 @@ test('snapshot verification rejects extra files before accepting content hashes'
   await assert.rejects(verifySnapshot(f.client, f.state.releases[0]));
 });
 
+async function repairFixture() {
+  const f = await setup();
+  f.remote.set('.htaccess', Buffer.from(`# BEGIN LSCACHE\nReviewed vendor rule\n# END LSCACHE\n${f.remote.get('.htaccess')}`));
+  f.remote.set(GUIDE, Buffer.from('original guide'));
+  f.client.meta = async (path = '', missing = false) => {
+    if (!path) return { items: [] };
+    if (f.remote.has(path) || [...f.remote.keys()].some(p => p.startsWith(`${path}/`))) return { isDir: !f.remote.has(path) };
+    if (missing) return null;
+    throw new Error('Missing fixture file');
+  };
+  f.repair = { id: 'test-reviewed-routing', active: f.state.active, stateSha256: sha(f.remote.get(STATE)), previousRoutingSha256: f.state.routingSha256, observedRoutingSha256: sha(f.remote.get('.htaccess')) };
+  return f;
+}
+
+test('reviewed repair verifies every retained byte and preserves original host state and routing', async () => {
+  const f = await repairFixture(), original = new Map(f.remote), reads = [];
+  const read = f.client.read;
+  f.client.read = async (...args) => { reads.push(args[0]); return read(...args); };
+  const result = await audit(f.client, f.config, f.work, f.repair);
+  assert.equal(result.state.routingSha256, sha(original.get('.htaccess')));
+  assert.deepEqual(result.stateBytes, original.get(STATE));
+  assert.deepEqual(result.route, original.get('.htaccess'));
+  assert.deepEqual(f.remote, original); // Audit must never mutate the host.
+  for (const record of f.state.releases) for (const file of record.files) assert.ok(reads.includes(file.path));
+  assert.deepEqual(await readFile(join(f.work, 'state-original.json')), original.get(STATE));
+  assert.deepEqual(await readFile(join(f.work, 'routing-before.htaccess')), original.get('.htaccess'));
+  const evidence = JSON.parse(await readFile(join(f.work, 'routing-repair.json')));
+  assert.equal(evidence.status, 'verified-for-deployment');
+  assert.deepEqual(evidence.verifiedReleases, f.state.releases.map(r => r.name));
+  assert.ok(f.guards.includes(STATE) && f.guards.includes('.htaccess'));
+});
+
+test('routing drift remains blocked without an exact reviewed receipt', async t => {
+  for (const damage of ['no-receipt', 'production-receipt', 'active', 'state', 'prior-route', 'vendor-rule', 'outside-rule', 'retained-file', 'missing-release', 'state-race', 'route-race']) {
+    await t.test(damage, async () => {
+      const f = await repairFixture();
+      let repair = f.repair;
+      if (damage === 'no-receipt') repair = null;
+      if (damage === 'production-receipt') repair = reviewedRoutingRepair;
+      if (damage === 'active') repair = { ...repair, active: 'synaiq-release-another' };
+      if (damage === 'state') f.remote.set(STATE, Buffer.from(JSON.stringify({ ...f.state, updatedAt: 'unreviewed' })));
+      if (damage === 'prior-route') repair = { ...repair, previousRoutingSha256: sha('unreviewed') };
+      if (damage === 'vendor-rule') f.remote.set('.htaccess', Buffer.from(f.remote.get('.htaccess').toString().replace('Reviewed vendor rule', 'Another vendor rule')));
+      if (damage === 'outside-rule') f.remote.set('.htaccess', Buffer.concat([f.remote.get('.htaccess'), Buffer.from('\nUnreviewed rule')]));
+      if (damage === 'retained-file') f.remote.set('synaiq-release-third/index.html', Buffer.from('edit')); // Same size, different hash.
+      if (damage === 'missing-release') f.remote.delete('synaiq-release-old/index.html');
+      if (damage.endsWith('-race')) {
+        const tree = f.client.tree;
+        f.client.tree = async (...args) => {
+          const result = await tree(...args);
+          f.remote.set(damage === 'state-race' ? STATE : '.htaccess', Buffer.from('concurrent change'));
+          return result;
+        };
+      }
+      await assert.rejects(audit(f.client, f.config, f.work, repair));
+      await assert.rejects(readFile(join(f.work, 'routing-repair.json')), { code: 'ENOENT' });
+      assert.deepEqual(f.deleted, []);
+    });
+  }
+});
+
+test('matching state ignores the historical receipt and does not emit a repair', async () => {
+  const f = await repairFixture();
+  f.remote.set(STATE, Buffer.from(JSON.stringify({ ...f.state, routingSha256: sha(f.remote.get('.htaccess')) })));
+  await audit(f.client, f.config, f.work, reviewedRoutingRepair);
+  await assert.rejects(readFile(join(f.work, 'routing-repair.json')), { code: 'ENOENT' });
+});
+
 test('a failed live check rolls back known routing without deleting releases', async () => {
   const f = await setup(), current = f.state.active;
-  const route = `RewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html)$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
+  const route = `# BEGIN LSCACHE\nKeep reviewed vendor rules\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html)$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
   f.remote.set('.htaccess', Buffer.from(route)); f.remote.set(GUIDE, Buffer.from('original guide'));
   const manifest = { release: 'synaiq-release-candidate', sourceCommit: 'a'.repeat(40), files: ['index.html', 'page.html', 'robots.txt', 'sitemap.xml'].map(path => ({ path, sha256: sha('new'), size: 3 })) };
   await mkdir(join(f.work, 'artifact'));
@@ -88,7 +157,7 @@ test('a failed live check rolls back known routing without deleting releases', a
   f.client.upload = async (path, bytes) => f.remote.set(path, bytes);
   let purges = 0; f.client.purge = async () => { purges++; };
   const services = {
-    audit: async () => before,
+    audit: async (_client, _config, _work, repair) => { assert.equal(repair, reviewedRoutingRepair); return before; },
     publicChecks: async () => {},
     verifyPublicAssets: async () => {},
     smoke: async (_manifest, _work, _origin, mode) => { if (mode === 'live') throw Error('simulated broken page'); },
@@ -97,6 +166,7 @@ test('a failed live check rolls back known routing without deleting releases', a
   await assert.rejects(deploy(f.client, f.config, f.work, manifest, 'test', services), /simulated broken page/);
   assert.equal(f.remote.get('.htaccess').toString(), route);
   assert.equal(f.remote.get(GUIDE).toString(), 'original guide');
+  assert.deepEqual(f.remote.get(STATE), before.stateBytes);
   assert.deepEqual(f.deleted, []); assert.equal(purges, 2);
   assert.equal(JSON.parse(await readFile(join(f.work, 'rollback.json'))).status, 'verified');
 });
