@@ -88,13 +88,13 @@ EMS 資料庫、帳號與密碼都留在 WSL 的 EMS 專案（`\\wsl.localhost\U
 
 ## 更新版本與回退
 
-### 2026-10-29：新版發布包納入 main
+### 2026-10-29：跨遠端版本回退與修復紀錄
 
-目前版本為 `20261013-booth-qr-v1`，包含警報中心 Telegram 訪客 QR Code 綁定、目前綁定對象與今日觸發人數。發布包和 `server-config.json` 必須一起納入 `main`，不要只留在功能分支。
+2026-10-28 15:59:56，本機從 `feat/ems-booth-qr-release` 切回尚未包含該功能的 `main`，發布設定回到 `20260929-sampling-lines-v1`；17:24:06 手動啟動後，公開警報中心只剩舊版示範面板。這次回退發生於前端發布檔案與設定，後端仍為 10/13 的版本。
 
-2026-10-28 從 `feat/ems-booth-qr-release` 切回 `main` 時，Git 還原了 9/29 的發布設定與檔案；之後手動啟動載入舊版。已恢復 10/13 發布包，41 個公開檔案通過 manifest SHA256 驗證，含 manifest 的 42 個檔案與原功能分支逐位元組一致。2026-10-29 唯讀檢查公開警報程式回應 HTTP 200 且包含新版綁定功能；本次提交未重啟服務或發送通知。
+已恢復 `20261013-booth-qr-v1`：41 個公開檔案通過 manifest SHA256 驗證，含 manifest 的 42 個檔案與原功能分支逐位元組一致。修復與維護紀錄以 `7f7b6fd` 提交至 GitHub `main`；2026-10-29 唯讀檢查公開警報程式為 HTTP 200 且包含新版綁定功能，沒有重送通知。
 
-啟動服務前先核對目前分支的 `server-config.json` 與其 release 目錄；切換到仍保留舊設定的歷史分支，仍會改變下次啟動版本。
+Azure `main` 已由 PR #734 合併新版發布包及設定；本補充只記錄回退原因與跨遠端同步注意事項，保留既有上線驗收及回退說明。GitHub 與 Azure 的分支狀態須分別確認；發布包和 `server-config.json` 要一起納入預計啟動的分支。切換至歷史分支仍可能改變下次啟動版本，啟動前應核對設定與對應 release 目錄。
 
 發布包在 EMS 專案的 `output/ems-public-local` 用 `build.mjs <release-id>` 建置，那裡也保留所有歷史版本與 QA 腳本。
 
@@ -102,8 +102,22 @@ EMS 資料庫、帳號與密碼都留在 WSL 的 EMS 專案（`\\wsl.localhost\U
 2. 依 `manifest.json` 核對 SHA256。
 3. 修改 `server-config.json` 的 `release`。
 4. 執行 stop，再執行 start。
+5. 在 EMS 專案執行 `node output/ems-public-local/qa/verify-release.mjs <config> https://synaiq-ai.com/ems/`，核對正式網址上每個檔案的 SHA256（`<config>` 是 `output/ems-public-local` 裡 `release` 指向新版本的設定檔；不加參數時讀那裡的 `server-config.json`）。
 
 回退時把舊版本的資料夾複製過來，改回 `release` 後重新啟動。上線中的版本資料夾不要直接修改。
+
+### 版本紀錄
+
+上一版的資料夾保留在 `releases/`，回退只要改回 `release` 再由使用者重新啟動。
+
+| 上線日 | 版本 | 內容 | 回退 |
+|---|---|---|---|
+| 2026-10-13 | `20261013-booth-qr-v1`（目前） | 警報頁 Telegram 示範面板加入攤位 QR 綁定（EMS PRD-0024）：QR Code（BFF 每 60 秒換碼）、目前綁定（只顯示遮罩名稱與剩餘時間）、今日已觸發人數、Bot 狀態提示；最近示範警報預設 5 筆，可展開到 10 筆。新增 `live/qr-svg.mjs` 與 `assets/uqr-0.1.3.mjs`（MIT，授權見 `assets/UQR-LICENSE.txt`），共 41 個公開檔案。API 白名單不變。 | `release` 改回 `releases/20260929-sampling-lines-v1`，重新啟動 |
+| 2026-09-29 | `20260929-sampling-lines-v1` | 建立本資料夾時的上線版本（歷史圖表依取樣間隔連線） | — |
+
+- `20261013-booth-qr-v1` 已於 2026-10-13 上線完成：使用者重新啟動轉送程序後，正式網址 41 個檔案的 SHA256 與 manifest 一致（`verify-release.mjs`），使用者也以手機在正式站實測掃碼綁定與示範警報，結果通過。
+- 攤位頁面開著且在前景時，每 4 秒 GET 一次 `/ems/api/alarms/demo`（每分鐘 15 次，在每 IP 120 次的限制內），日誌每分鐘因此多約 15 行；頁面切到背景就暫停。
+- 只回退前端版本時 QR 區塊會消失，「觸發警報」照常可用。QR 綁定的後端設定（kill switch）與回退見 EMS 專案的 PRD-0024 與操作手冊。
 
 ## 安全邊界
 
