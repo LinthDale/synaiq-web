@@ -88,6 +88,14 @@ EMS 資料庫、帳號與密碼都留在 WSL 的 EMS 專案（`\\wsl.localhost\U
 
 ## 更新版本與回退
 
+### 2026-10-29：跨遠端版本回退與修復紀錄
+
+2026-10-28 15:59:56，本機從 `feat/ems-booth-qr-release` 切回尚未包含該功能的 `main`，發布設定回到 `20260929-sampling-lines-v1`；17:24:06 手動啟動後，公開警報中心只剩舊版示範面板。這次回退發生於前端發布檔案與設定，後端仍為 10/13 的版本。
+
+已恢復 `20261013-booth-qr-v1`：41 個公開檔案通過 manifest SHA256 驗證，含 manifest 的 42 個檔案與原功能分支逐位元組一致。修復與維護紀錄以 `7f7b6fd` 提交至 GitHub `main`；2026-10-29 唯讀檢查公開警報程式為 HTTP 200 且包含新版綁定功能，沒有重送通知。
+
+Azure `main` 已由 PR #734 合併新版發布包及設定；本補充只記錄回退原因與跨遠端同步注意事項，保留既有上線驗收及回退說明。GitHub 與 Azure 的分支狀態須分別確認；發布包和 `server-config.json` 要一起納入預計啟動的分支。切換至歷史分支仍可能改變下次啟動版本，啟動前應核對設定與對應 release 目錄。
+
 發布包在 EMS 專案的 `output/ems-public-local` 用 `build.mjs <release-id>` 建置，那裡也保留所有歷史版本與 QA 腳本。
 
 1. 把新的 `releases/<release-id>/` 複製到這裡的 `releases/`。
