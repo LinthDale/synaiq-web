@@ -1,0 +1,40 @@
+{
+  "eyebrow": "Synaiq KIP",
+  "productLabel": "KIP – Plattform für intelligentes Wissen",
+  "title": ["Natürlich fragen.", "Präzise antworten.", "In Verbindung bleiben."],
+  "intro": "Machen Sie aus verstreuten Unternehmensdokumenten eine Wissenszentrale, die Fragen mit überprüfbaren Quellen beantwortet.",
+  "cta": "Anwendungsfall besprechen",
+  "sceneCaption": "Oberflächenkonzept · Kein Original-Screenshot",
+  "screenAlt": "Synaiq KIP-Suchkonzept mit Papierstruktur, Frage, Antwort und Quelle aus einem fiktiven Beschaffungsprozess",
+  "sourceLabel": "Eine überprüfbare Quelle",
+  "sampleQuestion": "Wie beantrage ich einen Laptop für neue Mitarbeitende?",
+  "sampleAnswer": "Antrag: Zweck, Spezifikation und Budget. ",
+  "sampleHighlight": "Nach Freigabe durch die Führungskraft holt der Einkauf Angebote ein und bestellt. Bei Lieferung prüfen.",
+  "sampleCitation": "Geraetebeschaffung_Beispiel.pdf",
+  "sceneNote": "Beispieldaten",
+  "processTitle": ["Von Dokumenten", "zu nutzbarem Wissen."],
+  "steps": [
+    ["Daten zusammenführen", "PDFs, Word-Dateien, Tabellen, Scans, Handschrift und Bilder – an einem Ort."],
+    ["Automatisch verarbeiten", "Inhalte auslesen, Tabellen rekonstruieren und den Verarbeitungsfortschritt verfolgen."],
+    ["Wissen durchsuchbar machen", "Fragen Sie in eigenen Worten und prüfen Sie anschließend das Originaldokument."]
+  ],
+  "architectureLabel": "Die Architektur hinter einer Antwort.",
+  "architectureTitle": ["Vier Ebenen.", "Eine Wissenszentrale."],
+  "architectureNote": "Von der Quelle bis zur Antwort verbunden.",
+  "layers": [
+    ["Nutzerzugang", "Web, APIs und Mobilgeräte verbinden sich mit bestehenden Arbeitsabläufen."],
+    ["Modellebene", "Wählen Sie ein passendes Modell und verbinden Sie Fragen mit dem Wissen Ihrer Organisation."],
+    ["Wissenszentrum", "Dokumente importieren, verarbeiten und Quellensammlungen organisieren."],
+    ["Plattformwerkzeuge", "Berechtigungen, Protokolle, Bildsuche und Berichte unterstützen die tägliche Nutzung."]
+  ],
+  "proofTitle": ["Stellen Sie eine Frage.", "Gehen Sie direkt zur Quelle."],
+  "proofCopy": ["Intelligent Knowledge Search (IKS) verbindet Fragen mit Dokumenten. Knowledge Center (KC) übernimmt Import, Verarbeitung und Sammlungen.", "Antworten und Quellen stehen nebeneinander, damit sich jede Suche überprüfen lässt."],
+  "capabilitiesTitle": ["Alles verbinden.", "Für den Arbeitsalltag."],
+  "capabilities": [
+    ["API- / MCP-Anbindung", "Binden Sie Ihre bestehenden Unternehmenssysteme an."],
+    ["Sammlungen und Berechtigungen", "Vergeben Sie Zugriffe nach Datenumfang und Rolle."],
+    ["Kontoaktivitäten", "Bewahren Sie Nutzungsprotokolle und Gesprächsverläufe auf."],
+    ["Bildsuche", "Finden Sie Bilder über Text oder ähnliche Bilder anhand eines Bildes."],
+    ["Berichte und Nutzungsanalysen", "Verstehen Sie die Nutzung und verbessern Sie Ihre Wissensinhalte fortlaufend."]
+  ]
+}

@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderHome } from './home-design.js';
-import { zhHant, en } from './locale-home.js';
+import { getMessages as readCatalog } from './i18n.js';
+const zhHant = readCatalog('zh-Hant').home;
+const en = readCatalog('en').home;
 import { getMessages, escapeHtml } from './i18n.js';
 
 const render = (locale, messages = getMessages(locale)) => renderHome({

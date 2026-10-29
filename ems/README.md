@@ -94,8 +94,22 @@ EMS 資料庫、帳號與密碼都留在 WSL 的 EMS 專案（`\\wsl.localhost\U
 2. 依 `manifest.json` 核對 SHA256。
 3. 修改 `server-config.json` 的 `release`。
 4. 執行 stop，再執行 start。
+5. 在 EMS 專案執行 `node output/ems-public-local/qa/verify-release.mjs <config> https://synaiq-ai.com/ems/`，核對正式網址上每個檔案的 SHA256（`<config>` 是 `output/ems-public-local` 裡 `release` 指向新版本的設定檔；不加參數時讀那裡的 `server-config.json`）。
 
 回退時把舊版本的資料夾複製過來，改回 `release` 後重新啟動。上線中的版本資料夾不要直接修改。
+
+### 版本紀錄
+
+上一版的資料夾保留在 `releases/`，回退只要改回 `release` 再由使用者重新啟動。
+
+| 上線日 | 版本 | 內容 | 回退 |
+|---|---|---|---|
+| 2026-10-13 | `20261013-booth-qr-v1`（目前） | 警報頁 Telegram 示範面板加入攤位 QR 綁定（EMS PRD-0024）：QR Code（BFF 每 60 秒換碼）、目前綁定（只顯示遮罩名稱與剩餘時間）、今日已觸發人數、Bot 狀態提示；最近示範警報預設 5 筆，可展開到 10 筆。新增 `live/qr-svg.mjs` 與 `assets/uqr-0.1.3.mjs`（MIT，授權見 `assets/UQR-LICENSE.txt`），共 41 個公開檔案。API 白名單不變。 | `release` 改回 `releases/20260929-sampling-lines-v1`，重新啟動 |
+| 2026-09-29 | `20260929-sampling-lines-v1` | 建立本資料夾時的上線版本（歷史圖表依取樣間隔連線） | — |
+
+- `20261013-booth-qr-v1` 已於 2026-10-13 上線完成：使用者重新啟動轉送程序後，正式網址 41 個檔案的 SHA256 與 manifest 一致（`verify-release.mjs`），使用者也以手機在正式站實測掃碼綁定與示範警報，結果通過。
+- 攤位頁面開著且在前景時，每 4 秒 GET 一次 `/ems/api/alarms/demo`（每分鐘 15 次，在每 IP 120 次的限制內），日誌每分鐘因此多約 15 行；頁面切到背景就暫停。
+- 只回退前端版本時 QR 區塊會消失，「觸發警報」照常可用。QR 綁定的後端設定（kill switch）與回退見 EMS 專案的 PRD-0024 與操作手冊。
 
 ## 安全邊界
 

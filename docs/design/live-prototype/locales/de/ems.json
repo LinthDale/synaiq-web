@@ -1,0 +1,65 @@
+{
+  "screens": {
+    "label": "Einblick in die Demo-Umgebung",
+    "note": "Originalaufnahmen der Oberfläche · Anonymisiert · Beispieldaten",
+    "group": "EMS-Produktansichten",
+    "enlarge": "Bild in voller Größe ansehen",
+    "items": [
+      ["Energieübersicht", "Betrachten Sie Netz, Photovoltaik, Speicher und Standortlast gemeinsam – einschließlich Energiemix und Lastverlauf."],
+      ["Lastmanagement", "Vergleichen Sie den Lastverlauf mit der vertraglich vereinbarten Leistung, um relevante Zeiträume zu erkennen."],
+      ["Speichermanagement", "Prüfen Sie Speicherzustand, Lade- und Entladepläne sowie Betriebsinformationen."]
+    ]
+  },
+  "productLabel": "EMS · Energiemanagementsystem",
+  "title": ["Energie sichtbar machen.", "Veränderungen verstehen.", "Den Standort steuern."],
+  "intro": "Die Energiegeschichte eines Standorts reicht über seine Stromrechnung hinaus. Von der Echtzeitüberwachung über das Lastmanagement bis zum Speichereinsatz bildet EMS einen vollständigen Managementzyklus ab, in dem Standortdaten jede Entscheidung unterstützen.",
+  "status": "Demo-Umgebung",
+  "cta": "Ablauf entdecken",
+  "sceneLabel": "Vom Gerät zum gesamten Standort",
+  "sceneNote": "Originalansicht der Demo",
+  "sceneNodes": ["Anlagen am Standort", "Energieverläufe", "Managemententscheidungen"],
+  "storyLabel": "Ein ganz normaler Arbeitstag",
+  "storyTitle": ["Der Zähler läuft weiter.", "Die Fragen bleiben."],
+  "story": [
+    "Anlagen fahren hoch, die Last steigt. Zu Spitzenzeiten muss das Team wissen: Was hat sich verändert, besteht Handlungsbedarf und könnte ein Speicher helfen?",
+    "Sind Messwerte, Alarme und Berichte auf verschiedene Systeme verteilt, erfordert jede Frage mehrere Suchvorgänge. EMS verbindet Beobachtung, Einordnung, Maßnahmen und Rückblick in einem durchgängigen Ablauf."
+  ],
+  "processTitle": ["Vom Messwert", "zur fundierten Entscheidung."],
+  "steps": [
+    ["Die Lage erfassen", "Beginnen Sie beim Standort und seinen Anlagen. Prüfen Sie aktuelle Messwerte, Zustände und Alarme, um relevante Veränderungen zu erkennen."],
+    ["Veränderungen verstehen", "Vergleichen Sie Verläufe, Lastdaten und Anlagenprotokolle. Klären Sie zuerst, wann und unter welchen Bedingungen eine Veränderung auftrat."],
+    ["Handeln und überprüfen", "Verbinden Sie Speichereinsatz, Ereignisverfolgung und Berichte in einem Zyklus und prüfen Sie, wie die jeweilige Strategie mit dem Standortbetrieb zusammenhängt."]
+  ],
+  "capabilitiesTitle": ["Jedes Gerät verstehen.", "Den ganzen Standort sehen."],
+  "capabilitiesIntro": "Sechs verknüpfte Bereiche beschreiben den vorgesehenen EMS-Funktionsumfang. Die Demo unterstützt Gespräche über Abläufe; Datenanbindungen, Steuerungsbedingungen und Lieferumfang werden für jeden Standort vereinbart.",
+  "capabilities": [
+    ["Energieübersicht und Echtzeitüberwachung", "Wechseln Sie von der Standortübersicht zu einzelnen Messwerten – mit einem gemeinsamen Einstieg für die tägliche Kontrolle."],
+    ["Historische Verläufe und Anlagenanalyse", "Ordnen Sie Veränderungen zeitlich ein und vergleichen Sie Betriebsphasen mit Originalaufzeichnungen, um Zusammenhänge zu verstehen."],
+    ["Lastmanagement", "Betrachten Sie Lastspitzen, Lastverläufe und Standortziele gemeinsam als Grundlage für Ihre Betriebsstrategie."],
+    ["Speichermanagement und Einsatzplanung", "Prüfen Sie Speicherzustand, Ladebedarf und Standortnutzung gemeinsam, um umsetzbare Einsatzbedingungen festzulegen."],
+    ["Alarme und Ereignisverfolgung", "Verfolgen Sie ein Ereignis von der Erkennung über die zugehörigen Aufzeichnungen bis zur Bearbeitung und Auswertung."],
+    ["Berichte und Managementbewertung", "Bündeln Sie Betriebs- und Managementaufzeichnungen eines Zeitraums, damit Teams auf derselben Informationsgrundlage diskutieren."]
+  ],
+  "demoTitle": ["Ein Tag voller Energie.", "Ein vollständiger Managementzyklus."],
+  "demoIntro": "Wählen Sie einen Schritt und erfahren Sie, welche Frage er beantwortet und welche Informationen als Nächstes zu prüfen sind.",
+  "demoLabel": "Interaktive Ablaufdarstellung · Keine Live-Überwachung",
+  "demoNote": "Diese Darstellung verbindet sich nicht mit Anlagen und steuert keine Geräte. Die EMS-Demo verwendet derzeit Simulatordaten; für den Zugang ist ein Konto erforderlich.",
+  "stageGroup": "Schritte des Energiemanagements",
+  "questionLabel": "Die zentrale Frage",
+  "actionLabel": "Der nächste Prüfschritt",
+  "stages": [
+    ["Standort überblicken", "Entspricht der heutige Energieverbrauch dem gewohnten Bild?", "Prüfen Sie die Übersicht und wählen Sie die Anlagen und Zeiträume aus, die Aufmerksamkeit erfordern.", "Standortmesswerte → Standortübersicht"],
+    ["Veränderungen verfolgen", "Wann begann der Energieverbrauch zu steigen?", "Vergleichen Sie aktuelle Messwerte mit historischen Aufzeichnungen, um die Veränderung einzugrenzen.", "Historische Verläufe → Anlagenaufzeichnungen"],
+    ["Last bewerten", "Welche Möglichkeiten haben wir zu Spitzenzeiten?", "Vergleichen Sie Lastverläufe und Standortziele, bevor Sie den Betriebsplan überprüfen.", "Lastverläufe → Standortziele"],
+    ["Speichereinsatz prüfen", "Wie könnte ein Speicher den Standort unterstützen?", "Prüfen Sie Speicherzustand, technische Grenzen und Steuerungsberechtigungen, bevor Sie eine Ladestrategie besprechen.", "Speicherzustand → Einsatzbedingungen"],
+    ["Ereignisse verfolgen", "Was geschah nach dem Alarm?", "Verknüpfen Sie Alarmzeiten, Anlagenaufzeichnungen und Bearbeitungsstatus, um den Ablauf nachzuvollziehen.", "Alarmereignisse → Bearbeitungsprotokolle"],
+    ["Zeitraum auswerten", "Welche Anpassung sollten wir als Nächstes prüfen?", "Führen Sie Verläufe und Ereignisse als Grundlage für die nächste Managementbewertung zusammen.", "Managementberichte → Weitere Verbesserungen"]
+  ],
+  "external": "EMS-Demo öffnen",
+  "externalNote": "Öffnet in einem neuen Tab · Demo-Konto erforderlich",
+  "contact": {
+    "heading": ["Erzählen Sie uns von Ihrem Standort.", "Gemeinsam planen wir den Energieablauf."],
+    "description": ["Beginnen wir mit Anlagen, Datenquellen und Managementzielen.", "Gemeinsam legen wir Demonstration und Umsetzungsumfang fest."],
+    "cta": "EMS-Demo besprechen"
+  }
+}

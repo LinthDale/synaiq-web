@@ -4,10 +4,11 @@
 // folder (/synaiq-release-*/page.html) or a local preview all point crawlers at taistro.com.tw.
 import { SUPPORTED_PAGES, SUPPORTED_LOCALES, DEFAULT_LOCALE, resolvePage, resolveLocale, getMessages, pageHref } from './i18n.js?v=20260922-cases-expansion';
 import { publishedCases, resolveCaseId } from './cases-data.js?v=20260922-cases-expansion';
+import { LOCALE_CONFIG } from './locale-config.js';
 
 export const SITE_ORIGIN = 'https://taistro.com.tw';
 // Open Graph wants POSIX-style locales; the site's own codes stay the source of truth.
-export const OG_LOCALES = Object.freeze({ 'zh-Hant': 'zh_TW', en: 'en_US' });
+export const OG_LOCALES = Object.freeze(Object.fromEntries(LOCALE_CONFIG.map(({ code, og }) => [code, og])));
 export const INDEXABLE = 'index, follow';
 // A requested case that is unknown or unpublished is a real miss, so it leaves the index.
 export const NOT_INDEXABLE = 'noindex, nofollow';
@@ -22,8 +23,7 @@ export function canonicalUrl({ page, locale, caseId } = {}) {
   const name = resolvePage(page);
   const code = resolveLocale(locale);
   const id = requestsCase(name, caseId) ? resolveCaseId(caseId) : null;
-  // The bare site root already serves the default page in the default language.
-  if (!id && name === 'home' && code === DEFAULT_LOCALE) return `${SITE_ORIGIN}/`;
+  // Root now negotiates the browser language. Explicit lang keeps canonical URLs stable.
   return new URL(pageHref({ page: name, locale: code, caseId: id }), `${SITE_ORIGIN}/`).href;
 }
 
@@ -37,7 +37,7 @@ export function alternateUrls(page, caseId = null) {
   ]);
 }
 
-/** Every address a crawler should know: the four pages plus each published case. */
+/** Every address a crawler should know: the six pages plus each published case. */
 export function crawlTargets() {
   const perLocale = (page, caseId) => SUPPORTED_LOCALES.map(item => Object.freeze({ page, locale: item.code, caseId }));
   return Object.freeze(SUPPORTED_PAGES.flatMap(page => page === 'cases'

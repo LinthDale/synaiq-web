@@ -1,0 +1,95 @@
+{
+  "eyebrow": "Synaiq KIP",
+  "productLabel": "KIP Knowledge Intelligence Platform",
+  "title": [
+    "Ask naturally.",
+    "Answer precisely.",
+    "Stay connected."
+  ],
+  "intro": "Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
+  "cta": "Discuss your use case",
+  "sceneCaption": "Interface concept · Not an actual product screenshot",
+  "screenAlt": "A paper-textured Synaiq KIP knowledge-search concept showing a question, answer and source from a fictional equipment purchasing process",
+  "sourceLabel": "A source you can check",
+  "sampleQuestion": "How do I request a laptop for a new colleague?",
+  "sampleAnswer": "Request details: purpose, specs and budget. ",
+  "sampleHighlight": "After manager approval, Purchasing gets quotes and orders. Inspect on arrival.",
+  "sampleCitation": "Equipment_Purchasing_Sample.pdf",
+  "sceneNote": "Sample data",
+  "processTitle": [
+    "From documents,",
+    "to knowledge you can use."
+  ],
+  "steps": [
+    [
+      "Bring in your data",
+      "PDFs, Word files, spreadsheets, scans, handwriting and images—all in one place."
+    ],
+    [
+      "Parse automatically",
+      "Read the content, reconstruct tables and follow processing progress."
+    ],
+    [
+      "Make it searchable",
+      "Ask in your own words, then check the original document."
+    ]
+  ],
+  "architectureLabel": "The architecture behind an answer.",
+  "architectureTitle": [
+    "Four layers,",
+    "one knowledge hub."
+  ],
+  "architectureNote": "Connected from source to answer.",
+  "layers": [
+    [
+      "User access",
+      "Web, APIs and mobile devices connect to existing workflows."
+    ],
+    [
+      "Model layer",
+      "Choose a model for your needs and connect questions to organizational knowledge."
+    ],
+    [
+      "Knowledge center",
+      "Bring in documents, parse them and organize source collections."
+    ],
+    [
+      "Platform tools",
+      "Permissions, records, image search and reports support everyday use."
+    ]
+  ],
+  "proofTitle": [
+    "Ask a question.",
+    "Go straight to the source."
+  ],
+  "proofCopy": [
+    "Intelligent Knowledge Search (IKS) links questions to documents. Knowledge Center (KC) handles ingestion, parsing and collections.",
+    "Answers and sources appear together, so every search can be checked."
+  ],
+  "capabilitiesTitle": [
+    "Connect it all",
+    "to everyday work."
+  ],
+  "capabilities": [
+    [
+      "API / MCP integration",
+      "Connect to your existing enterprise systems."
+    ],
+    [
+      "Collections and permissions",
+      "Grant access by data scope and role."
+    ],
+    [
+      "Account activity records",
+      "Keep usage records and conversation history."
+    ],
+    [
+      "Image search",
+      "Find images with text, or similar images with an image."
+    ],
+    [
+      "Reports and usage insights",
+      "Understand usage and keep improving your knowledge content."
+    ]
+  ]
+}

@@ -1936,7 +1936,9 @@ body[data-page="home"] .advantages.wave:before {
 .editorial-quote blockquote .marked {
   white-space: nowrap;
 }
-html:lang(en) .editorial-quote .quote-phrase {
+html:lang(en) .editorial-quote .quote-phrase,
+html:lang(de) .editorial-quote .quote-phrase,
+html:lang(de) .editorial-quote blockquote .marked {
   white-space: normal;
 }
 body[data-page="home"] .ceo-message .quote-letter-layout {
@@ -3522,6 +3524,20 @@ body[data-page="kip"] .kip-capability-list dd {
   .film-wordmark { flex-wrap: wrap; justify-content: flex-end; white-space: normal; max-width: 58%; gap: 4px 8px; }
   .film-product-logo { width: 88px; }
   .film-wordmark-label { text-align: right; }
+}
+/* Keep fallback HTML readable without JS, but avoid flashing another language with JS. */
+@media (scripting: enabled) {
+  html:not([data-i18n-ready]) body > :not(#locale-status):not(script):not(noscript) { visibility: hidden; }
+}
+#locale-status { padding: 24px; }
+#locale-status button, #locale-status select { margin: 8px; padding: 8px; }
+html:lang(de) main { hyphens: auto; overflow-wrap: anywhere; }
+html:lang(de) .title-phrase { white-space: normal; }
+html:lang(de) .energy-scene-nodes li,
+html:lang(de) .energy-stage-buttons button,
+html:lang(de) .film-wordmark-label { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 639px) {
+  html:lang(de) .pvsim-start-hint { left: 50%; right: auto; transform: translateX(-50%) rotate(-6deg); }
 }
 /* EMS / PVsim: editorial product stories and illustrative workflow. */
 .energy-product { background: var(--kip-paper); }

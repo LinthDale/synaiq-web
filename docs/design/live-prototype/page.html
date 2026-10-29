@@ -1,22 +1,25 @@
 <!doctype html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>tAistro 星洋智能科技 — 知識留在組織裡</title>
 <meta name="description" content="散落的企業文件，變成隨問隨答的知識中樞。從一個問題開始，每個答案，都有出處可以追溯。">
-<!-- These static values describe the Traditional Chinese home page, the address the site
-     root serves. There is deliberately no static canonical link element: this one document
-     also answers ?page=kip|cases|about and ?lang=en, so a fixed canonical would collapse
-     all eight addresses into the home page. The page script writes the canonical link, the
-     hreflang alternates and the per-page description for the address actually requested. -->
+<!-- Static metadata describes the Traditional Chinese fallback. This shared document serves
+     all pages and three languages, so it has no fixed canonical. The script selects the URL
+     language (or browser preference), then writes the matching canonical, hreflang and metadata. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="tAistro">
 <meta property="og:title" content="tAistro 星洋智能科技 — 知識留在組織裡">
 <meta property="og:description" content="散落的企業文件，變成隨問隨答的知識中樞。從一個問題開始，每個答案，都有出處可以追溯。">
-<meta property="og:url" content="https://taistro.com.tw/">
+<meta property="og:url" content="https://taistro.com.tw/?page=home&lang=zh-Hant">
 <meta property="og:locale" content="zh_TW">
+<!-- generated-locale-alternates:start -->
 <meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="de_DE">
+<!-- generated-locale-alternates:end -->
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Noto+Serif+TC:wght@300;400&family=Manrope:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261002-products"></head><body>
+<link rel="stylesheet" href="site.css?v=20261002-products"><link rel="modulepreload" href="locale-bootstrap.js">
+<script type="module" src="locale-bootstrap.js"></script>
+</head><body>
 <a class="skip" href="#main" data-i18n="navigation.skip">跳至主要內容</a>
 <header class="site-header">
   <div class="wrap nav">

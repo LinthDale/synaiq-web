@@ -56,7 +56,16 @@ export function buildRouting(base, name, paths) {
   }
   assert.equal(activeRelease(preview), current);
   assert.equal(activeRelease(live), name);
-  return { preview, live, current };
+  // Generated catalogs no longer have the old locale-*.js filename prefix.
+  const marker = '# Generated translation module cache policy';
+  const cache = `${marker}${eol}<IfModule mod_headers.c>${eol}<FilesMatch "^(?:[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*|startup|registry|loaders)\\.js$">${eol}Header always set Cache-Control "no-cache, must-revalidate"${eol}</FilesMatch>${eol}</IfModule>`;
+  const updateCache = text => {
+    if (!text.includes(marker)) return `${text}${eol}${cache}${eol}`;
+    const block = /# Generated translation module cache policy\r?\n<IfModule mod_headers\.c>[\s\S]*?<\/IfModule>/g;
+    assert.equal([...text.matchAll(block)].length, 1, 'Ambiguous generated locale cache block');
+    return text.replace(block, () => cache);
+  };
+  return { preview: updateCache(preview), live: updateCache(live), current };
 }
 export function transformSource(bytes, path, name) {
   releaseName(name);
@@ -66,6 +75,8 @@ export function transformSource(bytes, path, name) {
     .replace(/(["'(])assets\//g, `$1/${name}/assets/`);
   if (path === 'page.html') text = text
     .replace(/href="site\.css(?=["?])/g, `href="/${name}/site.css`)
+    .replace(/href="locale-bootstrap\.js(?=["?])/g, `href="/${name}/locale-bootstrap.js`)
+    .replace(/src="locale-bootstrap\.js(?=["?])/g, `src="/${name}/locale-bootstrap.js`)
     .replace(/src="prototype\.js(?=["?])/g, `src="/${name}/prototype.js`);
   assert.doesNotMatch(text, /localhost|127\.0\.0\.1|trycloudflare\.com/, `${path}: local address in public payload`);
   if (path === 'page.html') assert.doesNotMatch(text, /Local preview|preview\.js/, 'Production entry contains preview runtime');

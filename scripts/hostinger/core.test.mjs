@@ -7,6 +7,26 @@ import { activeRelease, buildRouting, transformSource, retentionPlan, assertNoDe
 const current = 'synaiq-release-a', name = 'synaiq-release-b';
 const base = `# BEGIN LSCACHE\nKeep vendor directives\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html|page\\.html|robots\\.txt|sitemap\\.xml)$ - [L]\nRewriteRule ^synaiq-release-older/(?:index\\.html)$ - [L]\nRewriteRule ^wp-content/uploads/2026/03/toutou-2\\.png$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
 const paths = ['index.html', 'page.html', 'robots.txt', 'sitemap.xml', 'assets/a.png'];
+test('nested generated catalogs retain explicit routing and cache rules', () => {
+  const nested = [...paths, 'locales/generated/de.js', 'locale-bootstrap.js'];
+  const { live } = buildRouting(base, name, nested);
+  assert.ok(live.includes('locales/generated/de\\.js'));
+  const matcher = new RegExp(live.match(/<FilesMatch "([^"]+)">/)[1]);
+  for (const file of ['de.js', 'fr.js', 'ja.js', 'zh-Hant.js', 'pt-BR.js', 'startup.js', 'registry.js', 'loaders.js']) assert.ok(matcher.test(file));
+  const next = buildRouting(live, 'synaiq-release-c', nested).live;
+  assert.equal(next.split('# Generated translation module cache policy').length, 2);
+  const html = transformSource(Buffer.from('<link rel="modulepreload" href="locale-bootstrap.js"><script type="module" src="locale-bootstrap.js"></script>'), 'page.html', name).toString();
+  assert.ok(html.includes(`href="/${name}/locale-bootstrap.js"`));
+  assert.ok(html.includes(`src="/${name}/locale-bootstrap.js"`));
+});
+
+test('a later release upgrades the old three-language cache block without duplicating it', () => {
+  const old = `${base}\n# Generated translation module cache policy\n<IfModule mod_headers.c>\n<FilesMatch "^(?:zh-Hant|en|de|startup)\\.js$">\nHeader always set Cache-Control "no-cache, must-revalidate"\n</FilesMatch>\n</IfModule>\n`;
+  const { live } = buildRouting(old, name, paths);
+  assert.equal(live.split('# Generated translation module cache policy').length, 2);
+  assert.ok(new RegExp(live.match(/<FilesMatch "([^"]+)">/)[1]).test('ja.js'));
+  assert.ok(live.includes('Keep vendor directives'));
+});
 test('staging leaves root unchanged and activation moves root plus crawl files together', () => {
   const { preview, live } = buildRouting(base, name, paths);
   assert.equal(activeRelease(preview), current); assert.equal(activeRelease(live), name);

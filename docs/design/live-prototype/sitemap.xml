@@ -1,100 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Canonical addresses from page-metadata.js; verified by seo-metadata.test.mjs. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://taistro.com.tw/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=home&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/"/>
+    <loc>https://taistro.com.tw/?page=home&amp;lang=zh-Hant</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=home&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=home&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=home&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=home&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=home&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=home&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=home&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=home&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=home&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=home&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=home&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=home&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=home&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=home&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=home&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=kip&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=kip&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=kip&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=kip&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=kip&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=kip&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=kip&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=kip&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=kip&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=kip&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=kip&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=kip&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=ems&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=ems&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=ems&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=ems&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=ems&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=ems&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=ems&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=ems&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=ems&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=ems&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=ems&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=ems&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=pvsim&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=pvsim&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=pvsim&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=pvsim&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=pvsim&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=pvsim&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=pvsim&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=pvsim&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=pvsim&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=pvsim&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=pvsim&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=cases&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=cases&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=cases&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tokyo-foodex-2026&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=cases&amp;case=tainan-tech-forum-2026&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=about&amp;lang=zh-Hant</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=about&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=about&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=about&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant" />
   </url>
   <url>
     <loc>https://taistro.com.tw/?page=about&amp;lang=en</loc>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=about&amp;lang=en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=about&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=about&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant" />
+  </url>
+  <url>
+    <loc>https://taistro.com.tw/?page=about&amp;lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://taistro.com.tw/?page=about&amp;lang=en" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://taistro.com.tw/?page=about&amp;lang=de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://taistro.com.tw/?page=about&amp;lang=zh-Hant" />
   </url>
 </urlset>

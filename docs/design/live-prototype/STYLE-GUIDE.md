@@ -12,20 +12,20 @@
 
 | 想修改 | 開哪個檔案、搜尋什麼 |
 |---|---|
-| 首頁 Banner、敘事、產業觀察、Wally 文案 | `locale-home.js` 的 `hero`／`narrative`／`outlook`／`wally` |
-| KIP 頁的標題、流程、四層架構與說明 | `locale-kip.js` |
-| 實績總覽文案、各案例故事、現場紀錄、圖說與報導標題 | `locale-cases.js` 的 `overview`／`tags`／`cases.<識別碼>` |
+| 首頁 Banner、敘事、產業觀察、Wally 文案 | `locales/<語言>/home.json` 的 `hero`／`narrative`／`outlook`／`wally` |
+| KIP 頁的標題、流程、四層架構與說明 | `locales/<語言>/kip.json` |
+| 實績總覽文案、各案例故事、現場紀錄、圖說與報導標題 | `locales/<語言>/cases.json` 的 `overview`／`tags`／`cases.<識別碼>` |
 | 案例日期、排序、精選、照片路徑、封面取景與報導 URL | `cases-data.js` 的 `CASES`；版型在 `cases-design.js` |
-| 關於我們的理念、團隊名單、職稱及學經歷 | `locale-about.js` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
-| 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locale-common.js` 的 `navigation`／`advantages`／`contact`／`footer` |
-| 瀏覽器分頁標題（六頁中英） | `locale-common.js` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
-| 搜尋結果摘要（六頁中英） | `locale-common.js` 的 `description`；詳見「搜尋引擎中繼資料」 |
+| 關於我們的理念、團隊名單、職稱及學經歷 | `locales/<語言>/about.json` 的 `hero`／`approach`／`leadership`／`technical`；照片路徑在 `about-design.js` |
+| 導覽、本頁目錄、八項優勢、聯絡區、公司地址 | `locales/<語言>/common.json` 的 `navigation`／`advantages`／`contact`／`footer` |
+| 瀏覽器分頁標題（六頁中英） | `locales/<語言>/common.json` 的 `title`；`prototype.js` 會覆寫 `page.html` 的靜態標題。本機預覽外框標題在同檔的 `preview`，不隨官網發布 |
+| 搜尋結果摘要（六頁中英） | `locales/<語言>/common.json` 的 `description`；詳見「搜尋引擎中繼資料」 |
 | 正規網址、hreflang、og 標籤 | `page-metadata.js` 算出網址與文字，`prototype.js` 寫進 `<head>`；詳見「搜尋引擎中繼資料」 |
 | robots.txt、sitemap.xml | 本目錄的同名檔案；改網址規則要同步 `page-metadata.js` |
-| CEO quote、姓名與職稱 | `locale-home.js` 搜尋 `ceo:`；中英文各一份 |
-| 第一段動畫的採購流程問答與引用 | `locale-demo.js` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
-| 另外兩段動畫的查詢、片名與步驟 | `locale-demo.js` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
-| 靜態產品示意圖裡的文字 | 問答與介面文字共用 `locale-demo.js`；`locale-screens.js` 負責映射與圖說，改完需重新生成 SVG |
+| CEO quote、姓名與職稱 | `locales/<語言>/home.json` 搜尋 `ceo:`；中英文各一份 |
+| 第一段動畫的採購流程問答與引用 | `locales/<語言>/demo.json` 搜尋 `question:`、`answer:`、`citationFilename:`；不是 `booth` 裡的圖片查詢文案 |
+| 另外兩段動畫的查詢、片名與步驟 | `locales/<語言>/demo.json` 的 `booth`，詳見下方「模擬滑鼠 Demo 與其他效果」 |
+| 靜態產品示意圖裡的文字 | 問答與介面文字共用 `locales/<語言>/demo.json`；`locale-screens.js` 負責映射與圖說，改完需重新生成 SVG |
 | 字型、字級、文字顏色 | `tokens.css`；不會修改文字內容或電話號碼 |
 | 動畫秒數、延遲、次數 | `tokens.css` 對應區段；不必改 JavaScript |
 | 間距、寬度、並排、撕紙與手機排列 | `site.css`；已有常用留白、剪報寬度等變數時，先改 `tokens.css` |
@@ -33,28 +33,28 @@
 | 電話號碼、Email 與點擊連結 | `page.html`；聯絡區的 Email 另在 `shared-design.js`，詳見「共用聯絡資料」 |
 | 頁尾電話、Email、連結的字級 | `tokens.css` 搜尋 `--footer-link-size`；整組頁尾連結共用 |
 
-文案分別匯出 `zhHant` 和 `en`，兩份都要修改，不會自動翻譯。保留原有 key、陣列長度與純文字格式，不要在語言檔塞 HTML。
+文案放在 `locales/<語言>/*.json`，所有已登錄語言都要同步修改，不會自動翻譯。保留原有 key、陣列長度與純文字格式，不要在語言檔塞 HTML；完成後執行 `npm run i18n:sync`。
 
 ### 容易漏掉的文案位置
 
-- 首頁標題在 `locale-home.js` 的 `hero.title`，依序是「散落的企業文件，」「變成隨問隨答的」「知識中樞」三個字串；第三個字串才是中文底線區塊。英文不套這條底線。
+- 首頁標題在 `locales/<語言>/home.json` 的 `hero.title`，依序是「散落的企業文件，」「變成隨問隨答的」「知識中樞」三個字串；第三個字串才是中文底線區塊。英文不套這條底線。
 - 首頁 K／I／P 的首字母效果由 `home-design.js` 的 `renderHeroEyebrow` 套用，僅針對完整的 `KNOWLEDGE INTELLIGENCE PLATFORM`；更換整句後不會自動替任意新文案的首字母加色。
-- 八項優勢在 `locale-common.js` 的 `advantages.items`。每項依序為「名稱、右側簡述、展開首段、展開補充、情境示例」，不是只改列表上的標題。
-- 「首頁／KIP 平台／實績展示／關於我們」是換頁，段落目錄依當前頁改變。文字在 `locale-common.js` 的 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。700px 以上主導覽排在 Logo 與語言選單之間；更窄的手機版可換行，保持連結可讀。
-- 語言切換顯示的 `ZH／EN` 在 `i18n.js` 的 `catalog.shortLabel`；選單字級在 `tokens.css` 的 `--language-size`。新增語言需完整詞典與靜態圖，不能只新增一個選項，步驟見 [語言與 Logo 指南](localization-and-brand-guide.md)。
-- 產業觀察的標題、兩段文章補充、年份、圖表朗讀說明與展開出處都在 `locale-home.js` 的 `outlook`；**圖表的 5 與 14.5 數值目前直接在 `home-design.js` 的 `budget-comparison`**，不是 CSS。若改數據，這些位置與原始來源必須一起核對。
+- 八項優勢在 `locales/<語言>/common.json` 的 `advantages.items`。每項依序為「名稱、右側簡述、展開首段、展開補充、情境示例」，不是只改列表上的標題。
+- 「首頁／KIP 平台／實績展示／關於我們」是換頁，段落目錄依當前頁改變。文字在 `locales/<語言>/common.json` 的 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。700px 以上主導覽排在 Logo 與語言選單之間；更窄的手機版可換行，保持連結可讀。
+- 語言名稱與 `ZH／EN／DE` 縮寫在 `locales/<語言>/_meta.json`；選單字級在 `tokens.css` 的 `--language-size`。新增語言使用 `npm run i18n:add -- 語言代碼`，翻譯完成後執行 `npm run i18n:sync`，選單、載入器、靜態圖與 SEO 語系自動更新，詳見 [語言與 Logo 指南](localization-and-brand-guide.md)。
+- 產業觀察的標題、兩段文章補充、年份、圖表朗讀說明與展開出處都在 `locales/<語言>/home.json` 的 `outlook`；**圖表的 5 與 14.5 數值目前直接在 `home-design.js` 的 `budget-comparison`**，不是 CSS。若改數據，這些位置與原始來源必須一起核對。
 
 ## 搜尋引擎中繼資料
 
-六頁（Home／KIP／EMS／PVsim／實績展示／關於我們）× 中英共 12 個網址，再加上每個公開案例的中英兩個網址，實際上都是**同一份 `page.html`**。
+六頁（Home／KIP／EMS／PVsim／實績展示／關於我們）與所有公開案例各有每種語言的網址，實際上都是**同一份 `page.html`**。語言數由 JSON 自動登錄。
 因此 `page.html` 裡**沒有**靜態 `<link rel="canonical">`——寫死一個就會把 KIP／實績／關於我們併進首頁。
 `page.html` 只保留繁中首頁的靜態 `description` 與 og 標籤（社群爬蟲不跑 JavaScript），
 其餘由 `prototype.js` 依當前頁、語言與案例就地補上。
 
 | 要改什麼 | 改哪裡 |
 |---|---|
-| 六頁中英的搜尋結果摘要 | `locale-common.js` 的 `description`；中文 ≤ 80 字、英文 ≤ 160 字 |
-| 各案例的 title／摘要 | `locale-cases.js` 的 `cases.<識別碼>.name`／`summary`；title 固定為 `${案例名稱} — ${實績展示} — tAistro`，摘要就是 `summary`，同樣受字數上限 |
+| 六頁中英的搜尋結果摘要 | `locales/<語言>/common.json` 的 `description`；中文 ≤ 80 字、英文 ≤ 160 字 |
+| 各案例的 title／摘要 | `locales/<語言>/cases.json` 的 `cases.<識別碼>.name`／`summary`；title 固定為 `${案例名稱} — ${實績展示} — tAistro`，摘要就是 `summary`，同樣受字數上限 |
 | 正規網址、hreflang 的組法 | `page-metadata.js` 的 `canonicalUrl`／`alternateUrls`；純函式，不碰 DOM |
 | 全部應被收錄的網址清單 | `page-metadata.js` 的 `crawlUrls()`；`sitemap.xml` 必須與它完全相同 |
 | 實際寫進 `<head>` 的動作 | `prototype.js` 的 `applyPageMetadata`；就地更新，不重複新增標籤 |
@@ -119,7 +119,7 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | 右上角中英切換 ZH／EN | `--language-size`；一般 12px，359px 以下 11px，兩處都在「01 導覽列」 |
 | 產業觀察區「AI 正在改變…」標題 | `--outlook-title-size` |
 | 產業觀察區說明內文 | `--outlook-body-size` |
-| 左下文章補充「2024 年的調查中…」兩段文字 | `--outlook-reading-size`／`--outlook-reading-color`／`--outlook-reading-leading`；文案在 `locale-home.js` 的 `outlook.reading` |
+| 左下文章補充「2024 年的調查中…」兩段文字 | `--outlook-reading-size`／`--outlook-reading-color`／`--outlook-reading-leading`；文案在 `locales/<語言>/home.json` 的 `outlook.reading` |
 | 展開的調查背景與出處 | `--outlook-detail-size` |
 | 資料註記 | `--outlook-note-size` |
 | 左邊 5% 的大小 | `--outlook-current-size`；% 隨數字等比例縮放 |
@@ -186,13 +186,13 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 | 頁面 | 內容與段落 ID | 渲染入口 |
 |---|---|---|
-| `page=cases` | 實績總覽：共同頁首與案例列表 `cases-list` | `cases-design.js`／`locale-cases.js` 的 `overview` |
-| `page=cases&case=<識別碼>` | 單一案例：案例故事 `story`、現場紀錄 `fieldnotes`、相關報導 `press` | `cases-design.js`／`locale-cases.js` 的 `cases.<識別碼>`＋`cases-data.js` |
-| `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locale-about.js` |
+| `page=cases` | 實績總覽：共同頁首與案例列表 `cases-list` | `cases-design.js`／`locales/<語言>/cases.json` 的 `overview` |
+| `page=cases&case=<識別碼>` | 單一案例：案例故事 `story`、現場紀錄 `fieldnotes`、相關報導 `press` | `cases-design.js`／`locales/<語言>/cases.json` 的 `cases.<識別碼>`＋`cases-data.js` |
+| `page=about` | 理念 `approach`、經營團隊 `leadership`、技術團隊 `technical` | `about-design.js`／`locales/<語言>/about.json` |
 
 兩頁都支援 `lang=zh-Hant`／`lang=en`。實績分成「總覽」與「單一案例」：總覽文案適用所有案例，「從台南到東京」等專屬文字屬於東京案例。目前兩則：`tokyo-foodex-2026`（四語導覽與裝置整合，有現場紀錄與兩則報導）與 `tainan-tech-forum-2026`（KIP 參展與綜合論談與談，有現場紀錄與三則報導）。不要把展會整體業績寫成 AI 帶來的績效。`01 / THE STORY`、`02 / IN THE FIELD` 是案例**內**的小節標示，不是案例排序。本頁目錄會依網址變化：總覽只有「我們的旅途」，案例只列它實際有的小節，找不到案例時沒有目錄。總覽卡片上方的標題是「一起見證我們的旅途」，案例頁的返回連結是「回到旅途」；這組旅途文案由使用者核准，`cases-render.test.mjs` 逐字比對。新增一筆實績的固定步驟見 [維護入口](README.md#新增一筆實績)。
 
-團隊名單的唯一文字來源是 `locale-about.js`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
+團隊名單的唯一文字來源是 `locales/<語言>/about.json`；Daniel Shih 已恢復舊版照片與專利策略師資料，放在 `technical.members`；Celestine 已移除。新增或改動學經歷時同步中英，不在這份文件另抄一份名單。
 
 ### 案例封面與主照的取向
 
@@ -218,7 +218,7 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 
 `ink-photo.js` 先顯示手繪，滑鼠移入後用水墨遮罩逐漸顯出真照；`tokens.css`「13 實績展示／關於我們」的 `--ink-reveal-duration` 目前為 `2600ms`。**點擊會保留點擊當下的顯影比例，再點一次才繼續**；不是第一次點擊就直接跳成完整真照。未暫停時離開圖片會逐漸回到手繪。鍵盤焦點也可顯影，Enter／Space 操作按鈕，Escape 返回手繪。觸控第一次輕點啟動顯影，過程中再次輕點可暫停／繼續；停在完整手繪或真照時，輕點開始反向轉場。reduced-motion 直接切換狀態，保留操作能力。
 
-總覽中有手繪／真照配對的封面，在右上角加上褐色細線箭頭提示；顏色由 `tokens.css` 的 `--ink-hint-color` 控制，與素描筆觸一致。手機提示「點我看看」，滑鼠裝置提示「移入看看」，中英文文案在 `locale-cases.js` 的 `overview.photoHint`。提示不攔截點擊，開始顯影後淡出、回到手繪時恢復；單一案例內頁與純照片不加提示。保留按鈕語意、無障礙名稱與焦點外框。`--ink-ripple-duration` 控制點擊水紋，`--editorial-hover-duration` 控制提示淡出與新頁面連結的小幅動作。所有時間都從 `tokens.css` 讀取。
+總覽中有手繪／真照配對的封面，在右上角加上褐色細線箭頭提示；顏色由 `tokens.css` 的 `--ink-hint-color` 控制，與素描筆觸一致。手機提示「點我看看」，滑鼠裝置提示「移入看看」，中英文文案在 `locales/<語言>/cases.json` 的 `overview.photoHint`。提示不攔截點擊，開始顯影後淡出、回到手繪時恢復；單一案例內頁與純照片不加提示。保留按鈕語意、無障礙名稱與焦點外框。`--ink-ripple-duration` 控制點擊水紋，`--editorial-hover-duration` 控制提示淡出與新頁面連結的小幅動作。所有時間都從 `tokens.css` 讀取。
 
 SVG 的噪聲、位移與模糊只作用於顯影遮罩，真照人物保持清晰；永久柔邊在 `site.css` 的 `.ink-photo__canvas`，場域另用 `.ink-photo--scene`。不要用整張真照模糊或調色濾鏡替代柔邊，也不要用照片濾鏡冒充手繪素材。
 
@@ -229,11 +229,11 @@ Dale、Steve 的真照改用使用者提供的 `20260624公司簡介_不含影�
 
 兩組 `photoCrop` 以 `/brand/team/*-web-1.jpg` 五張棚拍照為基準對齊頭部比例：五張的頭頂到下巴平均佔畫面高度 40.8%、頭頂上方留白平均 9.1%，Dale 與 Steve 的取景數字即由此反推。Steve 的方框比原圖寬，左右與上方會超出圖檔邊界（x、y 為負值）而露出透明區；超出範圍在畫面左側 0–1.7%、右側 96.5–100%、頂端 0–8.5%，人物剪影本身不會碰到圖檔左右邊界。調整這兩組數字時必須一併重算，不可只改其中一個。
 
-Steve 是新增的技術成員，放在 Lou 與 Dale 之間；Lou 仍保留。Steve 的「博士班」英文使用 `Doctoral Program`，不能改成已取得博士學位。Dale 的學經歷以使用者最新更正為準，覆蓋簡報中的舊資料；修改 `locale-about.js` 時須同步中英。
+Steve 是新增的技術成員，放在 Lou 與 Dale 之間；Lou 仍保留。Steve 的「博士班」英文使用 `Doctoral Program`，不能改成已取得博士學位。Dale 的學經歷以使用者最新更正為準，覆蓋簡報中的舊資料；修改 `locales/<語言>/about.json` 時須同步中英。
 
 ## 共用聯絡資料
 
-公司名稱與地址改 `locale-common.js` 的 `footer.company`／`footer.address`，中英文各一份；`page.html` 中對應 `data-i18n` 的預設文字也應同步。聯絡區標題、說明與按鈕文字改 `contact.heading`／`description`／`cta`。
+公司名稱與地址改 `locales/<語言>/common.json` 的 `footer.company`／`footer.address`，中英文各一份；`page.html` 中對應 `data-i18n` 的預設文字也應同步。聯絡區標題、說明與按鈕文字改 `contact.heading`／`description`／`cta`。
 
 Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入」寄信目標另在 `shared-design.js` 的 `renderContact`。更換信箱時兩處一起改。目前按鈕開啟郵件程式，沒有連接表單 API。
 
@@ -248,7 +248,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 - `href="tel:+886423931368"` 是點擊後交給電話程式的撥號號碼；沿用 `+`、國碼與數字、不加排版空格的寫法。
 - `>+886 4 2393 1368<` 是網站顯示文字，可以保留空格方便閱讀。
 - 更換號碼時兩處一起改；只改顯示文字，點擊仍會撥舊號碼。
-- 這一個共用頁尾供六頁、中英文使用；電話目前不在 `locale-common.js`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
+- 這一個共用頁尾供六頁、中英文使用；電話目前不在 `locales/<語言>/common.json`，也不是 CSS 設定。`src/content/` 裡搜尋到的同號電話屬於尚未用於正式站的 Astro 基礎，不是目前這個頁尾的來源。
 - 調整字級，開 `tokens.css` 搜尋 `--footer-link-size`；會一起影響同組 Email 與導覽連結，並要檢查 639px 以下的覆寫。`--footer-body-color` 控制頁尾段落文字，不是電話連結的獨立色彩設定。
 
 修改後重新整理本機預覽，確認顯示文字，再用 DevTools 檢查該連結的 `href`，不必真的撥出電話；六頁與中英文都要確認。
@@ -257,7 +257,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 <a id="動畫只改-tokenscss"></a>
 
-## 動畫：播放設定改 tokens.css，文案改 locale-demo.js
+## 動畫：播放設定改 tokens.css，文案改 locales/<語言>/demo.json
 
 所有可調秒數、延遲、次數與觸發比例只在 `tokens.css` 對應段落定義。儲存後重新整理本機預覽；JavaScript 在載入時讀取 CSS 設定，不會在背景即時重讀編輯器內容。
 
@@ -303,15 +303,15 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 - 步驟「01 用自然語言提問」的文字字型／大小用 `--demo-step-font`／`--demo-step-size`；前方數字用 `--demo-step-number-font`／`--demo-step-number-size`，都在同一段。目前桌機文字與數字各為 22px；899px 以下文字覆寫為 12px，639px 以下數字為 18px。改桌機字級不會自動取消這些窄版覆寫。
 - 三段共用播放次數、滑鼠與介面效果。兩個新片的五段停留時間，在同一「06 Demo」內搜尋 `data-demo-scene="text-image"`／`data-demo-scene="image-image"`，各自修改，不要在檔尾再覆寫。
 - 圖片回覆的進場／逐張延遲／原圖展開時間用 `--demo-image-results-duration`／`--demo-image-results-stagger`／`--demo-image-preview-duration`。
-- 問答、提示與步驟文案在 `locale-demo.js`，但第一段與圖片查詢不在同一層；請依下表修改 `zhHant`／`en` 兩份。新增場景、改動作順序、介面結構或示例圖片時才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字外觀與播放設定仍只在 `tokens.css`。
+- 問答、提示與步驟文案在 `locales/<語言>/demo.json`，但第一段與圖片查詢不在同一層；請依下表修改 `zhHant`／`en` 兩份。新增場景、改動作順序、介面結構或示例圖片時才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字外觀與播放設定仍只在 `tokens.css`。
 
-| 要改的動畫文字 | `locale-demo.js` 的位置 |
+| 要改的動畫文字 | `locales/<語言>/demo.json` 的位置 |
 |---|---|
 | 第一段提問、回答、底線重點、補充說明 | 最外層 `question`、`answer`、`answerHighlight`、`answerNote` |
 | 第一段側欄最近問題、上方路徑、搜尋中提示 | 最外層 `warrantyTopic`、`breadcrumb`、`thinking`；`warrantyTopic` 是保留的舊欄位名，目前內容是採購筆電申請，不是保固問題 |
 | 第一段引用檔名與「查看原文」 | 最外層 `citationFilename`、`citationPage`；`citationPage` 是保留的舊欄位名，目前顯示查看原文，不是頁碼 |
 | 展開的引用原文 | 最外層 `sourceLabel`、`sourceTitle`、`sourceHeading`、`sourceNote`、`sourceScribble`（手繪圈註）；原文的標記段落共用 `answerHighlight` |
-| 寄出／Send、右上知識智慧平台／Knowledge Platform、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locale-demo.js`，不要把圖示字元加回 `send` |
+| 寄出／Send、右上知識智慧平台／Knowledge Platform、對話紀錄／收合 | 最外層 `send`、`productLabel`、`history`、`collapse`、`close`；中英皆在 `locales/<語言>/demo.json`，不要把圖示字元加回 `send` |
 | 最後一幕知識中心的文件列表 | 最外層 `tableRows`；第一筆檔名需與 `citationFilename` 相同 |
 | 第一段下方 01／02／03 的步驟文字 | 最外層 `chapters`；不是 `booth` 裡的章節 |
 | 三段片名、說明 | `booth.titles`、`booth.descriptions`，依知識問答／自然語言找圖／以圖搜圖排序 |
@@ -322,7 +322,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 第一段目前以「為新進同仁採購筆電，該如何申請」示範查找制度流程：填寫用途、規格與預算，主管核准後由採購詢價、下單，到貨後驗收。這是虛構示例，不是企業實際制度；保留示例標示，不要改回目前未支援的「指定第 12 頁寫了什麼」問答。修改時一起核對問題、回答、引用原文、側欄與文件列表，不能只換一句提問。
 
-**動畫已換成採購流程，不代表全站所有示例已換。** `locale-screens.js` 的靜態搜尋畫面，以及 `locale-kip.js` 的 `sampleQuestion`／`sampleAnswer`／`sampleHighlight`／`sampleCitation` 仍有原本的第 12 頁／保固示例。這些不是新動畫的來源；若要統一文案，需另行同步修改並重新生成靜態圖，不能只換動畫詞典就視為全站完成。
+**動畫已換成採購流程，不代表全站所有示例已換。** `locale-screens.js` 的靜態搜尋畫面，以及 `locales/<語言>/kip.json` 的 `sampleQuestion`／`sampleAnswer`／`sampleHighlight`／`sampleCitation` 仍有原本的第 12 頁／保固示例。這些不是新動畫的來源；若要統一文案，需另行同步修改並重新生成靜態圖，不能只換動畫詞典就視為全站完成。
 
 ### 動畫介面內的字型與圖片
 
@@ -360,7 +360,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 素材只加入公開白名單中的四個核准檔案；樣稿 HTML、私人原始截圖、生成紀錄不隨網站發布。獨立 MP4 尚未因此重新錄製，不能把既有 MP4 當成本次紙質介面的影片。
 
-示例圖片清單在 `demo-animation.js` 的 `imageAssets`：`src` 是實際圖檔路徑，`name` 是產品名稱，`file` 是畫面顯示的示例檔名。三者不在 `locale-demo.js`。目前使用 `public/brand/wally-2-plus.png`、`public/brand/wally/wally-2.png`、`public/brand/wally-mini.png`；自然語言找圖先選 Wally 2 PLUS，以圖搜圖先選 Wally Mini。改清單順序也會改首張選取結果；改名或路徑時需核對輸入縮圖、三張結果、原始素材面板及公開白名單。
+示例圖片清單在 `demo-animation.js` 的 `imageAssets`：`src` 是實際圖檔路徑，`name` 是產品名稱，`file` 是畫面顯示的示例檔名。三者不在 `locales/<語言>/demo.json`。目前使用 `public/brand/wally-2-plus.png`、`public/brand/wally/wally-2.png`、`public/brand/wally-mini.png`；自然語言找圖先選 Wally 2 PLUS，以圖搜圖先選 Wally Mini。改清單順序也會改首張選取結果；改名或路徑時需核對輸入縮圖、三張結果、原始素材面板及公開白名單。
 
 ### 其他動態與暫停規則
 
@@ -382,7 +382,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 ## 修改 CEO quote 的文字
 
-**開 `locale-home.js`，搜尋 `ceo:`。** 有兩段：`zhHant.ceo.quote` 是中文、`en.ceo.quote` 是英文；姓名 `name` 與職稱 `role` 就在各自下方。中英文分開修改，不會自動翻譯。
+**開 `locales/<語言>/home.json`，搜尋 `ceo:`。** 有兩段：`zhHant.ceo.quote` 是中文、`en.ceo.quote` 是英文；姓名 `name` 與職稱 `role` 就在各自下方。中英文分開修改，不會自動翻譯。
 
 ```js
 quote: [
@@ -449,7 +449,7 @@ npm run test:design
 
 也可把 `PLAYWRIGHT_EXECUTABLE_PATH` 設為已安裝相容 Chromium 的完整路徑。只安裝瀏覽器但未設定此變數，`motion-browser.test.mjs`、`demo-booth-browser.test.mjs` 仍會跳過；看到 skipped 不能當作互動已通過。這些測試使用獨立 headless 瀏覽器及 loopback 服務，不操作使用者登入中的 Chrome，也不開公開隧道。
 
-人工檢查四頁 × 中英 × 390／768／1440px，並拖曳經過斷點，而不只看三張截圖；頁首另檢查 700px 斷點兩側與 835px 中型視窗：
+人工檢查六頁與公開案例 × 所有已登錄語言 × 320／390／835／1440px，並拖曳經過斷點；頁首另檢查 700px 斷點兩側：
 
 1. 導覽所在頁底線、語言切換保留頁面／錨點、手機目錄與 Escape 關閉正常。
 2. Banner 中文底線只在第三段，英文換行正常；大字、小字與按鈕沒有被撕紙遮住。
@@ -489,7 +489,7 @@ node scripts/check-typography.mjs --output=out/typography-check-current
 
 ## Logo 與靜態產品示意圖
 
-頁首與動畫的淺底 Logo 使用 `assets/synaiq-logo-ink.svg`；深底頁尾使用 repo 的 `public/brand/synaiq-logo-light.svg`。`brand.js` 統一指向這兩個版本，沒有 Logo 上傳後台。換固定原檔後仍需同步四張靜態產品 SVG：
+公司 tAistro 與產品 Synaiq KIP 的 Logo 由 `brand.js` 分開管理，沒有 Logo 上傳後台。換固定原檔後仍需同步所有已登錄語言的靜態產品 SVG：
 
 ```powershell
 node docs/design/live-prototype/scripts/sync-brand-screens.mjs
@@ -498,13 +498,13 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 
 以上在 repo 根目錄執行；第一行會更新生成圖，第二行只檢查是否一致。詳細品牌審查與其他語言登錄方式見 [語言與 Logo 指南](localization-and-brand-guide.md)。
 
-首頁「KIP 畫面＋信紙＋Wally」與 KIP 頁首使用的是生成 SVG，不是下方的動畫 DOM。兩者的採購問答、引用檔名、側欄與「寄出」文字現在都讀 `locale-demo.js`；`locale-screens.js` 只負責映射及靜態圖說。KIP 頁首的引文紙條也共用同一份採購示例，不再保留舊的指定頁碼問答。
+首頁「KIP 畫面＋信紙＋Wally」與 KIP 頁首使用的是生成 SVG，不是下方的動畫 DOM。兩者的採購問答、引用檔名、側欄與「寄出」文字現在都讀 `locales/<語言>/demo.json`；`locale-screens.js` 只負責映射及靜態圖說。KIP 頁首的引文紙條也共用同一份採購示例，不再保留舊的指定頁碼問答。
 
 靜態圖共用的標頭撕邊、KIP 字標、紙質側欄與小對話線稿在 `screen-templates/chrome.svg`；聊天／知識中心內容的座標及圖內字級在 `search.svg`／`library.svg`。使用與動畫相同的四個核准素材，由生成器內嵌至圖片，不依賴圖片外的 CSS。這是固定比例的產品插圖，維持 1440×900；外層組圖仍由 `site.css`／`tokens.css` 控制。
 
-生成器輸出 `assets/kip-search-demo.svg`、`kip-search-demo-en.svg`、`kip-library-demo.svg`、`kip-library-demo-en.svg`；頁面透過 `locale-common.js` 的 `assets.searchScreen`／`libraryScreen` 選用語言版本。修改問答或共用紙質素材後，除了檢查動畫，也要執行上述生成指令並查看首頁組圖／KIP 頁首的中英文版本。
+生成器為每個語言輸出搜尋與知識中心兩張 SVG；繁中使用 `assets/kip-search-demo.svg` 與 `kip-library-demo.svg`，其他語言在檔名加上語言代碼，例如 `kip-search-demo-de.svg`。頁面資源路徑由 `locale-config.js` 依生成的語言登錄表推導，不放在翻譯 JSON。修改問答或共用紙質素材後，執行 `npm run i18n:sync`，並查看所有語言的首頁組圖與 KIP 頁首。
 
-不要直接改生成 SVG 作為長期來源，下次生成會被覆蓋；也不要以為修改 `tokens.css` 會改到 `<img>` 裡的 SVG 字級。照片中已印好的 Logo 不會跟著更新。公開發布要包含改過的原檔與重新生成的四圖，不能只上傳 `brand.js`。
+不要直接改生成 SVG 作為長期來源，下次生成會被覆蓋；也不要以為修改 `tokens.css` 會改到 `<img>` 裡的 SVG 字級。照片中已印好的 Logo 不會跟著更新。公開發布要包含改過的原檔與所有重新生成的圖片，不能只上傳 `brand.js`。
 
 ## 素材與引用維護
 
@@ -533,11 +533,11 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 
 Wilson、Sunny、Leef、Lou 的真照分別在 repo 的 `public/brand/team/`，網址前綴為 `/brand/team/`；檔名以 `about-design.js` 的 `portraits` 映射為準，例如 Leef 對應舊檔 `leff-web-1.jpg`。Dale、Steve 與昱儒使用上述 `assets/team/` 素材。保留舊圖不代表仍在現行團隊頁使用，Daniel 的舊檔與舊 Dale 照片／手繪未列入公開白名單。Dale 旁的裝飾小貓（`team/dale-tuxedo-kitten.webp`／`-photo.webp`／`-ink.webp`）已依使用者要求移除，三個檔案保留在 repo，但已從 `share-preview.mjs` 白名單刪除，不再對外提供。新增公開素材須逐一加入 `share-preview.mjs`，不得整包公開舊素材回收目錄或公司簡報。
 
-新聞小圖在 `home-design.js` 搜尋 `outlook-clipping`；中英無障礙說明在 `locale-home.js` 的 `outlook.clippingLabel`／`clippingAlt`。寬度改 `--outlook-clipping-width`，傾斜改 `--outlook-clipping-tilt`（建議 -6deg 至 6deg，放大角度需重驗手機邊界）。外面不顯示圖說、調查人數或提醒字，調查背景與限制保留在 `outlook-details` 展開區；原截圖內標題與署名不刪。原圖與外框分開維護，不必每次修改文字都重新生圖。
+新聞小圖在 `home-design.js` 搜尋 `outlook-clipping`；中英無障礙說明在 `locales/<語言>/home.json` 的 `outlook.clippingLabel`／`clippingAlt`。寬度改 `--outlook-clipping-width`，傾斜改 `--outlook-clipping-tilt`（建議 -6deg 至 6deg，放大角度需重驗手機邊界）。外面不顯示圖說、調查人數或提醒字，調查背景與限制保留在 `outlook-details` 展開區；原截圖內標題與署名不刪。原圖與外框分開維護，不必每次修改文字都重新生圖。
 
 ### 引用與私人資料
 
-新聞圖左側的兩段摘要由 `locale-home.js` 的 `outlook.reading` 維護，中英同步。保留 2024 年調查時間，以及 33% 刪減／62% 不刪減其他專案的兩面，不改寫成所有企業都在挪用預算。桌機在 `.outlook-context` 與剪報並排，899px 以下自動堆疊，不加固定高度。
+新聞圖左側的兩段摘要由 `locales/<語言>/home.json` 的 `outlook.reading` 維護，中英同步。保留 2024 年調查時間，以及 33% 刪減／62% 不刪減其他專案的兩面，不改寫成所有企業都在挪用預算。桌機在 `.outlook-context` 與剪報並排，899px 以下自動堆疊，不加固定高度。
 
 產業觀察使用 [Investing.com 2024-06-29 的 J.P. Morgan CIO 調查報導](https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358)，屬媒體轉述，未取得原始調查全文。166 位 CIO／每年 1,230 億美元支出、2024 年 5% 與三年後 14.5% 預期、約 45% 年複合增幅、33% 刪減與 62% 不刪減其他專案，均須保留原日期及語境，不當作已實現結果、每年保證增幅或 KIP 的成效數據。
 

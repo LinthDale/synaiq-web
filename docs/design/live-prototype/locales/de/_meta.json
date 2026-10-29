@@ -1,0 +1,7 @@
+{
+  "label": "Deutsch",
+  "shortLabel": "DE",
+  "og": "de_DE",
+  "order": 2,
+  "screen": { "labelWidth": 148, "answerLineLength": 76, "answerUnderlineOffset": 32, "answerNoteY": 493 }
+}

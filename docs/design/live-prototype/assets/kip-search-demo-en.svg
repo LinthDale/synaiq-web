@@ -44,7 +44,7 @@
 <rect x="287" y="328" width="44" height="44" rx="6" fill="#282825"/><text x="297" y="359" font-size="23" fill="#f4f4f2">K</text>
 <text x="360" y="359" font-size="25">Start with a purchase request: purpose, specs and budget.</text>
 <text x="360" y="412" font-size="24">After manager approval, Purchasing gets quotes and orders. Inspect on arrival.</text>
-<path d="M358 430Q837 439 1314 429" fill="none" stroke="#637859" stroke-width="2"/>
+<path d="M358 430Q837 439 1314 429" transform="translate(0 0)" fill="none" stroke="#637859" stroke-width="2"/>
 <text x="360" y="477" font-size="17" fill="#64645e">Follow the application and approval rules in the cited process.</text>
 <rect x="360" y="523" width="994" height="142" rx="8" fill="#e3e9dc" stroke="#819b70"/>
 <text x="386" y="562" font-size="14" fill="#64645e">SOURCE / 01</text>

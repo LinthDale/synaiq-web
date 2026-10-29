@@ -1,0 +1,108 @@
+{
+  "hero": {
+    "eyebrow": "DIE MENSCHEN HINTER tAistro",
+    "title": [
+      "Technologie mit Menschlichkeit.",
+      "KI für den Alltag."
+    ],
+    "intro": "Wir sind tAistro. Vom Wissen in einer Organisation bis zum Gespräch vor Ort verbinden wir KI-Integration, Wissensmanagement und digitale Menschen zu Werkzeugen, die Menschen gerne nutzen.",
+    "action": "Unser Team kennenlernen",
+    "note": "Gute Technologie beginnt damit, Menschen zu verstehen."
+  },
+  "approach": {
+    "eyebrow": "01 / UNSER ANSATZ",
+    "title": "Den Einsatzort verstehen. Dann dafür entwickeln.",
+    "intro": "Praxistauglichkeit, Stabilität und Erweiterbarkeit leiten jede unserer Dienstleistungen.",
+    "principles": [
+      {
+        "title": "Für Menschen gestaltet",
+        "description": "Wir beginnen bei der Sprache und Arbeitsweise der Menschen und übersetzen komplexe Technik in klare, zugängliche Interaktionen."
+      },
+      {
+        "title": "Für die Praxis entwickelt",
+        "description": "Wir lernen die Abläufe in Behörden und Unternehmen kennen und verbinden KI mit der bereits stattfindenden Arbeit."
+      },
+      {
+        "title": "Sicherheit von Anfang an",
+        "description": "Wir berücksichtigen Informationssicherheit im Systementwurf und schaffen eine Architektur für schrittweise Einführung und Erweiterung."
+      }
+    ]
+  },
+  "leadership": {
+    "eyebrow": "02 / GESCHÄFTSLEITUNG",
+    "title": "Menschen, die Ideen in die Praxis bringen.",
+    "intro": "Von Betrieb und Finanzen bis zur Geschäftsentwicklung richten wir technische Entscheidungen an tatsächlichen Bedürfnissen aus.",
+    "members": [
+      {
+        "name": "Wilson Chiu",
+        "nativeName": "",
+        "role": "Chief Executive Officer, tAistro",
+        "credentials": [
+          "Masterabschluss am Institut für Wirtschaftsingenieurwesen und Management, National Chiao Tung University"
+        ]
+      },
+      {
+        "name": "Sunny Kang",
+        "nativeName": "",
+        "role": "Chief Operating Officer, tAistro",
+        "credentials": [
+          "Geschäftsführer, Ju-Xun Sustainability Strategy",
+          "Masterabschluss am Institut für Wirtschaftsingenieurwesen und Management, National Chiao Tung University"
+        ]
+      },
+      {
+        "name": "Leef Lee",
+        "nativeName": "",
+        "role": "Finanzvorstand",
+        "credentials": [
+          "Fachbereich Rechnungswesen, National Cheng Kung University",
+          "Stellvertretende Leitung Finanzen und Rechnungswesen"
+        ]
+      },
+      {
+        "name": "Yi Shyang Lou",
+        "nativeName": "",
+        "role": "Stellvertretender Direktor, tAistro",
+        "credentials": [
+          "Promotion am Institut für Informationsmanagement, National Central University",
+          "Leitender Auditor für Informationssicherheitsmanagementsysteme nach ISO 27001:2022"
+        ]
+      }
+    ]
+  },
+  "technical": {
+    "eyebrow": "03 / TECHNISCHES TEAM",
+    "title": "Komplexes einfach nutzbar machen.",
+    "intro": "Über Informationsmanagement, Software und Firmware hinweg verbinden wir Wissen, Systeme und Einsatzorte.",
+    "members": [
+      {
+        "name": "Daniel Shih",
+        "nativeName": "",
+        "role": "Patentstratege und Leiter Geschäftsentwicklung",
+        "credentials": [
+          "Masterabschluss am Institut für Technologiemanagement, National Yang Ming Chiao Tung University"
+        ]
+      },
+      {
+        "name": "Steve Chiang",
+        "nativeName": "",
+        "role": "Full-Stack-Systemarchitekt",
+        "credentials": [
+          "Promotionsprogramm für Information Engineering, Feng Chia University"
+        ]
+      },
+      {
+        "name": "Dale Lin",
+        "nativeName": "",
+        "role": "Leitender Full-Stack- und Firmware-Ingenieur",
+        "credentials": [
+          "Institut für Nachhaltigkeit und grüne Energietechnologie, National Central University"
+        ]
+      }
+    ]
+  },
+  "portrait": {
+    "alt": "Farbporträt von {name}",
+    "credentials": "Ausbildung und Erfahrung"
+  }
+}

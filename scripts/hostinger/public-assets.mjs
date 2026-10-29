@@ -43,7 +43,7 @@ export async function verifyPublicAssets(config, manifest, work) {
           throw error;
         }
       } else assert.equal(actual, file.sha256, `${file.path}: public content differs`);
-      if (/^locale-.*\.js$/.test(file.path)) assert.match(response.headers.get('cache-control') || '', /no-cache/, 'Locale cache policy missing');
+      if (/^(?:locale-.*|locales\/generated\/[^/]+)\.js$/.test(file.path)) assert.match(response.headers.get('cache-control') || '', /no-cache/, 'Locale cache policy missing');
       return result;
     })));
   }

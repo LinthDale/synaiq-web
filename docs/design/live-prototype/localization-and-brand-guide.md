@@ -1,67 +1,109 @@
-# 語言與 Logo 統一管理
+# 語言、翻譯檔與品牌素材維護
 
-適用範圍：`docs/design/live-prototype` 核准網站來源。它沒有 CMS、Logo 上傳後台或產品連線；本機修改後仍須依上架指引發布，正式站才會更新。
+最後更新：2026-10-28。本次三語改造為本機待審閱版本，未發布。
 
-## 使用英文版
+## 一套版型，三份語言資料
 
-- 網站右上角 `ZH / EN` 選單可切換語言，保留目前的 Home / KIP 頁面與網址中的段落錨點；單純捲動位置不會記錄。
-- 中文：`page.html?page=home&lang=zh-Hant`
-- 英文：`page.html?page=home&lang=en`
-- 英文 KIP：`page.html?page=kip&lang=en`
-- 可連續縮放的預覽列也有語言選單；網址可帶 `?page=kip&lang=en#proof`，直接開啟指定頁面、語言及段落。
-- 未提供或不支援的 `lang` 使用繁體中文。不會依瀏覽器語言自動切換，也不會把上一位使用者的偏好寫進共用資料。
+正式網站來源是 `docs/design/live-prototype/`。六個主要頁面及所有公開案例共用版型；不建立德文專用 HTML，也不使用 Astro dist 發布。
 
-## 擴充其他語言
+翻譯唯一來源為 `locales/zh-Hant/`、`locales/en/`、`locales/de/` 下的 JSON：
 
-版型只有一份；文字不是散落在 HTML 的分支判斷裡。
+| 檔案 | 內容 |
+|---|---|
+| common.json | 導覽、搜尋摘要、優勢、聯絡、頁尾、預覽列 |
+| home.json、kip.json | 首頁與 KIP 敘事 |
+| ems.json、pvsim.json | 產品、流程、圖說及 3D 操作提示 |
+| cases.json | 實績總覽、案例故事、照片說明與報導標題 |
+| about.json | 團隊、理念、姓名與經歷 |
+| demo.json | 動畫與 KIP 示意圖共用文案 |
+| screens.json | 靜態示意圖專用圖說及標籤 |
+| startup.json | 載入、失敗與重試提示 |
 
-| 檔案 | 職責 |
-| --- | --- |
-| `i18n.js` | 語言登錄、預設語言、連結、文字跳脫 |
-| `locale-common.js` | 導覽、八項優勢、聯絡、頁尾、預覽列、各語言示意圖路徑 |
-| `locale-home.js` | 首頁文案 |
-| `locale-kip.js` | KIP 文案 |
-| `locale-demo.js` | 動畫內文案和播放狀態 |
-| `locale-screens.js` | 將 `locale-demo.js` 映射為靜態圖文字，另維護圖說及輸出檔名後綴；只在本機生成時使用 |
+每個語言的 `_meta.json` 管理名稱、瀏覽器別名、SEO 語系與選用排版設定。`locale-config.js` 讀取自動生成的登錄表，推導示意圖路徑與公開白名單；`locale-schema.js` 管理固定團隊識別碼及分類。`cases-data.js` 管理案例識別碼、日期、排序、照片與報導網址。上述識別碼不是翻譯內容。JSON 的語意鍵與必要陣列結構必須一致；只放純文字，不放 HTML。原有刻意留空的 nativeName 可維持空字串。
 
-新增語言（例如日文）的方式：
+## 新增語言：只維護 JSON
 
-1. 為上述四份 runtime 詞典各新增完整的 `ja` 匯出，沿用相同語意 key 及陣列結構。只放純文字，HTML 由共用 renderer 處理。
-2. 在 `i18n.js` 匯入四份 `ja` 詞典，於 `catalog` 登錄 `ja`：`label: '日本語'`、`shortLabel: 'JA'`、`dir: 'ltr'`，組成 `{home, kip, demo, common}`。兩個語言選單會從登錄表自動建立，不用另外加按鈕。
-3. 在 `locale-screens.js` 匯入 demo 的 `ja` 並加入產生 `screenMessages` 的語言對照表，在 `captions` 補齊 `ja` 圖說，在 `screenLocaleSuffixes` 加 `ja: '-ja'`；對應 common 詞典的 `assets` 指向 `assets/kip-search-demo-ja.svg` 與 `assets/kip-library-demo-ja.svg`。不另抄一份採購問答。
-4. 執行下方生成指令、完整測試，並人工檢查新語言的長字詞及 RWD。語意 key / 陣列項目不一致會令測試失敗；目前不做逐字串回退，避免同一頁中英混雜。
-5. 若有新增公開檔案，先把確切檔名加進 `share-preview.mjs` allowlist，同步 `share-preview.test.mjs` 的核准數量。先備妥尚未被線上入口引用的檔案、測試通過，重載 **4318 的設計伺服器** 並確認新增檔案能取得後，才切換線上入口的引用；不可先讓線上入口引用尚未允許公開的模組。不要重啟 Cloudflared，也不要公開整個 docs 目錄。
-
-本次只驗證繁中／英文。未驗證的 RTL 或其他文字系統仍需要相應版面測試；有 `dir` 登錄不代表已完成 RTL 設計。
-
-## 公司與產品 Logo 分開管理
-
-`brand.js` 的 `BRAND` 是網站公司品牌 **tAistro**；`PRODUCT_BRAND` 是產品 **Synaiq KIP** 的 Synaiq Logo。公司品牌更換不會覆蓋產品識別。
-
-| 原檔 | 用途 |
-| --- | --- |
-| `assets/taistro-logo-ink.svg` | 網站淺底頁首、Demo 與靜態示意圖左上角 |
-| `assets/taistro-logo-light.svg` | 網站深底頁尾 |
-| `assets/synaiq-logo-ink.svg` | Synaiq KIP 標題、Demo 與四張示意圖右上角的產品識別 |
-
-新版 tAistro 圖形擷取自使用者提供的 `20260922_星洋taistro_LOGO.pdf` 第一頁，保留向量路徑與黑／白配色，去除版面背景。公司中文名為「星洋智能科技股份有限公司」，Email 為 `service@taistro.com.tw`。正式網站網域另行確認，不依 Email 自動變更 DNS 或 SEO 網址。
-
-更換同一品牌素材時，保留 `viewBox` 與透明背景，使用已審查、無腳本或外部引用的 SVG。新檔名必須同步 `brand.js`、`page.html` fallback、公開白名單及相關測試。
-
-若修改產品 Logo 或示意圖文字，執行：
+例如新增日文，從 repo 根目錄執行：
 
 ```powershell
-node docs/design/live-prototype/scripts/sync-brand-screens.mjs
-node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
-npm run test:design
+npm run i18n:add -- ja
 ```
 
-生成器同時讀取 `BRAND.ink`（左上公司 Logo）及 `PRODUCT_BRAND.ink`（右上產品 Logo，搭配 KIP 文字）。任一 Logo 變更都需重新產生四張示意圖。檢查中英文頁首、頁尾、產品標題、動畫及產品示意圖，並確認手機與桌面排版。正式上架依官網更新 README 辦理。
+指令會建立 `locales/ja/`、自動填入 `_meta.json` 的日文名稱與語系設定，並建立十份保留原有鍵值／陣列結構的空白翻譯 JSON。既有語言不會被覆寫。請以繁中為主、英文交叉核對完成翻譯；指令本身不提供機器翻譯，不會把英文內容冒充日文。
 
-### 不會自動改的地方
+翻譯完成後執行：
 
-- **設備照片、人物照片內已印好的 Logo** 是圖片像素的一部分，需要替換或另行修圖。
-- **正式站不會即時同步本機檔案**。需發布更新後的 `brand.js`、Logo 原檔及已同步的示意圖；正式站使用的是封裝後的核准靜態版本，不是 Astro `dist/`。步驟見 [上架／還原操作索引](../../operations/deploy-hostinger.md)。
-- 不提供 SVG 安全清洗／任意使用者上傳功能。只接受由團隊審查的品牌原檔；不要把來路不明、含 script／事件／外部引用的 SVG 直接當公開素材。
+```powershell
+npm run i18n:sync
+```
 
-若日後要由非工程人員「上傳一次即全站更新」，需要另做有權限控管、檔案驗證、淺／深底變體、版本回復及發布流程的品牌素材後台；目前尚未建置。
+一次自動完成：掃描語言資料夾、驗證完整性、生成語言登錄與載入器、語言模組、KIP 示意圖、sitemap 及靜態 Open Graph 語言標籤。導覽選單、瀏覽器語言匹配、公開白名單與發布快取規則自動涵蓋新語言，不需修改 JavaScript 或測試中的語言數量。既有 `npm run build:locales` 也會執行完整同步。
+
+`npm run dev:design` 啟動前會自動執行同步；預覽已開啟時，修改後需執行同步，新增語言還需重新啟動該預覽程序。這不是檔案監看服務。未翻譯的必要文字會阻擋同步、預覽啟動與 CI，不能直接發布空白模板。
+
+也可自行建立語言資料夾與十份完整 JSON。最小 `_meta.json` 範例：
+
+```json
+{ "label": "日本語", "shortLabel": "JA", "og": "ja_JP" }
+```
+
+資料夾使用標準 BCP 47 大小寫，例如 `ja`、`fr`、`pt-BR`。選用欄位：
+
+- `browserLanguages`：額外匹配別名，例如繁中使用 `["zh"]`。代碼本身自動加入，瀏覽器區域標籤會逐層縮短匹配。`fr` 自動匹配 `fr-CA`；若只提供 `pt-BR` 並希望所有葡語使用它，可加 `["pt"]`。不同語言不可重複宣告同一別名。
+- `dir`：預設 `ltr`，可指定 `rtl`；右至左語言仍需實際版面審閱。
+- `order`：選單排序，預設 100；同值按語言代碼排序，繁中預設版本置前。
+- `descriptionLimit`：搜尋摘要檢查長度，預設 160。
+- `screen`：需要時用 `labelWidth`、`answerLineLength`、`answerUnderlineOffset`、`answerNoteY` 調整 KIP SVG 文字空間。新語言有預設值；超長文字及非拉丁文字仍要查看產物。
+
+語言登錄、載入器與白名單只由驗證過的資料產生，JSON 原檔不會公開。沒有自動上架；翻譯品質與新語言版面仍需預覽驗收。
+
+## 選語言的優先順序
+
+1. 網址明確帶 `lang=zh-Hant`、`lang=en` 或 `lang=de` 時，以網址為準（大小寫不敏感）。
+2. 沒有 lang 參數時，依瀏覽器 `navigator.languages` 的偏好順序，選第一個支援的語言。德語區域標籤如 de-DE、de-AT、de-CH 對應 de；en-US、en-GB 對應 en；zh 系列對應目前唯一的中文版本 zh-Hant。
+3. 全部不支援時使用繁中。網址明確帶無效或空白 lang 時也回到繁中，不把參數當成資源路徑。
+
+選定語言以 replaceState 寫回網址；切換語言保留頁面、案例與段落，站內連結沿用當前語言。不使用帳號、Cookie 或 localStorage 保存偏好。以不同瀏覽器語言再次造訪沒有 lang 的入口，會重新判斷。
+
+例：`page.html?page=home&lang=de`、`page.html?page=cases&case=tokyo-foodex-2026&lang=de#fieldnotes`。本機預覽列遵守同一規則。
+
+## 修改、生成與驗證
+
+修正既有翻譯只需修改對應語言資料夾中的 JSON，例如德文首頁改 `locales/de/home.json`、英文 PVsim 操作提示改 `locales/en/pvsim.json` 的 `screens.viewer`。修改語言名稱、縮寫或瀏覽器別名才改 `_meta.json`。上方表格列出十份翻譯檔的內容範圍。
+
+原文變更後，其他語言也需由 AI 或譯者同步更新；生成器不會自動翻譯，也不能判斷既有譯文是否已過時。鍵值與型別檢查通過，不代表語意翻譯正確。
+
+以下指令從 repo 根目錄執行：
+
+```powershell
+npm run i18n:sync
+npm run test:design
+npm run test:deploy
+npm run test:i18n:browser
+```
+
+生成器把每個語言合併為 `locales/generated/<語言>.js`，另產生很小的 startup.js，讓完整語言檔載入失敗時仍可顯示三語錯誤提示。瀏覽器只下載當前語言的完整資料模組。生成的模組、示意圖與 sitemap 都納入 Git，禁止手改。
+
+只讀檢查：`npm run check:locales`，一次驗證登錄表、載入器、語言模組、示意圖、sitemap 與靜態語系標籤。缺鍵、型別或陣列項目不符、必要文字空白、替換參數不符、生成檔過期，都會令檢查失敗。CI 與發布工具會再次檢查，檢查模式不修改檔案。
+
+`locale-store.js` 是唯一快取來源；即使 i18n.js 帶不同版本 query，也共用同一份資料。先 `await loadMessages(locale)` 再呼叫同步 `getMessages(locale)`。頁面由 locale-bootstrap.js 完成載入；Node 測試明確透過 test-i18n-setup.mjs 預載，不在瀏覽器載入其他語言。
+
+沒有逐句回退，避免混語。語言檔載入失敗時顯示重試與切換語言；重試使用完整重新載入，清除瀏覽器對失敗模組的快取。
+
+## 德文與圖片
+
+德文以繁中為主、英文交叉核對，使用標準德語與 Sie。品牌、人名、地址及實績事實保持一致。待審閱詞彙見 [德文審閱表](locales/GERMAN-REVIEW.md)。
+
+KIP 動畫與靜態示意圖共用 demo.json；搜尋示意圖支援德文回答換行。EMS／PVsim 真實截圖、現場照片和新聞截圖保留原圖，只翻譯圖說、替代文字及網站操作介面。
+
+共用品牌分為公司 tAistro 與產品 Synaiq KIP；Logo 路徑在 brand.js。更改 Logo 或示意圖文案後，重跑 sync-brand-screens.mjs，確認六張中英德示意圖一致。照片像素中已有的 Logo 不會自動改變。
+
+## 預覽與發布
+
+本機以 `npm run dev:design` 開啟 4318。新增語言的生成模組與示意圖自動加入白名單；其他種類的公開資源仍需登錄 share-preview.mjs，並重啟自己啟動的預覽程序。JSON 原檔、翻譯審閱表、生成腳本不公開。
+
+測試會依登錄表自動涵蓋所有語言的六頁及案例，包含 320／390／835／1440px、語言偵測與手動切換、單一語言檔載入、失敗重試和發布目錄路徑。PVsim 真實 3D 操作另以 `npm run test:pvsim-viewer` 驗證所有已登錄語言。新增語言整合測試在隔離目錄產生第四語言，確認只加 JSON 即可串通整個流程，不向實際網站加入測試語言。
+
+首頁 canonical 現在明確帶 page 與 lang，避免依瀏覽器選語言的根網址混淆版本；hreflang、OG locale 與 sitemap 都包含 de。x-default 對應繁中預設版本。
+
+僅預覽或修改翻譯不代表已上架。取得發布授權後，依 [官網更新 README](../../operations/WEBSITE-UPDATE-README.md) 提交所有來源與生成檔並走既有 GitHub CI；不得直接覆蓋主機檔案。本機版本的瀏覽器報告不等於正式網址驗收。

@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderHome } from './home-design.js';
-import { zhHant } from './locale-home.js';
+import { getMessages as readCatalog } from './i18n.js';
+const zhHant = readCatalog('zh-Hant').home;
 import { escapeHtml } from './i18n.js';
 
 const html = renderHome({ advantageSection: () => '', contact: () => '' });
