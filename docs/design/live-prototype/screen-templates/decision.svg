@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" class="screen-decision" role="img" aria-labelledby="title desc">
+<title id="title">{{title}}</title><desc id="desc">{{description}}</desc>
+{{chrome}}
+<g font-family="Noto Sans TC,Microsoft JhengHei,sans-serif" fill="#282825">
+<rect x="290" y="128" width="1080" height="80" rx="10" fill="#dfe5d9"/>
+<text x="320" y="178" font-size="25">{{question}}</text>
+<text x="300" y="267" font-size="20" fill="#637859">{{metric}}</text>
+<path d="M300 292H1350M300 396H1350M300 500H1350M300 604H1350" stroke="#b7b7af"/>
+<rect x="300" y="293" width="1050" height="102" fill="#e3e9dc"/>
+<text x="320" y="357" font-size="26">{{optionA}}</text><text x="1300" y="361" text-anchor="end" font-size="42" fill="#35604b">{{valueA}}</text>
+<text x="320" y="461" font-size="26">{{optionC}}</text><text x="1300" y="465" text-anchor="end" font-size="42">{{valueC}}</text>
+<text x="320" y="565" font-size="26">{{optionB}}</text><text x="1300" y="569" text-anchor="end" font-size="42">{{valueB}}</text>
+<text x="320" y="660" font-size="23">{{adviceA}}</text>
+<text x="320" y="706" font-size="23">{{adviceC}}</text>
+<path d="M320 727Q790 736 1310 726" fill="none" stroke="#cca858" stroke-width="2"/>
+<text x="320" y="770" font-size="20">{{conditions}}</text>
+<text x="320" y="815" font-size="17" fill="#64645e">{{note}}</text>
+<text x="800" y="866" text-anchor="middle" font-size="14" fill="#64645e">{{footer}}</text>
+</g></svg>

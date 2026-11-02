@@ -26,9 +26,9 @@ async function fixture(t) {
   return { root, prototypeRoot, brandRoot, port: server.address().port };
 }
 
-function fetchRaw(port, path, method = 'GET') {
+function fetchRaw(port, path, method = 'GET', headers = {}) {
   return new Promise((resolve, reject) => {
-    const req = request({ hostname: '127.0.0.1', port, path, method }, res => {
+    const req = request({ hostname: '127.0.0.1', port, path, method, headers }, res => {
       const chunks = [];
       res.on('data', chunk => chunks.push(chunk));
       res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, body: Buffer.concat(chunks).toString() }));
@@ -87,6 +87,32 @@ test('HEAD has the GET length and headers but no body', async t => {
   assert.equal(head.body, '');
   assert.equal(head.headers['content-length'], get.headers['content-length']);
   assert.match(head.headers['content-type'], /text\/javascript/);
+});
+
+test('versioned animation images are reusable while editable images revalidate by content', async t => {
+  const { port, prototypeRoot } = await fixture(t);
+  const framePath = '/live-prototype/assets/kip-d-scroll-v5/frame-000.webp';
+  const frame = await fetchRaw(port, framePath);
+  assert.equal(frame.headers['cache-control'], 'public, max-age=31536000, immutable');
+  assert.ok(frame.headers.etag);
+  const cached = await fetchRaw(port, framePath, 'GET', { 'If-None-Match': frame.headers.etag });
+  assert.equal(cached.status, 304);
+  assert.equal(cached.body, '');
+  assert.equal(cached.headers.etag, frame.headers.etag);
+
+  const file = 'assets/kip-decision-demo.svg';
+  const path = `/live-prototype/${file}`;
+  const original = await fetchRaw(port, path);
+  assert.equal(original.headers['cache-control'], 'public, no-cache');
+  assert.equal((await fetchRaw(port, path, 'HEAD', { 'If-None-Match': `W/${original.headers.etag}` })).status, 304);
+  await writeFile(join(prototypeRoot, file), 'updated image contents');
+  const changed = await fetchRaw(port, path, 'GET', { 'If-None-Match': original.headers.etag });
+  assert.equal(changed.status, 200);
+  assert.notEqual(changed.headers.etag, original.headers.etag);
+  assert.equal(changed.body, 'updated image contents');
+  for (const path of ['/live-prototype/page.html', '/live-prototype/demo-animation.js', '/live-prototype/site.css']) {
+    assert.equal((await fetchRaw(port, path)).headers['cache-control'], 'no-store');
+  }
 });
 
 test('rejects every method except GET and HEAD', async t => {

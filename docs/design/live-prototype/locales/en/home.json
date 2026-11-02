@@ -26,68 +26,64 @@
     "01"
   ],
   "hero": {
-    "eyebrow": "KNOWLEDGE INTELLIGENCE PLATFORM",
+    "eyebrow": "Knowledge Intelligence Platform",
     "title": [
-      "Scattered company documents",
-      "become a knowledge hub ",
-      "you can ask."
+      "A platform for business decisions",
+      "and",
+      "reasoning"
     ],
     "intro": [
-      "Start with a question.",
-      "Every answer has a source you can trace."
+      "Built on proprietary algorithms, KIP retrieves evidence from enterprise knowledge and combines reasoning with computation.",
+      "Analyze business anomalies, calculate scenarios and compare options, with data and calculations behind every judgment."
     ],
-    "action": "See how Synaiq KIP works",
+    "action": "See KIP analyze and calculate",
     "artAlt": "A hand-drawn typewriter scatters letters and paper; faint threads are gathered by hands and lead to an abstract outline of a brain",
     "scroll": "Follow the thread"
   },
   "narrative": {
-    "pretitle": "Give every piece of",
+    "pretitle": "Synaiq KIP｜A platform for business decisions and reasoning",
     "title": [
-      "organizational knowledge",
-      "a chance to be found."
+      "Behind the numbers,",
+      "a business story unfolds."
     ],
     "lead": [
-      "Your company’s unique knowledge",
-      "often lives ",
-      "beyond the public web."
+      "When conditions change,",
+      "which option ",
+      "is worth pursuing?"
     ],
     "paragraphs": [
-      "Emails, memos, internal documents and presentations hold the experience your organization has built. Yet they often sit across separate systems and teams, not yet organized into knowledge that AI can use effectively.",
-      "The next opportunity is to connect AI with the knowledge and resources inside your company. So employees can find an answer when they need one—and find the evidence behind it."
+      "From investigating causes to comparing outcomes, put accumulated enterprise knowledge to work in your next business decision.",
+      "KIP connects documents, reports and experience, retrieves relevant evidence, reasons through possible causes and calculates outcomes from data and assumptions to help teams compare their options.",
+      "KIP has no token-based fees, and sensitive data need not be sent to external online models. Use retrieval, reasoning and computation to support business decisions while retaining control of company data."
     ],
-    "action": "Explore Synaiq KIP’s four-layer architecture ↗",
+    "action": "Explore Synaiq KIP ↗",
     "artAlt": "A hand-drawn illustration of two hands passing knowledge through sheets of paper and fine threads",
     "artNote": "Pass experience to the next pair of hands."
   },
   "products": {
-    "label": "Synaiq KIP and Wally product illustrations",
-    "note": "The threads begin to take shape.",
+    "label": "Synaiq KIP business decision interface concept",
+    "note": "From evidence to analysis and calculation.",
     "title": [
-      "Then, scattered knowledge",
-      "finds a way in."
+      "Turn enterprise knowledge",
+      "into a basis for business judgment."
     ],
-    "screenAlt": "A branded Synaiq KIP search interface study showing a question, an answer and its source; sample data, not an original product screenshot",
-    "screenCaption": "Synaiq KIP interface / Branded study",
-    "paperLabel": "A typographic composition of company knowledge sources",
-    "paperEyebrow": "YOUR KNOWLEDGE",
+    "screenAlt": "KIP concept comparing three options, expected net benefits and conditional recommendations; not a live calculation or product screenshot",
+    "screenCaption": "Synaiq KIP business decisions / Concept illustration",
+    "paperLabel": "Business decisions supported by data and computation",
+    "paperEyebrow": "DATA & COMPUTATION",
     "paperTitle": [
-      "Behind an answer,",
-      "an original source."
+      "Every decision,",
+      "backed by data",
+      "and calculation."
     ],
-    "paperDocuments": "Memos. Internal documents.",
+    "paperDocuments": "Business data × reasoning and computation",
     "paperCopy": [
-      "Your organization’s experience,",
-      "no longer scattered."
+      "Traceable data.",
+      "Grounded calculations."
     ],
-    "paperCaption": "Company knowledge · A typographic study",
-    "devicesLabel": "Wally products side by side",
-    "deviceAlts": [
-      "Original full-color Wally 2 product image",
-      "Original full-color Wally 2 PLUS product image, including the complete white mobile base",
-      "Original full-color Wally Mini product image"
-    ],
-    "stageCopy": "Synaiq KIP on screen. Wally, in person.",
-    "stageNote": "Design illustrations, not deployed customer cases."
+    "paperCaption": "Supporting business decisions",
+    "stageCopy": "KIP combines retrieval, reasoning and computation to support business decisions.",
+    "stageNote": "Interface concept, not a connected product session."
   },
   "outlook": {
     "eyebrow": "ENTERPRISE AI / INDUSTRY OUTLOOK",
@@ -101,14 +97,15 @@
       "In the 2024 survey, 33% of CIOs said they were cutting funding for other IT projects to support AI investment. Legacy systems, upgrades and infrastructure were most affected.",
       "Yet 62% said they were not cutting other projects. The report suggested that most AI investment would be funded by additional budgets, rather than simply reallocating existing spending."
     ],
-    "chartLabel": "Respondents expected AI computing hardware to rise from 5 percent of IT budgets in 2024 to 14.5 percent three years later",
-    "currentYear": "Reported share in 2024",
-    "futureYear": "Expected share in 2027",
+    "chartLabel": "AI computing hardware's share of IT budgets: 5% in 2024 to an expected 14.5% in 2027, implying approximately 42.6% compound annual growth in the share, not actual spending growth",
+    "growthLabel": "AI hardware budget share · Implied annual growth",
+    "perYear": "/ year",
+    "growthBasis": "2024 share: 5% → Expected 2027 share: 14.5%",
     "respondents": "166 CIOs",
     "spending": "Together, the respondents oversaw $123 billion in annual enterprise IT spending.",
     "caveat": "These were respondents’ expectations in 2024—not realized results or evidence of Synaiq KIP’s performance.",
     "detailsLabel": "Read the survey context and source",
-    "details": "The report described the three-year growth expectation as a compound annual growth rate of about 45%. Some 33% of CIOs said they would cut funding for other projects, with legacy systems/upgrades and infrastructure particularly affected; 62% said they would not cut other projects.",
+    "details": "We calculate the implied compound annual growth rate from the reported endpoints: (14.5 ÷ 5)^(1 ÷ 3) − 1 ≈ 42.6%. This measures expected growth in AI hardware's budget share, not growth in total IT budgets or actual spending. It does not imply the same rate in every year. The article describes the rate as roughly 45%, which differs slightly from the calculation using the published endpoints.",
     "sourceLabel": "Investing.com · Reported June 29, 2024 ↗",
     "sourceCaveat": "Based on media reporting; the full original J.P. Morgan survey was not available for review.",
     "clippingLabel": "Read the original Investing.com report (opens in a new tab)",
@@ -116,41 +113,13 @@
   },
   "showcase": {
     "title": [
-      "Ask a question.",
-      "See where the answer comes from."
+      "From profit and loss analysis",
+      "to the final decision."
     ],
     "copy": [
-      "Intelligent search connects questions to documents. The knowledge center manages ingestion and parsing.",
-      "From the question to the source, every step can be checked."
+      "Compare investment options and changes in profit, investigate causes and calculate outcomes under different conditions.",
+      "Follow the conversation through retrieved evidence, analysis and calculation assumptions."
     ]
-  },
-  "wally": {
-    "title": [
-      "The same knowledge,",
-      "now in person."
-    ],
-    "intro": [
-      "Wally is Synaiq KIP’s on-site presence.",
-      "Bringing searchable knowledge into face-to-face conversations."
-    ],
-    "detail": "Software and devices, part of the same story.",
-    "personaAlt": "The digital human character in a purple cheerleading outfit from the official website",
-    "personaCaption": "Official character artwork / Original colors",
-    "personaEyebrow": "WALLY MINI",
-    "personaTitle": [
-      "Give knowledge",
-      "a face to meet."
-    ],
-    "personaCopy": [
-      "From questions on a screen to conversations in person.",
-      "A familiar brand character carries the conversation into the room."
-    ],
-    "miniAlt": "Original full-color product image of the Wally Mini digital human device",
-    "materialNote": "Character and device artwork, not photographs of a deployed site.",
-    "panoramaLabel": "Five Wally device product images; scroll horizontally to view",
-    "panoramaAlt": "Complete full-color product lineup: Wally 1, 1 Plus, 2, 2 Plus and Mini",
-    "panoramaCaption": "Original full-color product lineup / Complete devices",
-    "panoramaHint": "Swipe sideways on mobile to see the full device lineup."
   },
   "ceo": {
     "label": "A quote from tAistro’s CEO",

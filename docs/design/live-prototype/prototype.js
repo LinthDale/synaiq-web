@@ -4,7 +4,7 @@ import { renderKip, initKip } from './kip-design.js';
 import { renderEms, renderPvsim, initEnergy } from './energy-design.js?v=20261002-products';
 import { renderCases, initCases, caseSectionIds } from './cases-design.js';
 import { renderAbout, initAbout } from './about-design.js';
-import { renderAdvantageSection, renderContact } from './shared-design.js';
+import { renderAdvantageSection, renderContact, initAdvantages } from './shared-design.js';
 import { SUPPORTED_LOCALES, resolveLocale, resolvePage, getMessages, pageHref, localeHref, escapeHtml as esc } from './i18n.js?v=20260922-cases-expansion';
 import { pageMetadata } from './page-metadata.js?v=20260922-cases-expansion';
 import { DEFAULT_CASE, resolveCaseId } from './cases-data.js?v=20260922-cases-expansion';
@@ -102,6 +102,7 @@ for (const link of document.querySelectorAll('a[href^="?page="]')) {
   link.setAttribute('href', pageHref({ page: target.searchParams.get('page'), caseId: target.searchParams.get('case'), locale, hash: target.hash }));
 }
 pages[page].init({ locale, messages });
+initAdvantages();
 document.getElementById('locale-status')?.remove();
 document.documentElement.dataset.i18nReady = 'true';
 if (location.hash) {
@@ -151,7 +152,7 @@ export function initPageNavigation(pageName, navigation = getMessages().common.n
   contextLabel.textContent = navigation[`${page}Context`];
   contextNav.setAttribute('aria-label', navigation[`${page}Sections`]);
   const sections = {
-    home: [['wally', navigation.wally], ['proof', navigation.proof], ['footer', navigation.about]],
+    home: [['proof', navigation.proof], ['advantages', navigation.advantages], ['footer', navigation.about]],
     kip: [['process', navigation.process], ['architecture', navigation.architecture], ['advantages', navigation.advantages], ['proof', navigation.demo]],
     ems: [['story', navigation.productStory], ['process', navigation.energyWorkflow], ['capabilities', navigation.capabilities], ['proof', navigation.demo]],
     pvsim: [['story', navigation.productStory], ['process', navigation.solarWorkflow], ['capabilities', navigation.capabilities], ['proof', navigation.demo]],

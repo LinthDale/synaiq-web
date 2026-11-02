@@ -12,14 +12,14 @@ const zhHant = readCatalog('zh-Hant').demo;
 const en = readCatalog('en').demo;
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
-const screenNames = ['search', 'library'];
+const screenNames = ['search', 'library', 'decision'];
 const expectedScreenCount = Object.keys(screenLocaleSuffixes).length * screenNames.length;
 
 test('every screen locale supplies the same semantic text keys as Chinese', () => {
   assert.deepEqual(Object.keys(screenMessages).sort(), Object.keys(screenLocaleSuffixes).sort());
   for (const [locale, messages] of Object.entries(screenMessages)) {
-    assert.deepEqual(Object.keys(messages).sort(), ['library', 'search'], locale);
-    for (const screen of ['search', 'library']) {
+    assert.deepEqual(Object.keys(messages).sort(), ['decision', 'library', 'search'], locale);
+    for (const screen of screenNames) {
       assert.deepEqual(Object.keys(messages[screen]).sort(), Object.keys(screenMessages['zh-Hant'][screen]).sort(), `${locale}/${screen}`);
       for (const value of Object.values(messages[screen])) assert.equal(typeof value, 'string');
     }
@@ -34,7 +34,10 @@ test('all static product screens use the approved shared paper chrome and curren
     assert.match(source, /id="product-logo"/);
     assert.match(source, /fill="#e9e6dc"/);
     assert.doesNotMatch(source, /第\s*12\s*頁|page\s*12|保固|warranty|Procurement_Contract/i);
-    assert.ok(source.includes(demo.citationFilename));
+    if (screen === 'decision') {
+      for (const row of demo.decision.rows) assert.ok(source.includes(row[1]));
+      assert.ok(source.includes(demo.decision.screenNote));
+    } else assert.ok(source.includes(demo.citationFilename));
     if (screen === 'search') {
       assert.equal(screenMessages[locale].search.question, demo.question);
       assert.equal(screenMessages[locale].search.answerHeading, demo.answer);
@@ -103,11 +106,12 @@ test('screen logo source follows brand configuration and refuses non-local or es
 });
 
 test('English screenshots translate all visible and accessible text, including example filenames', () => {
-  for (const { locale, source } of buildScreens()) {
+  for (const { locale, screen, source } of buildScreens()) {
     if (locale !== 'en') continue;
     assert.doesNotMatch(source, /\p{Script=Han}/u);
-    assert.match(source, /Equipment_Purchasing_Sample\.pdf/);
-    assert.match(source, /sample|Sample|fictional/);
+    if (screen === 'decision') assert.match(source, /Supplied example/);
+    else assert.match(source, /Equipment_Purchasing_Sample\.pdf/);
+    assert.match(source, /sample|Sample|fictional|example/);
   }
 });
 

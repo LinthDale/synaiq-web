@@ -8,9 +8,9 @@ import { escapeHtml } from './i18n.js';
 const html = renderHome({ advantageSection: () => '', contact: () => '' });
 
 test('preserves the selected hero and supplied enterprise narrative', () => {
-  assert.match(html, /散落的企業文件，/);
-  assert.match(html, /變成隨問隨答的/);
-  assert.match(html, /電子郵件、備忘錄、內部文件與簡報/);
+  assert.match(html, /企業經營決策/);
+  assert.match(html, /推理平台/);
+  assert.match(html, /自有演算法/);
   assert.doesNotMatch(html, /枯竭/);
 });
 
@@ -41,17 +41,16 @@ test('CEO section preserves the supplied quote and uses the requested speaking s
 });
 
 test('homepage preserves the selected brand-matched interface studies', () => {
-  assert.equal((html.match(/src="assets\/kip-search-demo\.svg"/g) || []).length, 1);
+  assert.equal((html.match(/src="assets\/kip-decision-demo\.svg"/g) || []).length, 1);
   assert.match(html, /data-demo-animation/);
   assert.match(html, /示例資料 · 非實際連線操作/);
   assert.doesNotMatch(html, /kb-entry-redacted\.png/);
 });
 
-test('hand-drawn opening precedes product reveal and PLUS stays in the device row', () => {
+test('hand-drawn opening precedes the KIP-only product reveal', () => {
   assert.match(html, /hero-thread-art" aria-hidden="true"/);
-  assert.match(html, /knowledge-threads-v2\.png/);
+  assert.match(html, /kip-d-opening-v5\.webp/);
   assert.ok(html.indexOf('id="introduction"') < html.indexOf('data-product-reveal'));
-  assert.match(html, /class="stage-devices"/);
-  assert.equal((html.match(/src="\/brand\/wally-2-plus\.png"/g) || []).length, 1);
+  assert.doesNotMatch(html, /stage-devices|home-wally|Wally|wally-mini|toutou-2|見面的方式/);
   assert.doesNotMatch(html, /wally-plus-feature|art-placeholder|human-ai-quote/);
 });

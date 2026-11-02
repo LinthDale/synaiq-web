@@ -1,9 +1,11 @@
 import { createServer } from 'node:http';
 import { lstat, open, realpath } from 'node:fs/promises';
 import { constants } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { LOCALE_PUBLIC_FILES } from './locale-config.js';
+import { DECISION_FRAME_FILES } from './decision-frames.js';
 
 // This is a public design-only allowlist, not a general repository file server.
 // New assets must be reviewed and explicitly named before they can be shared.
@@ -11,7 +13,9 @@ const runtimeFiles = [
   'index.html', 'page.html', 'prototype.js',
   'site.css', 'tokens.css',
   'home-design.js',
-  'demo-animation.js',
+  'decision-scroll.js', 'decision-frames.js', ...DECISION_FRAME_FILES,
+  'assets/kip-d-opening-v5.webp',
+  'demo-animation.js', 'decision-demo.js',
   'kip-design.js',
   'energy-design.js', 'energy-screens.js',
   'pvsim-viewer.js', 'vendor/pvsim-three.js', 'vendor/three-LICENSE.txt',
@@ -48,7 +52,7 @@ const runtimeFiles = [
   'assets/cases/tainan-tech-forum-2026-cover-sketch.webp',
   'assets/cases/tainan-tech-forum-2026-panel-sketch.webp',
 ];
-const productFiles = ['synaiq-logo-light.svg', 'wally/wally-2.png', 'wally/wally-series.png', 'wally-2-plus.png', 'wally-mini.png'];
+const productFiles = ['synaiq-logo-light.svg'];
 const teamFiles = ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg', 'team/daniel-web-1.jpg'];
 
 export const PUBLIC_FILES = Object.freeze([
@@ -89,6 +93,17 @@ const securityHeaders = Object.freeze({
     "base-uri 'none'", "form-action 'none'", "object-src 'none'",
   ].join('; '),
 });
+
+const immutableImages = new Set([...DECISION_FRAME_FILES, 'assets/kip-d-opening-v5.webp']);
+function imageCacheHeaders(entry, body) {
+  if (!['.svg', '.png', '.jpg', '.webp'].includes(extname(entry.file))) return {};
+  return {
+    'Cache-Control': immutableImages.has(entry.file)
+      ? 'public, max-age=31536000, immutable'
+      : 'public, no-cache',
+    ETag: `"${createHash('sha256').update(body).digest('base64url')}"`,
+  };
+}
 
 function publicPath(rawUrl) {
   // Do not let URL normalization erase traversal evidence before validation.
@@ -160,7 +175,12 @@ export function createPreviewHandler({ prototypeRoot = defaultRoots.prototype, b
       try {
         const body = await readPublicFile(roots[entry.root], entry);
         if (body !== null) {
-          send(response, request.method, 200, body, contentTypes[extname(entry.file)]);
+          const cacheHeaders = imageCacheHeaders(entry, body);
+          const validators = String(request.headers['if-none-match'] ?? '').split(',').map(value => value.trim().replace(/^W\//, ''));
+          if (cacheHeaders.ETag && validators.some(value => value === '*' || value === cacheHeaders.ETag)) {
+            response.writeHead(304, { ...securityHeaders, ...cacheHeaders });
+            response.end();
+          } else send(response, request.method, 200, body, contentTypes[extname(entry.file)], cacheHeaders);
           return;
         }
       } catch {

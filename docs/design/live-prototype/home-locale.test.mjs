@@ -32,8 +32,8 @@ test('Home language catalogs have matching semantic keys and plain-text values',
 
 test('English Home translates visible copy, labels and product illustration source', () => {
   const html = render('en');
-  assert.match(html, /Scattered company documents</);
-  assert.match(html, /assets\/kip-search-demo-en\.svg/);
+  assert.match(html, /A platform for business decisions/);
+  assert.match(html, /assets\/kip-decision-demo-en\.svg/);
   assert.match(html, /166 CIOs/);
   assert.match(html, /not realized results/);
   assert.match(html, /邱浩煒 Wilson/);
@@ -44,7 +44,7 @@ test('English Home translates visible copy, labels and product illustration sour
 
 test('English Home keeps the language when opening KIP', () => {
   const html = render('en');
-  assert.equal((html.match(/href="\?page=kip&amp;lang=en(?:#[^"]*)?"/g) || []).length, 2);
+  assert.equal((html.match(/href="\?page=kip&amp;lang=en(?:#[^"]*)?"/g) || []).length, 1);
   assert.doesNotMatch(html, /href="\?page=kip"/);
 });
 
@@ -53,7 +53,7 @@ test('English retains spaces when responsive paragraph line breaks are hidden', 
   const paragraph = html.match(/<div class="showcase-heading">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1];
   assert.ok(paragraph);
   const mobileText = paragraph.replace(/<br>/g, '');
-  assert.match(mobileText, /parsing\. From the question/);
+  assert.match(mobileText, /conditions\. Follow the conversation/);
 });
 
 test('Home escapes translated content instead of treating catalogs as HTML', () => {
@@ -77,7 +77,7 @@ test('Chinese Home remains the default and renders the current catalog quote exa
   const html = renderHome({ advantageSection: () => '', contact: () => '' });
   const quote = html.match(/<blockquote>([\s\S]*?)<\/blockquote>/)?.[1].replace(/<[^>]*>/g, '');
   assert.equal(quote, zhHant.ceo.quote.flat().map(escapeHtml).join(''));
-  assert.match(html, /src="assets\/kip-search-demo\.svg"/);
+  assert.match(html, /src="assets\/kip-decision-demo\.svg"/);
 });
 
 test('the English CEO quote renders both catalog paragraphs and escapes edited copy', () => {

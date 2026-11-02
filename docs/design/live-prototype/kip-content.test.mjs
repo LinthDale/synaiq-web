@@ -16,19 +16,19 @@ const css = siteCss.slice(kipStart);
 
 test('KIP preserves the retained copy and shared-content blocks', () => {
   const expected = [
-    '問得到、答得準、接得上。',
-    '把散落各處的企業文件，變成隨問隨答、有憑有據的知識中樞。',
+    '看懂經營變化，算清決策影響。',
+    getMessages('zh-Hant').kip.intro,
     '預約導入評估',
-    '資料接入',
-    'PDF、Word、Excel、掃描文件、手寫與圖片，一起進來。',
-    '讀取內容、還原表格，掌握處理進度。',
-    '用自己的問題查詢，再回到原文核對。',
+    '檢索依據',
+    '從企業文件與報表中，找出問題所需的資料與來源。',
+    '結合經營目標與限制，區分已知事實、合理推論與待查因素。',
+    '依據資料與假設，試算成本、效益及不同情境的結果。',
     'Web、API 與行動裝置，接入既有工作流程。',
     '依需求選擇模型，讓提問連回組織的知識。',
     '文件接入、解析與分庫，集中管理資料來源。',
     '權限、紀錄、影像檢索與報表，支援日常使用。',
-    '智慧知識搜尋 IKS 讓問題連回文件；知識中心 KC 管理接入、解析與分庫。',
-    '來源與答案一起出現，讓查詢成為可以確認的工作。',
+    getMessages('zh-Hant').kip.proofCopy[0],
+    getMessages('zh-Hant').kip.proofCopy[1],
     '系統介接 API / MCP',
     '與企業既有系統連接。',
     '分庫與權限控管',
@@ -58,7 +58,7 @@ test('KIP removes the standalone knowledge-center notes in both languages withou
       assert.equal(Object.hasOwn(messages.kip, key), false, `Unused KIP dictionary key: ${locale}.${key}`);
     }
     assert.equal((page.match(/data-demo-animation\s/g) || []).length, 1);
-    assert.equal((page.match(/class="film-library"/g) || []).length, 1);
+    assert.equal((page.match(/class="demo-film decision-chat-film"/g) || []).length, 1);
     assert.match(page, /kip-capability-list/);
   }
   assert.doesNotMatch(siteCss, /kip-library-notes/);
@@ -66,11 +66,11 @@ test('KIP removes the standalone knowledge-center notes in both languages withou
 });
 
 test('KIP retains its brand-matched screen and exactly one labeled animated demo', () => {
-  assert.equal((html.match(/src="assets\/kip-search-demo\.svg"/g) || []).length, 1);
+  assert.equal((html.match(/src="assets\/kip-decision-demo\.svg"/g) || []).length, 1);
   assert.equal((html.match(/data-demo-animation\s/g) || []).length, 1);
   assert.match(html, /data-demo-replay/);
   assert.match(html, /data-demo-pause/);
-  assert.match(html, /模擬滑鼠點擊與內容展開的情境動畫 · 示例資料 · 非實際連線操作/);
+  assert.match(html, /功能情境示例 · 示例資料 · 非實際連線操作/);
   assert.doesNotMatch(html, /kb-entry-redacted\.png|demo-window/);
 });
 

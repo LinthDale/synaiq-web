@@ -20,10 +20,10 @@ const original = [
   ['多媒體知識支援', '文件不只一種格式', 'PDF、掃描件、手寫、表格與圖片，都有對應的接入流程。'],
 ];
 
-test('eight advantages retain every accepted title, summary and explanation in order', () => {
-  assert.equal(advantages.length, original.length);
+test('two platform advantages precede the eight retained knowledge capabilities', () => {
+  assert.equal(advantages.length, original.length + 2);
   for (const [index, expected] of original.entries()) {
-    assert.deepEqual(Array.from(advantages[index]).slice(0, 3), expected);
+    assert.deepEqual(Array.from(advantages[index + 2]).slice(0, 3), expected);
     for (const copy of expected) assert.ok(html.includes(copy), `Missing original copy: ${copy}`);
   }
 });
@@ -34,23 +34,33 @@ test('each expansion adds substantive explanation and a clearly labeled illustra
     assert.ok((explanation.match(/。/g) || []).length >= 2, `${title}: provide working context`);
     assert.ok(scenario?.length >= 35, `${title}: missing concrete work scenario`);
   }
-  assert.equal((html.match(/class="advantage-detail"/g) || []).length, 8);
-  assert.equal((html.match(/class="advantage-scenario"/g) || []).length, 8);
-  assert.equal((html.match(/工作情境示例/g) || []).length, 8);
+  assert.equal((html.match(/class="advantage-detail"/g) || []).length, advantages.length);
+  assert.equal((html.match(/class="advantage-scenario"/g) || []).length, advantages.length);
+  assert.equal((html.match(/工作情境示例/g) || []).length, advantages.length);
   assert.doesNotMatch(html, /秒級|百分之百|100%|零幻覺|無限|待確認|理念稿/);
 });
 
-test('native details and a shared anchor support page navigation and keyboard activation', () => {
+test('each note unfolds its own paper with a single title and removable tape', () => {
   assert.match(html, /<section class="paper-section advantages" id="advantages" aria-labelledby="advantages-title">/);
-  assert.match(html, /<h2 id="advantages-title">八項核心優勢<\/h2>/);
-  assert.equal((html.match(/<details class="advantage-row">/g) || []).length, 8);
-  assert.equal((html.match(/<summary>/g) || []).length, 8);
+  assert.match(html, /<h2 id="advantages-title">核心優勢<\/h2>/);
+  assert.equal((html.match(/<button class="advantage-note"/g) || []).length, advantages.length);
+  assert.equal((html.match(/class="advantage-panel"/g) || []).length, advantages.length);
+  assert.equal((html.match(/class="advantage-sheet"/g) || []).length, advantages.length);
+  assert.equal((html.match(/class="advantage-tape"/g) || []).length, advantages.length);
+  for (let index = 0; index < advantages.length; index++) {
+    assert.ok(html.includes(`aria-expanded="false" aria-controls="advantage-panel-${index}"`));
+    assert.ok(html.includes(`id="advantage-panel-${index}" role="region" aria-labelledby="advantage-title-${index}" hidden`));
+    assert.equal(html.split(`id="advantage-title-${index}"`).length - 1, 1);
+  }
+  assert.doesNotMatch(html, /advantage-panel-actions|<h3|popover=/);
+  assert.doesNotMatch(html, /<details|<summary|<dialog|看說明|advantage-more/);
   assert.doesNotMatch(html, /onclick|role="button"|tabindex/);
 });
 
-test('compact rows keep touch targets and paper-edge clearance without enlarging body copy', () => {
+test('compact notes reflow and retain the surrounding paper-edge clearance', () => {
   assert.match(css, /section\.advantages > \.wrap\s*\{[^}]*1080px/);
-  assert.match(css, /section\.advantages \.advantage-row summary\s*\{[^}]*min-height:\s*58px;[^}]*padding:\s*14px 0/);
+  assert.match(css, /\.advantage-notes\s*\{[^}]*grid-template-columns:\s*repeat\(5, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.advantage-notes\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
   assert.match(css, /section\.advantages \.section-head\s*\{[^}]*margin-bottom:\s*28px/);
   assert.match(css, /body\[data-page\] section\.advantages\s*\{\s*padding-top:/);
   const paperCss = readFileSync(new URL('./site.css', import.meta.url), 'utf8');

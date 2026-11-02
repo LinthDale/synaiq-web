@@ -32,28 +32,27 @@
     "approach": "Our approach",
     "leadership": "Leadership",
     "technical": "Technical team",
-    "wally": "Wally",
     "proof": "Product tour",
     "about": "About tAistro",
     "process": "Knowledge flow",
     "architecture": "Architecture",
-    "advantages": "Eight advantages",
+    "advantages": "Core advantages",
     "demo": "Product demo",
     "menu": "Contents",
     "language": "Language",
     "skip": "Skip to main content"
   },
   "title": {
-    "home": "tAistro — Knowledge stays with you.",
-    "kip": "Synaiq KIP Platform — tAistro",
+    "home": "tAistro · KIP｜A platform for business decisions and reasoning",
+    "kip": "Synaiq KIP｜A platform for business decisions and reasoning — tAistro",
     "ems": "EMS — tAistro",
     "pvsim": "PVsim — tAistro",
     "cases": "Our Work — tAistro",
     "about": "About Us — tAistro"
   },
   "description": {
-    "home": "Scattered company documents become a knowledge hub you can ask. Start with a question. Every answer has a source you can trace.",
-    "kip": "Ask naturally. Answer precisely. Stay connected. Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
+    "home": "KIP supports business decisions with retrieval, reasoning and computation. No token-based fees; sensitive data need not go to external online models.",
+    "kip": "KIP supports business decisions with retrieval, reasoning and computation. No token-based fees; sensitive data need not go to external online models.",
     "ems": "Explore the EMS demo workflow: live monitoring, demand management, storage dispatch, event tracking and management review.",
     "pvsim": "Explore the PVsim demo workflow: site modeling, module layout, shading and generation assessment, and electrical string checks.",
     "cases": "AI in the field. Conversations beyond language. Technology finds meaning when people connect.",
@@ -75,14 +74,29 @@
     "address": "10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan"
   },
   "advantages": {
+    "close": "Close",
     "eyebrow": "Built around your knowledge.",
-    "title": "Eight core advantages",
+    "title": "Core advantages",
     "intro": [
-      "From bringing in documents to checking answers,",
-      "make organizational knowledge part of everyday work."
+      "No token-based fees.",
+      "Sensitive data need not be sent to external online models."
     ],
     "scenario": "Illustrative work scenario",
     "items": [
+      [
+        "No token-based fees",
+        "Reasoning without per-token charges",
+        "KIP does not charge according to input or output token usage.",
+        "Teams can follow up on a business question and compare different conditions without calculating token fees for each exchange. Keep the focus on the analysis: add evidence, check sources and recalculate scenarios as needed.",
+        "Compare investment costs and benefits, adjust the probability of success and ask about applicable conditions. Develop a supported judgment without estimating token fees for each round."
+      ],
+      [
+        "Keep sensitive data out of external online models",
+        "Retain control of company data",
+        "Sensitive company information need not be sent to external online models for processing.",
+        "Use profit-and-loss figures, purchasing costs and internal documents as evidence without sending sensitive content to an external online model. Connect company knowledge with reasoning and computation while retaining control of the data.",
+        "Investigate changes between two income statements using internal reports and purchasing data, without pasting sensitive figures or documents into an external online model conversation."
+      ],
       [
         "Grounded answers, fewer hallucinations",
         "Evidence before answers",

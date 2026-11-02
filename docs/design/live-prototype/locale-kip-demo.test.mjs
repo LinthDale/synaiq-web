@@ -6,15 +6,15 @@ import { renderAnimatedDemo, initAnimatedDemo } from './demo-animation.js';
 
 test('English KIP and demo render English copy, labels and sample filenames throughout', () => {
   const kip = renderKip({ locale: 'en', advantageSection: () => '', contact: () => '' });
-  assert.match(kip, /Ask naturally\./);
-  assert.match(kip, /assets\/kip-search-demo-en\.svg/);
+  assert.match(kip, /Understand business changes\./);
+  assert.match(kip, /assets\/kip-decision-demo-en\.svg/);
   assert.match(kip, /Four layers,/);
   assert.doesNotMatch(kip, /\p{Script=Han}/u);
-  const demo = renderAnimatedDemo({ locale: 'en' });
+  const demo = renderAnimatedDemo({ locale: 'en', initialScene: 'knowledge' });
   assert.match(demo, /Equipment_Purchasing_Sample\.pdf/);
   assert.match(demo, /Knowledge_Workflow_Sample\.docx/);
   assert.match(demo, /Data_Index_Sample\.xlsx/);
-  assert.match(kip, /Equipment_Purchasing_Sample\.pdf/);
+  assert.match(kip, /Original inputs and formula need verification/);
   assert.doesNotMatch(kip, /page\s*12|warranty|Procurement_Contract/i);
   assert.match(demo, />Replay<\/button>/);
   assert.match(demo, />Pause animation<\/button>/);
@@ -34,7 +34,7 @@ test('demo playback labels remain English after pause, replay and reduced-motion
   let observe;
   const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');
   const getComputedStyle = () => ({ getPropertyValue: name => css.match(new RegExp(`${name}:\\s*([^;]+);`))?.[1] ?? '' });
-  const mocks = { document, getComputedStyle, matchMedia: () => preference, IntersectionObserver: class { constructor(callback) { observe = callback; } observe() {} disconnect() {} }, ResizeObserver: class { observe() {} disconnect() {} }, requestAnimationFrame: () => 1, cancelAnimationFrame() {} };
+  const mocks = { document, getComputedStyle, matchMedia: () => preference, IntersectionObserver: class { constructor(callback, options) { if (!options?.rootMargin) observe = callback; } observe() {} disconnect() {} }, ResizeObserver: class { observe() {} disconnect() {} }, requestAnimationFrame: () => 1, cancelAnimationFrame() {} };
   for (const [key, value] of Object.entries(mocks)) Object.defineProperty(globalThis, key, { configurable: true, value });
   const dispose = initAnimatedDemo({ locale: 'en' });
   observe([{ isIntersecting: true, intersectionRatio: 1 }]);

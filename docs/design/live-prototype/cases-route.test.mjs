@@ -37,14 +37,14 @@ test('the language rewrite carries the case identifier instead of flattening the
     `?page=cases&case=${DEFAULT_CASE}&lang=zh-Hant#fieldnotes`,
     '?page=cases&lang=zh-Hant',
     '?page=home',
-    '?page=home#wally',
+    '?page=home#advantages',
     '?page=about&lang=zh-Hant',
   ], 'en'), [
     `?page=cases&case=${DEFAULT_CASE}&lang=en`,
     `?page=cases&case=${DEFAULT_CASE}&lang=en#fieldnotes`,
     '?page=cases&lang=en',
     '?page=home&lang=en',
-    '?page=home&lang=en#wally',
+    '?page=home&lang=en#advantages',
     '?page=about&lang=en',
   ]);
   // Parameter order stays page, case, language whichever order the markup used.

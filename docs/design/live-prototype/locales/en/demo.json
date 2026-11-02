@@ -1,13 +1,13 @@
 {
-  "groupLabel": "Synaiq KIP animated workflow preview using sample data, not a connected product",
+  "groupLabel": "KIP decision and knowledge examples, not a connected product",
   "playbackLabel": "PRODUCT IN MOTION",
   "replay": "Replay",
   "pause": "Pause animation",
   "play": "Play animation",
   "reducedMotion": "Reduced motion: still preview",
-  "productTitle": "Synaiq KIP / Knowledge Platform",
+  "productTitle": "Synaiq KIP Decision Support",
   "productNote": "Branded interface · Sample data",
-  "productLabel": "KIP Knowledge Platform",
+  "productLabel": "KIP Decision Support",
   "history": "Conversations",
   "close": "Close",
   "collapse": "Close",
@@ -58,12 +58,13 @@
   ],
   "libraryNote": "All content is sample data.",
   "chaptersLabel": "Steps shown in the animation",
+  "chapterHint": "Select a chapter to play · Pause or replay at any time",
   "chapters": [
     "Ask in your own words",
     "Follow the source",
     "Organize your documents"
   ],
-  "note": "Animated clicks and content reveals · Sample data · Not a live product session",
+  "note": "Feature illustration · Example data · Not a live product connection",
   "booth": {
     "label": "Synaiq KIP feature screening room",
     "previous": "Previous animation",
@@ -71,28 +72,32 @@
     "select": "Choose a feature animation",
     "nowShowing": "NOW SHOWING",
     "titles": [
+      "Business decisions",
+      "Profit & loss analysis",
       "Knowledge Q&A",
       "Find images with words",
       "Search by image"
     ],
     "descriptions": [
+      "Compare three options and understand the evidence and conditions behind a recommendation.",
+      "Compare periods, investigate causes and calculate profit under improvement scenarios.",
       "Start with a purchasing need. Find the process and its source.",
       "Describe the image you need, without remembering its filename.",
-      "Start with a reference image to discover visually related assets."
+      "Start with a reference image and explore interface assets with a similar layout."
     ],
-    "collection": "Sample library / Product assets",
+    "collection": "Sample library / KIP interfaces",
     "resultLabel": "SEARCH RESULTS",
     "resultCount": "3 sample images",
     "candidate": "View asset ↗",
     "original": "ORIGINAL ASSET",
     "fileLabel": "Filename",
     "folderLabel": "Location",
-    "folder": "Sample library / Wally series",
+    "folder": "Sample library / KIP interfaces",
     "example": "Illustrative workflow, not live search results",
-    "imageAlt": "Wally sample product image",
+    "imageAlt": "KIP interface concept image",
     "open": "View original ↗",
     "textImage": {
-      "query": "A reception robot with a large screen and a mobile base",
+      "query": "Find interface images with an investment comparison table",
       "loading": "Connecting your description to visual clues…",
       "matching": "From a description to an image, with its source in reach.",
       "chapters": [
@@ -102,14 +107,280 @@
       ]
     },
     "imageImage": {
-      "query": "Find product images with a similar appearance",
-      "loading": "Looking for images with a similar appearance…",
-      "matching": "Explore visually related assets from a reference image.",
+      "query": "Find interface images with a similar layout",
+      "loading": "Comparing layouts to find similar images…",
+      "matching": "Use the reference image to explore interface assets with similar layouts.",
       "chapters": [
         "Choose a reference",
-        "Compare similar images",
+        "Compare similar layouts",
         "Trace the image source"
       ]
-    }
+    },
+    "imageNames": [
+      "Investment comparison",
+      "Knowledge Q&A",
+      "Knowledge center"
+    ]
+  },
+  "decision": {
+    "title": "Business decisions",
+    "description": "Compare three options and understand the evidence and conditions behind a recommendation.",
+    "scrollHint": "Multi-turn conversation demo · pause, replay or select a chapter",
+    "chapters": [
+      "Question & evidence",
+      "Compare options",
+      "Advice & conditions"
+    ],
+    "question": "Compare three investment options. Which should come first, and why?",
+    "context": "Clarify the objective and constraints, then organize the information into comparable options.",
+    "inputs": [
+      [
+        "Options",
+        "A: New equipment. B: Marketing development. C: Process improvement."
+      ],
+      [
+        "Constraints",
+        "Investment, benefit realization probability, funding limit and operating cash reserve."
+      ]
+    ],
+    "evidenceLabel": "Review the example’s evidence and missing inputs",
+    "evidence": "This illustration reproduces the supplied product analysis example. Original documents, formula, period and currency are not available and must be checked before a real decision. This demo does not recalculate the results.",
+    "comparisonTitle": "Use a shared measure to see the differences.",
+    "metric": "Expected net benefit · Values in units of 10,000, as supplied",
+    "columns": [
+      "Option",
+      "Expected net benefit",
+      "Trade-off"
+    ],
+    "rows": [
+      [
+        "A | New equipment",
+        "38.25",
+        "Higher benefit, with a higher investment requirement."
+      ],
+      [
+        "C | Process improvement",
+        "36",
+        "Consider when realization probability and a smaller investment matter."
+      ],
+      [
+        "B | Marketing development",
+        "24",
+        "Lower realization probability and greater uncertainty."
+      ]
+    ],
+    "ranking": "Expected net benefit ranking: A > C > B",
+    "numberNote": "Values reproduce the supplied example. They are not live calculations, investment amounts or guaranteed returns.",
+    "recommendationTitle": "Different priorities can lead to different choices.",
+    "recommendations": [
+      [
+        "Benefit first → A: New equipment",
+        "Consider A if you prioritize higher benefit and can support the higher investment."
+      ],
+      [
+        "Probability and scale first → C: Process improvement",
+        "Consider C if you prioritize a higher realization probability and a smaller investment."
+      ]
+    ],
+    "reassessTitle": "Reassess when these conditions change",
+    "conditions": [
+      "Benefit realization probability or annual benefit changes.",
+      "Initial investment, funding limit or operating cash requirements change.",
+      "Check funding feasibility and verify all inputs and calculations before investing."
+    ],
+    "boundary": "KIP provides analysis and recommendations. People make the final decision.",
+    "screenQuestion": "Which of three options should come first?",
+    "screenNote": "Supplied example · Verify original inputs and formula",
+    "screenA": "Benefit first: consider A.",
+    "screenC": "Probability and investment scale first: consider C.",
+    "screenConditions": "Changed conditions call for reassessment.",
+    "topic": "Compare three options",
+    "screenMetric": "Expected net benefit (units of 10,000)",
+    "questions": [
+      "I want to compare investment options. What information should I prepare?",
+      "The options are A: new equipment, B: marketing development, and C: process improvement. Compare expected net benefits using the supplied analysis.",
+      "Would the recommendation change if I prioritise likelihood of success and investment size? When should we reassess?"
+    ]
+  },
+  "profit": {
+    "title": "Profit & loss analysis",
+    "description": "Compare periods, investigate causes and calculate profit under improvement scenarios.",
+    "topic": "Period-to-period P&L",
+    "evidenceLabel": "View data and calculations",
+    "thinking": "Comparing financial, sales and purchasing data…",
+    "chapters": [
+      "Compare periods",
+      "Investigate causes",
+      "Calculate scenarios"
+    ],
+    "questions": [
+      "Compare the previous and current income statements. Identify the three key business anomalies, calculate the changes and explain what needs attention first.",
+      "Cross-check product sales and raw-material purchasing data. Why did gross margin fall? Separate facts, reasonable inferences and factors that still need evidence.",
+      "With revenue at NT$12 million and operating expenses at NT$2.4 million, what would gross profit and operating profit be at gross margins of 28% and 30%?"
+    ],
+    "turns": [
+      {
+        "intro": "Revenue grew, but operating profit fell. Start with a side-by-side comparison.",
+        "table": {
+          "caption": "Monthly income statement | NT$10,000",
+          "columns": [
+            "Item",
+            "Previous",
+            "Current",
+            "Change"
+          ],
+          "rows": [
+            [
+              "Revenue",
+              "1,000",
+              "1,200",
+              "+20%"
+            ],
+            [
+              "Cost of goods sold",
+              "700",
+              "900",
+              "+28.6%"
+            ],
+            [
+              "Gross profit",
+              "300",
+              "300",
+              "0%"
+            ],
+            [
+              "Operating expenses",
+              "200",
+              "240",
+              "+20%"
+            ],
+            [
+              "Operating profit",
+              "100",
+              "60",
+              "−40%"
+            ]
+          ]
+        },
+        "points": [
+          [
+            "1 | More revenue, unchanged gross profit",
+            "Costs rose 28.6%, faster than revenue at 20%. Gross margin fell from 30% to 25%, a decline of 5 percentage points."
+          ],
+          [
+            "2 | Operating profit fell 40%",
+            "Operating profit fell from NT$1 million to NT$600,000, a drop of NT$400,000."
+          ],
+          [
+            "3 | Operating expenses rose 20%",
+            "Expenses rose from NT$2 million to NT$2.4 million. With gross profit unchanged, the extra NT$400,000 directly reduced operating profit."
+          ]
+        ],
+        "conclusion": "First investigate why costs grew and gross profit did not follow revenue; then review the expense increases and their justification.",
+        "evidence": [
+          "Source: 01 — P&L and product purchasing workbook / Monthly income statement.",
+          "Change = (current − previous) ÷ previous. Gross margin = gross profit ÷ revenue: 300 ÷ 1,000 = 30%; 300 ÷ 1,200 = 25%."
+        ]
+      },
+      {
+        "intro": "Cross-check product margins and material prices. Keep observed facts separate from explanations.",
+        "table": {
+          "caption": "Gross margin by product | Results from the supplied demo conversation",
+          "columns": [
+            "Product",
+            "Previous",
+            "Current",
+            "Change"
+          ],
+          "rows": [
+            [
+              "Standard part A",
+              "35%",
+              "30%",
+              "−5 pp"
+            ],
+            [
+              "Custom part B",
+              "25%",
+              "20%",
+              "−5 pp"
+            ],
+            [
+              "Precision part C",
+              "15%",
+              "20%",
+              "+5 pp"
+            ]
+          ]
+        },
+        "points": [
+          [
+            "Fact | Material unit prices increased",
+            "Steel rose from NT$50/kg to NT$60/kg (+20%); aluminium rose from NT$80/kg to NT$84/kg (+5%)."
+          ],
+          [
+            "Inference | Higher material prices may compress margins",
+            "Margins for A and B fell as material prices rose. Material costs may be one factor, but their full contribution has not been quantified."
+          ],
+          [
+            "Unknown | Inventory, consumption and other manufacturing costs",
+            "Purchasing amounts are not the same as current-period cost of goods sold. Inventory, consumption and cost details are still needed, as is an explanation for the improvement in product C."
+          ]
+        ],
+        "conclusion": "Check the cost breakdown before evaluating supplier negotiations or alternatives. Material price increases cannot be treated as the complete explanation.",
+        "evidence": [
+          "Sources: product sales comparison in the selected KIP conversation; 01 — P&L and product purchasing workbook / Raw-material purchasing analysis.",
+          "Source caveat: inventory, consumption and other manufacturing costs create differences between purchases and cost of goods sold. Do not infer full causation."
+        ]
+      },
+      {
+        "intro": "Hold revenue at NT$12 million and operating expenses at NT$2.4 million, then compare two gross-margin scenarios.",
+        "table": {
+          "caption": "Improvement scenarios | NT$10,000",
+          "columns": [
+            "Item",
+            "28% margin",
+            "30% margin"
+          ],
+          "rows": [
+            [
+              "Revenue",
+              "1,200",
+              "1,200"
+            ],
+            [
+              "Gross profit",
+              "336",
+              "360"
+            ],
+            [
+              "Operating expenses",
+              "240",
+              "240"
+            ],
+            [
+              "Operating profit",
+              "96",
+              "120"
+            ]
+          ]
+        },
+        "points": [
+          [
+            "Scenario 1 | Gross margin of 28%",
+            "Gross profit: 1,200 × 28% = 336; operating profit: 336 − 240 = 96, an increase of 36 over the current period (all in NT$10,000)."
+          ],
+          [
+            "Scenario 2 | Gross margin of 30%",
+            "Gross profit: 1,200 × 30% = 360; operating profit: 360 − 240 = 120, an increase of 60 over the current period (all in NT$10,000)."
+          ]
+        ],
+        "conclusion": "With revenue and expenses unchanged, a 30% margin yields NT$240,000 more operating profit than a 28% margin. These are conditional calculations; feasibility still depends on the improvement measures.",
+        "evidence": [
+          "Basis: conditions and results from the third turn of the same KIP demo. Current operating profit is NT$600,000.",
+          "Gross profit = revenue × gross margin; operating profit = gross profit − operating expenses. This reproduces sample calculations and is not a live analysis."
+        ]
+      }
+    ]
   }
 }
