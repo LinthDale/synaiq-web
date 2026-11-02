@@ -7,6 +7,33 @@ import { activeRelease, buildRouting, transformSource, retentionPlan, assertNoDe
 const current = 'synaiq-release-a', name = 'synaiq-release-b';
 const base = `# BEGIN LSCACHE\nKeep vendor directives\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html|page\\.html|robots\\.txt|sitemap\\.xml)$ - [L]\nRewriteRule ^synaiq-release-older/(?:index\\.html)$ - [L]\nRewriteRule ^wp-content/uploads/2026/03/toutou-2\\.png$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
 const paths = ['index.html', 'page.html', 'robots.txt', 'sitemap.xml', 'assets/a.png'];
+test('large frame allowlists split into bounded exact rules and survive the next release', () => {
+  const frames = Array.from({ length: 243 }, (_, index) => `assets/kip-d-scroll-v5/frame-${String(index).padStart(3, '0')}.webp`);
+  const payload = [...paths, ...frames];
+  const routing = buildRouting(base.replaceAll('\n', '\r\n'), name, payload);
+  const rulesFor = (text, release) => text.split(/\r?\n/).filter(line => line.startsWith(`RewriteRule ^${release}/`));
+  const rules = rulesFor(routing.live, name);
+  assert.ok(rules.length > 1);
+  assert.ok(rules.every(rule => Buffer.byteLength(rule) < 8000));
+  const matchers = rules.map(rule => new RegExp(rule.split(' ')[1]));
+  for (const path of payload) assert.equal(matchers.filter(rule => rule.test(`${name}/${path}`)).length, 1);
+  for (const path of ['.env', 'preview.js', 'assets/kip-d-scroll-v5/frame-243.webp', 'assets/kip-d-scroll-v5/frame-000Xwebp', 'assets/kip-d-scroll-v5/frame-000.webp.bak', 'assets/kip-d-scroll-v5/frame-000.webp/extra']) {
+    assert.ok(matchers.every(rule => !rule.test(`${name}/${path}`)), `Unexpected public path: ${path}`);
+  }
+  assert.equal(activeRelease(routing.preview), current);
+  assert.equal(activeRelease(routing.live), name);
+  assert.ok(routing.live.includes('Keep vendor directives\r\n'));
+  const next = buildRouting(routing.live, 'synaiq-release-c', paths);
+  assert.deepEqual(rulesFor(next.preview, name), rules);
+  assert.equal(rulesFor(next.preview, current).length, 0);
+  assert.equal(activeRelease(next.preview), name);
+  assert.equal(activeRelease(next.live), 'synaiq-release-c');
+});
+
+test('one path that exceeds the routing line limit still fails closed', () => {
+  assert.throws(() => buildRouting(base, name, [...paths, `assets/${'a'.repeat(8000)}.webp`]));
+});
+
 test('nested generated catalogs retain explicit routing and cache rules', () => {
   const nested = [...paths, 'locales/generated/de.js', 'locale-bootstrap.js'];
   const { live } = buildRouting(base, name, nested);

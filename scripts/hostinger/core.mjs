@@ -19,6 +19,21 @@ export function activeRelease(text) {
   return releaseName(matches[0][1]);
 }
 const escape = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function fileRules(name, paths) {
+  const format = entries => `RewriteRule ^${escape(name)}/(?:${entries.join('|')})$ - [L]`;
+  const rules = [];
+  let entries = [];
+  for (const path of paths.map(escape)) {
+    assert.ok(Buffer.byteLength(format([path])) < 8000, 'One public path exceeds the routing line limit');
+    if (Buffer.byteLength(format([...entries, path])) >= 8000) {
+      rules.push(format(entries));
+      entries = [];
+    }
+    entries.push(path);
+  }
+  if (entries.length) rules.push(format(entries));
+  return rules;
+}
 export function buildRouting(base, name, paths) {
   releaseName(name);
   const current = activeRelease(base);
@@ -33,15 +48,15 @@ export function buildRouting(base, name, paths) {
   assert.equal(base.split('RewriteRule ^ - [G,L]').length, 2, 'Missing deny-by-default routing');
   assert.ok(base.includes('Header always set Cache-Control "no-cache, must-revalidate"'));
   const eol = base.includes('\r\n') ? '\r\n' : '\n';
-  const rule = `RewriteRule ^${escape(name)}/(?:${paths.map(escape).join('|')})$ - [L]`;
-  assert.ok(Buffer.byteLength(rule) < 8000);
+  // Keep exact file allowlists while staying below the server's per-line limit.
+  const rules = fileRules(name, paths);
   // Only current and candidate are public. Other host directives remain byte-for-byte intact.
   const lines = base.split(eol).filter(line => {
     const match = line.match(/^RewriteRule \^(synaiq-release-[a-z0-9-]+)\//);
     return !match || match[1] === current;
   });
-  assert.equal(lines.filter(line => line.startsWith(`RewriteRule ^${current}/`)).length, 1);
-  const preview = lines.join(eol).replace(anchor, () => `${anchor}${eol}${rule}`);
+  assert.ok(lines.some(line => line.startsWith(`RewriteRule ^${current}/`)), 'Missing current release allowlist');
+  const preview = lines.join(eol).replace(anchor, () => `${anchor}${eol}${rules.join(eol)}`);
   let live = preview;
   for (const [from, to] of [
     [`RewriteRule ^$ /${current}/index.html [L]`, `RewriteRule ^$ /${name}/index.html [L]`],
