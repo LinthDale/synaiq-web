@@ -11,7 +11,7 @@ test('decision is first, with a readable comparison and conditional advice in ev
   const html=renderAnimatedDemo({locale,messages});
   assert.match(html,/data-demo-scene="decision"/);
   // Decision content belongs inside the existing product chat, not a replacement UI.
-  for(const part of ['film-sidebar','film-question','film-answer','film-input','film-top','film-product-logo']) {
+  for(const part of ['film-sidebar','film-question','film-answer','film-input','film-top','film-logo']) {
    assert.ok(html.includes(part),`preserve shared chat element: ${part}`);
   }
   assert.equal((html.match(/data-demo-select=/g)||[]).length,5);

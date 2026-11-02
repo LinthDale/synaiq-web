@@ -15,7 +15,7 @@ test('company artwork is independent from the Synaiq product identity', () => {
     assert.equal((svg.match(/<path /g) || []).length, 9);
     assert.doesNotMatch(svg, /<script|<image|<foreignObject|\bon\w+=/i);
   }
-  assert.match(read('demo-animation.js'), /messages\.common\.productBrand\.ink/);
+  assert.match(read('demo-animation.js'), /messages\.common\.brand\.ink/);
   assert.match(read('kip-design.js'), /messages\.common\.productBrand\.ink/);
 });
 

@@ -5,10 +5,10 @@ import { getMessages } from './i18n.js';
 import { PUBLIC_FILES } from './share-preview.mjs';
 
 test('approved paper shell and send pen are shared by all scenes and languages', () => {
-  for (const locale of ['zh-Hant', 'en']) for (const scene of ['knowledge', 'text-image', 'image-image']) {
+  for (const locale of ['zh-Hant', 'en']) for (const scene of ['decision', 'profit', 'knowledge', 'text-image', 'image-image']) {
     const html = renderDemoFilm(scene, getMessages(locale));
-    assert.match(html, /class="film-wordmark"/);
-    assert.match(html, /assets\/synaiq-logo-ink.svg/);
+    assert.match(html, /class="film-logo"><img[^>]+alt="tAistro"/);
+    assert.doesNotMatch(html, /class="film-(?:wordmark|product-logo|wordmark-label)"/);
     assert.match(html, /assets\/demo-sidebar-dialogues.webp/);
     assert.match(html, /assets\/demo-send-pen.webp/);
     assert.match(html, /data-demo-sidebar-toggle/);
