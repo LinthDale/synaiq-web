@@ -68,6 +68,26 @@ test('unknown routes, duplicate roots, missing crawl payload and path traversal 
   assert.throws(() => buildRouting(base, name, paths.filter(p => p !== 'robots.txt')));
   for (const path of ['../secret', '/absolute', 'a//b', 'a/../b', 'a\\b', 'a?x']) assert.throws(() => safePath(path));
 });
+
+test('auth entry activates only after staging and follows later releases without exposing descendants', () => {
+  const payload = [...paths, 'auth/index.html'];
+  for (const eol of ['\n', '\r\n']) {
+    const first = buildRouting(base.replaceAll('\n', eol), name, payload);
+    assert.ok(!first.preview.includes('RewriteRule ^auth'));
+    const authLine = first.live.split(eol).find(line => line.startsWith('RewriteRule ^auth'));
+    assert.equal(authLine, `RewriteRule ^auth/?$ /${name}/auth/index.html [L]`);
+    const matcher = new RegExp(authLine.split(' ')[1]);
+    for (const path of ['auth', 'auth/']) assert.ok(matcher.test(path));
+    for (const path of ['auth/callback', 'auth/.env', 'authentication', 'auth//']) assert.ok(!matcher.test(path));
+    const next = buildRouting(first.live, 'synaiq-release-c', payload);
+    assert.ok(next.preview.includes(authLine));
+    assert.ok(next.live.includes('RewriteRule ^auth/?$ /synaiq-release-c/auth/index.html [L]'));
+    assert.equal(next.live.split(eol).filter(line => line.startsWith('RewriteRule ^auth')).length, 1);
+    assert.throws(() => buildRouting(first.live, 'synaiq-release-c', paths), /Auth route requires/);
+    assert.throws(() => buildRouting(first.live.replace(authLine, `${authLine}${eol}${authLine}`), 'synaiq-release-c', payload), /Ambiguous auth routing/);
+    assert.throws(() => buildRouting(first.live.replace(authLine, 'RewriteRule ^auth /other-service [L]'), 'synaiq-release-c', payload), /Unreviewed auth routing/);
+  }
+});
 test('packaging rewrites cache-busted entry URLs and never includes preview runtime', () => {
   const input = Buffer.from('<link href="site.css?v=42"><script src="prototype.js?v=42"></script><img src="assets/a.png"><img src="/brand/a.svg">');
   const output = transformSource(input, 'page.html', name).toString();

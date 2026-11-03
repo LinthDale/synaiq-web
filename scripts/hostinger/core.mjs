@@ -48,6 +48,14 @@ export function buildRouting(base, name, paths) {
   assert.equal(base.split('RewriteRule ^ - [G,L]').length, 2, 'Missing deny-by-default routing');
   assert.ok(base.includes('Header always set Cache-Control "no-cache, must-revalidate"'));
   const eol = base.includes('\r\n') ? '\r\n' : '\n';
+  const authPath = 'auth/index.html';
+  const authRule = release => `RewriteRule ^auth/?$ /${release}/${authPath} [L]`;
+  const existingAuth = base.split(eol).filter(line => /^RewriteRule \^auth/.test(line));
+  assert.ok(existingAuth.length <= 1, 'Ambiguous auth routing');
+  if (existingAuth.length) {
+    assert.equal(existingAuth[0], authRule(current), 'Unreviewed auth routing');
+    assert.ok(paths.includes(authPath), 'Auth route requires its public payload');
+  }
   // Keep exact file allowlists while staying below the server's per-line limit.
   const rules = fileRules(name, paths);
   // Only current and candidate are public. Other host directives remain byte-for-byte intact.
@@ -71,6 +79,13 @@ export function buildRouting(base, name, paths) {
   }
   assert.equal(activeRelease(preview), current);
   assert.equal(activeRelease(live), name);
+  // Expose only the reserved entry. Descendants still reach deny-by-default routing.
+  // Staging preserves the current public entry; activation moves it with this release.
+  if (paths.includes(authPath)) {
+    live = existingAuth.length
+      ? live.replace(authRule(current), () => authRule(name))
+      : live.replace(anchor, () => `${authRule(name)}${eol}${eol}${anchor}`);
+  }
   // Generated catalogs no longer have the old locale-*.js filename prefix.
   const marker = '# Generated translation module cache policy';
   const cache = `${marker}${eol}<IfModule mod_headers.c>${eol}<FilesMatch "^(?:[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*|startup|registry|loaders)\\.js$">${eol}Header always set Cache-Control "no-cache, must-revalidate"${eol}</FilesMatch>${eol}</IfModule>`;

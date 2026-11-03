@@ -97,16 +97,20 @@ export async function audit(client, config, work, repair = null) {
 }
 export async function publicChecks(config, manifest, root = true) {
   const paths = root ? ['/', '/?page=ems&lang=en', '/?page=pvsim&lang=zh-Hant', '/robots.txt', '/sitemap.xml'] : [`/${manifest.release}/index.html`];
+  if (root && manifest.files.some(file => file.path === 'auth/index.html')) paths.push('/auth', '/auth/', '/auth?handoff=1');
   for (const path of paths) {
     const response = await request(new URL(path, config.origin));
     assert.equal(response.status, 200, `${path}: public HTTP ${response.status}`);
-    const file = /\.(txt|xml)$/.test(path) ? path.slice(1) : 'index.html';
+    const file = /^\/auth(?:[/?]|$)/.test(path) ? 'auth/index.html' : /\.(txt|xml)$/.test(path) ? path.slice(1) : 'index.html';
     assert.equal(sha(Buffer.from(await response.arrayBuffer())), manifest.files.find(f => f.path === file).sha256, `${path}: public version mismatch`);
     assert.match(response.headers.get('cache-control') || '', /no-cache/, `${path}: document cache policy missing`);
   }
   for (const path of ['/' + STATE, '/' + GUIDE, '/wp-admin/', '/wp-json/', '/index.php']) {
     const response = await request(new URL(path, config.origin));
     assert.equal(response.status, 410, `${path}: private or retired path exposed`);
+  }
+  if (root && manifest.files.some(file => file.path === 'auth/index.html')) {
+    assert.equal((await request(new URL('/auth/not-configured', config.origin))).status, 410);
   }
   assert.equal((await request(new URL('/wp-content/uploads/2026/03/toutou-2.png', config.origin))).status, 200);
 }

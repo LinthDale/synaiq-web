@@ -10,7 +10,7 @@ import { DECISION_FRAME_FILES } from './decision-frames.js';
 // This is a public design-only allowlist, not a general repository file server.
 // New assets must be reviewed and explicitly named before they can be shared.
 const runtimeFiles = [
-  'index.html', 'page.html', 'prototype.js',
+  'index.html', 'page.html', 'prototype.js', 'auth/index.html',
   'site.css', 'tokens.css',
   'home-design.js',
   'decision-scroll.js', 'decision-frames.js', ...DECISION_FRAME_FILES,
@@ -70,6 +70,8 @@ const routes = new Map(PUBLIC_FILES.flatMap(entry => entry.root === 'prototype'
   : [[entry.url, entry]]));
 routes.set('/', routes.get('/live-prototype/index.html'));
 routes.set('/live-prototype/', routes.get('/live-prototype/index.html'));
+routes.set('/auth', routes.get('/live-prototype/auth/index.html'));
+routes.set('/auth/', routes.get('/live-prototype/auth/index.html'));
 
 const contentTypes = Object.freeze({
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
