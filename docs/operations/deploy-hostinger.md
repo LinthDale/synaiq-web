@@ -1,10 +1,20 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-11-02（Asia/Taipei）。
+最後更新：2026-11-03（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
-## 2026-11-02 Demo 頂欄修正已上線（現行版本）
+## 2026-11-03 auth.taistro.com.tw 子網域
+
+依使用者最新要求，後續服務入口改用 `https://auth.taistro.com.tw/`。已在 Hostinger 的 `taistro.com.tw` 下建立 `auth` 子網域，根目錄為 `/home/u235694681/domains/synaiq.com/public_html/auth/`。使用獨立目錄，沒有轉址至主官網或 `/auth`。
+
+DNS 自動建立 `auth` ALIAS → `auth.taistro.com.tw.cdn.hstgr.net.`（TTL 300 秒）。2026-11-03 15:18（Asia/Taipei）確認 Cloudflare 公開 DNS 可解析，經 DNS over HTTPS 存取回應 200、憑證驗證成功且網址不變；目前顯示 Hostinger「Coming soon」預設頁。SSL 為 active、免費自動續期，HTTP → HTTPS 已啟用。比對前後 DNS，除新增 `auth` 外，所有既有記錄未改動。部分遞迴 DNS／本機仍有先前不存在的快取。
+
+接續方式見 [auth.taistro.com.tw](auth-handoff.md)。子網域檔案不由官網 CI 的 release 管理；後續可在該目錄部署，或將 `auth` DNS 改指向工程師的服務主機。設定、DNS 前後備份及 HTTPS 證據在 `out/auth-subdomain-20261103/`。
+
+同日較早依原始網址準備的 `/auth` 頁面來源為 `e6f1fff83c56ebcf040a26ba659ced4665b92c8e`，[Run 41592808706](https://github.com/LinthDale/synaiq-web/actions/runs/41592808706) 已通過 test job。15:19 主機觀察到路由切至 `synaiq-release-ci-41592808706-1`，但 deploy job 仍在驗證／收尾，state 與維護入口尚待 CI 更新；此時不能視為整個官網發布完成。沒有中斷主機變更或手動覆寫 CI 控制檔。後續交接使用上述子網域，不使用 `/auth`。
+
+## 2026-11-02 Demo 頂欄修正已上線
 
 來源 `23bfe6c105d0c8d0839aa5841838a9675c749177` 已推送 GitHub `main`，[Run 41409243321](https://github.com/LinthDale/synaiq-web/actions/runs/41409243321) 於 16:20（Asia/Taipei）完成部署、驗證、備份及保留清理。正式目錄為 `public_html/synaiq-release-ci-41409243321-1/`。
 

@@ -2,6 +2,8 @@
 
 給工程師及新的 AI session。最後核對：2026-11-02。
 
+2026-11-03 新增 `auth.taistro.com.tw` 子網域，接續方式見 [auth 子網域](auth-handoff.md)。目錄為 `public_html/auth/`，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
+
 ## GitHub 自動部署入口
 
 已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 的網站更新／合併會自動測試、部署、清快取，再加密備份並保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；最近成功發布為 [Run 41409243321](https://github.com/LinthDale/synaiq-web/actions/runs/41409243321)（2026-11-02），KIP 經營決策與推理平台改版、Demo 頂欄修正及 PVsim 外部連結已上線。來源 `23bfe6c105d0c8d0839aa5841838a9675c749177`，現行目錄為 `public_html/synaiq-release-ci-41409243321-1/`；338 檔主機雜湊與公開資源、local／staged／live 各 52 組瀏覽器檢查通過，詳見 [部署紀錄](deploy-hostinger.md)。後續以主機 `.htaccess` 及 Actions summary 為準。
