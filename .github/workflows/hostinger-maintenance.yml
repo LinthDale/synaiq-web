@@ -1,0 +1,47 @@
+name: Archive and remove reviewed Hostinger leftovers
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hostinger-production
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    if: github.repository == 'LinthDale/synaiq-web' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.21.0'
+          cache: npm
+      - run: npm ci
+      - run: node --test scripts/maintenance/hostinger-unmanaged.test.mjs
+      - name: Back up, verify, delete reviewed directories and verify website
+        env:
+          HOSTINGER_API_TOKEN: ${{ secrets.HOSTINGER_API_TOKEN }}
+          HOSTINGER_BACKUP_KEY: ${{ secrets.HOSTINGER_BACKUP_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/maintenance/hostinger-unmanaged.mjs
+      - name: Preserve encrypted evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: hostinger-cleanup-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            out/hostinger-maintenance/cleanup-${{ github.run_id }}-${{ github.run_attempt }}/backup.tar.gz.enc
+            out/hostinger-maintenance/cleanup-${{ github.run_id }}-${{ github.run_attempt }}/evidence.tar.gz.enc
+            out/hostinger-maintenance/cleanup-${{ github.run_id }}-${{ github.run_attempt }}/failure-evidence.tar.gz.enc
+          if-no-files-found: ignore
+          retention-days: 90

@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { PUBLIC_FILES } from '../../docs/design/live-prototype/share-preview.mjs';
-import { sha, transformSource, safePath, releaseName } from './core.mjs';
+import { sha, transformSource, safePath, releaseName, sharedPath } from './core.mjs';
 import { syncLocales } from '../../docs/design/live-prototype/scripts/sync-locales.mjs';
 
 export async function packageSite(work, name) {
@@ -32,10 +32,11 @@ export async function packageSite(work, name) {
     for (const output of path === 'page.html' ? ['page.html', 'index.html'] : [path]) {
       const target = join(work, 'artifact', output);
       await mkdir(join(target, '..'), { recursive: true }); await writeFile(target, bytes, { flag: 'wx' });
-      files.push({ path: output, size: bytes.length, sha256: sha(bytes), source });
+      const hash = sha(bytes), pooled = sharedPath(output, hash);
+      files.push({ path: output, size: bytes.length, sha256: hash, source, ...(pooled ? { sharedPath: pooled } : {}) });
     }
   }
-  const manifest = { release: name, sourceCommit, createdAt: new Date().toISOString(), files };
+  const manifest = { release: name, sourceCommit, storage: 'shared-assets-v1', createdAt: new Date().toISOString(), files };
   await writeFile(join(work, 'manifest.json'), JSON.stringify(manifest, null, 2), { flag: 'wx' });
   for (const file of files) assert.equal(sha(await readFile(join(work, 'artifact', file.path))), file.sha256);
   return manifest;

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, mkdir, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { sha, STATE, GUIDE } from './core.mjs';
+import { sha, payloadDigest, STATE, GUIDE, sharedPath } from './core.mjs';
 import { prepareCleanup, prune, verifySnapshot, deploy, audit } from './deploy.mjs';
 import { reviewedRoutingRepair } from './reviewed-routing-repair.mjs';
 
@@ -76,6 +76,21 @@ test('snapshot verification rejects extra files before accepting content hashes'
   await assert.rejects(verifySnapshot(f.client, f.state.releases[0]));
 });
 
+test('a reused local report must attest every payload file before any host operation', async () => {
+  for (const damage of ['missing-digest', 'file-hash', 'shared-address', 'file-list']) {
+    const work = await mkdtemp(join(tmpdir(), 'local-report-'));
+    const manifest = { release: 'synaiq-release-candidate', sourceCommit: 'a'.repeat(40), files: [{ path: 'index.html', size: 3, sha256: sha('new') }] };
+    const report = { status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, payloadSha256: payloadDigest(manifest) };
+    await writeFile(join(work, 'browser-local.json'), JSON.stringify(damage === 'missing-digest' ? { ...report, payloadSha256: undefined } : report));
+    if (damage === 'file-hash') manifest.files[0].sha256 = sha('edited');
+    if (damage === 'shared-address') manifest.files[0].sharedPath = sharedPath('image.webp', sha('new'));
+    if (damage === 'file-list') manifest.files.push({ path: 'extra.js', size: 3, sha256: sha('new') });
+    let hostCalls = 0;
+    await assert.rejects(deploy({}, {}, work, manifest, 'test', { audit: async () => { hostCalls++; } }), /exact payload/);
+    assert.equal(hostCalls, 0);
+  }
+});
+
 async function repairFixture() {
   const f = await setup();
   f.remote.set('.htaccess', Buffer.from(`# BEGIN LSCACHE\nReviewed vendor rule\n# END LSCACHE\n${f.remote.get('.htaccess')}`));
@@ -144,7 +159,7 @@ test('matching state ignores the historical receipt and does not emit a repair',
   await assert.rejects(readFile(join(f.work, 'routing-repair.json')), { code: 'ENOENT' });
 });
 
-for (const nestedIndex of [false, true]) test(`a failed live check rolls back known routing without deleting releases (nested index: ${nestedIndex})`, async () => {
+for (const nestedIndex of [false, true]) for (const pooled of [false, true]) test(`a failed live check rolls back known routing without deleting releases (nested index: ${nestedIndex}, shared assets: ${pooled})`, async () => {
   const f = await setup(), current = f.state.active;
   if (nestedIndex) {
     // Snapshot paths sort auth/index.html before the actual release homepage.
@@ -156,9 +171,10 @@ for (const nestedIndex of [false, true]) test(`a failed live check rolls back kn
   const route = `# BEGIN LSCACHE\nKeep reviewed vendor rules\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html)$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
   f.remote.set('.htaccess', Buffer.from(route)); f.remote.set(GUIDE, Buffer.from('original guide'));
   const manifest = { release: 'synaiq-release-candidate', sourceCommit: 'a'.repeat(40), files: ['index.html', 'page.html', 'robots.txt', 'sitemap.xml'].map(path => ({ path, sha256: sha('new'), size: 3 })) };
+  if (pooled) manifest.files.push({ path: 'image.webp', size: 3, sha256: sha('new'), sharedPath: sharedPath('image.webp', sha('new')) });
   await mkdir(join(f.work, 'artifact'));
   for (const file of manifest.files) await writeFile(join(f.work, 'artifact', file.path), 'new');
-  await writeFile(join(f.work, 'browser-local.json'), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit }));
+  await writeFile(join(f.work, 'browser-local.json'), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, payloadSha256: payloadDigest(manifest) }));
   const before = { route: Buffer.from(route), guide: Buffer.from('original guide'), state: f.state, stateBytes: f.remote.get(STATE) };
   f.client.meta = async path => f.remote.has(path) ? {} : null;
   f.client.upload = async (path, bytes) => f.remote.set(path, bytes);
@@ -175,5 +191,6 @@ for (const nestedIndex of [false, true]) test(`a failed live check rolls back kn
   assert.equal(f.remote.get(GUIDE).toString(), 'original guide');
   assert.deepEqual(f.remote.get(STATE), before.stateBytes);
   assert.deepEqual(f.deleted, []); assert.equal(purges, 2);
+  if (pooled) assert.ok(f.remote.has(manifest.files.find(f => f.sharedPath).sharedPath), 'Rollback preserves immutable objects for investigation and later reuse');
   assert.equal(JSON.parse(await readFile(join(f.work, 'rollback.json'))).status, 'verified');
 });

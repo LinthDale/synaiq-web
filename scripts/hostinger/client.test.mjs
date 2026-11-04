@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { connect } from './client.mjs';
-import { sha } from './core.mjs';
+import { sha, sharedPath } from './core.mjs';
 
 function fixture() {
   const files = new Map([['.htaccess', Buffer.from('original')]]), mutations = [];
@@ -77,4 +77,35 @@ test('session redirects, unsafe upload paths and broad deletion targets are reje
   await assert.rejects(client.upload('.htaccess', Buffer.from('bad')));
   for (const name of ['public_html', '../synaiq-release-a', 'wp-content', 'synaiq-release-a/..']) await assert.rejects(client.removeRelease(name));
   assert.equal(g.mutations.length, 0);
+});
+
+test('shared media uploads require the exact content hash and cannot overwrite existing objects', async () => {
+  const f = fixture(), client = await connect(f.config, 'test-token', f.fetcher);
+  const bytes = Buffer.from('media'), path = sharedPath('image.webp', sha(bytes));
+  await assert.rejects(client.upload(path, Buffer.from('wrong')), /differ from address/);
+  await assert.rejects(client.upload(`synaiq-assets-v1/${sha(bytes)}.php`, bytes));
+  assert.equal(f.mutations.length, 0);
+  await client.upload(path, bytes);
+  assert.deepEqual(f.files.get(path), bytes);
+  const count = f.mutations.length;
+  await assert.rejects(client.upload(path, bytes), /already exists/);
+  assert.equal(f.mutations.length, count);
+});
+
+test('shared media deletion guards content and reconciles a lost response without resending', async () => {
+  const bytes = Buffer.from('media'), hash = sha(bytes), path = sharedPath('image.webp', hash);
+  for (const ranOnServer of [true, false]) {
+    const f = fixture(); f.files.set(path, bytes); let deletes = 0;
+    const client = await connect(f.config, 'test-token', async (url, options = {}) => {
+      if (options.method === 'DELETE') {
+        deletes++; if (ranOnServer) f.files.delete(path); throw new TypeError('fetch failed');
+      }
+      return f.fetcher(url, options);
+    });
+    await assert.rejects(client.removeAsset(path, sha('wrong')));
+    assert.equal(deletes, 0);
+    if (ranOnServer) await client.removeAsset(path, hash);
+    else await assert.rejects(client.removeAsset(path, hash), /fetch failed/);
+    assert.equal(deletes, 1);
+  }
 });

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { sha, safePath, releaseName, STATE, GUIDE } from './core.mjs';
+import { sha, safePath, releaseName, STATE, GUIDE, assetPath, ASSET_ROOT } from './core.mjs';
 
 export async function request(url, options = {}) {
   // No automatic mutation retries. Never include authenticated URLs or response bodies in errors.
@@ -76,7 +76,9 @@ export async function connect(config, token, fetcher = request, { retryDelayMs =
   }
   async function upload(path, bytes) {
     safePath(path);
-    assert.ok(/^synaiq-release-[a-z0-9-]+\//.test(path) || /^\.ci-candidate-[a-z0-9-]+$/.test(path), 'Upload outside candidate scope');
+    if (path.startsWith(ASSET_ROOT + '/')) {
+      assetPath(path); assert.equal(path.split('/')[1].split('.')[0], sha(bytes), 'Shared asset bytes differ from address');
+    } else assert.ok(/^synaiq-release-[a-z0-9-]+\//.test(path) || /^\.ci-candidate-[a-z0-9-]+$/.test(path), 'Upload outside candidate scope');
     assert.equal(await meta(path, true), null, `${path}: already exists`);
     const headers = { ...auth, 'Tus-Resumable': '1.0.0', 'Upload-Offset': '0' };
     const created = await fetcher(url(path, 'tus'), { method: 'POST', headers: { ...headers, 'Upload-Length': String(bytes.length) } });
@@ -128,5 +130,16 @@ export async function connect(config, token, fetcher = request, { retryDelayMs =
       assert.equal(response.status, 200, `${domain}: cache purge HTTP ${response.status}`);
     }
   }
-  return { meta, read, tree, upload, guard, replace, removeRelease, purge };
+  async function removeAsset(path, expectedHash) {
+    assetPath(path); assert.equal(path.split('/')[1].split('.')[0], expectedHash);
+    await guard(path, expectedHash);
+    let response;
+    try { response = await fetcher(url(path), { method: 'DELETE', headers: auth }); } catch (error) {
+      if (isTransportError(error) && await meta(path, true) === null) return;
+      throw error;
+    }
+    assert.ok(response.ok, `${path}: asset delete HTTP ${response.status}`);
+    assert.equal(await meta(path, true), null, `${path}: asset still exists after delete`);
+  }
+  return { meta, read, tree, upload, guard, replace, removeRelease, removeAsset, purge };
 }

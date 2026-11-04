@@ -46,6 +46,13 @@ jobs:
         run: |
           node scripts/hostinger/cli.mjs package "$DEPLOY_ID"
           node scripts/hostinger/cli.mjs local "$DEPLOY_ID"
+      - name: Pass the public local-check report to the deployment job
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: hostinger-local-check-${{ github.run_id }}-${{ github.run_attempt }}
+          path: out/hostinger-ci/${{ github.run_id }}-${{ github.run_attempt }}/browser-local.json
+          if-no-files-found: error
+          retention-days: 7
 
   deploy:
     needs: test
@@ -57,6 +64,7 @@ jobs:
       url: https://taistro.com.tw/
     permissions:
       contents: write # Encrypted backups in draft Releases; no commits are made by CI.
+      actions: read # Download only this workflow run's public browser-check report.
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -85,13 +93,16 @@ jobs:
             if [ "$result" -ne 1 ]; then exit "$result"; fi
             echo "Deployment inputs superseded by a newer main commit; skipping."
           fi
-      - name: Package and check immutable deployment inputs
+      - name: Package immutable inputs and reuse the exact payload check
         if: steps.head.outputs.current == 'true'
         env:
           DEPLOY_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           node scripts/hostinger/cli.mjs package "$DEPLOY_ID"
-          node scripts/hostinger/cli.mjs local "$DEPLOY_ID"
+          # Download only this run's public check report, never another run's payload.
+          # deploy verifies its source, release and complete manifest digest before host writes.
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name "hostinger-local-check-$DEPLOY_ID" --dir "out/hostinger-ci/$DEPLOY_ID"
       - name: Stage, verify, activate, back up and prune
         if: steps.head.outputs.current == 'true'
         env:

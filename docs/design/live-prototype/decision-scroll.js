@@ -1,4 +1,10 @@
-import { DECISION_FRAME_COUNT, decisionFrameFile } from './decision-frames.js';
+import { DECISION_FRAME_COUNT, decisionFrameFile, decisionMobileFrameFile } from './decision-frames.js';
+import { createDecisionMobileSource } from './decision-mobile-source.js';
+
+export const DECISION_POLICIES = Object.freeze({
+  mobile: Object.freeze({ cacheSize: 6, concurrent: 2, ahead: 2, behind: 1, warmWholeSequence: false, warmAhead: 48, warmBehind: 12, warmConcurrent: 6, visibleOnly: true }),
+  desktop: Object.freeze({ cacheSize: 32, concurrent: 6, ahead: 20, behind: 8, warmWholeSequence: true, warmConcurrent: 2, visibleOnly: false }),
+});
 
 const clamp = value => Math.max(0, Math.min(1, value));
 export function decisionPreloadOrder(current, direction = 1, count = DECISION_FRAME_COUNT) {
@@ -83,14 +89,31 @@ export function scenePlacement(width, height, imageWidth, imageHeight) {
 }
 
 export function initDecisionScroll() {
+  const mobile = matchMedia('(max-width: 899px), (pointer: coarse)');
+  let stop = () => {};
+  const update = () => {
+    stop();
+    stop = initAnimatedDecisionScroll(mobile.matches ? 'mobile' : 'desktop');
+  };
+  mobile.addEventListener('change', update);
+  update();
+  return () => { mobile.removeEventListener('change', update); stop(); };
+}
+
+function initAnimatedDecisionScroll(profile) {
   const hero = document.querySelector('.home-opening');
   const proof = document.getElementById('proof');
   if (!hero || !proof) return () => {};
+  const policy = DECISION_POLICIES[profile];
+  const frameFile = profile === 'mobile' ? decisionMobileFrameFile : decisionFrameFile;
+  document.body.dataset.decisionProfile = profile;
   const surfaces = [...document.querySelectorAll('[data-decision-surface]')];
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   const abort = new AbortController();
+  const source = profile === 'mobile' ? createDecisionMobileSource({ signal: abort.signal }) : null;
+  const surfaceFrames = new Map();
   const cache = new Map();
-  const pending = new Set();
+  const pending = new Map();
   const failed = new Set();
   // HTTP cache holds compressed frames; only the nearby window stays decoded.
   const warmed = new Set();
@@ -99,7 +122,7 @@ export function initDecisionScroll() {
   let warmTask = null;
   const idle = globalThis.requestIdleCallback
     ? callback => requestIdleCallback(callback, { timeout: 1200 })
-    : callback => setTimeout(callback, 200);
+    : callback => setTimeout(callback, profile === 'mobile' ? 0 : 200);
   const cancelIdle = globalThis.cancelIdleCallback ?? clearTimeout;
   let requested = 0;
   let target = 0;
@@ -108,6 +131,7 @@ export function initDecisionScroll() {
   let lastScroll = null;
   let direction = 1;
   let displayed = -1;
+  let displayedUrl = '';
   let raf = 0;
   let disposed = false;
   let ready = false;
@@ -145,6 +169,15 @@ export function initDecisionScroll() {
     const scene = scenePlacement(innerWidth, viewportHeight, imageWidth, imageHeight);
     for (const surface of surfaces) {
       const bounds = surface.getBoundingClientRect();
+      if (policy.visibleOnly && (bounds.bottom < -256 || bounds.top > innerHeight + 256)) {
+        surface.style.removeProperty('--decision-frame');
+        surfaceFrames.delete(surface);
+        continue;
+      }
+      if (displayed >= 0 && surfaceFrames.get(surface) !== displayed) {
+        surface.style.setProperty('--decision-frame', `url("${displayedUrl}")`);
+        surfaceFrames.set(surface, displayed);
+      }
       const top = headerHeight + scene.y - bounds.top;
       surface.style.setProperty('--decision-size', `${scene.width}px ${scene.height}px`);
       surface.style.setProperty('--decision-position', `${scene.x - bounds.left}px ${top}px`);
@@ -160,39 +193,53 @@ export function initDecisionScroll() {
     if (!image || disposed) return;
     imageWidth = image.naturalWidth;
     imageHeight = image.naturalHeight;
-    const url = new URL(decisionFrameFile(index), import.meta.url).href;
-    for (const surface of surfaces) surface.style.setProperty('--decision-frame', `url("${url}")`);
     document.body.classList.add('decision-scroll-ready');
     document.body.dataset.decisionFrame = String(index);
     displayed = index;
+    displayedUrl = image.src;
     if (!ready) { ready = true; measure(); }
     positionSurfaces();
   }
 
-  function fillCache() {
-    if (disposed) return;
+  function wantedFrames() {
     // Contiguous look-ahead avoids the old 1/3/6-frame holes during a wheel tick.
     // Keep the destination warm too, so anchors and fast drags need not decode a movie.
-    const wanted = preference.matches ? [requested] : [requested,target,
-      ...Array.from({length:20},(_,i)=>requested+(i+1)*direction),
-      ...Array.from({length:8},(_,i)=>requested-(i+1)*direction)];
-    for (const index of wanted) {
-      if (pending.size >= 6) break;
+    return (preference.matches ? [requested] : [requested,target,
+      ...Array.from({length:policy.ahead},(_,i)=>requested+(i+1)*direction),
+      ...Array.from({length:policy.behind},(_,i)=>requested-(i+1)*direction)])
+      .filter(index => index >= 0 && index < DECISION_FRAME_COUNT);
+  }
+  function fillCache() {
+    if (disposed) return;
+    for (const index of wantedFrames()) {
+      if (pending.size >= policy.concurrent) break;
       if (index < 0 || index >= DECISION_FRAME_COUNT || cache.has(index) || pending.has(index) || failed.has(index)) continue;
-      pending.add(index);
       const image = new Image();
+      pending.set(index, image);
       image.decoding = 'async';
       image.fetchPriority = index === requested || index === target ? 'high' : 'low';
-      image.src = new URL(decisionFrameFile(index), import.meta.url).href;
-      image.decode().then(() => {
+      const decode = src => {
+        if (disposed) return;
+        image.src = src;
+        return image.decode();
+      };
+      const loading = source ? source.frame(index).then(decode) : decode(new URL(frameFile(index), import.meta.url).href);
+      loading.then(() => {
         if (disposed) return;
         cache.set(index, image);
         warmed.add(index);
         document.body.dataset.decisionPreloaded = String(warmed.size);
         if (index === requested) display(index);
         else if (!ready && index === target) display(index);
-        const removable = [...cache.keys()].filter(key => key !== requested && key !== target && key !== displayed).sort((a,b) => Math.abs(b-requested)-Math.abs(a-requested));
-        while (cache.size > 32 && removable.length) cache.delete(removable.shift());
+        // Keep the requested window first. Distance alone evicted the look-ahead
+        // frame just decoded, then finally() decoded it again indefinitely.
+        const wanted = new Set(wantedFrames());
+        const removable = [...cache.keys()].filter(key => key !== requested && key !== target && key !== displayed)
+          .sort((a,b) => Number(wanted.has(a)) - Number(wanted.has(b)) || Math.abs(b-requested)-Math.abs(a-requested));
+        while (cache.size > policy.cacheSize && removable.length) {
+          const old = removable.shift(); cache.get(old).removeAttribute('src'); cache.delete(old);
+        }
+        document.body.dataset.decisionCached = String(cache.size);
       }).catch(() => { failed.add(index); }).finally(() => {
         pending.delete(index);
         fillCache();
@@ -203,24 +250,32 @@ export function initDecisionScroll() {
 
   function canWarm() {
     const connection = navigator.connection;
-    return !disposed && ready && !preference.matches && !document.hidden
+    return (policy.warmWholeSequence || policy.warmAhead > 0) && !disposed && ready && !preference.matches && !document.hidden
       && !connection?.saveData && !['slow-2g', '2g'].includes(connection?.effectiveType);
   }
   function scheduleWarm() {
-    if (!canWarm() || warmTask !== null || warmed.size >= DECISION_FRAME_COUNT || warming.size >= 2) return;
+    if (!canWarm() || warmTask !== null || warmed.size >= DECISION_FRAME_COUNT || warming.size >= policy.warmConcurrent) return;
     warmTask = idle(() => {
       warmTask = null;
       if (!canWarm()) return;
-      const order = decisionPreloadOrder(requested, direction);
-      while (warming.size < 2) {
+      // Compressed HTTP responses may look farther ahead without retaining
+      // decoded images. This separates first-scroll network latency from the
+      // small pixel-memory window; touch devices never idle-fetch all 243.
+      const order = decisionPreloadOrder(requested, direction).filter(index => {
+        const distance = (index - requested) * direction;
+        return policy.warmWholeSequence || (distance >= -policy.warmBehind && distance <= policy.warmAhead);
+      });
+      while (warming.size < policy.warmConcurrent) {
         const index = order.find(value => !warmed.has(value) && !warming.has(value) && !pending.has(value) && !warmFailed.has(value));
         if (index === undefined) break;
         warming.add(index);
-        fetch(new URL(decisionFrameFile(index), import.meta.url), {
+        const preparation = source ? source.prepare(index) : fetch(new URL(frameFile(index), import.meta.url), {
           cache: 'force-cache', priority: 'low', signal: abort.signal,
         }).then(async response => {
           if (!response.ok) throw new Error('Frame preload failed');
           await response.arrayBuffer(); // Consume the response so the browser can cache it.
+        });
+        preparation.then(() => {
           if (!disposed) {
             warmed.add(index);
             document.body.dataset.decisionPreloaded = String(warmed.size);
@@ -253,7 +308,7 @@ export function initDecisionScroll() {
     lastTime=time;
     document.body.dataset.decisionTarget = String(target);
     if (cache.has(requested) && displayed !== requested) display(requested);
-    if (ready) positionSurfaces();
+    else if (ready) positionSurfaces();
     fillCache();
     scheduleWarm();
     if (scrub!==target) schedule();
@@ -271,14 +326,19 @@ export function initDecisionScroll() {
   addEventListener('resize', measure, {passive:true, signal:abort.signal});
   preference.addEventListener('change', measure, {signal:abort.signal});
   document.addEventListener('visibilitychange', scheduleWarm, {signal:abort.signal});
-  addEventListener('online', () => { failed.clear(); warmFailed.clear(); fillCache(); scheduleWarm(); }, {signal:abort.signal});
+  addEventListener('online', () => { failed.clear(); warmFailed.clear(); source?.retryFailed(); fillCache(); scheduleWarm(); }, {signal:abort.signal});
   function dispose() {
     disposed = true;
     abort.abort();
     resize.disconnect();
     cancelAnimationFrame(raf);
     if (warmTask !== null) cancelIdle(warmTask);
-    cache.clear();
+    for (const image of [...cache.values(), ...pending.values()]) image.removeAttribute('src');
+    cache.clear(); pending.clear();
+    source?.clear(); surfaceFrames.clear(); displayedUrl = '';
+    document.body.classList.remove('decision-scroll-ready');
+    for (const key of ['decisionFrame', 'decisionTarget', 'decisionPreloaded', 'decisionProfile', 'decisionCached']) delete document.body.dataset[key];
+    for (const surface of surfaces) for (const property of ['--decision-frame', '--decision-size', '--decision-position', '--decision-tear-position']) surface.style.removeProperty(property);
   }
   addEventListener('pagehide', event => { if (!event.persisted) dispose(); }, {signal:abort.signal});
   addEventListener('pageshow', measure, {signal:abort.signal});

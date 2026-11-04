@@ -6,7 +6,7 @@
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 的網站更新／合併會自動測試、部署、清快取，再加密備份並保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；最近成功發布為 [Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191)（2026-11-04），修正 iPhone Chrome 卡在「內容載入中」的 WebKit 相容性問題。來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，現行目錄為 `public_html/synaiq-release-ci-41780885191-1/`（339 檔）；local／staged／live 各 52 組瀏覽器檢查通過，另以 WebKit 26.0 與 Chrome 完成正式站六頁、三語共 36 組手機檢查及語言切換，主機路由與 state 一致，詳見 [部署紀錄](deploy-hostinger.md)。後續以主機 `.htaccess` 及 Actions summary 為準。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；最近成功發布為 [Run 41806595635](https://github.com/LinthDale/synaiq-web/actions/runs/41806595635)（2026-11-04），已導入內容雜湊共用素材，現行 `public_html/synaiq-release-ci-41806595635-1/`。local／staged／live 各 52 組及另行 WebKit 26.0／Chrome 共 36 組手機檢查通過；手機保留輕量背景動畫並限制解碼，桌面修正反覆解碼；語系初始化正常。三個已核准未納管目錄已備份後刪除，釋放 101.5 MB；目前未納管發布目錄為零。主機 `.htaccess` 與 state 為即時依據，詳見 [部署紀錄](deploy-hostinger.md)。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
@@ -18,7 +18,7 @@
 |---|---|
 | 修改正式網站 | `docs/design/live-prototype/`，品牌素材在 `public/brand/` |
 | 公開檔案白名單 | `docs/design/live-prototype/share-preview.mjs` 的 `PUBLIC_FILES` |
-| 上傳位置 | `public_html/<本次新 release>/`，每次完整發布使用新目錄 |
+| 上傳位置 | 入口在 `public_html/<本次新 release>/`；相同靜態資源共用 `public_html/synaiq-assets-v1/<sha256>.<ext>`，不重複上傳 |
 | 驗收網址 | https://taistro.com.tw/，六頁的 `?page=home/kip/ems/pvsim/cases/about&lang=zh-Hant/en/de` 組合；舊網域 HTTPS 應 301 轉到新網址 |
 | 目前版本及回退紀錄 | [部署紀錄](deploy-hostinger.md)；主機 `.htaccess` 才是即時依據 |
 | 發布工具與證據 | `scripts/hostinger/`；首次成功本機核對在 `out/hostinger-ci/38197100197-1/`，雲端完整證據在加密草稿 Release。歷史 `out/synaiq-release-*` 只供參考，不可原地重跑 |
