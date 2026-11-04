@@ -54,8 +54,10 @@ export async function smoke(manifest, work, origin, mode) {
     }
     browser = await chromium.launch({ headless: true, ...(process.env.HOSTINGER_BROWSER_CHANNEL ? { channel: process.env.HOSTINGER_BROWSER_CHANNEL } : {}), args: ['--enable-unsafe-swiftshader'] });
     for (const item of smokeMatrix()) {
-      const context = await browser.newContext({ viewport: { width: item.width, height: 950 }, reducedMotion: 'reduce' });
-      const page = await context.newPage(), errors = [];
+      const touchHome = item.page === 'home' && item.width < 900;
+      const context = await browser.newContext({ viewport: { width: item.width, height: 950 }, reducedMotion: touchHome ? 'no-preference' : 'reduce', ...(touchHome ? { isMobile: true, hasTouch: true, deviceScaleFactor: 3 } : {}) });
+      const page = await context.newPage(), errors = [], frameRequests = [];
+      page.on('request', req => { if (/\/kip-d-scroll-v5\/frame-\d+\.webp/.test(req.url())) frameRequests.push(req.url()); });
       page.on('pageerror', error => errors.push(error.message));
       page.on('requestfailed', req => { if (new URL(req.url()).origin === origin) errors.push(`Resource failed: ${new URL(req.url()).pathname}`); });
       page.on('response', res => { if (new URL(res.url()).origin === origin && res.status() >= 400) errors.push(`HTTP ${res.status()}: ${new URL(res.url()).pathname}`); });
@@ -98,13 +100,27 @@ export async function smoke(manifest, work, origin, mode) {
         assert.equal(await canvas.isVisible(), false);
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'Horizontal overflow');
+      if (touchHome) {
+        for (let pass = 0; pass < 2; pass++) {
+          for (const selector of ['.home-opening', '#introduction', '[data-product-reveal]', '#proof', '.advantages', '#people', '#contact']) {
+            const section = page.locator(selector).first();
+            await section.scrollIntoViewIfNeeded();
+            assert.equal(await section.isVisible(), true, `${selector}: lost during mobile scrolling`);
+            assert.ok((await section.innerText()).trim().length > 0, `${selector}: missing mobile content`);
+          }
+          await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+          assert.equal(await page.locator('.hero-thread-art img').isVisible(), true);
+        }
+        assert.deepEqual(frameRequests, [], 'Touch homepage loaded the full background sequence');
+        assert.equal(await page.locator('body').evaluate(body => body.classList.contains('decision-scroll-ready')), false);
+      }
       const opposite = LANGS[(LANGS.indexOf(item.lang) + 1) % LANGS.length];
       await page.locator('#language').selectOption(opposite);
       await page.waitForURL(url => url.searchParams.get('lang') === opposite);
       assert.equal(new URL(page.url()).searchParams.get('page'), item.page);
       if (item.caseId) assert.equal(new URL(page.url()).searchParams.get('case'), item.caseId);
       assert.deepEqual(errors, []);
-      cases.push({ ...item, status: 'passed' }); await context.close();
+      cases.push({ ...item, ...(touchHome ? { motion: 'no-preference', touch: true, scrollPasses: 2, frameRequests: frameRequests.length } : {}), status: 'passed' }); await context.close();
     }
     await writeFile(join(work, `browser-${mode}.json`), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, cases }, null, 2));
     console.log(`${mode}: ${cases.length} browser checks passed`);

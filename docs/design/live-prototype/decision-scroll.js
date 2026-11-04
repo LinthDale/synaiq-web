@@ -83,6 +83,21 @@ export function scenePlacement(width, height, imageWidth, imageHeight) {
 }
 
 export function initDecisionScroll() {
+  // Touch devices keep the existing static artwork. A decoded frame window plus
+  // repainting several tall backgrounds can exhaust an iPhone's rendering budget.
+  // Use input capabilities as well as width so a landscape phone/tablet stays static.
+  const desktop = matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)');
+  let stop = () => {};
+  const update = () => {
+    stop();
+    stop = desktop.matches ? initAnimatedDecisionScroll() : () => {};
+  };
+  desktop.addEventListener('change', update);
+  update();
+  return () => { desktop.removeEventListener('change', update); stop(); };
+}
+
+function initAnimatedDecisionScroll() {
   const hero = document.querySelector('.home-opening');
   const proof = document.getElementById('proof');
   if (!hero || !proof) return () => {};
@@ -90,7 +105,7 @@ export function initDecisionScroll() {
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   const abort = new AbortController();
   const cache = new Map();
-  const pending = new Set();
+  const pending = new Map();
   const failed = new Set();
   // HTTP cache holds compressed frames; only the nearby window stays decoded.
   const warmed = new Set();
@@ -179,8 +194,8 @@ export function initDecisionScroll() {
     for (const index of wanted) {
       if (pending.size >= 6) break;
       if (index < 0 || index >= DECISION_FRAME_COUNT || cache.has(index) || pending.has(index) || failed.has(index)) continue;
-      pending.add(index);
       const image = new Image();
+      pending.set(index, image);
       image.decoding = 'async';
       image.fetchPriority = index === requested || index === target ? 'high' : 'low';
       image.src = new URL(decisionFrameFile(index), import.meta.url).href;
@@ -278,7 +293,11 @@ export function initDecisionScroll() {
     resize.disconnect();
     cancelAnimationFrame(raf);
     if (warmTask !== null) cancelIdle(warmTask);
-    cache.clear();
+    for (const image of [...cache.values(), ...pending.values()]) image.removeAttribute('src');
+    cache.clear(); pending.clear();
+    document.body.classList.remove('decision-scroll-ready');
+    for (const key of ['decisionFrame', 'decisionTarget', 'decisionPreloaded']) delete document.body.dataset[key];
+    for (const surface of surfaces) for (const property of ['--decision-frame', '--decision-size', '--decision-position', '--decision-tear-position']) surface.style.removeProperty(property);
   }
   addEventListener('pagehide', event => { if (!event.persisted) dispose(); }, {signal:abort.signal});
   addEventListener('pageshow', measure, {signal:abort.signal});
