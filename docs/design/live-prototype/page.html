@@ -26,7 +26,8 @@ if (!["kip", "ems", "pvsim", "cases", "about"].includes(new URLSearchParams(loca
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Noto+Serif+TC:wght@300;400&family=Manrope:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css?v=20261002-products"><link rel="modulepreload" href="locale-bootstrap.js">
-<script type="module" src="locale-bootstrap.js"></script>
+<!-- prototype.js is the sole module entry. Executing its async locale dependency
+     here too can leave iPhone WebKit waiting forever (WebKit bug 242740). -->
 </head><body>
 <a class="skip" href="#main" data-i18n="navigation.skip">跳至主要內容</a>
 <header class="site-header">
