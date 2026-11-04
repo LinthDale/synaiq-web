@@ -4,6 +4,18 @@ import { createHash, createCipheriv, createDecipheriv, randomBytes } from 'node:
 export const sha = data => createHash('sha256').update(data).digest('hex');
 export const STATE = '.hostinger-ci-state.json';
 export const GUIDE = '00-SYNAIQ-START-HERE.txt';
+export const ASSET_ROOT = 'synaiq-assets-v1';
+export const ASSET_MAP = '.hostinger-assets.json';
+const sharedExtension = /\.(avif|css|gif|glb|ico|jpe?g|js|mp4|png|svg|webm|webp|woff2?)$/;
+export function sharedPath(path, hash) {
+  safePath(path); assert.match(hash, /^[a-f0-9]{64}$/);
+  const extension = path.match(sharedExtension)?.[1];
+  return extension ? `${ASSET_ROOT}/${hash}.${extension}` : null;
+}
+export function assetPath(path) {
+  assert.match(path, /^synaiq-assets-v1\/[a-f0-9]{64}\.(?:avif|css|gif|glb|ico|jpe?g|js|mp4|png|svg|webm|webp|woff2?)$/);
+  return path;
+}
 export const releaseName = name => {
   assert.match(name, /^synaiq-release-[a-z0-9]+(?:-[a-z0-9]+)*$/);
   return name;
@@ -34,7 +46,7 @@ function fileRules(name, paths) {
   if (entries.length) rules.push(format(entries));
   return rules;
 }
-export function buildRouting(base, name, paths) {
+export function buildRouting(base, name, paths, assets = []) {
   releaseName(name);
   const current = activeRelease(base);
   assert.notEqual(current, name);
@@ -57,12 +69,29 @@ export function buildRouting(base, name, paths) {
     assert.ok(paths.includes(authPath), 'Auth route requires its public payload');
   }
   // Keep exact file allowlists while staying below the server's per-line limit.
-  const rules = fileRules(name, paths);
+  const aliases = new Map();
+  for (const file of assets) {
+    safePath(file.path); assetPath(file.sharedPath);
+    assert.equal(sharedPath(file.path, file.sha256), file.sharedPath, 'Asset address differs from content hash');
+    assert.ok(paths.includes(file.path)); assert.ok(!aliases.has(file.path));
+    aliases.set(file.path, file.sharedPath);
+  }
+  const rules = [
+    ...[...aliases].map(([path, target]) => `RewriteRule ^${name}/${escape(path)}$ /${target} [L]`),
+    ...fileRules(name, paths.filter(path => !aliases.has(path))),
+  ];
+  assert.ok(rules.every(rule => Buffer.byteLength(rule) < 8000), 'One asset alias exceeds the routing line limit');
   // Only current and candidate are public. Other host directives remain byte-for-byte intact.
   const lines = base.split(eol).filter(line => {
+    if (line.startsWith(`RewriteRule ^${ASSET_ROOT}/`)) return false;
     const match = line.match(/^RewriteRule \^(synaiq-release-[a-z0-9-]+)\//);
     return !match || match[1] === current;
   });
+  const currentAssets = lines.flatMap(line => {
+    if (!line.startsWith(`RewriteRule ^${current}/`) || !line.includes(` /${ASSET_ROOT}/`)) return [];
+    return [assetPath(line.match(/ \/(synaiq-assets-v1\/[^ ]+) \[L\]$/)?.[1] || '')];
+  });
+  rules.push(...fileRules(ASSET_ROOT, [...new Set([...currentAssets, ...aliases.values()])].sort().map(path => path.slice(ASSET_ROOT.length + 1))));
   assert.ok(lines.some(line => line.startsWith(`RewriteRule ^${current}/`)), 'Missing current release allowlist');
   const preview = lines.join(eol).replace(anchor, () => `${anchor}${eol}${rules.join(eol)}`);
   let live = preview;
@@ -88,7 +117,7 @@ export function buildRouting(base, name, paths) {
   }
   // Generated catalogs no longer have the old locale-*.js filename prefix.
   const marker = '# Generated translation module cache policy';
-  const cache = `${marker}${eol}<IfModule mod_headers.c>${eol}<FilesMatch "^(?:[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*|startup|registry|loaders)\\.js$">${eol}Header always set Cache-Control "no-cache, must-revalidate"${eol}</FilesMatch>${eol}</IfModule>`;
+  const cache = `${marker}${eol}<IfModule mod_headers.c>${eol}<FilesMatch "^(?:[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*|startup|registry|loaders|[a-f0-9]{64})\\.js$">${eol}Header always set Cache-Control "no-cache, must-revalidate"${eol}</FilesMatch>${eol}</IfModule>`;
   const updateCache = text => {
     if (!text.includes(marker)) return `${text}${eol}${cache}${eol}`;
     const block = /# Generated translation module cache policy\r?\n<IfModule mod_headers\.c>[\s\S]*?<\/IfModule>/g;

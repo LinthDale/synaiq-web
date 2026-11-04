@@ -53,7 +53,8 @@ export async function main() {
     phase = 'evidence'; await publishEvidence(config, work, process.env.HOSTINGER_BACKUP_KEY, id);
     // Each browser pass runs the whole matrix or throws, so its size is what every pass verified.
     const checks = smokeMatrix().length;
-    const summary = `### Hostinger deployment verified\n\n- Website: ${config.origin}/\n- Release: ${manifest.release}\n- Source: ${manifest.sourceCommit}\n- Retained: ${plan.keep.join(', ')}\n- Archived and removed: ${plan.remove.join(', ') || 'none'}\n- Encrypted backup: ${receipt.tag} (draft Release)\n- Browser checks: ${checks} local + ${checks} staged + ${checks} live\n`;
+    const transfer = JSON.parse(await readFile(join(work, 'transfer.json')));
+    const summary = `### Hostinger deployment verified\n\n- Website: ${config.origin}/\n- Release: ${manifest.release}\n- Source: ${manifest.sourceCommit}\n- Uploaded: ${transfer.uploadedFiles} files / ${transfer.uploadedBytes} bytes\n- Reused: ${transfer.reusedFiles} shared assets / ${transfer.reusedBytes} bytes\n- Retained: ${plan.keep.join(', ')}\n- Archived and removed: ${plan.remove.join(', ') || 'none'}\n- Encrypted backup: ${receipt.tag} (draft Release)\n- Browser checks: ${checks} local + ${checks} staged + ${checks} live\n`;
     await save(work, 'summary.md', summary);
     if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
     console.log('Deployment, backup and retention verified.');

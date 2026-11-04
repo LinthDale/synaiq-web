@@ -25,14 +25,20 @@
 2. 按公開 allowlist 從 Git commit 封裝檔案（2026-11-02 為 338 檔，含 243 張背景動畫幀；數量隨 allowlist 調整），正式 `index.html` 由 `page.html` 產生。CSS、JS、圖片指向唯一的新版本目錄。精確檔名白名單可拆成多條路由，每條小於 8,000 bytes，仍只開放已封裝檔案；後續發布會保留現行版的全部白名單路由。
 3. 本機瀏覽器測試：六頁 × 繁中／英文／德文 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的三語內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 52 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
-5. 上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，authenticated raw 下載逐檔核對 SHA-256。
+5. 入口文件上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`；圖片、動畫、模型、JS、CSS、SVG 等靜態資源以封裝後內容的 SHA-256 儲存在 `public_html/synaiq-assets-v1/<sha256>.<副檔名>`。已存在的資源先透過 authenticated raw 核對大小與 SHA-256，完全相同才重用；缺少時才上傳及下載驗證，絕不覆寫既有 hash 檔案。獨立檔案最多四個並行，失敗會等已開始的操作結束再回退。
 6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 同一組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
 7. 清除兩網域快取，正式網址檢查及同一組瀏覽器驗證成功後，更新主機私有維護說明及 `.hostinger-ci-state.json`。
 8. 按**實際成功啟用順序**保留現行版＋最近兩版。先重驗保留檔案及跨版本相依，完整下載待刪版本並建立逐檔清單。
 9. 備份 tar.gz 以 AES-256-GCM 加密，解包核對每個檔案，存至 GitHub **草稿 Release**，重新下載、比對 SHA-256 並驗證解密後才允許刪除。
-10. 再次核對路由、保留版本、待刪版本及備份；僅刪除清單內的 `synaiq-release-*` 目錄。清理完成後重新核對公開站，將最終證據加密存入同一份草稿 Release。
+10. 再次核對路由、保留版本、待刪版本及備份；刪除清單內的 `synaiq-release-*` 目錄。共用素材也依三個保留版本的引用清單回收：只有無引用、路由未開放、已備份並核對 hash 的物件才可刪除；有未納管候選目錄時暫停素材回收。清理完成後重新核對公開站，將最終證據加密存入同一份草稿 Release。
+
+共用儲存保留每版原有網址，例如 `/<release>/prototype.js`，由精確 RewriteRule 在主機內部對應到 hash 檔案，不做瀏覽器轉址。相對 ES module imports、`import.meta.url`、動畫幀與 CSS 相對路徑仍以原網址解析；公開白名單只開放現行／候選版所需的確切檔案，私有 `.hostinger-assets.json` 不開放。生成語系的 `no-cache, must-revalidate` 規則涵蓋改寫後的 hash JS 檔名。
+
+每版的私有素材清單及 state 的 `releases[].assets` 記錄原路徑、共用路徑、大小與 hash。封裝 artifact 仍包含所有檔案，備份保留完整還原能力；節省的是 Hostinger 重複上傳與儲存，GitHub 的加密備份仍會上傳。第一次導入需建立共用素材庫；後續發布由 `transfer.json` 與 Actions summary 分別記錄實際上傳／重用數量與 bytes，不把核對下載量算成零傳輸。
 
 WordPress、`.private`、其他網域、未納管的失敗／未知目錄都不會自動刪除。它們列在 audit 的 `unmanaged`；納管前須另確認內容、相依與備份。初次成功發布後，六個已知舊版本中會保留 pvsim-3d、solutions 與新 CI 版本，其餘四版經備份後清理。
+
+2026-11-04 使用者另授權清除盤點的三個未納管目錄。專用 workflow `hostinger-maintenance.yml` 僅接受 main 的手動觸發，與部署共用 `hostinger-production` concurrency；`scripts/maintenance/hostinger-unmanaged.mjs` 固定已審閱的 active、路由／state hash、三個目錄名稱、檔案數與大小。先完整下載、加密存至草稿 Release、重下載並驗證可還原，再重驗所有保留版本及待刪內容，最後刪除並核對公開站。路由、state 與維護入口保持原值；不是清空 `public_html` 的工具。重跑若現況已變會停止，不能直接更換基準來掩蓋差異。
 
 GitHub production concurrency 不取消正在執行的部署，避免中途打斷上傳或清理。新的待執行任務可能取代更舊的待執行任務。不要在 CI 運作時手動改主機；hash 保護會停止發現的外部變更，但不是主機全域交易鎖。
 
@@ -104,6 +110,8 @@ tar -tzf out/restore-RUN/backup.tar.gz.enc.tar.gz
 ```
 
 通常回退以 GitHub `main` revert 問題 commit，讓同一條完整驗證流程發布修正版本。若須緊急恢復舊目錄，先暫停部署、下載此次加密證據，確保舊目錄完整，再以即時路由 hash 保護恢復 `routing-before.htaccess`，同步 state 與維護入口、清快取並驗證。已歸檔的版本須先依原名還原並核對 hash；不要直接執行過去 `out/` 的版本綁定腳本。
+
+使用共用儲存的版本還原時，依 manifest 的 `files[].sharedPath` 將 artifact 中相對路徑的檔案放回該 hash 位址，其餘檔案放回原 release 目錄，並還原私有素材清單。若回退到仍在主機的三個保留版本，須同時驗證它的實體檔案與 `releases[].assets`，不能只確認入口目錄存在。備份中的 `backup/synaiq-assets-v1/` 保存被回收的素材；完整 artifact、前後 state／路由與 inventory 用於核對重建結果。任何 hash 不符皆停止，不覆寫同名素材或沿用目前版本的素材清單。
 
 ## 驗證命令與官方參考
 

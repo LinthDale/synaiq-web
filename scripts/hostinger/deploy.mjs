@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir, appendFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { sha, activeRelease, buildRouting, retentionPlan, assertNoDependencies, STATE, GUIDE } from './core.mjs';
+import { sha, activeRelease, buildRouting, retentionPlan, assertNoDependencies, STATE, GUIDE, assetPath, sharedPath, ASSET_ROOT, ASSET_MAP } from './core.mjs';
 import { request } from './client.mjs';
 import { smoke } from './browser.mjs';
 import { verifyPublicAssets } from './public-assets.mjs';
@@ -13,10 +13,15 @@ export async function save(work, path, bytes) {
   await writeFile(target, Buffer.isBuffer(bytes) || typeof bytes === 'string' ? bytes : json(bytes));
 }
 export async function mapLimit(items, fn, concurrency = 4) {
-  let next = 0; const results = new Array(items.length);
+  assert.ok(Number.isSafeInteger(concurrency) && concurrency > 0);
+  let next = 0, failed = false, failure; const results = new Array(items.length);
   await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, async () => {
-    while (next < items.length) { const index = next++; results[index] = await fn(items[index]); }
+    while (!failed && next < items.length) {
+      const index = next++;
+      try { results[index] = await fn(items[index]); } catch (error) { if (!failed) failure = error; failed = true; }
+    }
   }));
+  if (failed) throw failure; // Drain in-flight writes before rollback or another phase starts.
   return results;
 }
 export async function snapshot(client, name, backupDirectory) {
@@ -40,6 +45,41 @@ export async function verifySnapshot(client, record, onFile = () => {}) {
     assert.equal(sha(bytes), file.sha256, `${file.path}: changed outside CI`);
     await onFile(file.path, bytes);
   });
+  for (const file of record.assets || []) {
+    assetPath(file.sharedPath);
+    assert.equal(sharedPath(file.path, file.sha256), file.sharedPath);
+  }
+  await mapLimit([...new Map((record.assets || []).map(f => [f.sharedPath, f])).values()], async file => {
+    const bytes = await client.read(file.sharedPath, file.size);
+    assert.equal(sha(bytes), file.sha256, `${file.sharedPath}: shared asset changed outside CI`);
+    await onFile(file.sharedPath, bytes);
+  });
+}
+export async function uploadPayload(client, work, manifest) {
+  const assets = manifest.files.filter(f => f.sharedPath);
+  const unique = [...new Map(manifest.files.map(f => [f.sharedPath || `${manifest.release}/${f.path}`, f])).entries()];
+  const stats = { uploadedFiles: 0, uploadedBytes: 0, reusedFiles: 0, reusedBytes: 0, logicalFiles: manifest.files.length };
+  await mapLimit(unique, async ([target, file]) => {
+    const bytes = await readFile(join(work, 'artifact', file.path)); assert.equal(sha(bytes), file.sha256);
+    if (file.sharedPath) {
+      assetPath(target); assert.equal(sharedPath(file.path, file.sha256), target);
+      const existing = await client.meta(target, true);
+      if (existing) {
+        assert.equal(existing.size, file.size, `${target}: shared size differs`);
+        assert.equal(sha(await client.read(target, file.size)), file.sha256, `${target}: shared hash differs`);
+        stats.reusedFiles++; stats.reusedBytes += file.size; return;
+      }
+    }
+    await client.upload(target, bytes); stats.uploadedFiles++; stats.uploadedBytes += bytes.length;
+  });
+  if (assets.length) {
+    const marker = json({ schema: 1, release: manifest.release, sourceCommit: manifest.sourceCommit, assets });
+    await client.upload(`${manifest.release}/${ASSET_MAP}`, marker);
+    stats.uploadedFiles++; stats.uploadedBytes += marker.length;
+  }
+  await save(work, 'transfer.json', stats);
+  console.log(`Transfer: uploaded ${stats.uploadedFiles} files / ${stats.uploadedBytes} bytes; reused ${stats.reusedFiles} assets / ${stats.reusedBytes} bytes`);
+  return assets;
 }
 export async function audit(client, config, work, repair = null) {
   const route = await client.read('.htaccess'), active = activeRelease(route.toString());
@@ -126,15 +166,12 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
   const previousIndex = before.state.releases[0].files.find(file => file.path === `${before.state.active}/index.html`);
   assert.ok(previousIndex, 'Current release homepage is missing from the snapshot');
   assert.equal(await client.meta(manifest.release, true), null, 'Release exists; inspect instead of replaying upload');
-  const route = buildRouting(before.route.toString(), manifest.release, manifest.files.map(f => f.path));
+  const assets = manifest.files.filter(f => f.sharedPath);
+  const route = buildRouting(before.route.toString(), manifest.release, manifest.files.map(f => f.path), assets);
   await save(work, 'routing-preview.htaccess', route.preview); await save(work, 'routing-live.htaccess', route.live);
   let routeAttempted = false, committed = false, nextStateBytes, nextGuideBytes;
   try {
-    for (const file of manifest.files) {
-      const bytes = await readFile(join(work, 'artifact', file.path)); assert.equal(sha(bytes), file.sha256);
-      await client.upload(`${manifest.release}/${file.path}`, bytes);
-    }
-    console.log(`Uploaded and hash-verified ${manifest.files.length} files`);
+    await uploadPayload(client, work, manifest);
     routeAttempted = true;
     await client.replace('.htaccess', Buffer.from(route.preview), sha(before.route), `${id}-preview`);
     await checkAssets(config, manifest, work);
@@ -149,6 +186,7 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
     await checkPublic(config, manifest);
     await browserCheck(manifest, work, config.origin, 'live');
     const current = await takeSnapshot(client, manifest.release);
+    if (assets.length) current.assets = assets;
     const state = { schema: 1, active: manifest.release, routingSha256: sha(route.live), sourceCommit: manifest.sourceCommit, updatedAt: new Date().toISOString(), releases: [current, ...before.state.releases] };
     const note = `Hostinger production — managed by GitHub Actions\nWebsite: ${config.origin}/\nActive: public_html/${manifest.release}/\nSource: ${manifest.sourceCommit}\nWorkflow: https://github.com/${config.repository}/actions/runs/${process.env.GITHUB_RUN_ID || 'local'}\nRetention: current + two previous successful releases; encrypted backup before deletion.\nEdit docs/design/live-prototype/, then push/merge to GitHub main.\nDo not upload local preview index.html or manually edit managed releases.\n`;
     nextGuideBytes = Buffer.from(note); nextStateBytes = json(state);
@@ -193,8 +231,30 @@ export async function prepareCleanup(client, config, work, state) {
     await verifySnapshot(client, record, (path, bytes) => save(join(work, 'backup'), path, bytes));
     console.log(`Backed up ${record.name}`);
   }
+  let pool;
+  if (state.releases.some(r => r.assets?.length)) {
+    const root = await client.meta();
+    const unmanaged = root.items.filter(i => i.isDir && i.name.startsWith('synaiq-release-') && !state.releases.some(r => r.name === i.name)).map(i => i.name);
+    pool = { remove: [], blockedByUnmanaged: unmanaged };
+    // Unknown/failed candidates may still need shared assets. Preserve the pool until their
+    // directories have been separately reviewed and archived, instead of guessing dependencies.
+    if (!unmanaged.length) {
+      const referenced = new Set(state.releases.filter(r => plan.keep.includes(r.name)).flatMap(r => (r.assets || []).map(f => f.sharedPath)));
+      const tree = await client.tree(ASSET_ROOT);
+      assert.deepEqual(tree.dirs, [ASSET_ROOT], 'Unexpected shared asset subdirectory');
+      for (const file of tree.files) {
+        assetPath(file.path);
+        if (referenced.has(file.path)) continue;
+        assert.ok(!routing.includes(file.path), 'Unreferenced shared asset is still routed');
+        const bytes = await client.read(file.path, file.size), hash = sha(bytes);
+        assert.equal(file.path.split('/')[1].split('.')[0], hash, 'Orphan asset differs from its hash address');
+        await save(join(work, 'backup'), file.path, bytes);
+        pool.remove.push({ ...file, sha256: hash });
+      }
+    }
+  }
   await client.guard('.htaccess', state.routingSha256);
-  await save(work, 'cleanup-plan.json', { ...plan, routingSha256: state.routingSha256, stateSha256: sha(json(state)) });
+  await save(work, 'cleanup-plan.json', { ...plan, ...(pool ? { pool } : {}), routingSha256: state.routingSha256, stateSha256: sha(json(state)) });
   return plan;
 }
 export async function prune(client, config, work, state, receipt, id) {
@@ -218,6 +278,19 @@ export async function prune(client, config, work, state, receipt, id) {
     await client.removeRelease(name);
     await appendFile(join(work, 'cleanup-operations.jsonl'), JSON.stringify({ phase: 'delete-verified', name }) + '\n');
     console.log(`Removed archived ${name}`);
+  }
+  if (plan.pool?.remove.length) {
+    const root = await client.meta();
+    assert.ok(!root.items.some(i => i.isDir && i.name.startsWith('synaiq-release-') && !state.releases.some(r => r.name === i.name)), 'New unmanaged candidate; shared asset cleanup stopped');
+    const referenced = new Set(state.releases.filter(r => plan.keep.includes(r.name)).flatMap(r => (r.assets || []).map(f => f.sharedPath)));
+    for (const file of plan.pool.remove) {
+      assetPath(file.path); assert.ok(!referenced.has(file.path));
+      assert.equal(sha(await readFile(join(work, 'backup', file.path))), file.sha256);
+      await client.guard('.htaccess', plan.routingSha256); await client.guard(STATE, plan.stateSha256);
+      await appendFile(join(work, 'cleanup-operations.jsonl'), JSON.stringify({ phase: 'asset-delete-intent', path: file.path, archiveSha256: receipt.archiveSha256 }) + '\n');
+      await client.removeAsset(file.path, file.sha256);
+      await appendFile(join(work, 'cleanup-operations.jsonl'), JSON.stringify({ phase: 'asset-delete-verified', path: file.path }) + '\n');
+    }
   }
   const next = { ...state, releases: state.releases.filter(r => plan.keep.includes(r.name)), lastBackup: receipt.tag };
   await client.replace(STATE, json(next), plan.stateSha256, `${id}-pruned-state`);
