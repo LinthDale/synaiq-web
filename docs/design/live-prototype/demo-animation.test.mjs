@@ -9,7 +9,7 @@ test('knowledge demo explains a sample purchasing process without claiming page-
   for (const locale of ['zh-Hant', 'en']) {
     const messages = getMessages(locale);
     const m = messages.demo;
-    const html = renderAnimatedDemo({ locale, messages });
+    const html = renderAnimatedDemo({ locale, messages, initialScene: 'knowledge' });
     assert.doesNotMatch(html, /第\s*12\s*頁|page\s*12|第十二條|保固|warranty|Procurement_Contract/i);
     assert.match(m.question, locale === 'en' ? /laptop/i : /筆電/);
     assert.match(m.answer, locale === 'en' ? /purpose.*specs.*budget/i : /用途.*規格.*預算/);
@@ -34,7 +34,7 @@ test('animation progresses from pointer click to answer and original source', ()
 
 test('demo is a labeled animation, not a functioning product form', () => {
   const html = renderAnimatedDemo();
-  assert.match(html, /自動播放的操作情境動畫/);
+  assert.match(html, /KIP 決策與知識功能示例/);
   assert.match(html, /data-demo-pause/);
   assert.match(html, /示例資料/);
   assert.doesNotMatch(html, /<form|<input|<textarea|iframe|synaiq-ai\.com/);

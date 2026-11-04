@@ -84,7 +84,7 @@ test('solutions disclosure leads to three internal product stories', () => {
 
 // The work page now defaults to its overview; one case's own sections are covered below.
 const pageSections = {
-  home: ['wally', 'proof', 'footer'],
+  home: ['proof', 'advantages', 'footer'],
   kip: ['process', 'architecture', 'advantages', 'proof'],
   ems: ['story', 'process', 'capabilities', 'proof'],
   pvsim: ['story', 'process', 'capabilities', 'proof'],

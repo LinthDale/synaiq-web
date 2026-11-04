@@ -37,7 +37,8 @@ test('paper demo preserves responsive navigation, notebook and localized send co
             const send=page.locator('.film-send');
             assert.equal((await send.innerText()).trim(),locale==='en'?'Send':'寄出');
             await send.locator('img').evaluate(i=>i.decode());
-            assert.equal(await page.locator('.film-product-logo img').getAttribute('alt'),'Synaiq');
+            assert.equal(await page.locator('.film-wordmark, .film-product-logo, .film-wordmark-label').count(),0);
+            assert.equal(await page.locator('.film-logo img').getAttribute('alt'),'tAistro');
             if(width<700) {
               await page.locator('[data-demo-sidebar-toggle]').click();
               assert.equal(await page.locator('.film-sidebar').isVisible(),true);

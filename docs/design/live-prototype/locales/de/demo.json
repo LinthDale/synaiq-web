@@ -1,13 +1,13 @@
 {
-  "groupLabel": "Animierte Synaiq KIP-Ablaufvorschau mit Beispieldaten, kein verbundenes Produkt",
+  "groupLabel": "KIP Entscheidungs- und Wissensbeispiele, kein verbundenes Produkt",
   "playbackLabel": "DAS PRODUKT IN AKTION",
   "replay": "Wiederholen",
   "pause": "Animation pausieren",
   "play": "Animation abspielen",
   "reducedMotion": "Reduzierte Bewegung: Standbildvorschau",
-  "productTitle": "Synaiq KIP / Wissensplattform",
+  "productTitle": "Synaiq KIP Entscheidungshilfe",
   "productNote": "Gestaltungsstudie · Beispieldaten",
-  "productLabel": "KIP Wissensplattform",
+  "productLabel": "KIP Entscheidungshilfe",
   "history": "Gespräche",
   "close": "Schließen",
   "collapse": "Schließen",
@@ -58,12 +58,13 @@
   ],
   "libraryNote": "Alle Inhalte sind Beispieldaten.",
   "chaptersLabel": "Schritte der Animation",
+  "chapterHint": "Kapitel zum Abspielen wählen · Jederzeit pausieren oder erneut abspielen",
   "chapters": [
     "In eigenen Worten fragen",
     "Der Quelle folgen",
     "Dokumente organisieren"
   ],
-  "note": "Animierte Klicks und Einblendungen · Beispieldaten · Keine Live-Produktsitzung",
+  "note": "Funktionsbeispiel · Beispieldaten · Keine Live-Verbindung",
   "booth": {
     "label": "Synaiq KIP-Vorführraum",
     "previous": "Vorherige Animation",
@@ -71,28 +72,32 @@
     "select": "Funktionsanimation auswählen",
     "nowShowing": "JETZT ZU SEHEN",
     "titles": [
+      "Unternehmerische Entscheidungen",
+      "Gewinn- und Verlustanalyse",
       "Fragen zum Wissen",
       "Bilder mit Worten finden",
       "Mit einem Bild suchen"
     ],
     "descriptions": [
+      "Drei Optionen vergleichen und die Belege und Bedingungen einer Empfehlung verstehen.",
+      "Perioden vergleichen, Ursachen prüfen und den Gewinn in Verbesserungsszenarien berechnen.",
       "Vom Beschaffungsbedarf zum passenden Ablauf und seiner Quelle.",
       "Beschreiben Sie das gesuchte Bild, ohne den Dateinamen kennen zu müssen.",
-      "Finden Sie anhand eines Referenzbilds visuell verwandte Inhalte."
+      "Von einem Referenzbild zu Oberflächenbildern mit ähnlichem Layout."
     ],
-    "collection": "Beispielsammlung / Produktbilder",
+    "collection": "Beispielbibliothek / KIP-Oberflächen",
     "resultLabel": "SUCHERGEBNISSE",
     "resultCount": "3 Beispielbilder",
     "candidate": "Datei ansehen ↗",
     "original": "ORIGINALDATEI",
     "fileLabel": "Dateiname",
     "folderLabel": "Speicherort",
-    "folder": "Beispielsammlung / Wally-Serie",
+    "folder": "Beispielbibliothek / KIP-Oberflächen",
     "example": "Beispielhafter Ablauf, keine Live-Suchergebnisse",
-    "imageAlt": "Wally-Produktbild als Beispiel",
+    "imageAlt": "KIP-Oberflächenkonzept",
     "open": "Original ansehen ↗",
     "textImage": {
-      "query": "Ein Empfangsroboter mit großem Bildschirm und mobiler Basis",
+      "query": "Finde Oberflächenbilder mit einer Tabelle zum Investitionsvergleich",
       "loading": "Beschreibung mit visuellen Merkmalen verbinden…",
       "matching": "Von der Beschreibung zum Bild – die Quelle bleibt erreichbar.",
       "chapters": [
@@ -102,14 +107,280 @@
       ]
     },
     "imageImage": {
-      "query": "Produktbilder mit ähnlichem Aussehen finden",
-      "loading": "Bilder mit ähnlichem Aussehen suchen…",
-      "matching": "Visuell verwandte Inhalte anhand eines Referenzbilds entdecken.",
+      "query": "Finde Oberflächenbilder mit ähnlichem Layout",
+      "loading": "Layouts vergleichen und ähnliche Bilder suchen…",
+      "matching": "Vom Referenzbild aus Oberflächenbilder mit ähnlichem Layout erkunden.",
       "chapters": [
         "Referenzbild auswählen",
-        "Ähnliche Bilder vergleichen",
+        "Ähnliche Layouts vergleichen",
         "Bildquelle nachvollziehen"
       ]
-    }
+    },
+    "imageNames": [
+      "Investitionsvergleich",
+      "Wissensfragen",
+      "Wissenszentrum"
+    ]
+  },
+  "decision": {
+    "title": "Unternehmerische Entscheidungen",
+    "description": "Drei Optionen vergleichen und die Belege und Bedingungen einer Empfehlung verstehen.",
+    "scrollHint": "Automatische Gesprächsfolge · pausieren, wiederholen oder Abschnitt wählen",
+    "chapters": [
+      "Frage & Belege",
+      "Optionen vergleichen",
+      "Rat & Bedingungen"
+    ],
+    "question": "Vergleichen Sie drei Investitionsoptionen. Welche sollte zuerst kommen und warum?",
+    "context": "Zuerst Ziel und Grenzen klären, dann Informationen zu vergleichbaren Optionen ordnen.",
+    "inputs": [
+      [
+        "Optionen",
+        "A: Neue Ausrüstung. B: Markterschließung. C: Prozessverbesserung."
+      ],
+      [
+        "Bedingungen",
+        "Investition, Eintrittswahrscheinlichkeit des Nutzens, Finanzierungsgrenze und Liquiditätsreserve."
+      ]
+    ],
+    "evidenceLabel": "Belege und fehlende Eingaben des Beispiels prüfen",
+    "evidence": "Die Darstellung übernimmt die bereitgestellte Produktanalyse. Originaldokumente, Formel, Zeitraum und Währung fehlen und müssen vor einer echten Entscheidung geprüft werden. Das Demo berechnet die Ergebnisse nicht neu.",
+    "comparisonTitle": "Ein gemeinsamer Maßstab macht Unterschiede sichtbar.",
+    "metric": "Erwarteter Nettonutzen · Werte in Einheiten von 10.000 wie bereitgestellt",
+    "columns": [
+      "Option",
+      "Erwarteter Nettonutzen",
+      "Abwägung"
+    ],
+    "rows": [
+      [
+        "A | Neue Ausrüstung",
+        "38.25",
+        "Höherer Nutzen bei höherem Investitionsbedarf."
+      ],
+      [
+        "C | Prozessverbesserung",
+        "36",
+        "Bei höherer Eintrittswahrscheinlichkeit und kleinerer Investition erwägen."
+      ],
+      [
+        "B | Markterschließung",
+        "24",
+        "Geringere Eintrittswahrscheinlichkeit und höhere Unsicherheit."
+      ]
+    ],
+    "ranking": "Rangfolge nach erwartetem Nettonutzen: A > C > B",
+    "numberNote": "Werte aus dem bereitgestellten Beispiel; keine Live-Berechnung, Investitionsbeträge oder garantierten Erträge.",
+    "recommendationTitle": "Andere Prioritäten können zu einer anderen Wahl führen.",
+    "recommendations": [
+      [
+        "Nutzen zuerst → A: Neue Ausrüstung",
+        "A erwägen, wenn ein höherer Nutzen im Vordergrund steht und die höhere Investition tragbar ist."
+      ],
+      [
+        "Wahrscheinlichkeit und Umfang zuerst → C",
+        "C erwägen, wenn eine höhere Eintrittswahrscheinlichkeit und eine kleinere Investition wichtiger sind."
+      ]
+    ],
+    "reassessTitle": "Bei diesen Änderungen neu bewerten",
+    "conditions": [
+      "Eintrittswahrscheinlichkeit oder jährlicher Nutzen ändern sich.",
+      "Anfangsinvestition, Finanzierungsgrenze oder Liquiditätsanforderungen ändern sich.",
+      "Vor der Investition Finanzierbarkeit sowie alle Eingaben und Berechnungen prüfen."
+    ],
+    "boundary": "KIP liefert Analysen und Empfehlungen. Die endgültige Entscheidung trifft der Mensch.",
+    "screenQuestion": "Welche von drei Optionen sollte zuerst kommen?",
+    "screenNote": "Bereitgestelltes Beispiel · Eingaben und Formel prüfen",
+    "screenA": "Nutzen zuerst: A erwägen.",
+    "screenC": "Wahrscheinlichkeit und Kapitaleinsatz zuerst: C erwägen.",
+    "screenConditions": "Geänderte Bedingungen erfordern eine Neubewertung.",
+    "topic": "Drei Optionen vergleichen",
+    "screenMetric": "Erwarteter Nettonutzen (Einheiten von 10.000)",
+    "questions": [
+      "Ich möchte Investitionsoptionen vergleichen. Welche Angaben benötige ich zuerst?",
+      "Die Optionen sind A: neue Anlagen, B: Marketingausbau und C: Prozessverbesserung. Vergleiche den erwarteten Nettonutzen anhand der vorliegenden Analyse.",
+      "Ändert sich die Empfehlung, wenn Erfolgswahrscheinlichkeit und Investitionsumfang wichtiger sind? Wann müssen wir neu bewerten?"
+    ]
+  },
+  "profit": {
+    "title": "Gewinn- und Verlustanalyse",
+    "description": "Perioden vergleichen, Ursachen prüfen und den Gewinn in Verbesserungsszenarien berechnen.",
+    "topic": "GuV im Periodenvergleich",
+    "evidenceLabel": "Daten und Berechnungen ansehen",
+    "thinking": "Finanz-, Vertriebs- und Einkaufsdaten werden verglichen…",
+    "chapters": [
+      "Perioden vergleichen",
+      "Ursachen prüfen",
+      "Szenarien berechnen"
+    ],
+    "questions": [
+      "Vergleiche die GuV der Vorperiode mit der aktuellen Periode. Ermittle die drei wichtigsten Auffälligkeiten, berechne die Veränderungen und erläutere die Prioritäten.",
+      "Prüfe Produktumsätze und Rohstoffeinkäufe gemeinsam. Warum sank die Bruttomarge? Trenne belegte Fakten, plausible Schlussfolgerungen und noch ungeklärte Faktoren.",
+      "Wie hoch wären Bruttogewinn und Betriebsergebnis bei 28% bzw. 30% Bruttomarge, wenn Umsatz und Betriebsaufwand bei 12 Mio. bzw. 2,4 Mio. NT$ bleiben?"
+    ],
+    "turns": [
+      {
+        "intro": "Der Umsatz stieg, das Betriebsergebnis sank. Zunächst werden beide Perioden gegenübergestellt.",
+        "table": {
+          "caption": "Monatliche GuV | Einheit: 10.000 NT$",
+          "columns": [
+            "Position",
+            "Vorperiode",
+            "Aktuell",
+            "Änderung"
+          ],
+          "rows": [
+            [
+              "Umsatz",
+              "1.000",
+              "1.200",
+              "+20%"
+            ],
+            [
+              "Umsatzkosten",
+              "700",
+              "900",
+              "+28,6%"
+            ],
+            [
+              "Bruttogewinn",
+              "300",
+              "300",
+              "0%"
+            ],
+            [
+              "Betriebsaufwand",
+              "200",
+              "240",
+              "+20%"
+            ],
+            [
+              "Betriebsergebnis",
+              "100",
+              "60",
+              "−40%"
+            ]
+          ]
+        },
+        "points": [
+          [
+            "1 | Mehr Umsatz, unveränderter Bruttogewinn",
+            "Die Kosten stiegen um 28,6%, der Umsatz um 20%. Die Bruttomarge sank von 30% auf 25%, also um 5 Prozentpunkte."
+          ],
+          [
+            "2 | Betriebsergebnis um 40% gesunken",
+            "Das Betriebsergebnis sank von 1 Mio. auf 600.000 NT$, also um 400.000 NT$."
+          ],
+          [
+            "3 | Betriebsaufwand um 20% gestiegen",
+            "Der Aufwand stieg von 2 Mio. auf 2,4 Mio. NT$. Bei unverändertem Bruttogewinn mindern die zusätzlichen 400.000 NT$ direkt das Betriebsergebnis."
+          ]
+        ],
+        "conclusion": "Zuerst prüfen, warum die Kosten steigen und der Bruttogewinn nicht mit dem Umsatz wächst. Danach die zusätzlichen Aufwendungen und ihre Berechtigung untersuchen.",
+        "evidence": [
+          "Quelle: Arbeitsmappe 01 — GuV und Produkteinkauf / Monatliche GuV.",
+          "Änderung = (aktuell − Vorperiode) ÷ Vorperiode. Bruttomarge = Bruttogewinn ÷ Umsatz: 300 ÷ 1.000 = 30%; 300 ÷ 1.200 = 25%."
+        ]
+      },
+      {
+        "intro": "Produktmargen mit Materialpreisen abgleichen und belegte Fakten von Erklärungen trennen.",
+        "table": {
+          "caption": "Bruttomarge nach Produkt | Ergebnisse des angegebenen Demo-Dialogs",
+          "columns": [
+            "Produkt",
+            "Vorperiode",
+            "Aktuell",
+            "Änderung"
+          ],
+          "rows": [
+            [
+              "Standardteil A",
+              "35%",
+              "30%",
+              "−5 Prozentpunkte"
+            ],
+            [
+              "Sonderteil B",
+              "25%",
+              "20%",
+              "−5 Prozentpunkte"
+            ],
+            [
+              "Präzisionsteil C",
+              "15%",
+              "20%",
+              "+5 Prozentpunkte"
+            ]
+          ]
+        },
+        "points": [
+          [
+            "Fakt | Höhere Materialpreise",
+            "Stahl stieg von 50 auf 60 NT$/kg (+20%); Aluminium von 80 auf 84 NT$/kg (+5%)."
+          ],
+          [
+            "Schlussfolgerung | Materialpreise könnten Margen belasten",
+            "Die Margen von A und B sanken bei steigenden Materialpreisen. Materialkosten könnten ein Einflussfaktor sein; ihr vollständiger Beitrag ist nicht quantifiziert."
+          ],
+          [
+            "Ungeklärt | Bestände, Verbrauch und weitere Herstellungskosten",
+            "Einkäufe entsprechen nicht den Umsatzkosten der aktuellen Periode. Bestands-, Verbrauchs- und Kostendetails fehlen ebenso wie eine Erklärung für die Verbesserung bei Produkt C."
+          ]
+        ],
+        "conclusion": "Vor Preisverhandlungen oder Lieferantenalternativen die Kostenstruktur prüfen. Materialpreissteigerungen erklären nicht automatisch die gesamte Veränderung.",
+        "evidence": [
+          "Quellen: Produktvergleich im ausgewählten KIPialog; Arbeitsmappe 01 — GuV und Produkteinkauf / Rohstoffeinkaufsanalyse.",
+          "Hinweis der Quelle: Bestände, Verbrauch und weitere Herstellungskosten führen zu Unterschieden zwischen Einkauf und Umsatzkosten. Eine vollständige kausale Zuordnung ist nicht zulässig."
+        ]
+      },
+      {
+        "intro": "Bei 12 Mio. NT$ Umsatz und 2,4 Mio. NT$ Betriebsaufwand werden zwei Margenszenarien verglichen.",
+        "table": {
+          "caption": "Verbesserungsszenarien | Einheit: 10.000 NT$",
+          "columns": [
+            "Position",
+            "28% Marge",
+            "30% Marge"
+          ],
+          "rows": [
+            [
+              "Umsatz",
+              "1.200",
+              "1.200"
+            ],
+            [
+              "Bruttogewinn",
+              "336",
+              "360"
+            ],
+            [
+              "Betriebsaufwand",
+              "240",
+              "240"
+            ],
+            [
+              "Betriebsergebnis",
+              "96",
+              "120"
+            ]
+          ]
+        },
+        "points": [
+          [
+            "Szenario 1 | Bruttomarge von 28%",
+            "Bruttogewinn: 1.200 × 28% = 336; Betriebsergebnis: 336 − 240 = 96, also 36 mehr als aktuell (jeweils in 10.000 NT$)."
+          ],
+          [
+            "Szenario 2 | Bruttomarge von 30%",
+            "Bruttogewinn: 1.200 × 30% = 360; Betriebsergebnis: 360 − 240 = 120, also 60 mehr als aktuell (jeweils in 10.000 NT$)."
+          ]
+        ],
+        "conclusion": "Bei unverändertem Umsatz und Aufwand ergibt eine Marge von 30% ein um 240.000 NT$ höheres Betriebsergebnis als 28%. Die Rechnung ist an diese Annahmen gebunden; die Umsetzbarkeit der Maßnahmen muss geprüft werden.",
+        "evidence": [
+          "Grundlage: Bedingungen und Ergebnisse der dritten Runde desselben KIP-Beispieldialogs. Das aktuelle Betriebsergebnis beträgt 600.000 NT$.",
+          "Bruttogewinn = Umsatz × Bruttomarge; Betriebsergebnis = Bruttogewinn − Betriebsaufwand. Die Demo gibt Beispielrechnungen wieder und ist keine Live-Analyse."
+        ]
+      }
+    ]
   }
 }

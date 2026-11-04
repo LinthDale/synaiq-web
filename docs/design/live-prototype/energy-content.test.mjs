@@ -5,7 +5,7 @@ import { getMessages } from './i18n.js';
 
 for (const [product, render, destination] of [
   ['ems', renderEms, 'https://synaiq-ai.com/ems/#Monitor'],
-  ['pvsim', renderPvsim, 'https://synaiq-ai.com/solar/'],
+  ['pvsim', renderPvsim, 'https://www.pvsim.com.tw/'],
 ]) for (const locale of ['zh-Hant', 'en']) {
   test(`${product}/${locale} has a story, workflow, capabilities and an explicitly illustrative demo`, () => {
     const messages = getMessages(locale), m = messages[product];

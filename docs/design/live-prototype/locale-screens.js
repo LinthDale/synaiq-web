@@ -9,6 +9,7 @@ const catalogs = Object.fromEntries(await Promise.all(LOCALE_CONFIG.map(async ({
 export const screenMessages = Object.fromEntries(Object.entries(catalogs).map(([locale, catalog]) => {
   const demo = catalog.demo;
   const c = catalog.screens;
+  const d = demo.decision;
   const common = {
     description: c.description, productLabel: demo.productLabel,
     newChat: demo.newChat, recentQuestions: demo.recentQuestions,
@@ -16,6 +17,13 @@ export const screenMessages = Object.fromEntries(Object.entries(catalogs).map(([
     sourcesQuestion: demo.sourceTopic, workspace: demo.workspace, footer: demo.productNote,
   };
   return [locale, {
+    decision: {
+      ...common, description:catalog.home.products.screenAlt, title:demo.productTitle, conversationTopic:d.topic,
+      question:d.screenQuestion, metric:d.screenMetric,
+      optionA:d.rows[0][0], valueA:d.rows[0][1], optionC:d.rows[1][0], valueC:d.rows[1][1], optionB:d.rows[2][0], valueB:d.rows[2][1],
+      adviceA:d.screenA, adviceC:d.screenC, conditions:d.screenConditions,
+      note:d.screenNote,
+    },
     search: {
       ...common, title: c.searchTitle, breadcrumb: demo.breadcrumb,
       question: demo.question, avatar: demo.avatar, answerHeading: demo.answer,

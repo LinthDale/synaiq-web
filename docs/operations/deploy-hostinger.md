@@ -1,8 +1,56 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-10-28（Asia/Taipei）。
+最後更新：2026-11-04（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-11-04 iPhone Chrome 內容載入修正
+
+移除 `page.html` 重複執行 `locale-bootstrap.js` 的 module 入口，保留 modulepreload 並統一由 `prototype.js` 初始化。修正前 WebKit 26.0 在語系載入與頁面載入重疊時會無錯誤地停在「內容載入中」；同一瀏覽器回歸測試已先重現失敗，再驗證修正。
+
+[Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191) 完成發布、正式驗證、加密備份及保留清理。來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，正式目錄為 `public_html/synaiq-release-ci-41780885191-1/`，339 檔；CI 的 local／staged／live 各 52 組檢查通過。另以 WebKit 26.0 與 Chrome 對正式網址執行六頁 × 三語共 36 組手機檢查及 6 次語言切換，確認內容可見、載入提示已移除，而且入口 HTML 精確符合本次來源與版本路徑。
+
+獨立讀取主機 `.htaccess`、state 與維護入口驗證一致；路由 SHA-256 為 `cc92dbc61f62cf9f23a05e32204610789748864c45a90defaaa794304de2f347`。保留 `synaiq-release-ci-41780885191-1`、`synaiq-release-ci-41592808706-1`、`synaiq-release-ci-41409243321-1`；加密備份與完整證據保存在草稿 Release `hostinger-backup-41780885191-1`。
+
+先前 Run 41778203133 第 1 次執行在上傳前讀取舊版 `frame-022.webp` 時收到 403 而停止；獨立重讀確認 hash 正確、路由未變，才重跑。第 2 次上傳及 staged 52 組檢查通過，但舊首頁檢查以檔名結尾選取，誤用了排序較前的 `auth/index.html` 雜湊，因此回退至原路由。`69637d1` 將啟用前及回退的核對都改為精確選取 `<目前版本>/index.html`，新增有／無巢狀 index 的回歸測試，41 項部署測試通過；沒有放寬雜湊保護。失敗與成功證據分開保留在 `out/mobile-loading-20261104/`，主要檔案為 `failed-deployment-recheck.json`、`live-acceptance.json`、`host-verification.json`、`workflow-final.json` 及兩次加密失敗封存。
+
+## 2026-11-03 auth.taistro.com.tw 子網域
+
+依使用者最新要求，後續服務入口改用 `https://auth.taistro.com.tw/`。已在 Hostinger 的 `taistro.com.tw` 下建立 `auth` 子網域，根目錄為 `/home/u235694681/domains/synaiq.com/public_html/auth/`。使用獨立目錄，沒有轉址至主官網或 `/auth`。
+
+DNS 自動建立 `auth` ALIAS → `auth.taistro.com.tw.cdn.hstgr.net.`（TTL 300 秒）。2026-11-03 15:18（Asia/Taipei）確認 Cloudflare 公開 DNS 可解析，經 DNS over HTTPS 存取回應 200、憑證驗證成功且網址不變；目前顯示 Hostinger「Coming soon」預設頁。SSL 為 active、免費自動續期，HTTP → HTTPS 已啟用。比對前後 DNS，除新增 `auth` 外，所有既有記錄未改動。部分遞迴 DNS／本機仍有先前不存在的快取。
+
+接續方式見 [auth.taistro.com.tw](auth-handoff.md)。子網域檔案不由官網 CI 的 release 管理；後續可在該目錄部署，或將 `auth` DNS 改指向工程師的服務主機。設定、DNS 前後備份及 HTTPS 證據在 `out/auth-subdomain-20261103/`。
+
+同日較早依原始網址準備的 `/auth` 頁面來源為 `e6f1fff83c56ebcf040a26ba659ced4665b92c8e`，[Run 41592808706](https://github.com/LinthDale/synaiq-web/actions/runs/41592808706) 已通過 test job。15:19 主機觀察到路由切至 `synaiq-release-ci-41592808706-1`，但 deploy job 仍在驗證／收尾，state 與維護入口尚待 CI 更新；此時不能視為整個官網發布完成。沒有中斷主機變更或手動覆寫 CI 控制檔。後續交接使用上述子網域，不使用 `/auth`。
+
+## 2026-11-02 Demo 頂欄修正已上線
+
+來源 `23bfe6c105d0c8d0839aa5841838a9675c749177` 已推送 GitHub `main`，[Run 41409243321](https://github.com/LinthDale/synaiq-web/actions/runs/41409243321) 於 16:20（Asia/Taipei）完成部署、驗證、備份及保留清理。正式目錄為 `public_html/synaiq-release-ci-41409243321-1/`。
+
+依使用者補充註解，移除五個 Demo 共用頂欄右側的 Synaiq logo 與產品文字標籤（繁中「KIP 決策輔助」），保留左側 tAistro。延續同日 KIP 改版與 PVsim `https://www.pvsim.com.tw/` 連結修正，未修改 Demo 對話或播放方式。
+
+驗證：39 項部署測試、221 項網站測試通過（5 項既有跳過）、32 項 repository 測試及 Astro 建置成功；local／staged／live 各 52 組瀏覽器檢查通過。338 個檔案主機 SHA-256 與公開資源驗證成功。另在正式繁中首頁逐一切換五個 Demo，確認每個頂欄只有載入成功的 tAistro 圖片、無右側文字；正式 PVsim 頁按鈕 href 確認為指定網址，瀏覽器無錯誤。畫面與檢查紀錄見 `out/kip-copy-20261102/independent-public-demo-41409243321.json`。
+
+加密草稿 Release `hostinger-backup-41409243321-1` 保存 `backup.tar.gz.enc`（58,801,330 bytes）與 `evidence.tar.gz.enc`（58,801,843 bytes）。保留本次版本、`synaiq-release-ci-41406663947-1`、`synaiq-release-ci-40656230546-1`；`synaiq-release-ci-38330034089-1` 已經備份、下載驗證及重驗後移除。主機私有維護入口已同步，歷史失敗目錄及 WordPress 未動。
+
+發布後獨立唯讀 audit 通過：現行 338 檔逐檔雜湊、路由與 state 一致，三個保留版本目錄及檔案清單正確。路由 SHA-256：`c3866867fcc6647792346bbaf6a9ae736b6102c6856f55244790e42dbb96770b`；state SHA-256：`3e0862029d6a08f0454e8ddb4deeb7373809399b2740cb86eac09d6b5e8de4d4`；私有維護入口 SHA-256：`a66b5eca0e10cd0a647b0078d5ca18732778141bbd0b0bf30dc41c21fdf94bef`。
+
+完整 CI 證據在 `out/kip-copy-20261102/github-run-41409243321-complete.log` 及上述草稿 Release；本機網站測試在 `out/kip-copy-20261102/test-design-demo-header.log`；獨立主機核對與控制檔原文在 `out/hostinger-ci/audit-20261102-kip-demo-final/`。
+
+## 2026-11-02 KIP 經營決策與推理平台改版發布
+
+來源 `800791b018a378b7661f3a27ca1d59b93c6557e7` 已推送 GitHub `main`，[Run 41406663947](https://github.com/LinthDale/synaiq-web/actions/runs/41406663947) 於 15:55（Asia/Taipei）完成部署、驗證、備份與保留清理。發布目錄為 `public_html/synaiq-release-ci-41406663947-1/`。
+
+內容包含 KIP「企業經營決策與推理平台」定位、經營決策／損益分析等五個一致操作的 Demo、位於介面下方的章節控制、背景滾動動畫 243 幀、可展開及貼回的核心優勢紙條，以及產業觀察的占比推算年複合成長呈現。PVsim 產品頁外部按鈕已改連 `https://www.pvsim.com.tw/`。來源功能提交 `ccc97f2`、PVsim 連結修正 `710c647`。
+
+驗證：39 項部署測試、221 項網站測試通過（5 項既有跳過）、32 項 repository 測試及 Astro 建置成功；local／staged／live 各 52 組瀏覽器檢查通過。338 個發布檔案已逐檔上傳及核對主機 SHA-256，公開資源與 CDN 圖片驗證成功。另從正式網址目視確認首頁大標、背景與產品展示，並讀取 PVsim 按鈕確認目的網址；瀏覽器無錯誤。
+
+加密備份草稿 `hostinger-backup-41406663947-1` 保存 `backup.tar.gz.enc`（58,755,282 bytes）與 `evidence.tar.gz.enc`（58,755,737 bytes）。此次保留 `synaiq-release-ci-41406663947-1`、`synaiq-release-ci-40656230546-1`、`synaiq-release-ci-38330034089-1`；`synaiq-release-ci-38254033687-1` 已在完整備份與重驗後移除。未納管的失敗目錄及 WordPress 保留。
+
+本次中途狀態：Run `41404675075` 依使用者叫停，在上傳前取消以補上 PVsim 網址；Run `41405851048` 在上傳前因單條精確檔名白名單路由過長停止。`800791b` 將白名單分成每條小於 8,000 bytes 的精確規則並補上回歸檢查，未放寬公開範圍。兩次停止都沒有切換正式入口。成功後接到使用者移除 Demo 右上角產品 logo 與標籤的補充要求，另以來源 `23bfe6c` 接續發布，結果另記。
+
+證據：`out/kip-copy-20261102/github-run-41406663947-complete.log`、`release-failed-41405851048.log`、`out/hostinger-ci/audit-20261102-kip-launch/`，以及上述 GitHub 草稿加密備份。保留所有失敗與取消紀錄，未重用歷史發布目錄。
 
 ## 2026-10-28 三語版本已上線，LiteSpeed 路由基準已修復
 

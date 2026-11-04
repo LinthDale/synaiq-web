@@ -1,10 +1,12 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-10-28。
+給工程師及新的 AI session。最後核對：2026-11-04。
+
+2026-11-03 新增 `auth.taistro.com.tw` 子網域，接續方式見 [auth 子網域](auth-handoff.md)。目錄為 `public_html/auth/`，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 的網站更新／合併會自動測試、部署、清快取，再加密備份並保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；最近成功發布為 [Run 40656230546](https://github.com/LinthDale/synaiq-web/actions/runs/40656230546)（2026-10-28），三語版本與瀏覽器語言選擇已上線。現行目錄為 `public_html/synaiq-release-ci-40656230546-1/`；92 檔主機雜湊、公開資源與三語操作已獨立核對，詳見 [部署紀錄](deploy-hostinger.md)。後續以主機 `.htaccess` 及 Actions summary 為準。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 的網站更新／合併會自動測試、部署、清快取，再加密備份並保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；最近成功發布為 [Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191)（2026-11-04），修正 iPhone Chrome 卡在「內容載入中」的 WebKit 相容性問題。來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，現行目錄為 `public_html/synaiq-release-ci-41780885191-1/`（339 檔）；local／staged／live 各 52 組瀏覽器檢查通過，另以 WebKit 26.0 與 Chrome 完成正式站六頁、三語共 36 組手機檢查及語言切換，主機路由與 state 一致，詳見 [部署紀錄](deploy-hostinger.md)。後續以主機 `.htaccess` 及 Actions summary 為準。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 

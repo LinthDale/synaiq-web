@@ -97,16 +97,20 @@ export async function audit(client, config, work, repair = null) {
 }
 export async function publicChecks(config, manifest, root = true) {
   const paths = root ? ['/', '/?page=ems&lang=en', '/?page=pvsim&lang=zh-Hant', '/robots.txt', '/sitemap.xml'] : [`/${manifest.release}/index.html`];
+  if (root && manifest.files.some(file => file.path === 'auth/index.html')) paths.push('/auth', '/auth/', '/auth?handoff=1');
   for (const path of paths) {
     const response = await request(new URL(path, config.origin));
     assert.equal(response.status, 200, `${path}: public HTTP ${response.status}`);
-    const file = /\.(txt|xml)$/.test(path) ? path.slice(1) : 'index.html';
+    const file = /^\/auth(?:[/?]|$)/.test(path) ? 'auth/index.html' : /\.(txt|xml)$/.test(path) ? path.slice(1) : 'index.html';
     assert.equal(sha(Buffer.from(await response.arrayBuffer())), manifest.files.find(f => f.path === file).sha256, `${path}: public version mismatch`);
     assert.match(response.headers.get('cache-control') || '', /no-cache/, `${path}: document cache policy missing`);
   }
   for (const path of ['/' + STATE, '/' + GUIDE, '/wp-admin/', '/wp-json/', '/index.php']) {
     const response = await request(new URL(path, config.origin));
     assert.equal(response.status, 410, `${path}: private or retired path exposed`);
+  }
+  if (root && manifest.files.some(file => file.path === 'auth/index.html')) {
+    assert.equal((await request(new URL('/auth/not-configured', config.origin))).status, 410);
   }
   assert.equal((await request(new URL('/wp-content/uploads/2026/03/toutou-2.png', config.origin))).status, 200);
 }
@@ -119,6 +123,8 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
   assert.equal(local.status, 'passed'); assert.equal(local.release, manifest.release); assert.equal(local.sourceCommit, manifest.sourceCommit);
   console.log('Auditing current routing and release hashes');
   const before = await inspect(client, config, work, reviewedRoutingRepair);
+  const previousIndex = before.state.releases[0].files.find(file => file.path === `${before.state.active}/index.html`);
+  assert.ok(previousIndex, 'Current release homepage is missing from the snapshot');
   assert.equal(await client.meta(manifest.release, true), null, 'Release exists; inspect instead of replaying upload');
   const route = buildRouting(before.route.toString(), manifest.release, manifest.files.map(f => f.path));
   await save(work, 'routing-preview.htaccess', route.preview); await save(work, 'routing-live.htaccess', route.live);
@@ -137,7 +143,7 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
     // The old homepage must still be served during staging.
     const root = await getPublic(config.origin);
     assert.equal(root.status, 200);
-    assert.equal(sha(Buffer.from(await root.arrayBuffer())), before.state.releases[0].files.find(f => f.path.endsWith('/index.html')).sha256);
+    assert.equal(sha(Buffer.from(await root.arrayBuffer())), previousIndex.sha256);
     await client.replace('.htaccess', Buffer.from(route.live), sha(route.preview), `${id}-live`);
     await client.purge();
     await checkPublic(config, manifest);
@@ -161,7 +167,7 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
         await client.purge();
         const response = await getPublic(config.origin);
         assert.equal(response.status, 200);
-        assert.equal(sha(Buffer.from(await response.arrayBuffer())), before.state.releases[0].files.find(f => f.path.endsWith('/index.html')).sha256);
+        assert.equal(sha(Buffer.from(await response.arrayBuffer())), previousIndex.sha256);
         await save(work, 'rollback.json', { status: 'verified', active: before.state.active, routingSha256: sha(before.route) });
       } else assert.equal(sha(actual), sha(before.route), 'Routing changed externally; automatic rollback stopped');
       // If control files were already updated, restore only this run's known content.

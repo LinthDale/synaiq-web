@@ -68,10 +68,10 @@ test('motion settings control real reveal, repeat, pause and final-frame behavio
     }
 
     await t.test('resizing does not consume another product appearance; new CSS timings reach each layer', async () => {
-      const { page, close } = await open('--product-reveal-count:2; --product-screen-duration:2s; --product-paper-duration:3s; --product-wally-duration:4s;');
+      const { page, close } = await open('--product-reveal-count:2; --product-screen-duration:2s; --product-paper-duration:3s;');
       try {
         await enter(page);
-        for (const [selector, expected] of [['.main-screen', '2s'], ['.source-paper', '3s'], ['.stage-devices', '4s']]) {
+        for (const [selector, expected] of [['.main-screen', '2s'], ['.source-paper', '3s']]) {
           const actual = await page.locator(`[data-product-reveal] ${selector}`).evaluate(el => {
             const style = getComputedStyle(el);
             return style.transitionDuration.split(',').map(x => x.trim())[style.transitionProperty.split(',').map(x => x.trim()).indexOf('transform')];

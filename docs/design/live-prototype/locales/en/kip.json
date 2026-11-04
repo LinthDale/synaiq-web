@@ -1,37 +1,41 @@
 {
   "eyebrow": "Synaiq KIP",
-  "productLabel": "KIP Knowledge Intelligence Platform",
+  "productLabel": "KIP｜A platform for business decisions and reasoning",
   "title": [
-    "Ask naturally.",
-    "Answer precisely.",
-    "Stay connected."
+    "Understand business changes.",
+    "Calculate",
+    "decision impacts."
   ],
-  "intro": "Turn scattered company documents into a knowledge hub that answers questions with sources you can check.",
+  "intro": "Built on proprietary algorithms, KIP retrieves evidence from enterprise knowledge and combines reasoning with computation. Analyze business anomalies, calculate scenarios and compare options, with data and calculations behind every judgment.",
   "cta": "Discuss your use case",
   "sceneCaption": "Interface concept · Not an actual product screenshot",
-  "screenAlt": "A paper-textured Synaiq KIP knowledge-search concept showing a question, answer and source from a fictional equipment purchasing process",
-  "sourceLabel": "A source you can check",
-  "sampleQuestion": "How do I request a laptop for a new colleague?",
-  "sampleAnswer": "Request details: purpose, specs and budget. ",
-  "sampleHighlight": "After manager approval, Purchasing gets quotes and orders. Inspect on arrival.",
-  "sampleCitation": "Equipment_Purchasing_Sample.pdf",
+  "screenAlt": "KIP concept comparing three options, expected net benefits and conditional recommendations; not a live calculation or product screenshot",
+  "sourceLabel": "Recommendation and conditions",
+  "sampleQuestion": "Which of three investment options should come first?",
+  "sampleAnswer": "A ranks first by the example’s expected net benefit; ",
+  "sampleHighlight": "consider C when success probability and a smaller investment matter more.",
+  "sampleCitation": "Supplied analysis example · Original inputs and formula need verification",
   "sceneNote": "Sample data",
   "processTitle": [
-    "From documents,",
-    "to knowledge you can use."
+    "Retrieve, reason and calculate.",
+    "Support business decisions."
   ],
   "steps": [
     [
-      "Bring in your data",
-      "PDFs, Word files, spreadsheets, scans, handwriting and images—all in one place."
+      "Retrieve evidence",
+      "Find the data and sources needed to address a question in enterprise documents and reports."
     ],
     [
-      "Parse automatically",
-      "Read the content, reconstruct tables and follow processing progress."
+      "Reason through the problem",
+      "Consider objectives and constraints, separating facts, reasonable inferences and open questions."
     ],
     [
-      "Make it searchable",
-      "Ask in your own words, then check the original document."
+      "Calculate and compare",
+      "Use data and assumptions to calculate costs, benefits and outcomes across scenarios."
+    ],
+    [
+      "Support decisions",
+      "Compare options and their conditions to provide a basis for business judgment."
     ]
   ],
   "architectureLabel": "The architecture behind an answer.",
@@ -59,18 +63,22 @@
     ]
   ],
   "proofTitle": [
-    "Ask a question.",
-    "Go straight to the source."
+    "Start with a business question.",
+    "Explore the analysis and calculations."
   ],
   "proofCopy": [
-    "Intelligent Knowledge Search (IKS) links questions to documents. Knowledge Center (KC) handles ingestion, parsing and collections.",
-    "Answers and sources appear together, so every search can be checked."
+    "Compare investment options and changes in profit, investigate causes and calculate outcomes under different conditions.",
+    "Follow the conversation through retrieved evidence, analysis and calculation assumptions."
   ],
   "capabilitiesTitle": [
     "Connect it all",
     "to everyday work."
   ],
   "capabilities": [
+    [
+      "Business analysis and scenario calculations",
+      "Analyze changes in profit, compare investments and calculate outcomes under different conditions."
+    ],
     [
       "API / MCP integration",
       "Connect to your existing enterprise systems."

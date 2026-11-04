@@ -32,11 +32,11 @@ test('no website typography declarations can be left outside tokens.css', async 
   }
 });
 
-test('only the knowledge-hub phrase is marked in the Home title', () => {
+test('only the reasoning-platform phrase is marked in the Home title', () => {
   const home = renderHome({ advantageSection: () => '', contact: () => '' });
   const title = home.match(/<h1>(.*?)<\/h1>/s)[1];
-  assert.match(title, /class="title-phrase">變成隨問隨答的<\/span>/);
-  assert.match(title, /class="title-phrase title-knowledge">知識中樞<\/span>/);
+  assert.match(title, /class="title-phrase">與<\/span>/);
+  assert.match(title, /class="title-phrase title-knowledge">推理平台<\/span>/);
   assert.equal((title.match(/title-knowledge/g) ?? []).length, 1);
   assert.ok(hasDeclaration('tokens.css', '.home-opening h1 .title-knowledge', 'text-decoration-line', 'underline'));
   assert.ok(hasDeclaration('tokens.css', '.home-opening h1 .title-knowledge', 'text-underline-offset', 'var(--hero-underline-offset)'));
@@ -62,11 +62,11 @@ test('the Contents label has its own searchable setting, separate from menu link
   assert.ok(hasDeclaration('tokens.css', '.page-context-label', 'font-size', 'var(--nav-context-label-size)'));
 });
 
-test('Home emphasizes only K I P without changing the eyebrow text in either language', async () => {
+test('Home emphasizes K I P in the approved full product name in either language', async () => {
   for (const locale of ['zh-Hant', 'en']) {
     const html = renderHome({ locale, advantageSection: () => '', contact: () => '' });
     const label = html.match(/<p class="eyebrow">(.*?)<\/p>/s)[1];
-    assert.equal(label.replace(/<[^>]+>/g, ''), 'KNOWLEDGE INTELLIGENCE PLATFORM');
+    assert.equal(label.replace(/<[^>]+>/g, ''), 'Knowledge Intelligence Platform');
     assert.deepEqual([...label.matchAll(/<span class="eyebrow-initial">(.*?)<\/span>/g)].map(match => match[1]), ['K', 'I', 'P']);
   }
   assert.ok(hasDeclaration('tokens.css', '.home-opening .eyebrow-initial', 'font-size', 'calc(1em + var(--hero-eyebrow-initial-increase))'));

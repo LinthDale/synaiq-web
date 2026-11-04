@@ -32,28 +32,27 @@
     "approach": "Unser Ansatz",
     "leadership": "Geschäftsleitung",
     "technical": "Technisches Team",
-    "wally": "Wally",
     "proof": "Produkteinblick",
     "about": "Über tAistro",
     "process": "Wissensfluss",
     "architecture": "Architektur",
-    "advantages": "Acht Vorteile",
+    "advantages": "Zentrale Vorteile",
     "demo": "Produktdemo",
     "menu": "Inhalt",
     "language": "Sprache",
     "skip": "Zum Hauptinhalt springen"
   },
   "title": {
-    "home": "tAistro — Wissen bleibt im Unternehmen.",
-    "kip": "Synaiq KIP Plattform — tAistro",
+    "home": "tAistro · KIP｜Plattform für Unternehmensentscheidungen und logisches Schlussfolgern",
+    "kip": "Synaiq KIP｜Plattform für Unternehmensentscheidungen und logisches Schlussfolgern — tAistro",
     "ems": "EMS — tAistro",
     "pvsim": "PVsim — tAistro",
     "cases": "Referenzen — tAistro",
     "about": "Über uns — tAistro"
   },
   "description": {
-    "home": "Verstreute Unternehmensdokumente werden zu einer Wissenszentrale. Stellen Sie Fragen und erhalten Sie Antworten mit nachvollziehbaren Quellen.",
-    "kip": "Natürlich fragen, präzise antworten. Synaiq KIP macht aus verstreuten Unternehmensdokumenten eine Wissenszentrale mit überprüfbaren Quellen.",
+    "home": "KIP unterstützt Entscheidungen durch Recherche, Schlussfolgern und Berechnung. Keine Tokengebühren; sensible Daten müssen nicht an externe Online-Modelle.",
+    "kip": "KIP unterstützt Entscheidungen durch Recherche, Schlussfolgern und Berechnung. Keine Tokengebühren; sensible Daten müssen nicht an externe Online-Modelle.",
     "ems": "Entdecken Sie den EMS-Demoablauf: Echtzeitüberwachung, Lastmanagement, Speichereinsatz, Ereignisverfolgung und Managementbewertung.",
     "pvsim": "Entdecken Sie den PVsim-Planungsablauf: Standortmodellierung, Modulbelegung, Verschattungs- und Ertragsbewertung sowie elektrische Stringprüfung.",
     "cases": "KI vor Ort. Gespräche über Sprachgrenzen hinweg. Technologie gewinnt Bedeutung, wenn Menschen einander begegnen.",
@@ -75,14 +74,29 @@
     "address": "10F.-2, No. 910, Sec. 2, Taiwan Blvd., He’an Vil., Xitun Dist., Taichung City 407, Taiwan"
   },
   "advantages": {
+    "close": "Schließen",
     "eyebrow": "Rund um Ihr Wissen entwickelt.",
-    "title": "Acht zentrale Vorteile",
+    "title": "Zentrale Vorteile",
     "intro": [
-      "Vom Import der Dokumente bis zur Prüfung der Antworten –",
-      "Unternehmenswissen wird Teil des Arbeitsalltags."
+      "Keine tokenbasierten Gebühren.",
+      "Vertrauliche Daten müssen nicht an externe Online-Modelle übermittelt werden."
     ],
     "scenario": "Beispiel aus dem Arbeitsalltag",
     "items": [
+      [
+        "Keine tokenbasierten Gebühren",
+        "Schlussfolgern ohne Abrechnung pro Token",
+        "KIP rechnet nicht nach der Anzahl der Eingabe- oder Ausgabe-Token ab.",
+        "Teams können zu einer Geschäftsfrage weiter nachfragen und unterschiedliche Bedingungen vergleichen, ohne für jeden Austausch Tokengebühren zu berechnen. Im Mittelpunkt bleibt die Analyse: Belege ergänzen, Quellen prüfen und Szenarien erneut durchrechnen.",
+        "Vergleichen Sie Kosten und Nutzen einer Investition, ändern Sie die Erfolgswahrscheinlichkeit und fragen Sie nach den Voraussetzungen. So entsteht eine begründete Einschätzung, ohne Tokengebühren je Gesprächsrunde zu kalkulieren."
+      ],
+      [
+        "Vertrauliche Daten bleiben externen Online-Modellen fern",
+        "Kontrolle über Unternehmensdaten",
+        "Vertrauliche Unternehmensinformationen müssen nicht zur Verarbeitung an externe Online-Modelle gesendet werden.",
+        "Nutzen Sie Ergebniszahlen, Einkaufskosten und interne Dokumente als Analysegrundlage, ohne vertrauliche Inhalte an ein externes Online-Modell zu senden. Verbinden Sie Unternehmenswissen mit Schlussfolgerungen und Berechnungen und behalten Sie die Kontrolle über die Daten.",
+        "Untersuchen Sie Veränderungen zwischen zwei Gewinn-und-Verlust-Rechnungen anhand interner Berichte und Einkaufsdaten, ohne sensible Zahlen oder Dokumente in den Dialog mit einem externen Online-Modell zu kopieren."
+      ],
       [
         "Fundierte Antworten, weniger KI-Halluzinationen",
         "Erst Belege, dann Antworten",

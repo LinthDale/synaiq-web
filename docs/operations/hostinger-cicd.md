@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：**已啟用，三語版本已上線**。[Run 40656230546](https://github.com/LinthDale/synaiq-web/actions/runs/40656230546) 於 2026-10-28 完成部署、驗證、備份及清理；來源 `96d589a74ec1ba972ea12a902789b6fca6af14c8`，正式目錄 `synaiq-release-ci-40656230546-1`。獨立主機與正式網站驗證結果見 [部署紀錄](deploy-hostinger.md)。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
+目前狀態：**已啟用，iPhone 語系載入修正已上線**。[Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191) 於 2026-11-04 完成部署、驗證、備份及清理；來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，正式目錄 `synaiq-release-ci-41780885191-1`。另以 WebKit 26.0 與 Chrome 完成正式站 36 組手機檢查及語言切換。獨立主機與正式網站驗證結果見 [部署紀錄](deploy-hostinger.md)。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
 
-本次加密備份位於草稿 Release `hostinger-backup-40656230546-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。首次啟用紀錄 [Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 與其備份仍保留；詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
+本次加密備份位於草稿 Release `hostinger-backup-41780885191-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。首次啟用紀錄 [Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 與歷次加密備份仍保留；詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
 
 ## 平常如何更新
 
@@ -22,8 +22,8 @@
 ## 發布及保留流程
 
 1. 設計測試、部署防護測試、Astro／repository 測試全部成功。
-2. 按公開 allowlist 從 Git commit 封裝 88 個檔案（數量隨 allowlist 調整），正式 `index.html` 由 `page.html` 產生。CSS、JS、圖片指向唯一的新版本目錄。
-3. 本機瀏覽器測試：六頁 × 中英 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的中英內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 36 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。
+2. 按公開 allowlist 從 Git commit 封裝檔案（2026-11-02 為 338 檔，含 243 張背景動畫幀；數量隨 allowlist 調整），正式 `index.html` 由 `page.html` 產生。CSS、JS、圖片指向唯一的新版本目錄。精確檔名白名單可拆成多條路由，每條小於 8,000 bytes，仍只開放已封裝檔案；後續發布會保留現行版的全部白名單路由。
+3. 本機瀏覽器測試：六頁 × 繁中／英文／德文 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的三語內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 52 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
 5. 上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，authenticated raw 下載逐檔核對 SHA-256。
 6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 同一組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
@@ -68,6 +68,10 @@ node --use-system-ca --env-file=.env.hostinger.local scripts/hostinger/cli.mjs a
 - 加密備份內包括封裝 artifact、路由前後檔、維護入口前文、state、逐檔清理備份、manifest、驗證及 archive inventory；不包含 token、session 或 backup key。
 
 ## 失敗與復原
+
+### 2026-11-02 大量動畫幀的精確路由修復
+
+Run `41405851048` 在上傳前因公開檔案白名單超過單條 RewriteRule 的 8,000-byte 限制停止，未修改正式站。來源 `800791b` 將長白名單分成多條有起訖錨點的精確檔名規則，保留原有單行長度檢查；沒有改成整個目錄公開。新增回歸檢查涵蓋 243 張動畫幀、未列入的檔案及下一次發布保留舊版多條規則，39 項部署測試通過。
 
 ### 2026-10-28 已審閱的 LiteSpeed 路由基準修復
 

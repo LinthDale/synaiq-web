@@ -1,5 +1,9 @@
 # 官網樣式維護指南
 
+Demo 共用操作列：五個功能都由 `renderDemoChapters()` 產生三個 `data-demo-chapter` 按鈕，`playChapter()` 對應段落並自動播放；再次點選可重播。章節列一律放在畫面下方，與畫面等寬；桌面三欄、699px 以下單欄。文字與數字皆使用內文字體，桌面 16px、899px 以下 14px；保留至少 44px 點按高度。幾何在 `site.css` 的 `.demo-chapters`，字級與底線在 `tokens.css`。共用提示接在按鈕下方，由三語 `demo.json` 的 `chapterHint` 維護。所有功能預設播放一輪後停止。
+
+核心優勢使用同一張手撕紙條展開：原 `.advantage-sheet` 保留紙邊與標題，膠帶掀起脫落、紙面由原位置放大，說明在紙內浮現。移出時由當下尺寸縮回原格，膠帶重新貼上，再將紙條移回原本的文件位置。展開與收合都保留原格高度，不另外產生矩形框、不拉長頁面。桌面五欄、平板三欄、手機兩欄；滑鼠移入／鍵盤焦點即展開，移出／焦點離開／Esc 收起，手機點按操作。`shared-design.js` 處理定位、收合完成及中途重開，`site.css` 管理紙面、撕膠帶與貼回動作；`tokens.css` 的 `--advantage-return-duration` 控制縮回時間。捲動、視窗尺寸改變或減少動態效果時立即復位。十項文案維護 `locales/<語言>/common.json` 的 `advantages`。
+
 最後更新：2026-10-12。
 
 改字的外觀先開 `tokens.css`，改文案先找 `locale-*.js`，改版面才開 `site.css`。本指引涵蓋已上線的 Home／KIP／實績展示／關於我們中英版，供日常維護使用。
@@ -42,7 +46,7 @@
 - 八項優勢在 `locales/<語言>/common.json` 的 `advantages.items`。每項依序為「名稱、右側簡述、展開首段、展開補充、情境示例」，不是只改列表上的標題。
 - 「首頁／KIP 平台／實績展示／關於我們」是換頁，段落目錄依當前頁改變。文字在 `locales/<語言>/common.json` 的 `navigation`；增刪目錄項目或改目標 ID 要同步 `prototype.js` 的 `initPageNavigation` 與對應頁面區塊。所在頁只保留底線，無障礙用的 `aria-current` 不要刪掉。700px 以上主導覽排在 Logo 與語言選單之間；更窄的手機版可換行，保持連結可讀。
 - 語言名稱與 `ZH／EN／DE` 縮寫在 `locales/<語言>/_meta.json`；選單字級在 `tokens.css` 的 `--language-size`。新增語言使用 `npm run i18n:add -- 語言代碼`，翻譯完成後執行 `npm run i18n:sync`，選單、載入器、靜態圖與 SEO 語系自動更新，詳見 [語言與 Logo 指南](localization-and-brand-guide.md)。
-- 產業觀察的標題、兩段文章補充、年份、圖表朗讀說明與展開出處都在 `locales/<語言>/home.json` 的 `outlook`；**圖表的 5 與 14.5 數值目前直接在 `home-design.js` 的 `budget-comparison`**，不是 CSS。若改數據，這些位置與原始來源必須一起核對。
+- 產業觀察主數字改為預算占比推算年複合成長率。`home-design.js` 依 `(14.5 / 5)^(1 / 3) - 1` 計算約 42.6%，依語言格式顯示。`outlook.growthLabel`／`perYear`／`growthBasis`、朗讀說明與出處維護於三語 `home.json`；保留 2024 調查、2027 預期與原始占比。不得稱為實際支出年增幅或 KIP 成效。
 
 ## 搜尋引擎中繼資料
 
@@ -92,7 +96,7 @@
 ```
 
 同段下面就是手機設定；例如手機小標原本是 `9px`。桌機與手機需要一起調整時，兩處都要改。
-產業觀察的 `--outlook-current-size`（左 5%）與 `--outlook-future-size`（右 14.5%）彼此獨立；兩者各有桌機、899px 以下平板、639px 以下手機設定，都排在「05 產業觀察」同一段。百分比符號維持數字的 0.38 倍，不會連動另一側數字或箭頭。
+產業觀察使用 `--outlook-growth-size` 調整 +42.6% 主數字，分桌機、899px 以下平板、639px 以下手機設定。字體由 `--outlook-growth-font` 指向內文 Manrope 無襯線字體，字重 500；百分比符號維持數字的 0.38 倍。裝飾箭頭已移除。
 K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小標增加指定大小，手機亦沿用；目前保留你調整的 `4px`。顏色用 `--hero-eyebrow-initial-color: #cca858`，與 Logo 金色一致。兩個設定不會改其他字母。
 首頁英文小標與 KIP 頁的 `SYNAIQ KIP` 已分開，調首頁不會連動 KIP。
 大標題搜尋 `散落的企業文件`，下方說明搜尋 `從一個問題開始`，不需要先猜英文變數名稱。
@@ -122,9 +126,8 @@ K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小
 | 左下文章補充「2024 年的調查中…」兩段文字 | `--outlook-reading-size`／`--outlook-reading-color`／`--outlook-reading-leading`；文案在 `locales/<語言>/home.json` 的 `outlook.reading` |
 | 展開的調查背景與出處 | `--outlook-detail-size` |
 | 資料註記 | `--outlook-note-size` |
-| 左邊 5% 的大小 | `--outlook-current-size`；% 隨數字等比例縮放 |
-| 右邊 14.5% 的大小／強調色 | `--outlook-future-size`／`--outlook-number-color`；% 隨數字等比例縮放 |
-| 5% → 14.5% 中間金色手繪箭頭 | `--outlook-arrow-color`／`--outlook-arrow-width`／`--outlook-arrow-stroke`；曲線在 `home-design.js` 搜尋 `budget-arrow`，不使用字型符號或額外圖片檔 |
+| 推算年複合成長率大小／強調色 | `--outlook-growth-size`／`--outlook-number-color`；% 隨數字等比例縮放 |
+| 成長率數字字體／字重 | `--outlook-growth-font`／`--outlook-growth-weight` |
 | 產業觀察區淡綠底色 | `--outlook-surface` |
 | 產業觀察右下角新聞剪報寬度／傾斜角度 | `--outlook-clipping-width`／`--outlook-clipping-tilt`；原截圖內文字需改素材，不受 CSS 控制 |
 | 全站側邊留白 | `--gutter` |
@@ -453,7 +456,7 @@ npm run test:design
 
 1. 導覽所在頁底線、語言切換保留頁面／錨點、手機目錄與 Escape 關閉正常。
 2. Banner 中文底線只在第三段，英文換行正常；大字、小字與按鈕沒有被撕紙遮住。
-3. 金色箭頭、左右獨立百分比與剪報傾斜不溢出；左下補充與展開來源都能閱讀。
+3. 成長率數字與每年單位不溢出、沒有裝飾箭頭；剪報、文章補充與展開來源都能閱讀。
 4. 產品組圖捲入／捲出、次數用盡、短視窗與 reduced-motion 都正常。
 5. 三片全部切換，逐幕看提問、回覆、引用／素材面板與末幕；檢查滑鼠點擊位置、暫停、重播、切片保持暫停及分頁切走後恢復。
 6. 長回答與檔名不壓住輸入框、不被裁切；八項優勢展開後不產生水平捲動。
@@ -539,7 +542,7 @@ Wilson、Sunny、Leef、Lou 的真照分別在 repo 的 `public/brand/team/`，�
 
 新聞圖左側的兩段摘要由 `locales/<語言>/home.json` 的 `outlook.reading` 維護，中英同步。保留 2024 年調查時間，以及 33% 刪減／62% 不刪減其他專案的兩面，不改寫成所有企業都在挪用預算。桌機在 `.outlook-context` 與剪報並排，899px 以下自動堆疊，不加固定高度。
 
-產業觀察使用 [Investing.com 2024-06-29 的 J.P. Morgan CIO 調查報導](https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358)，屬媒體轉述，未取得原始調查全文。166 位 CIO／每年 1,230 億美元支出、2024 年 5% 與三年後 14.5% 預期、約 45% 年複合增幅、33% 刪減與 62% 不刪減其他專案，均須保留原日期及語境，不當作已實現結果、每年保證增幅或 KIP 的成效數據。
+產業觀察使用 [Investing.com 2024-06-29 的 J.P. Morgan CIO 調查報導](https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358)，屬媒體轉述，未取得原始調查全文。主數字約 42.6% 是本站由 2024 年占比 5% 與 2027 年預期占比 14.5% 推算的年複合成長率，不是原文直接報出的精確數值；原文概括稱約 45%，差異在展開出處中說明。166 位 CIO／每年 1,230 億美元支出、33% 刪減與 62% 不刪減其他專案也保留。不可當作已實現結果、實際支出增幅、每年保證增幅或 KIP 成效。
 
 CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫或版面擅改文案。企業知識敘事不構成已支援所有 connector／格式／客製訓練的產品承諾。
 

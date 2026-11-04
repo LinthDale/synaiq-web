@@ -8,12 +8,10 @@ import { hasDeclaration } from './css-test-helpers.mjs';
 
 const sourceUrl = 'https://www.investing.com/news/stock-market-news/cio-survey-a-massive-boon-for-microsoft--jp-morgan-3502358';
 
-test('current and future budget numbers have independent sizes at every breakpoint', async () => {
+test('annual growth emphasis has editable sizes at every breakpoint', async () => {
   const css = await readFile(new URL('tokens.css', import.meta.url), 'utf8');
-  assert.ok(hasDeclaration('tokens.css', '.budget-value:not(.budget-future)', 'font-size', 'var(--outlook-current-size)'));
-  assert.ok(hasDeclaration('tokens.css', '.budget-future', 'font-size', 'var(--outlook-future-size)'));
-  for (const name of ['--outlook-current-size', '--outlook-future-size']) {
-    // Values remain user-editable; verify separate base/tablet/mobile controls, not a frozen font size.
+  assert.ok(hasDeclaration('tokens.css', '.budget-value', 'font-size', 'var(--outlook-growth-size)'));
+  for (const name of ['--outlook-growth-size']) {
     assert.equal((css.match(new RegExp(`${name}:`, 'g')) ?? []).length, 3);
     for (const width of [899, 639]) {
       const blocks = [...css.matchAll(new RegExp(`@media \\(max-width: ${width}px\\)[^{]*\\{[\\s\\S]*?\\n\\}`, 'g'))];
@@ -23,25 +21,20 @@ test('current and future budget numbers have independent sizes at every breakpoi
   assert.ok(!css.includes('--outlook-number-size'));
 });
 
-test('the budget comparison uses a decorative scalable hand-drawn gold arrow in both languages', () => {
-  for (const locale of ['zh-Hant', 'en']) {
+test('annual growth keeps localized source context without a decorative arrow', () => {
+  for (const locale of ['zh-Hant', 'en', 'de']) {
     const messages = getMessages(locale);
     const html = renderHome({ locale, messages, advantageSection: () => '', contact: () => '' });
-    const arrow = html.match(/<svg class="budget-arrow"[\s\S]*?<\/svg>/)?.[0];
-    assert.ok(arrow);
-    assert.match(arrow, /viewBox="0 0 240 140"/);
-    assert.match(arrow, /aria-hidden="true"/);
-    assert.match(arrow, /focusable="false"/);
-    assert.equal((arrow.match(/<path /g) ?? []).length, 3);
-    assert.doesNotMatch(html, /class="budget-arrow"[^>]*>↗/);
+    assert.doesNotMatch(html, /class="budget-arrow"/);
     assert.ok(html.includes(escapeHtml(messages.home.outlook.chartLabel)));
-    assert.ok(html.includes('14.5<small>%</small>'));
+    const rate = new Intl.NumberFormat(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(((14.5 / 5) ** (1 / 3) - 1) * 100);
+    assert.ok(html.includes(`+${rate}<small>%</small>`));
+    for (const key of ['growthLabel', 'perYear', 'growthBasis', 'details']) {
+      assert.ok(html.includes(escapeHtml(messages.home.outlook[key])));
+    }
   }
-  assert.ok(hasDeclaration('tokens.css', ':root', '--outlook-arrow-color', '#cca858'));
-  assert.ok(hasDeclaration('tokens.css', '.budget-arrow', 'color', 'var(--outlook-arrow-color)'));
-  assert.ok(hasDeclaration('site.css', '.budget-arrow', 'width', 'var(--outlook-arrow-width)'));
-  assert.ok(hasDeclaration('site.css', '.budget-arrow', 'height', 'auto'));
-  assert.ok(hasDeclaration('site.css', '.budget-arrow path', 'stroke-width', 'var(--outlook-arrow-stroke)'));
+  assert.ok(hasDeclaration('tokens.css', ':root', '--outlook-growth-font', 'var(--body)'));
+  assert.ok(hasDeclaration('tokens.css', '.budget-value', 'font-family', 'var(--outlook-growth-font)'));
 });
 
 test('both Home languages keep the enlarged clipping free of captions, with survey caveats inside the disclosure', () => {

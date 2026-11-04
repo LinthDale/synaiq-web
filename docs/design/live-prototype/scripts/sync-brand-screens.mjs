@@ -9,7 +9,7 @@ import { LOCALE_CONFIG } from '../locale-config.js';
 import { BRAND, PRODUCT_BRAND } from '../brand.js';
 
 const root = new URL('../', import.meta.url);
-const screenNames = Object.freeze(['search', 'library']);
+const screenNames = Object.freeze(['search', 'library', 'decision']);
 const normalize = source => source.replaceAll('\r\n', '\n');
 const escapeXml = value => value.replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;',

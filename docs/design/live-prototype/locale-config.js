@@ -5,6 +5,7 @@ export const LOCALE_CONFIG = Object.freeze(registry.map(item => Object.freeze(it
 const assetRoot = 'assets/';
 export const LOCALE_ASSETS = Object.freeze(Object.fromEntries(LOCALE_CONFIG.map(({ code, suffix }) => [code, {
   searchScreen: `${assetRoot}kip-search-demo${suffix}.svg`,
+  decisionScreen: `${assetRoot}kip-decision-demo${suffix}.svg`,
   libraryScreen: `${assetRoot}kip-library-demo${suffix}.svg`,
 }])));
 // Exact generated files only. JSON sources and arbitrary files stay private.

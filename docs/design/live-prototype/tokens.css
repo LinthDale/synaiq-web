@@ -139,26 +139,22 @@
   --outlook-reading-leading: 1.9;                  /* 文章補充行高 */
   --outlook-detail-size: 14px;            /* 「閱讀調查背景與出處」及展開內文 */
   --outlook-note-size: 12px;              /* 「資料為媒體轉述…」註記 */
-  --outlook-current-size: clamp(48px, 6.5vw, 88px); /* 左邊 5 的大小；% 隨此值等比例縮放 */
-  --outlook-future-size: clamp(56px, 6.5vw, 100px);  /* 右邊 14.5 的大小；% 隨此值等比例縮放 */
-  --outlook-number-color: #345e40;        /* 14.5% 強調色 */
-  --outlook-arrow-color: #cca858;         /* 5% → 14.5% 的手繪箭頭，取自品牌 Logo 金色 */
-  --outlook-arrow-width: clamp(76px, 11vw, 164px); /* 箭頭整體寬度，窄版可再縮小 */
-  --outlook-arrow-stroke: 2.8px;          /* 箭頭筆觸粗細；縮放時仍保留線條份量 */
+  --outlook-growth-size: clamp(76px, 8.4vw, 120px); /* 推算年複合成長率 */
+  --outlook-growth-font: var(--body);    /* 俐落的 Manrope 數字 */
+  --outlook-growth-weight: 500;
+  --outlook-number-color: #345e40;
   --outlook-surface: #e1e7dc;             /* 整段背景色 */
   --outlook-clipping-width: 500px;        /* 右下角新聞剪報寬度；窄版自動縮小並保留旋轉空間 */
   --outlook-clipping-tilt: 6deg;          /* 新聞剪報順時針傾斜；建議維持 -6deg 至 6deg */
 }
 @media (max-width: 899px) {               /* 產業觀察的平板設定 */
   :root {
-    --outlook-current-size: clamp(64px, 10vw, 88px); /* 左邊 5 */
-    --outlook-future-size: clamp(64px, 10vw, 88px);  /* 右邊 14.5 */
+    --outlook-growth-size: clamp(76px, 11vw, 100px);
   }
 }
 @media (max-width: 639px) {               /* 產業觀察的手機設定 */
   :root {
-    --outlook-current-size: clamp(56px, 15vw, 88px); /* 左邊 5 */
-    --outlook-future-size: clamp(56px, 15vw, 88px);  /* 右邊 14.5 */
+    --outlook-growth-size: clamp(68px, 17vw, 96px);
   }
 }
 
@@ -172,14 +168,15 @@
   /* 01 用自然語言提問／02 沿著引用看原文／03 讓文件各有位置
      三段動畫下方的流程文字與數字；不是上方選片按鈕。 */
   --demo-step-font: var(--body);          /* 流程文字的字型 */
-  --demo-step-size: 22px;                 /* 流程文字大小 */
+  --demo-step-size: 16px;                 /* 畫面下方的流程文字大小 */
   --demo-step-color: var(--inverse);      /* 未播放到的文字顏色 */
   --demo-step-active-color: var(--paper); /* 當前步驟文字顏色 */
-  --demo-step-number-font: var(--display); /* 01、02、03 數字字型 */
-  --demo-step-number-size: 22px;          /* 數字大小，與文字分開 */
+  --demo-step-number-font: var(--body);  /* 01、02、03 數字字型 */
+  --demo-step-number-size: 16px;         /* 數字大小，與文字分開 */
 
   /* 影院選片框：知識問答／以自然語言找圖／以圖搜圖 */
   --demo-booth-title-font: var(--display);
+  --demo-screen-width: 95%;              /* Demo 畫面縮小 5%，保留文字閱讀尺寸 */
   --demo-booth-title-size: clamp(24px, 2.7vw, 38px);
   --demo-booth-title-color: var(--paper);
   --demo-booth-body-size: 14px;
@@ -204,7 +201,7 @@
   --demo-answer-hold: 3.8s;               /* ③ 顯示回答 */
   --demo-source-hold: 4.2s;               /* ④ 展開原文 */
   --demo-library-hold: 4.2s;              /* ⑤ 知識庫；目前一輪共 16 秒 */
-  --demo-play-count: 0;                  /* 0 持續循環、1 一輪、2 兩輪；結束停在知識庫，可重播 */
+  --demo-play-count: 1;                  /* 五個 Demo 統一播放一輪後停留，可點段落或重播 */
   --demo-view-threshold: 0.12;            /* 開始播放的可見比例；離開畫面／切換分頁自動暫停 */
 
   /* 各動作的細節秒數；不改上面五段的停留時間 */
@@ -236,11 +233,11 @@
   --demo-library-hold: 4s;
 }
 @media (max-width: 899px) {               /* Demo 步驟的平板／手機字級 */
-  :root { --demo-step-size: 12px; }
+  :root { --demo-step-size: 14px; --demo-step-number-size: 14px; }
 }
 @media (max-width: 639px) {
   :root {
-    --demo-step-number-size: 18px;
+    --demo-step-number-size: 14px;
     --demo-booth-body-size: 12px;
     --demo-booth-choice-size: 12px;
     --demo-image-result-size: 13px;
@@ -262,18 +259,29 @@
   :root { --persona-title-size: 34px; }
 }
 
-/* ── 08「八項核心優勢」；首頁與 KIP 共用 ── */
+/* ── 08「核心優勢」紙條；原八項核心優勢與兩項平台優勢，首頁與 KIP 共用 ── */
 :root {
   --advantages-title-size: clamp(32px, 3.2vw, 46px); /* 區段標題 */
   --advantages-title-color: var(--ink);
-  --advantages-summary-size: var(--body-text-size); /* 準確回答，低 AI 幻覺…八項名稱 */
-  --advantages-hint-size: 15px;           /* 有依據才回答…右側簡述 */
+  --advantages-summary-size: 19px;        /* 紙條標題 */
+  --advantages-hint-size: 13px;           /* 紙條簡述 */
   --advantages-detail-size: 16px;         /* 點開 + 後的說明 */
   --advantages-detail-leading: 1.9;       /* 展開說明行高 */
   --advantages-detail-color: var(--muted);
+  --advantage-note-paper: #eeede5;
+  --advantage-note-accent: #526443;
+  --advantage-note-shadow: #24271e20;
+  --advantage-note-tape: #c6b89373;
+  --advantage-note-tape-accent: #99aa8580;
+  --advantage-note-duration: 440ms;
+  --advantage-return-duration: 420ms;
+  --advantage-note-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --advantage-tape-duration: 330ms;
+  --advantage-detail-duration: 220ms;
+  --advantage-detail-delay: 160ms;
 }
 @media (max-width: 639px) {
-  :root { --advantages-hint-size: 13px; }
+  :root { --advantages-summary-size: 17px; }
 }
 
 /* ── 09 CEO 引言：「AI 的價值…」／邱浩煒 Wilson；改文案請開 locales/<language>/home.json 的 ceo.quote ── */
@@ -508,20 +516,26 @@ a:hover {
   font-size: 12px;
   color: var(--muted);
 }
-/* 八項核心優勢：標題、右側摘要、展開內文與加減符號 */
-.advantage-row summary:after {
-  font: 26px var(--display);
+/* 核心優勢：手撕紙條摘要與彈出說明 */
+.advantage-note,
+.advantage-close {
+  font-family: var(--body);
+  color: var(--ink);
 }
-.advantage-row summary span {
+.advantage-short {
   font-size: var(--advantages-hint-size);
+  line-height: 1.6;
   color: var(--muted);
 }
-.advantage-row summary strong {
+.advantage-note strong {
+  font-family: var(--display);
   font-weight: 400;
   font-size: var(--advantages-summary-size);
+  line-height: 1.5;
 }
-.advantage-row > p {
-  color: var(--muted);
+.advantage-close {
+  font-size: 24px;
+  line-height: 1;
 }
 /* 先講一個場景，我們回一個做法。／從資料來源、使用對象與查詢需求開始 */
 .contact {
@@ -560,10 +574,6 @@ footer {
   }
 }
 @media (max-width: 639px) {
-  /* 八項核心優勢：標題、右側摘要、展開內文與加減符號 */
-  .advantage-row summary span {
-    font-size: var(--advantages-hint-size);
-  }
   /* 頁尾：鑫揚智能科技股份有限公司、公司地址、聯絡與版權 */
   .footer-links {
     font-size: var(--footer-link-size);
@@ -953,27 +963,22 @@ body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navi
   font-size: var(--outlook-body-size);
   color: var(--outlook-body-color);
 }
-/* 調查數字：5%、14.5%、箭頭 */
+/* 由 2024 年 5% 與 2027 年預期 14.5% 推算的占比年複合成長率 */
 .budget-value {
-  font-family: var(--display);
-  font-weight: 300;
+  font-family: var(--outlook-growth-font);
+  font-weight: var(--outlook-growth-weight);
+  font-variant-numeric: lining-nums tabular-nums;
   line-height: 1;
-  letter-spacing: -0.055em;
-}
-.budget-value:not(.budget-future) {
-  font-size: var(--outlook-current-size);
+  letter-spacing: -0.045em;
+  font-size: var(--outlook-growth-size);
+  color: var(--outlook-number-color);
 }
 .budget-value small {
   font-size: 0.38em;
   letter-spacing: 0;
 }
-.budget-future {
-  font-size: var(--outlook-future-size);
-  color: var(--outlook-number-color);
-}
-.budget-arrow {
-  color: var(--outlook-arrow-color);
-}
+.budget-label { font-size: 16px; line-height: 1.7; }
+.budget-period { font-size: 18px; color: var(--outlook-number-color); }
 /* 2024 年當時占比／2027 年預期占比 */
 .budget-year {
   font-size: 12px;
@@ -1326,7 +1331,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   color: var(--demo-step-color);
   font-size: var(--demo-step-size);
 }
-.demo-chapters li > span {
+.demo-chapters button > span {
   font-family: var(--demo-step-number-font);
   font-size: var(--demo-step-number-size);
   font-weight: 400;
@@ -1559,9 +1564,6 @@ body[data-page="kip"] .kip-layer-stack p {
 body[data-page="kip"] .advantages .section-no {
   color: var(--kip-olive);
 }
-body[data-page="kip"] .advantage-row summary::after {
-  color: var(--kip-olive);
-}
 /* 問完，順手看原文。／智慧知識搜尋 IKS、知識中心 KC */
 body[data-page="kip"] .kip-proof {
   color: var(--kip-paper);
@@ -1784,3 +1786,45 @@ html[lang='en'] .energy-opening h1 { font-size: clamp(36px, 3.5vw, 55px); }
 html:lang(de) body[data-page="kip"] { --kip-title-size: clamp(38px, 3.9vw, 56px); }
 /* PVsim model invitation: white handwriting on the dark model poster. */
 .pvsim-start-hint { color: #fff; text-shadow: 0 2px 5px #102532; }
+
+/* KIP-D 決策示例：問題與依據、方案比較、建議與條件 */
+.animated-product:is([data-demo-scene="decision"], [data-demo-scene="profit"]) {
+  --demo-question-hold: 2.4s;
+  --demo-click-hold: 1.4s;
+  --demo-answer-hold: 4.6s;
+  --demo-source-hold: 0.8s;
+  --demo-library-hold: 0.8s;
+  --demo-play-count: 1;
+}
+.demo-chapter-hint { font-size: 13px
+}
+.demo-chapters button { color: inherit; font: inherit
+}
+.demo-chapters button[aria-current] { text-decoration: underline; text-underline-offset: 7px
+}
+.decision-step h4 { font-size: 18px; line-height: 1.5; font-weight: 500
+}
+.decision-step h5 { font-size: 15px; line-height: 1.65
+}
+.decision-step p,.decision-step li { font-size: 15px; line-height: 1.8
+}
+.decision-evidence { color: #56564f
+}
+.decision-evidence summary { font-size: 14px
+}
+.decision-table-wrap table { font-size: 15px
+}
+.decision-table-wrap caption { color: #56564f; font-size: 13px
+}
+.decision-table-wrap th { font-weight: 500
+}
+.decision-table-wrap thead th { font-size: 13px
+}
+.decision-value { font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; color: #35604b
+}
+.decision-ranking { color: #35604b
+}
+.decision-step .decision-footnote { font-size: 12px; color: #65655d
+}
+.decision-boundary { color: #56564f
+}

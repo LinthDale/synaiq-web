@@ -7,6 +7,7 @@ function stepDrawing(index) {
     '<path d="M61 36 145 28 156 138 65 144ZM79 23 159 21 169 126M95 16 171 18 179 115M76 59 133 53M78 75 143 69M79 93 129 87M80 111 142 105"/><path class="kip-pen-accent" d="M35 91q-14 43 23 57m-15-9 15 9-4-17"/>',
     '<path d="M71 25 157 29 151 143 64 139ZM83 52l55 2M81 69l51 2M78 86l62 3M78 105l40 1M77 119l58 4"/><path class="kip-pen-accent" d="M50 49 42 47 38 126 49 128M169 48 179 48 175 127 164 127M56 82q56-8 111 1"/>',
     '<path d="M65 29 144 29 151 139 61 143ZM77 54l52-2M77 72l49-1M76 90l36-1M75 109l48-1"/><path class="kip-pen-accent" d="M128 84c-32-8-39 36-10 42 36 6 39-34 10-42ZM140 123l28 32M108 103l9 9 18-21"/>',
+    '<path d="M65 29h90v114H65ZM80 55h58M80 77h36M80 99h24"/><path class="kip-pen-accent" d="m108 115 15 13 37-42"/>',
   ];
   return `<svg class="kip-step-drawing" viewBox="0 0 220 180" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${drawings[index]}</svg>`;
 }
@@ -26,7 +27,7 @@ export function renderKip({ advantageSection, contact, locale = 'zh-Hant', messa
       <div class="kip-opening-scene">
         <svg class="kip-pencil-trail" viewBox="0 0 700 610" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M59 70c24-59 73-51 54-6-14 34-61 28-60 58 1 61 164 4 272-21S611 79 638 194s-72 308-156 338-148-25-140-76 86-62 125-37 2 59-51 48"/><path d="m52 58 8 14 14-5M396 461l20 7-13 13"/></svg>
         <div class="kip-scene-caption"><span>01 / Synaiq KIP</span><span>${e(m.sceneCaption)}</span></div>
-        <figure class="kip-hero-screen"><img src="${e(messages.common.assets.searchScreen)}" width="1440" height="900" alt="${e(m.screenAlt)}"></figure>
+        <figure class="kip-hero-screen"><img src="${e(messages.common.assets.decisionScreen)}" width="1440" height="900" alt="${e(m.screenAlt)}"></figure>
         <div class="kip-evidence-slip"><span class="kip-slip-label">${e(m.sourceLabel)}</span><p>${e(m.sampleQuestion)}</p><p class="kip-slip-answer">${e(m.sampleAnswer)}<span class="marked">${e(m.sampleHighlight)}</span></p><small>${e(m.sampleCitation)}</small></div>
         <span class="kip-scene-note">${e(m.sceneNote)}</span>
       </div>
