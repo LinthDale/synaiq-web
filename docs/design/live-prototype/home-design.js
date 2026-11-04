@@ -24,7 +24,7 @@ export function renderHome({ advantageSection, contact, locale = 'zh-Hant', mess
       <p class="intro">${lines(hero.intro)}</p>
       <a class="button inverse" href="#proof">${h(hero.action)}</a>
     </div>
-    <figure class="hero-thread-art" aria-hidden="true"><img src="assets/kip-d-opening-v5.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="${h(hero.artAlt)}"></figure>
+    <figure class="hero-thread-art" aria-hidden="true"><picture><source media="(max-width: 899px), (pointer: coarse)" srcset="assets/kip-d-scroll-mobile-v1/frame-000.webp"><img src="assets/kip-d-opening-v5.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="${h(hero.artAlt)}"></picture></figure>
     <a class="hero-scroll" href="#introduction">${h(hero.scroll)} <span aria-hidden="true">↓</span></a>
   </section>
 
