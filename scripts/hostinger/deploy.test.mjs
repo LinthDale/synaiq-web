@@ -144,8 +144,15 @@ test('matching state ignores the historical receipt and does not emit a repair',
   await assert.rejects(readFile(join(f.work, 'routing-repair.json')), { code: 'ENOENT' });
 });
 
-test('a failed live check rolls back known routing without deleting releases', async () => {
+for (const nestedIndex of [false, true]) test(`a failed live check rolls back known routing without deleting releases (nested index: ${nestedIndex})`, async () => {
   const f = await setup(), current = f.state.active;
+  if (nestedIndex) {
+    // Snapshot paths sort auth/index.html before the actual release homepage.
+    const path = `${current}/auth/index.html`, bytes = Buffer.from('auth');
+    f.state.releases[0].files.unshift({ path, size: bytes.length, sha256: sha(bytes) });
+    f.remote.set(path, bytes);
+    f.remote.set(STATE, Buffer.from(JSON.stringify(f.state, null, 2)));
+  }
   const route = `# BEGIN LSCACHE\nKeep reviewed vendor rules\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html)$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
   f.remote.set('.htaccess', Buffer.from(route)); f.remote.set(GUIDE, Buffer.from('original guide'));
   const manifest = { release: 'synaiq-release-candidate', sourceCommit: 'a'.repeat(40), files: ['index.html', 'page.html', 'robots.txt', 'sitemap.xml'].map(path => ({ path, sha256: sha('new'), size: 3 })) };
