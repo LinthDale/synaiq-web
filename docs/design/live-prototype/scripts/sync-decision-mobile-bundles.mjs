@@ -16,7 +16,11 @@ export async function syncDecisionMobileBundles({ check = false } = {}) {
     const bytes = Buffer.from(JSON.stringify({ schema: 1, start, frames }) + '\n');
     assert.ok(bytes.length < 600_000); size += bytes.length;
     const target = new URL(path, root);
-    if (check) { assert.equal((await lstat(target)).isSymbolicLink(), false); assert.deepEqual(await readFile(target), bytes); }
+    if (check) {
+      assert.equal((await lstat(target)).isSymbolicLink(), false);
+      // Git may check text assets out as CRLF on Windows; packaged bytes use git show.
+      assert.equal((await readFile(target, 'utf8')).replaceAll('\r\n', '\n'), bytes.toString('utf8'));
+    }
     else { await mkdir(new URL('./', target), { recursive: true }); await writeFile(target, bytes, { flag: 'wx' }); }
   }
   return { files: DECISION_MOBILE_BUNDLE_FILES.length, frames: DECISION_MOBILE_FRAME_FILES.length, bytes: size };
