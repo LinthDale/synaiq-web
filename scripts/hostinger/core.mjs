@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash, createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
 
 export const sha = data => createHash('sha256').update(data).digest('hex');
+export const payloadDigest = manifest => sha(JSON.stringify({ release: manifest.release, sourceCommit: manifest.sourceCommit, storage: manifest.storage, files: manifest.files }));
 export const STATE = '.hostinger-ci-state.json';
 export const GUIDE = '00-SYNAIQ-START-HERE.txt';
 export const ASSET_ROOT = 'synaiq-assets-v1';

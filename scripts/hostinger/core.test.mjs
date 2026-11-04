@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
-import { activeRelease, buildRouting, transformSource, retentionPlan, assertNoDependencies, encrypt, decrypt, safePath } from './core.mjs';
+import { activeRelease, buildRouting, transformSource, retentionPlan, assertNoDependencies, encrypt, decrypt, safePath, payloadDigest } from './core.mjs';
 
 const current = 'synaiq-release-a', name = 'synaiq-release-b';
 const base = `# BEGIN LSCACHE\nKeep vendor directives\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html|page\\.html|robots\\.txt|sitemap\\.xml)$ - [L]\nRewriteRule ^synaiq-release-older/(?:index\\.html)$ - [L]\nRewriteRule ^wp-content/uploads/2026/03/toutou-2\\.png$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
@@ -121,4 +121,14 @@ test('workflow isolates PRs from secrets and serializes production mutations', a
   assert.ok(workflow.includes('name: production'));
   assert.ok(!workflow.split('  deploy:')[0].includes('secrets.'));
   assert.ok(!workflow.includes('pull_request_target'));
+  assert.equal([...workflow.matchAll(/cli\.mjs local /g)].length, 1, 'Run the local matrix once; bind its report to the re-created payload');
+  assert.ok(workflow.includes('--name "hostinger-local-check-$DEPLOY_ID"'));
+  assert.ok(workflow.includes('path: out/hostinger-ci/${{ github.run_id }}-${{ github.run_attempt }}/browser-local.json'));
+});
+
+test('local-check digest ignores packaging time but binds release, commit, storage and all file metadata', () => {
+  const manifest = { release: 'synaiq-release-test', sourceCommit: 'source', storage: 'shared-assets-v1', createdAt: 'first', files: [{ path: 'a.js', size: 1, sha256: 'hash', sharedPath: 'asset' }] };
+  assert.equal(payloadDigest(manifest), payloadDigest({ ...manifest, createdAt: 'later' }));
+  for (const field of ['release', 'sourceCommit', 'storage']) assert.notEqual(payloadDigest(manifest), payloadDigest({ ...manifest, [field]: 'changed' }));
+  for (const field of ['path', 'size', 'sha256', 'sharedPath']) assert.notEqual(payloadDigest(manifest), payloadDigest({ ...manifest, files: [{ ...manifest.files[0], [field]: 'changed' }] }));
 });

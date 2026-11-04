@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir, appendFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { sha, activeRelease, buildRouting, retentionPlan, assertNoDependencies, STATE, GUIDE, assetPath, sharedPath, ASSET_ROOT, ASSET_MAP } from './core.mjs';
+import { sha, payloadDigest, activeRelease, buildRouting, retentionPlan, assertNoDependencies, STATE, GUIDE, assetPath, sharedPath, ASSET_ROOT, ASSET_MAP } from './core.mjs';
 import { request } from './client.mjs';
 import { smoke } from './browser.mjs';
 import { verifyPublicAssets } from './public-assets.mjs';
@@ -161,6 +161,7 @@ export async function deploy(client, config, work, manifest, id, services = {}) 
   const checkAssets = services.verifyPublicAssets || verifyPublicAssets;
   const local = JSON.parse(await readFile(join(work, 'browser-local.json')));
   assert.equal(local.status, 'passed'); assert.equal(local.release, manifest.release); assert.equal(local.sourceCommit, manifest.sourceCommit);
+  assert.equal(local.payloadSha256, payloadDigest(manifest), 'Local browser report does not match this exact payload');
   console.log('Auditing current routing and release hashes');
   const before = await inspect(client, config, work, reviewedRoutingRepair);
   const previousIndex = before.state.releases[0].files.find(file => file.path === `${before.state.active}/index.html`);

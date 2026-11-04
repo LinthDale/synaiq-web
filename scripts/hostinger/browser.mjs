@@ -4,7 +4,7 @@ import { createServer } from 'node:http';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
 import { canonicalUrl, crawlTargets } from '../../docs/design/live-prototype/page-metadata.js';
-import { sha } from './core.mjs';
+import { sha, payloadDigest } from './core.mjs';
 import { SUPPORTED_LOCALES } from '../../docs/design/live-prototype/locale-store.js';
 
 const PAGES = ['home', 'kip', 'ems', 'pvsim', 'cases', 'about'];
@@ -122,7 +122,7 @@ export async function smoke(manifest, work, origin, mode) {
       assert.deepEqual(errors, []);
       cases.push({ ...item, ...(touchHome ? { motion: 'no-preference', touch: true, scrollPasses: 2, frameRequests: frameRequests.length } : {}), status: 'passed' }); await context.close();
     }
-    await writeFile(join(work, `browser-${mode}.json`), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, cases }, null, 2));
+    await writeFile(join(work, `browser-${mode}.json`), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, payloadSha256: payloadDigest(manifest), cases }, null, 2));
     console.log(`${mode}: ${cases.length} browser checks passed`);
   } finally { await browser?.close(); server?.close(); }
 }

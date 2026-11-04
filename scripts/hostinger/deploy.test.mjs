@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, mkdir, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { sha, STATE, GUIDE, sharedPath } from './core.mjs';
+import { sha, payloadDigest, STATE, GUIDE, sharedPath } from './core.mjs';
 import { prepareCleanup, prune, verifySnapshot, deploy, audit } from './deploy.mjs';
 import { reviewedRoutingRepair } from './reviewed-routing-repair.mjs';
 
@@ -74,6 +74,21 @@ test('audit stops before any upload when a recorded release is missing or change
 test('snapshot verification rejects extra files before accepting content hashes', async () => {
   const f = await setup(); f.remote.set('synaiq-release-new/untracked.php', Buffer.from('test'));
   await assert.rejects(verifySnapshot(f.client, f.state.releases[0]));
+});
+
+test('a reused local report must attest every payload file before any host operation', async () => {
+  for (const damage of ['missing-digest', 'file-hash', 'shared-address', 'file-list']) {
+    const work = await mkdtemp(join(tmpdir(), 'local-report-'));
+    const manifest = { release: 'synaiq-release-candidate', sourceCommit: 'a'.repeat(40), files: [{ path: 'index.html', size: 3, sha256: sha('new') }] };
+    const report = { status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, payloadSha256: payloadDigest(manifest) };
+    await writeFile(join(work, 'browser-local.json'), JSON.stringify(damage === 'missing-digest' ? { ...report, payloadSha256: undefined } : report));
+    if (damage === 'file-hash') manifest.files[0].sha256 = sha('edited');
+    if (damage === 'shared-address') manifest.files[0].sharedPath = sharedPath('image.webp', sha('new'));
+    if (damage === 'file-list') manifest.files.push({ path: 'extra.js', size: 3, sha256: sha('new') });
+    let hostCalls = 0;
+    await assert.rejects(deploy({}, {}, work, manifest, 'test', { audit: async () => { hostCalls++; } }), /exact payload/);
+    assert.equal(hostCalls, 0);
+  }
 });
 
 async function repairFixture() {
@@ -159,7 +174,7 @@ for (const nestedIndex of [false, true]) for (const pooled of [false, true]) tes
   if (pooled) manifest.files.push({ path: 'image.webp', size: 3, sha256: sha('new'), sharedPath: sharedPath('image.webp', sha('new')) });
   await mkdir(join(f.work, 'artifact'));
   for (const file of manifest.files) await writeFile(join(f.work, 'artifact', file.path), 'new');
-  await writeFile(join(f.work, 'browser-local.json'), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit }));
+  await writeFile(join(f.work, 'browser-local.json'), JSON.stringify({ status: 'passed', release: manifest.release, sourceCommit: manifest.sourceCommit, payloadSha256: payloadDigest(manifest) }));
   const before = { route: Buffer.from(route), guide: Buffer.from('original guide'), state: f.state, stateBytes: f.remote.get(STATE) };
   f.client.meta = async path => f.remote.has(path) ? {} : null;
   f.client.upload = async (path, bytes) => f.remote.set(path, bytes);
