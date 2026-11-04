@@ -4,6 +4,32 @@
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
+## 2026-11-04 共用素材發布流程與未納管清理
+
+依使用者要求改善每次完整上傳的流程，靜態資源改以封裝後內容的 SHA-256 共用儲存；已存在且大小／hash 相同才重用，獨立新檔最多四個並行。保留每版網址、精確公開白名單、語系快取規則、原子切換與回退。三個保留版本都不再引用的素材，需先完成可還原加密備份與刪前重驗才回收；有未納管候選目錄時暫停素材回收。
+
+共用儲存建立後，[Run 41795279287](https://github.com/LinthDale/synaiq-web/actions/runs/41795279287) 已實測只上傳 19 檔、411,855 bytes，重用 321 個資源、32,873,039 bytes。首輪輕量版曾新增 243 張手機影格；本輪改為 8 個下載包，既有桌面影格不重複上傳。前一輪的手機靜態處理已由本輪輕量動畫取代。
+
+首次共用儲存由 [Run 41792521670](https://github.com/LinthDale/synaiq-web/actions/runs/41792521670) 建立。後續 [Run 41806595635](https://github.com/LinthDale/synaiq-web/actions/runs/41806595635) 已完成手機輕量動畫與桌面快取修正，來源 `28bbf76f82ae5828af13081d6b7afebadffe121e`，現行版本為 `public_html/synaiq-release-ci-41806595635-1/`：349 個公開邏輯檔案，7 個版本實體檔案（含私有素材清單）及 343 個共用資源。這次正式部署實際上傳 29 檔、3,482,096 bytes，重用 321 個資源、32,881,866 bytes。相較完整 36,241,232 bytes 封裝減少約 90.4% 上傳量；GitHub 加密備份仍保存完整 artifact。
+
+使用者另回報 iPhone Chrome 能載入但往下捲動後變空白。原先手機也啟動桌面解析度 243 幀背景與最多 32 張解碼圖；未取得實機記憶體／終止記錄，不能將系統終止視為已重現的根因。曾先發布停用手機動畫的臨時方案，使用者要求保留動畫後，改採 576×384 橫式衍生影格（243 張共 2,290,506 bytes）、6 幀解碼快取、2 個同時解碼、僅預載鄰近位置，不整段閒置預載，離開畫面的背景區塊暫時釋放影格樣式。直式構圖另外製作，尚未上線。此輪上線為使用者明確要求先測試的橫式縮小版，不宣稱實機空白已根治。
+
+使用者也回報桌面卡頓。確認距離排序的快取淘汰會移除剛解碼的預載窗影格，隨後重複解碼。修正為優先保留目前預載窗；同一個本機 Chrome 10 秒正反向捲動測試，解碼呼叫由 169,684 降為 442，顯示變化由 322 次至 323 次，保留正常捲動變化。這是受控本機量測，不代表實體 iPhone 或所有桌面裝置的效能保證。Cookie 不用於動畫加速；版本化素材使用 HTTP 快取，解碼與繪製仍需受控。
+
+使用者實測首輪 `5f62167`（Run 41801720857）已不再空白，但第一次往下滑仍卡住，重複幾次才正常。該輪 local／staged／live 各 52 組及獨立 36 組手機檢查均通過；後續保留版本重查遇到讀取 403，刪除前停止，已存在持久加密備份 `hostinger-backup-41801720857-1`。使用新 API 檔案連線讀取同一物件成功且 SHA-256 一致；改為發布／準備清理／刪前重查階段各建立新連線，不自動重送任何變更，保留備份、狀態與路由 hash 保護。
+
+針對首次捲動，本輪將手機原有 243 張 WebP 原樣封成 8 包 JSON（每包最多 32 張，共 3,060,929 bytes），只個別公開封面首幀，動畫內容和時序不變。壓縮包獨立快取，影格用到才解碼，仍最多 6 幀快取／2 個同時解碼；僅預備前方 48、後方 12 幀涉及的附近包，不閒置載入整段。受控本機 120ms 回應延遲、7 秒捲動測試，首次不同顯示幀由逐張方式的 13 增為 191，接近重複後的 207；這是影格追隨量測，不是 FPS 或實體 iPhone 保證。使用者以 iPhone Chrome 實測回覆「第一次也明顯變順，且不空白」，本輪手機實機測試通過；此前空白的原始根因仍未取得終止診斷，未追認為已確診。來源圖與解碼窗加上保守 UTF-16 壓縮字串估算小於 16 MiB，並非整個瀏覽器的記憶體上限。
+
+驗證：55 項部署測試、225 項網站測試（CI 9 skipped；本機 224 passed／10 skipped）、32 項 repository 測試，以及 CI local／staged／live 各 52 組瀏覽器檢查通過。另有三項 WebKit 26.0／Chrome 手機直橫向、反覆捲動、解碼上限與桌面縮放／重複解碼回歸測試通過。正式站六頁、三語共 36 組正常動態手機檢查、首頁反覆捲動及語言切換通過；獨立驗證實體／共用檔案雜湊、無瀏覽器轉址、JS 快取規則、私有清單 410 與未納管目錄為零。使用者已完成本輪實際 iPhone Chrome 測試，首次捲動明顯變順且未再空白；原始空白根因仍未確診。
+
+移除 test／deploy job 重複執行同一套本機 52 組驗收的步驟。test job 僅傳遞無主機資料的 `browser-local.json`；deploy job 下載同一 run／attempt 的報告、從 commit 重建封裝，核對來源、release 及完整檔案 manifest 摘要一致後才可操作主機。時間戳記不影響摘要，檔案 hash、大小、路徑、共用位址或來源改變都會阻擋。staged／live 完整驗收保持保留。
+
+主機路由 SHA-256：`0250860ed5a03a7f891a448ec11bd3dab4bdf848c2879ada1f923631ad1c0522`；state SHA-256：`eab1ea3d3c6244f2cf7726ebfbf9e451af13a8cfe282d130fbe598af8c38571d`。現行與回退版為 `synaiq-release-ci-41806595635-1`、`synaiq-release-ci-41801720857-1`、`synaiq-release-ci-41795279287-1`；持久加密備份與完整證據在草稿 Release `hostinger-backup-41806595635-1`。部署與清理使用同一個 `hostinger-production` concurrency。
+
+先前 [清理 Run 41791382557](https://github.com/LinthDale/synaiq-web/actions/runs/41791382557) 已刪除三個使用者核准的未納管目錄：`synaiq-release-20260930-screens-anon`、`synaiq-release-ci-38196226321-1`、`synaiq-release-ci-41778203133-2`。完整下載、逐檔 SHA-256、加密封存、還原驗證、GitHub 重下載驗證及保留相依檢查後才刪除，共釋放 101,508,279 bytes。清理當下的三個成功版本、路由、state 與維護入口不變；主機重查未納管目錄為零，正式站檢查通過。備份草稿為 `hostinger-backup-cleanup-41791382557-1`；備份 SHA-256 `d7ab965c3800b5f08031964ce4ee8369b2b2b3312c045543a668b58884de8b36`，完整證據 SHA-256 `7294f87924017d556366db4e11413ef3587420a08385d02250983f0db4ac90c7`。WordPress、其他服務及私人目錄未列入本次清理。
+
+本機證據在 `out/mobile-loading-20261104/`：`cleanup-success.log`、`storage-after-cleanup.json`、`transfer-simulation.json`、`storage-host-verification.json`、`storage-live-acceptance.json`、`storage-workflow-final.json`；復原方式見 [CI/CD](hostinger-cicd.md)。
+
 ## 2026-11-04 iPhone Chrome 內容載入修正
 
 移除 `page.html` 重複執行 `locale-bootstrap.js` 的 module 入口，保留 modulepreload 並統一由 `prototype.js` 初始化。修正前 WebKit 26.0 在語系載入與頁面載入重疊時會無錯誤地停在「內容載入中」；同一瀏覽器回歸測試已先重現失敗，再驗證修正。

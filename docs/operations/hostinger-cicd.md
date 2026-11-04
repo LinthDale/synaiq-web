@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：**已啟用，iPhone 語系載入修正已上線**。[Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191) 於 2026-11-04 完成部署、驗證、備份及清理；來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，正式目錄 `synaiq-release-ci-41780885191-1`。另以 WebKit 26.0 與 Chrome 完成正式站 36 組手機檢查及語言切換。獨立主機與正式網站驗證結果見 [部署紀錄](deploy-hostinger.md)。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
+目前狀態：**已啟用，共用素材發布與手機捲動修正已上線**。[Run 41806595635](https://github.com/LinthDale/synaiq-web/actions/runs/41806595635) 來源 `28bbf76f82ae5828af13081d6b7afebadffe121e`，現行 `synaiq-release-ci-41806595635-1`；local／staged／live 各 52 組及 WebKit 26.0／Chrome 共 36 組正常動態手機檢查通過。`HOSTINGER_DEPLOY_ENABLED=true`；改為 `false` 可暫停後續部署。詳見 [部署紀錄](deploy-hostinger.md)。
 
-本次加密備份位於草稿 Release `hostinger-backup-41780885191-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。首次啟用紀錄 [Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 與歷次加密備份仍保留；詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
+本次備份在草稿 Release `hostinger-backup-41806595635-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。三個未納管目錄的獨立備份在 `hostinger-backup-cleanup-41791382557-1`；歷次備份仍保留。
 
 ## 平常如何更新
 
@@ -23,7 +23,7 @@
 
 1. 設計測試、部署防護測試、Astro／repository 測試全部成功。
 2. 按公開 allowlist 從 Git commit 封裝檔案（2026-11-02 為 338 檔，含 243 張背景動畫幀；數量隨 allowlist 調整），正式 `index.html` 由 `page.html` 產生。CSS、JS、圖片指向唯一的新版本目錄。精確檔名白名單可拆成多條路由，每條小於 8,000 bytes，仍只開放已封裝檔案；後續發布會保留現行版的全部白名單路由。
-3. 本機瀏覽器測試：六頁 × 繁中／英文／德文 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的三語內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 52 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。
+3. 本機瀏覽器測試：六頁 × 繁中／英文／德文 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的三語內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 52 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。 三語手機首頁使用正常動態模式、觸控與 DPR 3，反覆上下捲動至頁尾，確認輕量背景存在且沒有桌面解析度幀請求；桌面首頁也使用正常動態模式並檢查反覆解碼，其餘內頁保留減少動態模式。本機驗收只跑一次；報告綁定來源 commit、release 與完整 manifest 摘要，deploy job 重建封裝、核對相同才沿用。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
 5. 入口文件上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`；圖片、動畫、模型、JS、CSS、SVG 等靜態資源以封裝後內容的 SHA-256 儲存在 `public_html/synaiq-assets-v1/<sha256>.<副檔名>`。已存在的資源先透過 authenticated raw 核對大小與 SHA-256，完全相同才重用；缺少時才上傳及下載驗證，絕不覆寫既有 hash 檔案。獨立檔案最多四個並行，失敗會等已開始的操作結束再回退。
 6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 同一組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
@@ -70,7 +70,8 @@ node --use-system-ca --env-file=.env.hostinger.local scripts/hostinger/cli.mjs a
 - Actions job summary 記錄來源 SHA、正式目錄、保留／清理版本和 backup tag；CI 不自行 commit 維護紀錄，避免循環觸發。
 - 私有主機維護入口是 `00-SYNAIQ-START-HERE.txt`；`.hostinger-ci-state.json` 保存成功發布順序及檔案 hash。兩者公開請求必須回 410。
 - 每次成功流程的草稿 Release `hostinger-backup-<run_id>-<attempt>` 保存 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。保留為草稿，不發布；不自動刪除備份。
-- Actions artifacts 僅以明確檔名上傳三種加密封存（backup／evidence／failure-evidence），保留 90 天，是方便存取的副本，不能取代草稿 Release 的持久備份。禁止使用 `*.enc` 通配符；解密驗證目錄以 `.restored` 結尾，避免目錄被遞迴收集。公開 repository 的 artifacts 可供有讀取權限的已登入使用者下載，因此不得上傳未加密主機備份。
+- 主機備份與失敗證據的 Actions artifacts 僅以明確檔名上傳三種加密封存（backup／evidence／failure-evidence），保留 90 天，是方便存取的副本，不能取代草稿 Release 的持久備份。禁止使用 `*.enc` 通配符；解密驗證目錄以 `.restored` 結尾，避免目錄被遞迴收集。公開 repository 的 artifacts 可供有讀取權限的已登入使用者下載，因此不得上傳未加密主機備份。
+- test job 另存公開的 `browser-local.json` 驗收報告，保留 7 天，僅含公開頁面測試及封裝摘要，不含主機資料或密鑰。deploy job 僅下載同一 run／attempt 的這份報告，使用 `actions: read`，並在操作主機前核對完整 manifest 摘要。
 - 加密備份內包括封裝 artifact、路由前後檔、維護入口前文、state、逐檔清理備份、manifest、驗證及 archive inventory；不包含 token、session 或 backup key。
 
 ## 失敗與復原
