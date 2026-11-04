@@ -7,6 +7,13 @@ import { activeRelease, buildRouting, transformSource, retentionPlan, assertNoDe
 const current = 'synaiq-release-a', name = 'synaiq-release-b';
 const base = `# BEGIN LSCACHE\nKeep vendor directives\n# END LSCACHE\nRewriteRule ^$ /${current}/index.html [L]\nRewriteRule ^robots\\.txt$ /${current}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${current}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${current}/(?:index\\.html|page\\.html|robots\\.txt|sitemap\\.xml)$ - [L]\nRewriteRule ^synaiq-release-older/(?:index\\.html)$ - [L]\nRewriteRule ^wp-content/uploads/2026/03/toutou-2\\.png$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${current};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
 const paths = ['index.html', 'page.html', 'robots.txt', 'sitemap.xml', 'assets/a.png'];
+
+test('only the eight explicit mobile frame bundles qualify for shared JSON storage', async () => {
+  const { sharedPath, ASSET_MAP } = await import('./core.mjs');
+  const hash = 'a'.repeat(64);
+  for (let index = 0; index < 8; index++) assert.equal(sharedPath(`assets/kip-d-scroll-mobile-bundles-v1/frames-00${index}.json`, hash), `synaiq-assets-v1/${hash}.json`);
+  for (const path of [ASSET_MAP, '.hostinger-ci-state.json', 'locales/zh-Hant.json', 'assets/kip-d-scroll-mobile-bundles-v1/frames-008.json']) assert.equal(sharedPath(path, hash), null);
+});
 test('large frame allowlists split into bounded exact rules and survive the next release', () => {
   const frames = Array.from({ length: 243 }, (_, index) => `assets/kip-d-scroll-v5/frame-${String(index).padStart(3, '0')}.webp`);
   const payload = [...paths, ...frames];

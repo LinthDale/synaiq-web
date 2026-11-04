@@ -35,7 +35,7 @@ export async function main() {
     if (mode === 'local') {
       await smoke(JSON.parse(await readFile(manifestFile)), work, config.origin, 'local'); return;
     }
-    const client = await connect(config, process.env.HOSTINGER_API_TOKEN);
+    let client = await connect(config, process.env.HOSTINGER_API_TOKEN);
     if (mode === 'audit') { const result = await audit(client, config, work); console.log(JSON.stringify({ active: result.state.active, managed: result.state.releases.length, unmanaged: result.unmanaged })); return; }
     // Production mutations are only exposed on GitHub's protected main deployment job.
     assert.equal(process.env.GITHUB_ACTIONS, 'true');
@@ -46,9 +46,13 @@ export async function main() {
     const manifest = JSON.parse(await readFile(manifestFile));
     assert.equal(manifest.sourceCommit, process.env.GITHUB_SHA);
     phase = 'deploy'; const state = await deploy(client, config, work, manifest, id);
-    phase = 'prepare-cleanup'; const plan = await prepareCleanup(client, config, work, state);
+    // Browser verification can outlive a file-manager session. Acquire fresh
+    // credentials at phase boundaries; never retry a mutation after a 403.
+    phase = 'prepare-cleanup'; client = await connect(config, process.env.HOSTINGER_API_TOKEN);
+    const plan = await prepareCleanup(client, config, work, state);
     phase = 'backup'; const receipt = await publishBackup(config, work, manifest, process.env.HOSTINGER_BACKUP_KEY, id);
-    phase = 'prune'; await prune(client, config, work, state, receipt, id);
+    phase = 'prune'; client = await connect(config, process.env.HOSTINGER_API_TOKEN);
+    await prune(client, config, work, state, receipt, id);
     phase = 'public-checks'; await client.purge(); await publicChecks(config, manifest);
     phase = 'evidence'; await publishEvidence(config, work, process.env.HOSTINGER_BACKUP_KEY, id);
     // Each browser pass runs the whole matrix or throws, so its size is what every pass verified.

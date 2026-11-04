@@ -20,7 +20,7 @@ for (const [engine, executablePath] of [
         const original = HTMLImageElement.prototype.decode;
         let active = 0; window.mobileDecodePeak = 0;
         HTMLImageElement.prototype.decode = function (...args) {
-          if (!this.src.includes('/kip-d-scroll-mobile-v1/')) return original.apply(this, args);
+          if (!this.src.includes('/kip-d-scroll-mobile-v1/') && !this.src.startsWith('data:image/webp;base64,')) return original.apply(this, args);
           active++; window.mobileDecodePeak = Math.max(window.mobileDecodePeak, active);
           return original.apply(this, args).finally(() => { active--; });
         };
@@ -29,7 +29,7 @@ for (const [engine, executablePath] of [
       const page = await context.newPage(), desktopFrames = [], mobileFrames = new Set(), errors = [], displayed = new Set();
       page.on('request', request => {
         if (/\/kip-d-scroll-v5\/frame-\d+\.webp/.test(request.url())) desktopFrames.push(request.url());
-        if (/\/kip-d-scroll-mobile-v1\/frame-\d+\.webp/.test(request.url())) mobileFrames.add(request.url());
+        if (/\/kip-d-scroll-mobile(?:-bundles)?-v1\//.test(request.url())) mobileFrames.add(request.url());
       });
       page.on('pageerror', error => errors.push(error.message));
       page.on('crash', () => errors.push('Page crashed'));
@@ -38,7 +38,7 @@ for (const [engine, executablePath] of [
       await page.locator('body.decision-scroll-ready[data-decision-profile="mobile"]').waitFor();
       await page.waitForTimeout(1500);
       assert.deepEqual(desktopFrames, [], 'Touch devices must use the lower-resolution sequence');
-      assert.ok(mobileFrames.size > 0 && mobileFrames.size <= 5, 'Idle touch homepage must not preload the whole sequence');
+      assert.ok(mobileFrames.size > 0 && mobileFrames.size <= 3, 'Idle touch homepage prepares at most two nearby compressed bundles and its poster');
       assert.ok((await page.locator('.hero-thread-art img').evaluate(img => img.currentSrc)).includes('/kip-d-scroll-mobile-v1/'));
       for (const viewport of [{ width: 390, height: 844 }, { width: 1180, height: 820 }, { width: 390, height: 844 }]) {
         await page.setViewportSize(viewport);
@@ -49,13 +49,13 @@ for (const [engine, executablePath] of [
             // scrollIntoView can resolve before the scroll event's animation frame.
             // Observe the painted surface too; the preceding target may still match.
             if (await section.getAttribute('data-decision-surface') !== null) await page.waitForFunction(selector =>
-              getComputedStyle(document.querySelector(selector)).backgroundImage.includes('/kip-d-scroll-mobile-v1/'), selector, { timeout: 10000 });
+              getComputedStyle(document.querySelector(selector)).backgroundImage.includes('data:image/webp;base64,'), selector, { timeout: 10000 });
             assert.equal(await section.isVisible(), true, selector);
             assert.ok((await section.innerText()).trim().length > 0, selector);
             await page.waitForFunction(() => document.body.dataset.decisionFrame === document.body.dataset.decisionTarget);
             displayed.add(await page.locator('body').getAttribute('data-decision-frame'));
             assert.ok(Number(await page.locator('body').getAttribute('data-decision-cached')) <= 6);
-            if (await section.getAttribute('data-decision-surface') !== null) assert.ok((await section.evaluate(el => getComputedStyle(el).backgroundImage)).includes('/kip-d-scroll-mobile-v1/'), `${selector}: missing mobile background`);
+            if (await section.getAttribute('data-decision-surface') !== null) assert.ok((await section.evaluate(el => getComputedStyle(el).backgroundImage)).includes('data:image/webp;base64,'), `${selector}: missing mobile background`);
           }
           await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
           assert.equal(await page.locator('h1').isVisible(), true);
@@ -64,6 +64,7 @@ for (const [engine, executablePath] of [
       }
       assert.deepEqual(desktopFrames, []);
       assert.ok(displayed.size > 2, 'Scrolling must retain the animation rather than a static replacement');
+      assert.ok(mobileFrames.size <= 9, '243 mobile frames must use at most eight bundle requests and one poster');
       assert.ok(await page.evaluate(() => window.mobileDecodePeak <= 2));
       assert.equal(await page.locator('body').getAttribute('data-decision-profile'), 'mobile');
       assert.deepEqual(errors, []);
@@ -116,7 +117,7 @@ test('RWD switches resolution and cache policy between desktop and phone widths 
       assert.ok(await page.evaluate(() => window.desktopDecodeCalls < 1000), 'Repeated decoding of evicted look-ahead frames');
       await page.setViewportSize({ width: 390, height: 844 });
       await page.locator('body.decision-scroll-ready[data-decision-profile="mobile"]').waitFor();
-      assert.ok((await page.locator('.home-opening').evaluate(el => getComputedStyle(el).backgroundImage)).includes('/kip-d-scroll-mobile-v1/'));
+      assert.ok((await page.locator('.home-opening').evaluate(el => getComputedStyle(el).backgroundImage)).includes('data:image/webp;base64,'));
       assert.ok(Number(await page.locator('body').getAttribute('data-decision-cached')) <= 6);
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.locator('body.decision-scroll-ready[data-decision-profile="desktop"]').waitFor();

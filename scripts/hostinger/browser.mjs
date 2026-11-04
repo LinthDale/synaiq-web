@@ -38,7 +38,7 @@ export async function smoke(manifest, work, origin, mode) {
   try {
     if (mode === 'local') {
       const assets = new Map();
-      const types = { html: 'text/html', js: 'text/javascript', css: 'text/css', webp: 'image/webp', jpg: 'image/jpeg', png: 'image/png', svg: 'image/svg+xml', xml: 'application/xml', txt: 'text/plain', glb: 'model/gltf-binary' };
+      const types = { html: 'text/html', js: 'text/javascript', json: 'application/json', css: 'text/css', webp: 'image/webp', jpg: 'image/jpeg', png: 'image/png', svg: 'image/svg+xml', xml: 'application/xml', txt: 'text/plain', glb: 'model/gltf-binary' };
       for (const file of manifest.files) {
         const bytes = await readFile(join(work, 'artifact', file.path));
         assert.equal(sha(bytes), file.sha256);
@@ -68,17 +68,22 @@ export async function smoke(manifest, work, origin, mode) {
       const page = await context.newPage(), errors = [], frameRequests = [], mobileFrames = new Set();
       page.on('request', req => {
         if (/\/kip-d-scroll-v5\/frame-\d+\.webp/.test(req.url())) frameRequests.push(req.url());
-        if (/\/kip-d-scroll-mobile-v1\/frame-\d+\.webp/.test(req.url())) mobileFrames.add(req.url());
+        if (/\/kip-d-scroll-mobile(?:-bundles)?-v1\//.test(req.url())) mobileFrames.add(req.url());
       });
       page.on('pageerror', error => errors.push(error.message));
       page.on('requestfailed', req => { if (new URL(req.url()).origin === origin) errors.push(`Resource failed: ${new URL(req.url()).pathname}`); });
       page.on('response', res => { if (new URL(res.url()).origin === origin && res.status() >= 400) errors.push(`HTTP ${res.status()}: ${new URL(res.url()).pathname}`); });
       const path = mode === 'staged' ? `/${manifest.release}/index.html` : '/';
-      const response = await page.goto(`${origin}${path}${smokeQuery(item)}`, { waitUntil: 'networkidle', timeout: 60000 });
+      const response = await page.goto(`${origin}${path}${smokeQuery(item)}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
       assert.equal(response.status(), 200);
       // A working older release is not a successful deployment of this commit.
       assert.equal(sha(await response.body()), manifest.files.find(f => f.path === 'index.html').sha256);
+      // Idle background prefetch is not page readiness. Wait for rendered content
+      // and fonts explicitly, rather than every optional animation download.
+      await page.locator('html[data-i18n-ready="true"]').waitFor();
       await page.locator(`body[data-page="${item.page}"]`).waitFor();
+      await page.locator('h1').waitFor();
+      await page.evaluate(() => document.fonts.ready);
       assert.equal(await page.locator('h1').count(), 1);
       assert.doesNotMatch(await page.title(), /preview|預覽/i);
       assert.equal(await page.locator('html').getAttribute('lang'), item.lang);
@@ -121,7 +126,7 @@ export async function smoke(manifest, work, origin, mode) {
             assert.equal(await section.isVisible(), true, `${selector}: lost during mobile scrolling`);
             assert.ok((await section.innerText()).trim().length > 0, `${selector}: missing mobile content`);
             if (await section.getAttribute('data-decision-surface') !== null) await page.waitForFunction(selector =>
-              getComputedStyle(document.querySelector(selector)).backgroundImage.includes('/kip-d-scroll-mobile-v1/'), selector, { timeout: 10000 });
+              getComputedStyle(document.querySelector(selector)).backgroundImage.includes('data:image/webp;base64,'), selector, { timeout: 10000 });
             assert.ok(Number(await page.locator('body').getAttribute('data-decision-cached')) <= 6, 'Mobile decoded cache exceeded its bound');
           }
           await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
@@ -130,6 +135,7 @@ export async function smoke(manifest, work, origin, mode) {
         }
         assert.deepEqual(frameRequests, [], 'Touch homepage loaded desktop-resolution frames');
         assert.ok(mobileFrames.size > 2, 'Mobile scrolling did not load animated frames');
+        assert.ok(mobileFrames.size <= 9, 'Mobile background exceeded eight bundles and one poster');
       }
       if (item.page === 'home' && !touchHome) {
         await page.locator('body.decision-scroll-ready[data-decision-profile="desktop"]').waitFor();
