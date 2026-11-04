@@ -64,6 +64,7 @@ jobs:
       url: https://taistro.com.tw/
     permissions:
       contents: write # Encrypted backups in draft Releases; no commits are made by CI.
+      actions: read # Download only this workflow run's public browser-check report.
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

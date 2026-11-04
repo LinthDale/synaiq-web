@@ -124,6 +124,7 @@ test('workflow isolates PRs from secrets and serializes production mutations', a
   assert.equal([...workflow.matchAll(/cli\.mjs local /g)].length, 1, 'Run the local matrix once; bind its report to the re-created payload');
   assert.ok(workflow.includes('--name "hostinger-local-check-$DEPLOY_ID"'));
   assert.ok(workflow.includes('path: out/hostinger-ci/${{ github.run_id }}-${{ github.run_attempt }}/browser-local.json'));
+  assert.ok(workflow.split('  deploy:')[1].includes('actions: read'), 'The deployment token needs artifact download permission');
 });
 
 test('local-check digest ignores packaging time but binds release, commit, storage and all file metadata', () => {
