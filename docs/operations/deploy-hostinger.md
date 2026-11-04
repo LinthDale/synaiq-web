@@ -1,8 +1,18 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-11-03（Asia/Taipei）。
+最後更新：2026-11-04（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-11-04 iPhone Chrome 內容載入修正
+
+移除 `page.html` 重複執行 `locale-bootstrap.js` 的 module 入口，保留 modulepreload 並統一由 `prototype.js` 初始化。修正前 WebKit 26.0 在語系載入與頁面載入重疊時會無錯誤地停在「內容載入中」；同一瀏覽器回歸測試已先重現失敗，再驗證修正。
+
+[Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191) 完成發布、正式驗證、加密備份及保留清理。來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，正式目錄為 `public_html/synaiq-release-ci-41780885191-1/`，339 檔；CI 的 local／staged／live 各 52 組檢查通過。另以 WebKit 26.0 與 Chrome 對正式網址執行六頁 × 三語共 36 組手機檢查及 6 次語言切換，確認內容可見、載入提示已移除，而且入口 HTML 精確符合本次來源與版本路徑。
+
+獨立讀取主機 `.htaccess`、state 與維護入口驗證一致；路由 SHA-256 為 `cc92dbc61f62cf9f23a05e32204610789748864c45a90defaaa794304de2f347`。保留 `synaiq-release-ci-41780885191-1`、`synaiq-release-ci-41592808706-1`、`synaiq-release-ci-41409243321-1`；加密備份與完整證據保存在草稿 Release `hostinger-backup-41780885191-1`。
+
+先前 Run 41778203133 第 1 次執行在上傳前讀取舊版 `frame-022.webp` 時收到 403 而停止；獨立重讀確認 hash 正確、路由未變，才重跑。第 2 次上傳及 staged 52 組檢查通過，但舊首頁檢查以檔名結尾選取，誤用了排序較前的 `auth/index.html` 雜湊，因此回退至原路由。`69637d1` 將啟用前及回退的核對都改為精確選取 `<目前版本>/index.html`，新增有／無巢狀 index 的回歸測試，41 項部署測試通過；沒有放寬雜湊保護。失敗與成功證據分開保留在 `out/mobile-loading-20261104/`，主要檔案為 `failed-deployment-recheck.json`、`live-acceptance.json`、`host-verification.json`、`workflow-final.json` 及兩次加密失敗封存。
 
 ## 2026-11-03 auth.taistro.com.tw 子網域
 

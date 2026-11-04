@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：**已啟用，KIP 改版及 Demo 頂欄修正已上線**。[Run 41409243321](https://github.com/LinthDale/synaiq-web/actions/runs/41409243321) 於 2026-11-02 完成部署、驗證、備份及清理；來源 `23bfe6c105d0c8d0839aa5841838a9675c749177`，正式目錄 `synaiq-release-ci-41409243321-1`。獨立主機與正式網站驗證結果見 [部署紀錄](deploy-hostinger.md)。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
+目前狀態：**已啟用，iPhone 語系載入修正已上線**。[Run 41780885191](https://github.com/LinthDale/synaiq-web/actions/runs/41780885191) 於 2026-11-04 完成部署、驗證、備份及清理；來源 `69637d12e7900d34516dbd38aea6fec4b913cbad`，正式目錄 `synaiq-release-ci-41780885191-1`。另以 WebKit 26.0 與 Chrome 完成正式站 36 組手機檢查及語言切換。獨立主機與正式網站驗證結果見 [部署紀錄](deploy-hostinger.md)。`HOSTINGER_DEPLOY_ENABLED=true`；改成 `false` 可暫停後續部署。
 
-本次加密備份位於草稿 Release `hostinger-backup-41409243321-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。首次啟用紀錄 [Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 與歷次加密備份仍保留；詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
+本次加密備份位於草稿 Release `hostinger-backup-41780885191-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。首次啟用紀錄 [Run 38197100197](https://github.com/LinthDale/synaiq-web/actions/runs/38197100197) 與歷次加密備份仍保留；詳細路由 hash、保留／清理清單見 [部署紀錄](deploy-hostinger.md)。
 
 ## 平常如何更新
 
