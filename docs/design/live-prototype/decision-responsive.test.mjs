@@ -12,6 +12,7 @@ test('orientation chooses composition independently of the 480px and 900px resol
     [768, 1024, 'portrait-small'], [1024, 1366, 'portrait-large'],
     [899, 1200, 'portrait-small'], [900, 1200, 'portrait-large'],
     [899, 600, 'landscape-small'], [900, 600, 'landscape-large'],
+    [932, 430, 'landscape-small'], [932, 500, 'landscape-large'],
     [1440, 900, 'landscape-large'], [1200, 1600, 'portrait-large'],
     [900, 900, 'portrait-large'],
   ]) assert.equal(decisionVariantAt(width, height), expected);

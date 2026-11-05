@@ -1,7 +1,7 @@
 import { DECISION_FRAME_COUNT, DECISION_MOBILE_BUNDLE_FILES, decisionFrameFile, decisionMobileFrameFile } from './decision-frames.js';
 
 export const DECISION_SMALL_MEDIA = '(max-width: 899px)';
-export const DECISION_PHONE_MEDIA = '(max-width: 479px)';
+export const DECISION_PHONE_MEDIA = '(max-width: 479px), (max-height: 479px)';
 export const DECISION_PORTRAIT_MEDIA = '(orientation: portrait)';
 export const DECISION_PORTRAIT_BUNDLE_FILES = Object.freeze(Array.from({ length: Math.ceil(DECISION_FRAME_COUNT / 32) }, (_, i) => `assets/kip-d-scroll-portrait-bundles-v1/frames-${String(i).padStart(3, '0')}.json`));
 export const DECISION_PORTRAIT_SMALL_BUNDLE_FILES = Object.freeze(Array.from({ length: Math.ceil(DECISION_FRAME_COUNT / 32) }, (_, i) => `assets/kip-d-scroll-portrait-small-bundles-v1/frames-${String(i).padStart(3, '0')}.json`));
@@ -20,5 +20,6 @@ export const DECISION_RESPONSIVE_FILES = Object.freeze([
 ]);
 export function decisionVariantAt(width, height) {
   if (height >= width && width < 480) return 'portrait-phone';
+  if (width > height && height < 480) return 'landscape-small';
   return `${height >= width ? 'portrait' : 'landscape'}-${width < 900 ? 'small' : 'large'}`;
 }

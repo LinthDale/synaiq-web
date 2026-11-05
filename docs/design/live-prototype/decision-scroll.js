@@ -97,7 +97,7 @@ export function initDecisionScroll() {
   let selected = '';
   const update = () => {
     const variant = decisionVariantAt(innerWidth, innerHeight);
-    const profile = queries[0].matches || queries[2].matches ? 'mobile' : 'desktop';
+    const profile = queries[0].matches || queries[2].matches || queries[3].matches ? 'mobile' : 'desktop';
     const key = `${variant}:${profile}`;
     if (selected === key) return;
     selected = key;

@@ -66,7 +66,7 @@ for (const [engine, executablePath] of [
       await page.waitForTimeout(500);
       assert.ok(requests.length > 0);
       assert.ok(requests.every(url => url.includes('/kip-d-scroll-portrait-phone-')), 'Phone portrait must not download landscape or large portrait frames');
-      for (const [width, height] of [[390,844], [844,390], [479,900], [480,900], [768,1024], [1024,1366], [899,1200], [900,1200], [1180,820], [390,844]]) {
+      for (const [width, height] of [[390,844], [844,390], [932,430], [932,500], [479,900], [480,900], [768,1024], [1024,1366], [899,1200], [900,1200], [1180,820], [390,844]]) {
         await page.setViewportSize({ width, height });
         const key = decisionVariantAt(width, height), variant = DECISION_VARIANTS[key];
         await page.locator(`body.decision-scroll-ready[data-decision-variant="${key}"]`).waitFor();

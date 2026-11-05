@@ -22,16 +22,16 @@ if (!["kip", "ems", "pvsim", "cases", "about"].includes(new URLSearchParams(loca
   cover.rel = 'preload'; cover.as = 'image'; cover.fetchPriority = 'high';
   const portrait = matchMedia('(orientation: portrait)').matches;
   const small = matchMedia('(max-width: 899px)').matches;
-  const phone = matchMedia('(max-width: 479px)').matches;
+  const phone = matchMedia('(max-width: 479px), (max-height: 479px)').matches;
   cover.href = portrait
     ? (phone ? 'assets/kip-d-scroll-portrait-phone-v1/frame-000.webp' : small ? 'assets/kip-d-scroll-portrait-small-v1/frame-000.webp' : 'assets/kip-d-scroll-portrait-v1/frame-000.webp')
-    : (small ? 'assets/kip-d-scroll-mobile-v1/frame-000.webp' : 'assets/kip-d-opening-v5.webp');
+    : (small || phone ? 'assets/kip-d-scroll-mobile-v1/frame-000.webp' : 'assets/kip-d-opening-v5.webp');
   document.head.append(cover);
   // Start the first compressed bundle while locale/page modules are loading.
   // The animation adopts this same request; it does not download the pack twice.
   const firstBundle = portrait
     ? (phone ? 'assets/kip-d-scroll-portrait-phone-bundles-v1/frames-000.json' : small ? 'assets/kip-d-scroll-portrait-small-bundles-v1/frames-000.json' : 'assets/kip-d-scroll-portrait-bundles-v1/frames-000.json')
-    : (small ? 'assets/kip-d-scroll-mobile-bundles-v1/frames-000.json' : null);
+    : (small || phone ? 'assets/kip-d-scroll-mobile-bundles-v1/frames-000.json' : null);
   if (firstBundle && !matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData
       && !['slow-2g', '2g'].includes(navigator.connection?.effectiveType)) {
     const url = new URL(firstBundle, location.href).href, controller = new AbortController();
