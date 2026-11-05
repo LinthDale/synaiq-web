@@ -68,7 +68,7 @@ export async function smoke(manifest, work, origin, mode) {
       const page = await context.newPage(), errors = [], frameRequests = [], mobileFrames = new Set();
       page.on('request', req => {
         if (/\/kip-d-scroll-v5\/frame-\d+\.webp/.test(req.url())) frameRequests.push(req.url());
-        if (/\/kip-d-scroll-mobile(?:-bundles)?-v1\//.test(req.url())) mobileFrames.add(req.url());
+        if (/\/kip-d-scroll-(?:mobile|portrait-small|portrait-phone)(?:-bundles)?-v1\//.test(req.url())) mobileFrames.add(req.url());
       });
       page.on('pageerror', error => errors.push(error.message));
       page.on('requestfailed', req => { if (new URL(req.url()).origin === origin) errors.push(`Resource failed: ${new URL(req.url()).pathname}`); });
@@ -118,7 +118,7 @@ export async function smoke(manifest, work, origin, mode) {
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, 'Horizontal overflow');
       if (touchHome) {
-        await page.locator('body.decision-scroll-ready[data-decision-profile="mobile"]').waitFor();
+        await page.locator('body.decision-scroll-ready[data-decision-profile="mobile"][data-decision-variant="portrait-phone"]').waitFor();
         for (let pass = 0; pass < 2; pass++) {
           for (const selector of ['.home-opening', '#introduction', '[data-product-reveal]', '#proof', '.advantages', '#people', '#contact']) {
             const section = page.locator(selector).first();

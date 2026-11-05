@@ -2837,6 +2837,9 @@ body[data-page="home"] .ceo-attribution {
 /* END DEMO */
 
 /* BEGIN DECISION SCROLL / ComfyUI 滾動幀預覽 */
+@media (orientation: portrait) {
+  .home-opening .hero-thread-art img { object-position: center bottom; }
+}
 body.decision-scroll-ready[data-page="home"] [data-decision-surface] {
   --decision-tint: #24272c80;
   background-color: #24272c;

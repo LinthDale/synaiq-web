@@ -1,9 +1,11 @@
-import { DECISION_FRAME_COUNT, decisionFrameFile, decisionMobileFrameFile } from './decision-frames.js';
+import { DECISION_FRAME_COUNT, DECISION_MOBILE_BUNDLE_SIZE } from './decision-frames.js';
 import { createDecisionMobileSource } from './decision-mobile-source.js';
+import { DECISION_VARIANTS, decisionVariantAt, DECISION_SMALL_MEDIA, DECISION_PORTRAIT_MEDIA, DECISION_PHONE_MEDIA } from './decision-responsive.js';
 
 export const DECISION_POLICIES = Object.freeze({
   mobile: Object.freeze({ cacheSize: 6, concurrent: 2, ahead: 2, behind: 1, warmWholeSequence: false, warmAhead: 48, warmBehind: 12, warmConcurrent: 6, visibleOnly: true }),
   desktop: Object.freeze({ cacheSize: 32, concurrent: 6, ahead: 20, behind: 8, warmWholeSequence: true, warmConcurrent: 2, visibleOnly: false }),
+  portraitLarge: Object.freeze({ cacheSize: 3, concurrent: 1, ahead: 1, behind: 0, warmWholeSequence: false, warmAhead: 48, warmBehind: 12, warmConcurrent: 6, visibleOnly: true }),
 });
 
 const clamp = value => Math.max(0, Math.min(1, value));
@@ -84,33 +86,45 @@ export function scenePlacement(width, height, imageWidth, imageHeight) {
   const drawnWidth = imageWidth * scale;
   const drawnHeight = imageHeight * scale;
   // Portrait cropping keeps the hand and bulb on the right in the same frame.
-  const anchor = width < 640 ? 0.9 : width < 1100 ? 0.68 : 0.5;
-  return { width: drawnWidth, height: drawnHeight, x: (width - drawnWidth) * anchor, y: (height - drawnHeight) * 0.55 };
+  const portrait = imageHeight > imageWidth;
+  const anchor = portrait ? 0.5 : width < 640 ? 0.9 : width < 1100 ? 0.68 : 0.5;
+  return { width: drawnWidth, height: drawnHeight, x: (width - drawnWidth) * anchor, y: (height - drawnHeight) * (portrait ? 1 : 0.55) };
 }
 
 export function initDecisionScroll() {
-  const mobile = matchMedia('(max-width: 899px), (pointer: coarse)');
+  const queries = [matchMedia(DECISION_SMALL_MEDIA), matchMedia(DECISION_PORTRAIT_MEDIA), matchMedia('(pointer: coarse)'), matchMedia(DECISION_PHONE_MEDIA)];
   let stop = () => {};
+  let selected = '';
   const update = () => {
+    const variant = decisionVariantAt(innerWidth, innerHeight);
+    const profile = queries[0].matches || queries[2].matches || queries[3].matches ? 'mobile' : 'desktop';
+    const key = `${variant}:${profile}`;
+    if (selected === key) return;
+    selected = key;
     stop();
-    stop = initAnimatedDecisionScroll(mobile.matches ? 'mobile' : 'desktop');
+    stop = initAnimatedDecisionScroll(profile, variant);
   };
-  mobile.addEventListener('change', update);
+  for (const query of queries) query.addEventListener('change', update);
   update();
-  return () => { mobile.removeEventListener('change', update); stop(); };
+  return () => { for (const query of queries) query.removeEventListener('change', update); stop(); };
 }
 
-function initAnimatedDecisionScroll(profile) {
+function initAnimatedDecisionScroll(profile, variantKey) {
   const hero = document.querySelector('.home-opening');
   const proof = document.getElementById('proof');
   if (!hero || !proof) return () => {};
-  const policy = DECISION_POLICIES[profile];
-  const frameFile = profile === 'mobile' ? decisionMobileFrameFile : decisionFrameFile;
+  const variant = DECISION_VARIANTS[variantKey];
+  const policy = variantKey === 'portrait-large' ? DECISION_POLICIES.portraitLarge : DECISION_POLICIES[profile];
+  const frameFile = variant.frameFile;
   document.body.dataset.decisionProfile = profile;
+  document.body.dataset.decisionVariant = variantKey;
   const surfaces = [...document.querySelectorAll('[data-decision-surface]')];
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   const abort = new AbortController();
-  const source = profile === 'mobile' ? createDecisionMobileSource({ signal: abort.signal }) : null;
+  const initial = globalThis.__taistroDecisionFirstBundle;
+  delete globalThis.__taistroDecisionFirstBundle;
+  const source = variant.bundles ? createDecisionMobileSource({ signal: abort.signal, files: variant.bundles, initial }) : null;
+  if (!source) initial?.cancel();
   const surfaceFrames = new Map();
   const cache = new Map();
   const pending = new Map();
@@ -120,10 +134,10 @@ function initAnimatedDecisionScroll(profile) {
   const warming = new Set();
   const warmFailed = new Set();
   let warmTask = null;
-  const idle = globalThis.requestIdleCallback
+  const idle = source ? callback => setTimeout(callback, 0) : globalThis.requestIdleCallback
     ? callback => requestIdleCallback(callback, { timeout: 1200 })
     : callback => setTimeout(callback, profile === 'mobile' ? 0 : 200);
-  const cancelIdle = globalThis.cancelIdleCallback ?? clearTimeout;
+  const cancelIdle = source ? clearTimeout : globalThis.cancelIdleCallback ?? clearTimeout;
   let requested = 0;
   let target = 0;
   let scrub = 0;
@@ -135,8 +149,8 @@ function initAnimatedDecisionScroll(profile) {
   let raf = 0;
   let disposed = false;
   let ready = false;
-  let imageWidth = 1152;
-  let imageHeight = 768;
+  let imageWidth = variant.width;
+  let imageHeight = variant.height;
   let headerHeight = 74;
   let timeline = {segments:[],total:0};
 
@@ -201,10 +215,30 @@ function initAnimatedDecisionScroll(profile) {
     positionSurfaces();
   }
 
+  function nearestCachedFrame() {
+    if (cache.has(requested)) return requested;
+    let nearest = cache.has(displayed) ? displayed : -1;
+    let distance = nearest < 0 ? Infinity : Math.abs(nearest-requested);
+    for (const index of cache.keys()) if (Math.abs(index-requested) < distance) {
+      nearest = index; distance = Math.abs(index-requested);
+    }
+    return nearest;
+  }
+  const warmKey = index => source ? Math.floor(index/DECISION_MOBILE_BUNDLE_SIZE) : index;
+  function markWarmed(index) {
+    const start = source ? warmKey(index)*DECISION_MOBILE_BUNDLE_SIZE : index;
+    const end = Math.min(DECISION_FRAME_COUNT, start + (source ? DECISION_MOBILE_BUNDLE_SIZE : 1));
+    for (let frame=start; frame<end; frame++) warmed.add(frame);
+    document.body.dataset.decisionPreloaded = String(warmed.size);
+  }
+
   function wantedFrames() {
     // Contiguous look-ahead avoids the old 1/3/6-frame holes during a wheel tick.
     // Keep the destination warm too, so anchors and fast drags need not decode a movie.
-    return (preference.matches ? [requested] : [requested,target,
+    // Budgeted surfaces decode the scrub position and its immediate neighbors.
+    // Direct jumps already set requested=target; decoding both on every normal
+    // scroll needlessly spends the small decoder budget on a second moving head.
+    return (preference.matches ? [requested] : [requested,...(policy.visibleOnly ? [] : [target]),
       ...Array.from({length:policy.ahead},(_,i)=>requested+(i+1)*direction),
       ...Array.from({length:policy.behind},(_,i)=>requested-(i+1)*direction)])
       .filter(index => index >= 0 && index < DECISION_FRAME_COUNT);
@@ -227,10 +261,11 @@ function initAnimatedDecisionScroll(profile) {
       loading.then(() => {
         if (disposed) return;
         cache.set(index, image);
-        warmed.add(index);
-        document.body.dataset.decisionPreloaded = String(warmed.size);
-        if (index === requested) display(index);
-        else if (!ready && index === target) display(index);
+        markWarmed(index);
+        // A cold download may finish after the reader has moved on. Paint the
+        // nearest available frame instead of waiting for an exact moving target.
+        const nearest = nearestCachedFrame();
+        if (nearest >= 0 && nearest !== displayed) display(nearest);
         // Keep the requested window first. Distance alone evicted the look-ahead
         // frame just decoded, then finally() decoded it again indefinitely.
         const wanted = new Set(wantedFrames());
@@ -250,7 +285,7 @@ function initAnimatedDecisionScroll(profile) {
 
   function canWarm() {
     const connection = navigator.connection;
-    return (policy.warmWholeSequence || policy.warmAhead > 0) && !disposed && ready && !preference.matches && !document.hidden
+    return (policy.warmWholeSequence || policy.warmAhead > 0) && !disposed && (ready || source) && !preference.matches && !document.hidden
       && !connection?.saveData && !['slow-2g', '2g'].includes(connection?.effectiveType);
   }
   function scheduleWarm() {
@@ -266,9 +301,10 @@ function initAnimatedDecisionScroll(profile) {
         return policy.warmWholeSequence || (distance >= -policy.warmBehind && distance <= policy.warmAhead);
       });
       while (warming.size < policy.warmConcurrent) {
-        const index = order.find(value => !warmed.has(value) && !warming.has(value) && !pending.has(value) && !warmFailed.has(value));
+        const index = order.find(value => !warmed.has(value) && !warming.has(warmKey(value)) && !pending.has(value) && !warmFailed.has(warmKey(value)));
         if (index === undefined) break;
-        warming.add(index);
+        const key = warmKey(index);
+        warming.add(key);
         const preparation = source ? source.prepare(index) : fetch(new URL(frameFile(index), import.meta.url), {
           cache: 'force-cache', priority: 'low', signal: abort.signal,
         }).then(async response => {
@@ -277,11 +313,10 @@ function initAnimatedDecisionScroll(profile) {
         });
         preparation.then(() => {
           if (!disposed) {
-            warmed.add(index);
-            document.body.dataset.decisionPreloaded = String(warmed.size);
+            markWarmed(index);
           }
-        }).catch(() => { if (!disposed) warmFailed.add(index); }).finally(() => {
-          warming.delete(index);
+        }).catch(() => { if (!disposed) warmFailed.add(key); }).finally(() => {
+          warming.delete(key);
           scheduleWarm();
         });
       }
@@ -307,7 +342,8 @@ function initAnimatedDecisionScroll(profile) {
     lastScroll=y;
     lastTime=time;
     document.body.dataset.decisionTarget = String(target);
-    if (cache.has(requested) && displayed !== requested) display(requested);
+    const nearest = nearestCachedFrame();
+    if (nearest >= 0 && displayed !== nearest) display(nearest);
     else if (ready) positionSurfaces();
     fillCache();
     scheduleWarm();
@@ -337,7 +373,7 @@ function initAnimatedDecisionScroll(profile) {
     cache.clear(); pending.clear();
     source?.clear(); surfaceFrames.clear(); displayedUrl = '';
     document.body.classList.remove('decision-scroll-ready');
-    for (const key of ['decisionFrame', 'decisionTarget', 'decisionPreloaded', 'decisionProfile', 'decisionCached']) delete document.body.dataset[key];
+    for (const key of ['decisionFrame', 'decisionTarget', 'decisionPreloaded', 'decisionProfile', 'decisionVariant', 'decisionCached']) delete document.body.dataset[key];
     for (const surface of surfaces) for (const property of ['--decision-frame', '--decision-size', '--decision-position', '--decision-tear-position']) surface.style.removeProperty(property);
   }
   addEventListener('pagehide', event => { if (!event.persisted) dispose(); }, {signal:abort.signal});

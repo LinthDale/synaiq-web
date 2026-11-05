@@ -1,12 +1,12 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-11-04。
+給工程師及新的 AI session。最後核對：2026-11-05。
 
 2026-11-03 新增 `auth.taistro.com.tw` 子網域，接續方式見 [auth 子網域](auth-handoff.md)。目錄為 `public_html/auth/`，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。`HOSTINGER_DEPLOY_ENABLED=true`；最近成功發布為 [Run 41806595635](https://github.com/LinthDale/synaiq-web/actions/runs/41806595635)（2026-11-04），已導入內容雜湊共用素材，現行 `public_html/synaiq-release-ci-41806595635-1/`。local／staged／live 各 52 組及另行 WebKit 26.0／Chrome 共 36 組手機檢查通過；手機保留輕量背景動畫並限制解碼，桌面修正反覆解碼；語系初始化正常。三個已核准未納管目錄已備份後刪除，釋放 101.5 MB；目前未納管發布目錄為零。主機 `.htaccess` 與 state 為即時依據，詳見 [部署紀錄](deploy-hostinger.md)。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。最近成功發布為 [Run 41951556292](https://github.com/LinthDale/synaiq-web/actions/runs/41951556292)（2026-11-05），現行 `public_html/synaiq-release-ci-41951556292-1/`。直向依 480／900px 分為 360／432／864 級；橫向寬度小於 900px 或高度小於 480px 使用縮小素材。首包提前準備、按包預取並保留動畫，改善第一次捲動。local／staged／live 各 52 組及 WebKit 26.0／Chrome 共 24 組正式 RWD 檢查通過。共用素材、先備份再清理與三個保留版本流程維持；未納管發布目錄為零。主機 `.htaccess` 與 state 為即時依據，詳見 [部署紀錄](deploy-hostinger.md)。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 

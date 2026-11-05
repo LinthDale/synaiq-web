@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createPreviewServer, PUBLIC_FILES } from './share-preview.mjs';
 import { DECISION_MOBILE_BUNDLE_FILES } from './decision-frames.js';
+import { DECISION_RESPONSIVE_FILES } from './decision-responsive.js';
 
 async function fixture(t) {
   const root = await mkdtemp(join(tmpdir(), 'synaiq-share-preview-'));
@@ -43,7 +44,7 @@ test('serves the review shell at both public entry points and resolves its relat
   const { port } = await fixture(t);
   assert.equal(PUBLIC_FILES.length, new Set(PUBLIC_FILES.map(entry => entry.url)).size);
   assert.ok(PUBLIC_FILES.some(entry => entry.file === 'locales/generated/registry.js'));
-  assert.deepEqual(PUBLIC_FILES.filter(entry => entry.file.endsWith('.json')).map(entry => entry.file), [...DECISION_MOBILE_BUNDLE_FILES]);
+  assert.deepEqual(PUBLIC_FILES.filter(entry => entry.file.endsWith('.json')).map(entry => entry.file), [...DECISION_RESPONSIVE_FILES.filter(file => file.endsWith('.json')), ...DECISION_MOBILE_BUNDLE_FILES]);
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/synaiq-logo-ink.svg'));
   assert.ok(PUBLIC_FILES.some(entry => entry.url === '/live-prototype/assets/kip-connected-work-v1.webp'));
   for (const file of ['page-metadata.js', 'cases-data.js', 'robots.txt', 'sitemap.xml']) {
