@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：**已啟用，直式背景 RWD 與首次捲動修正已上線**。[Run 41951556292](https://github.com/LinthDale/synaiq-web/actions/runs/41951556292) 來源 `3bcbd0a19269fb7f162e292b6603bd27d401e912`，現行 `synaiq-release-ci-41951556292-1`。直橫向選構圖、直向依 480／900px 分級，橫向短邊小於 480px 也用輕量素材；首包提前下載、按包預取並限制附近幀解碼；local／staged／live 各 52 組及正式站 24 組 RWD 檢查通過。`HOSTINGER_DEPLOY_ENABLED=true`；改為 `false` 可暫停後續部署。詳見 [部署紀錄](deploy-hostinger.md)。
+目前狀態：**已啟用，Demo 時序、自動接播與紙條材質修正已上線**。[Run 42002538039](https://github.com/LinthDale/synaiq-web/actions/runs/42002538039) 來源 `1543b4fa3593968b97242ff2d68bf80c8e2c5d76`，現行 `synaiq-release-ci-42002538039-1`。五組 Demo 完成寄出後才顯示訊息，播完停留 1.2 秒後接續下一組；紙條本體與撕邊共用底色。local／staged／live 各 52 組、本機 Chrome 動畫回歸 25 項及正式檔案雜湊核對通過。`HOSTINGER_DEPLOY_ENABLED=true`；改為 `false` 可暫停後續部署。詳見 [部署紀錄](deploy-hostinger.md)。
 
-本次備份在草稿 Release `hostinger-backup-41951556292-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`；歷次清理與發布的加密備份仍保留。
+本次備份在草稿 Release `hostinger-backup-42002538039-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`；歷次清理與發布的加密備份仍保留。
 
 ## 平常如何更新
 

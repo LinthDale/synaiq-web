@@ -1,8 +1,20 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-11-04（Asia/Taipei）。
+最後更新：2026-11-05（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-11-05 Demo 送出時序、自動接播與紙條材質
+
+[Run 42002538039](https://github.com/LinthDale/synaiq-web/actions/runs/42002538039) 的 test／deploy 均成功。來源 `1543b4fa3593968b97242ff2d68bf80c8e2c5d76`，正式目錄為 `public_html/synaiq-release-ci-42002538039-1/`。五組 Demo 在游標抵達並完成寄出前保留草稿，之後才出現訊息、等待提示及回答；每組播完停留 1.2 秒後接續下一組，最後回到第一組，暫停與離開畫面會停止換片倒數。核心優勢紙條與上下撕邊共用底色，原材質僅作透明輪廓，消除異色接縫。
+
+本機網站測試 230 passed／13 skipped、部署防護 55 項、repository 32 項及 Chrome 動畫回歸 25 項通過。CI local／staged／live 各 52 組瀏覽器驗收通過。另在正式網址觀察正常速度由經營決策自動接續損益分析，確認紙張與撕邊皆為 `rgb(238, 237, 229)`，mask 使用本次 release 的素材。
+
+17:46（Asia/Taipei）獨立讀取主機路由、state、維護入口及公開檔案：四個修正檔案的 Git 封裝內容、Hostinger 原始檔與公開 HTTPS SHA-256 一致；繁中／英／德 KIP 入口皆回 200 且指向本次版本；三個私有資料網址仍為 410。路由 SHA-256：`d1b0c66f37aec4add775a1c4e3989c63788f91f1a375bca5e55aa12eb7ec8ac6`；state SHA-256：`43f4a10483a981e01843b468ac3197cb1d13264a54d0b1090cb502603aebad55`。
+
+現行版及兩個回退版本為 `synaiq-release-ci-42002538039-1`、`synaiq-release-ci-41951556292-1`、`synaiq-release-ci-41944747569-1`。`41806595635-1` 依既有流程備份及重驗後移除；加密備份與完整證據保留在草稿 Release `hostinger-backup-42002538039-1`，含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。兩網域快取、主機私有維護入口及 state 均由 CI 完成更新。
+
+本機證據：`out/demo-release-20261105/` 的 `design-tests.log`、`deploy-tests.log`、`repo-tests.log`、`demo-browser-tests.log`、`workflow-final.json`、`backup-final.json`、`ci-local/browser-local.json`、`live-verification.json`、`live-browser.json` 及 staged／live 截圖；上架前基準在 `out/hostinger-ci/demo-before-20261105/`。其他 auth／DNS／PVsim 交接與 PRD 的既有未提交修改保持原狀，未納入本次發布提交。
 
 ## 2026-11-05 直式背景 RWD 與首次捲動修正
 

@@ -6,7 +6,7 @@
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。最近成功發布為 [Run 41951556292](https://github.com/LinthDale/synaiq-web/actions/runs/41951556292)（2026-11-05），現行 `public_html/synaiq-release-ci-41951556292-1/`。直向依 480／900px 分為 360／432／864 級；橫向寬度小於 900px 或高度小於 480px 使用縮小素材。首包提前準備、按包預取並保留動畫，改善第一次捲動。local／staged／live 各 52 組及 WebKit 26.0／Chrome 共 24 組正式 RWD 檢查通過。共用素材、先備份再清理與三個保留版本流程維持；未納管發布目錄為零。主機 `.htaccess` 與 state 為即時依據，詳見 [部署紀錄](deploy-hostinger.md)。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。最近成功發布為 [Run 42002538039](https://github.com/LinthDale/synaiq-web/actions/runs/42002538039)（2026-11-05），來源 `1543b4fa3593968b97242ff2d68bf80c8e2c5d76`，現行 `public_html/synaiq-release-ci-42002538039-1/`。本次修正 Demo 寄出前先顯示訊息的時序、播完自動接續下一組，以及紙條與撕邊的底色接縫；local／staged／live 各 52 組與本機 Chrome 動畫回歸 25 項通過，正式檔案雜湊與三語入口已獨立核對。草稿備份為 `hostinger-backup-42002538039-1`；保留現行版及 `41951556292-1`、`41944747569-1`。主機 `.htaccess` 與 state 為即時依據，詳見 [部署紀錄](deploy-hostinger.md)。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
