@@ -1,8 +1,31 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDecisionMobileSource } from './decision-mobile-source.js';
+import { DECISION_MOBILE_BUNDLE_FILES } from './decision-frames.js';
 const frame = 'data:image/webp;base64,UklGRg==';
 const bundle = (start = 0) => ({ schema: 1, start, frames: Array(Math.min(32, 243 - start)).fill(frame) });
+
+test('the early first bundle is adopted without a second fetch and cancelled with its owning animation', async () => {
+  let requests = 0, cancelled = 0;
+  const controller = new AbortController();
+  const source = createDecisionMobileSource({ signal: controller.signal, initial: {
+    url: new URL(DECISION_MOBILE_BUNDLE_FILES[0], import.meta.url).href,
+    text: Promise.resolve(JSON.stringify(bundle())), cancel: () => { cancelled++; },
+  }, fetcher: async () => { requests++; return Response.json(bundle()); } });
+  assert.equal(await source.frame(0), frame); await source.prepare(31);
+  assert.equal(requests, 0);
+  source.clear(); controller.abort(); assert.equal(cancelled, 1);
+});
+
+test('rotating before initialization cancels a mismatched early bundle rather than painting the wrong composition', async () => {
+  let cancelled = 0, requests = 0;
+  const source = createDecisionMobileSource({ initial: {
+    url: new URL('assets/kip-d-scroll-portrait-small-bundles-v1/frames-000.json', import.meta.url).href,
+    text: Promise.resolve(JSON.stringify(bundle())), cancel: () => { cancelled++; },
+  }, fetcher: async () => { requests++; return Response.json(bundle()); } });
+  assert.equal(cancelled, 1); assert.equal(await source.frame(0), frame); assert.equal(requests, 1);
+  source.clear(); assert.equal(cancelled, 1);
+});
 
 test('nearby frames share one compressed download without decoding images', async () => {
   const requests = [];

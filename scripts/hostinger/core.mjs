@@ -10,7 +10,7 @@ export const ASSET_MAP = '.hostinger-assets.json';
 const sharedExtension = /\.(avif|css|gif|glb|ico|jpe?g|js|mp4|png|svg|webm|webp|woff2?)$/;
 export function sharedPath(path, hash) {
   safePath(path); assert.match(hash, /^[a-f0-9]{64}$/);
-  const extension = path.match(sharedExtension)?.[1] || (/^assets\/kip-d-scroll-(?:mobile|portrait|portrait-small)-bundles-v1\/frames-00[0-7]\.json$/.test(path) ? 'json' : null);
+  const extension = path.match(sharedExtension)?.[1] || (/^assets\/kip-d-scroll-(?:mobile|portrait|portrait-small|portrait-phone)-bundles-v1\/frames-00[0-7]\.json$/.test(path) ? 'json' : null);
   return extension ? `${ASSET_ROOT}/${hash}.${extension}` : null;
 }
 export function assetPath(path) {

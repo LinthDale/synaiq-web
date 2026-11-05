@@ -4,6 +4,36 @@ import { chromium, webkit } from 'playwright';
 import { createPreviewServer } from './share-preview.mjs';
 import { decisionVariantAt, DECISION_VARIANTS } from './decision-responsive.js';
 
+test('cold scrolling paints stale first-pack results promptly and adopts the early download only once', {
+  skip: !process.env.PLAYWRIGHT_EXECUTABLE_PATH,
+}, async () => {
+  const server = createPreviewServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH, headless: true });
+  try {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'no-preference' });
+    await context.route('https://**/*', route => route.abort());
+    await context.route('**/frames-*.json', async route => {
+      await new Promise(resolve => setTimeout(resolve, 500)); await route.continue();
+    });
+    const page = await context.newPage(); let firstRequests = 0;
+    page.on('request', request => { if (request.url().endsWith('/kip-d-scroll-portrait-phone-bundles-v1/frames-000.json')) firstRequests++; });
+    const firstResponse = page.waitForResponse(response => response.url().endsWith('/kip-d-scroll-portrait-phone-bundles-v1/frames-000.json'));
+    await page.goto(`http://127.0.0.1:${server.address().port}/page.html?page=home&lang=zh-Hant`, { waitUntil: 'domcontentloaded' });
+    await page.locator('h1').waitFor();
+    await page.waitForFunction(() => document.body.dataset.decisionTarget === '0');
+    await page.evaluate(() => {
+      const end = document.querySelector('#proof').getBoundingClientRect().bottom + scrollY - innerHeight;
+      scrollTo({ top: end * 0.35, behavior: 'instant' });
+    });
+    await page.waitForFunction(() => Number(document.body.dataset.decisionTarget) > 32);
+    await (await firstResponse).finished();
+    await page.locator('body.decision-scroll-ready').waitFor({ timeout: 300 });
+    assert.equal(firstRequests, 1, 'Early preload must not duplicate the first bundle');
+    assert.equal(await page.locator('body').getAttribute('data-decision-variant'), 'portrait-phone');
+    await context.close();
+  } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
+});
+
 for (const [engine, executablePath] of [
   [webkit, process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE_PATH],
   [chromium, process.env.PLAYWRIGHT_EXECUTABLE_PATH],
@@ -32,11 +62,11 @@ for (const [engine, executablePath] of [
       page.on('crash', () => errors.push('Page crashed'));
       await page.goto(`http://127.0.0.1:${server.address().port}/page.html?page=home&lang=zh-Hant`);
       await page.locator('html[data-i18n-ready="true"]').waitFor();
-      await page.locator('body.decision-scroll-ready[data-decision-variant="portrait-small"]').waitFor();
+      await page.locator('body.decision-scroll-ready[data-decision-variant="portrait-phone"]').waitFor();
       await page.waitForTimeout(500);
       assert.ok(requests.length > 0);
-      assert.ok(requests.every(url => url.includes('/kip-d-scroll-portrait-small-')), 'Phone portrait must not download landscape or large portrait frames');
-      for (const [width, height] of [[390,844], [844,390], [768,1024], [1024,1366], [899,1200], [900,1200], [1180,820], [390,844]]) {
+      assert.ok(requests.every(url => url.includes('/kip-d-scroll-portrait-phone-')), 'Phone portrait must not download landscape or large portrait frames');
+      for (const [width, height] of [[390,844], [844,390], [479,900], [480,900], [768,1024], [1024,1366], [899,1200], [900,1200], [1180,820], [390,844]]) {
         await page.setViewportSize({ width, height });
         const key = decisionVariantAt(width, height), variant = DECISION_VARIANTS[key];
         await page.locator(`body.decision-scroll-ready[data-decision-variant="${key}"]`).waitFor();
@@ -107,7 +137,7 @@ test('RWD switches resolution and cache policy between desktop and phone widths 
       await page.waitForTimeout(400);
       assert.ok(await page.evaluate(() => window.desktopDecodeCalls < 1000), 'Repeated decoding of evicted look-ahead frames');
       await page.setViewportSize({ width: 390, height: 844 });
-      await page.locator('body.decision-scroll-ready[data-decision-profile="mobile"][data-decision-variant="portrait-small"]').waitFor();
+      await page.locator('body.decision-scroll-ready[data-decision-profile="mobile"][data-decision-variant="portrait-phone"]').waitFor();
       assert.ok((await page.locator('.home-opening').evaluate(el => getComputedStyle(el).backgroundImage)).includes('data:image/webp;base64,'));
       assert.ok(Number(await page.locator('body').getAttribute('data-decision-cached')) <= 6);
       await page.setViewportSize({ width: 1440, height: 900 });

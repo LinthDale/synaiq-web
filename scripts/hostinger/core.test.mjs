@@ -11,7 +11,7 @@ const paths = ['index.html', 'page.html', 'robots.txt', 'sitemap.xml', 'assets/a
 test('only explicit landscape and portrait frame bundles qualify for shared JSON storage', async () => {
   const { sharedPath, ASSET_MAP } = await import('./core.mjs');
   const hash = 'a'.repeat(64);
-  for (const variant of ['mobile', 'portrait', 'portrait-small']) {
+  for (const variant of ['mobile', 'portrait', 'portrait-small', 'portrait-phone']) {
     for (let index = 0; index < 8; index++) assert.equal(sharedPath(`assets/kip-d-scroll-${variant}-bundles-v1/frames-00${index}.json`, hash), `synaiq-assets-v1/${hash}.json`);
     assert.equal(sharedPath(`assets/kip-d-scroll-${variant}-bundles-v1/frames-008.json`, hash), null);
   }

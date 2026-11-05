@@ -24,7 +24,7 @@ export function renderHome({ advantageSection, contact, locale = 'zh-Hant', mess
       <p class="intro">${lines(hero.intro)}</p>
       <a class="button inverse" href="#proof">${h(hero.action)}</a>
     </div>
-    <figure class="hero-thread-art" aria-hidden="true"><picture><source media="(orientation: portrait) and (max-width: 899px)" srcset="assets/kip-d-scroll-portrait-small-v1/frame-000.webp" width="432" height="768"><source media="(orientation: portrait)" srcset="assets/kip-d-scroll-portrait-v1/frame-000.webp" width="864" height="1536"><source media="(max-width: 899px)" srcset="assets/kip-d-scroll-mobile-v1/frame-000.webp"><img src="assets/kip-d-opening-v5.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="${h(hero.artAlt)}"></picture></figure>
+    <figure class="hero-thread-art" aria-hidden="true"><picture><source media="(orientation: portrait) and (max-width: 479px)" srcset="assets/kip-d-scroll-portrait-phone-v1/frame-000.webp" width="360" height="640"><source media="(orientation: portrait) and (max-width: 899px)" srcset="assets/kip-d-scroll-portrait-small-v1/frame-000.webp" width="432" height="768"><source media="(orientation: portrait)" srcset="assets/kip-d-scroll-portrait-v1/frame-000.webp" width="864" height="1536"><source media="(max-width: 899px)" srcset="assets/kip-d-scroll-mobile-v1/frame-000.webp"><img src="assets/kip-d-opening-v5.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="${h(hero.artAlt)}"></picture></figure>
     <a class="hero-scroll" href="#introduction">${h(hero.scroll)} <span aria-hidden="true">↓</span></a>
   </section>
 

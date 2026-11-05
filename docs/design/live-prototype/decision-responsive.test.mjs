@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import { decisionVariantAt, DECISION_VARIANTS } from './decision-responsive.js';
 import { scenePlacement, DECISION_POLICIES } from './decision-scroll.js';
 import { syncDecisionPortrait } from './scripts/sync-decision-portrait.mjs';
+import { syncDecisionPhone } from './scripts/sync-decision-phone.mjs';
 import { readFile } from 'node:fs/promises';
 
-test('orientation chooses composition independently of the 900px resolution breakpoint', () => {
+test('orientation chooses composition independently of the 480px and 900px resolution breakpoints', () => {
   for (const [width, height, expected] of [
-    [390, 844, 'portrait-small'], [844, 390, 'landscape-small'],
+    [390, 844, 'portrait-phone'], [479, 900, 'portrait-phone'], [480, 900, 'portrait-small'], [844, 390, 'landscape-small'],
     [768, 1024, 'portrait-small'], [1024, 1366, 'portrait-large'],
     [899, 1200, 'portrait-small'], [900, 1200, 'portrait-large'],
     [899, 600, 'landscape-small'], [900, 600, 'landscape-large'],
@@ -41,4 +42,12 @@ test('portrait positioning keeps the typewriter, fingertips and bulb inside phon
       assert.ok(scene.y + scene.height * y >= 0 && scene.y + scene.height * y <= height);
     }
   }
+});
+
+test('the phone tier preserves all 243 portrait frames with the earlier lightweight pixel budget', async () => {
+  const manifest = await syncDecisionPhone({ check: true });
+  assert.equal(manifest.frames.length, 243);
+  assert.ok(manifest.frames.reduce((sum, frame) => sum + frame.bytes, 0) < 1_500_000);
+  assert.ok(360 * 640 <= 576 * 384 * 1.05);
+  assert.equal(decisionVariantAt(390, 844), 'portrait-phone');
 });
