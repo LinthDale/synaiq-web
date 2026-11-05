@@ -411,7 +411,9 @@ section.advantages .section-no {
   left: 0;
   width: 100%;
   height: 18px;
-  background: url("assets/torn-paper-cotton-v2.webp") center / 100% 100% no-repeat;
+  /* Share the paper fill; the asset supplies only the torn edge's alpha. */
+  background: var(--advantage-note-paper);
+  mask: url("assets/torn-paper-cotton-v2.webp") center / 100% 100% no-repeat;
 }
 .advantage-paper::before { top: -14px; }
 .advantage-paper::after { bottom: -14px; transform: rotate(180deg); }
@@ -2432,12 +2434,12 @@ body[data-page="home"] .ceo-attribution {
     transform var(--demo-pointer-click-duration);
   pointer-events: none;
 }
-[data-state="question"] .film-question > span {
+[data-state="question"] .knowledge-draft {
   animation: film-typing var(--demo-typing-duration) steps(23, end) both;
 }
-[data-state="question"] .film-answer,
-[data-state="click"] .film-answer {
+.animated-product:is([data-state="question"], [data-state="move"], [data-state="click"], [data-state="thinking"]) .film-chat > .film-answer {
   opacity: 0;
+  visibility: hidden;
   transform: translateY(12px);
 }
 [data-state="click"] .film-cursor {
@@ -2445,11 +2447,21 @@ body[data-page="home"] .ceo-attribution {
   top: 85%;
   transform: scale(0.76);
 }
-[data-state="click"] .film-thinking {
+[data-state="thinking"] .film-thinking {
   display: flex;
 }
 [data-state="click"] .film-send {
   background: #55764a;
+}
+/* Sending is ordered: draft, pointer travel, press, submitted message, response. */
+.animated-product:is([data-state="question"], [data-state="move"], [data-state="click"]) .film-chat > .film-question { visibility: hidden; }
+.animated-product:is([data-state="question"], [data-state="move"], [data-state="click"]) .film-input-draft { display: flex; }
+.animated-product:is([data-state="question"], [data-state="move"], [data-state="click"]) .film-input-placeholder { display: none; }
+.animated-product:is([data-state="move"], [data-state="click"], [data-state="thinking"]) .film-cursor { transition: none; }
+.animated-product[data-state="move"] .film-cursor { animation: film-pointer-move var(--demo-move-hold) var(--demo-pointer-easing) both; }
+@keyframes film-pointer-move {
+  from { left: var(--cursor-from-x); top: var(--cursor-from-y); }
+  to { left: var(--cursor-x); top: var(--cursor-y); }
 }
 [data-state="answer"] .film-cursor {
   left: 84%;
@@ -2731,13 +2743,12 @@ body[data-page="home"] .ceo-attribution {
 .decision-chat-film .film-question > span { animation: none; }
 .decision-chat-film .film-thinking { position: static; display: flex; margin: 20px 0; }
 .decision-chat-film .decision-turn[data-turn-phase="answer"] .film-answer { animation: film-arrive var(--demo-answer-duration) both; }
-.decision-chat-film .decision-turn[data-turn-phase="click"] .film-question { animation: film-arrive var(--demo-answer-duration) both; }
+.animated-product.is-inspecting .decision-chat-film .film-answer { animation: none; }
 :is([data-demo-scene="decision"], [data-demo-scene="profit"])[data-state="question"] .film-input-draft { display: flex; }
 :is([data-demo-scene="decision"], [data-demo-scene="profit"])[data-state="question"] .film-input-placeholder { display: none; }
 :is([data-demo-scene="decision"], [data-demo-scene="profit"])[data-state="question"] .decision-draft { animation: film-typing var(--demo-typing-duration) steps(32,end) both; }
 .decision-chat-film .film-chat { padding-bottom: 34px; }
 .decision-chat-film .film-input { position: relative; left: auto; right: auto; bottom: auto; margin-top: 20px; align-items: center; gap: 12px; }
-.is-paused .decision-chat-film .film-answer,.is-paused .decision-draft { animation: none !important; }
 .decision-draft { display: block; overflow-wrap: anywhere; }
 .decision-turn { padding-bottom: 20px; }
 @media(prefers-reduced-motion:reduce) {
@@ -2815,7 +2826,6 @@ body[data-page="home"] .ceo-attribution {
 [data-state="question"] .image-search-film .film-input-placeholder { display: none; }
 [data-demo-scene="text-image"][data-state="question"] .image-query-text { animation: film-typing var(--demo-typing-duration) steps(23, end) both; }
 [data-demo-scene="image-image"][data-state="question"] .film-input .image-query-thumb { animation: film-arrive var(--demo-image-results-duration) both; }
-[data-state="click"] .image-search-film .film-question { animation: film-arrive var(--demo-image-results-duration) both; }
 [data-state="answer"] .image-result { animation: film-arrive var(--demo-image-results-duration) calc(var(--result-order) * var(--demo-image-results-stagger)) both; }
 [data-state="source"] .image-result:first-child, [data-state="library"] .image-result:first-child { border-color: #a3853f; box-shadow: 0 0 0 2px #cca85844; }
 [data-state="library"] .image-search-preview { transform: translateX(0); }

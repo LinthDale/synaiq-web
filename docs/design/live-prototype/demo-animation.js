@@ -11,14 +11,15 @@ export function readMotionNumber(style, name, { time = false, integer = false, m
   return Number.isFinite(value) && value <= max && (!integer || Number.isInteger(value)) ? value : null;
 }
 
-const demoStates = ['question', 'click', 'answer', 'source', 'library'];
+const demoStates = ['question', 'move', 'click', 'thinking', 'answer', 'source', 'library'];
 export function readDemoTiming(style) {
   const durations = demoStates.map(state => readMotionNumber(style, `--demo-${state}-hold`, { time: true }));
   const count = readMotionNumber(style, '--demo-play-count', { integer: true });
   const threshold = readMotionNumber(style, '--demo-view-threshold', { max: 1 });
-  if (count === null || threshold === null || durations.some(value => value === null || value <= 0)) return null;
+  const nextHold = readMotionNumber(style, '--demo-next-hold', { time: true });
+  if (count === null || threshold === null || nextHold === null || durations.some(value => value === null || value <= 0)) return null;
   const total = durations.reduce((sum, value) => sum + value, 0);
-  return Number.isFinite(total) ? { durations, total, count, threshold } : null;
+  return Number.isFinite(total) ? { durations, total, count, threshold, nextHold } : null;
 }
 
 export function demoFrameAt(milliseconds, timing) {
@@ -95,6 +96,7 @@ function renderKnowledgeFilm(messages) {
   const m = messages.demo, e = escapeHtml;
   return renderChatFilm(messages, {
     question: `<span>${e(m.question)}</span>`,
+    draft: `<span class="knowledge-draft">${e(m.question)}</span>`,
     answer: `<p>${e(m.answer)}<br><span class="marked">${e(m.answerHighlight)}</span></p><small>${e(m.answerNote)}</small><button type="button" class="film-citation" aria-expanded="false" aria-controls="demo-source-note"><small>${e(m.citationLabel)}</small><span>${e(m.citationFilename)} <b>${e(m.citationPage)}</b></span></button>`,
     panels: `<section class="film-source film-note" id="demo-source-note" aria-label="${e(m.sourceRegion)}" inert><div class="film-note-top"><small>${e(m.sourceLabel)}</small><button type="button" data-demo-source-close>${e(m.close)} ×</button></div><h4>${e(m.sourceTitle)}</h4><div class="film-note-body"><p class="film-source-label">${e(m.sourceHeading)}</p><p><mark>${e(m.answerHighlight)}</mark></p><span class="film-note-scribble">${e(m.sourceScribble)}</span></div><small class="film-note-disclaimer">${e(m.sourceNote)}</small></section>
       <div class="film-library"><small>${e(m.libraryLabel)}</small><h4>${e(m.libraryTitle)}</h4><p>${e(m.libraryIntro)}</p><div class="film-table"><div>${m.tableHeaders.map(copy => `<span>${e(copy)}</span>`).join('')}</div>${m.tableRows.map(row => `<div>${row.map(copy => `<span>${e(copy)}</span>`).join('')}</div>`).join('')}</div><small>${e(m.libraryNote)}</small></div>`,
@@ -187,7 +189,7 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     root.querySelector('.film-note')?.toggleAttribute('inert', !noteOpen || sidebarOpen);
     root.querySelector('.film-citation')?.setAttribute('aria-expanded', String(noteOpen));
     root.querySelector('.film-chat')?.toggleAttribute('inert', sidebarOpen || noteOpen || (scene === 'knowledge' && currentState === 'library'));
-    if(!isConversationScene(scene)) root.querySelector('.film-answer')?.toggleAttribute('inert', currentState === 'question' || currentState === 'click');
+    if(!isConversationScene(scene)) root.querySelector('.film-answer')?.toggleAttribute('inert', ['question', 'move', 'click', 'thinking'].includes(currentState));
     root.querySelector('.film-library')?.toggleAttribute('inert', sidebarOpen || currentState !== 'library');
     root.querySelectorAll('.film-nav-question,.film-nav-library').forEach(button => {
       const library = scene === 'knowledge' && currentState === 'library';
@@ -205,9 +207,10 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
   }
   function positionPointer() {
     const film = root.querySelector('.demo-film');
-    const selector = isConversationScene(scene) ? (currentState === 'click' ? '.film-send' : '.film-input') : scene === 'knowledge'
-      ? currentState === 'click' ? '.film-send' : currentState === 'answer' || currentState === 'source' ? '.film-citation b' : currentState === 'library' ? '.film-library h4' : '.film-question'
-      : currentState === 'click' ? '.film-send' : currentState === 'answer' || currentState === 'source' ? '.image-result:first-child figcaption' : currentState === 'library' ? '.image-preview-open' : scene === 'image-image' ? '.film-input .image-query-thumb' : '.film-input .image-query-text';
+    const sending = ['move', 'click', 'thinking'].includes(currentState);
+    const selector = sending ? '.film-send' : isConversationScene(scene) ? '.film-input' : scene === 'knowledge'
+      ? currentState === 'answer' || currentState === 'source' ? '.film-citation b' : currentState === 'library' ? '.film-library h4' : '.film-input'
+      : currentState === 'answer' || currentState === 'source' ? '.image-result:first-child figcaption' : currentState === 'library' ? '.image-preview-open' : '.film-input';
     const target = root.querySelector(selector);
     if (!film || !target) return;
     const container = film.getBoundingClientRect(), point = target.getBoundingClientRect();
@@ -217,6 +220,9 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     const offsetX = preview ? new DOMMatrixReadOnly(getComputedStyle(preview).transform).m41 : 0;
     root.style.setProperty('--cursor-x', `${(point.left + point.width * .62 - container.left - offsetX) / container.width * 100}%`);
     root.style.setProperty('--cursor-y', `${(point.top + point.height * .62 - container.top) / container.height * 100}%`);
+    const input = root.querySelector('.film-input').getBoundingClientRect();
+    root.style.setProperty('--cursor-from-x', `${(input.left + input.width * .62 - container.left) / container.width * 100}%`);
+    root.style.setProperty('--cursor-from-y', `${(input.top + input.height * .62 - container.top) / container.height * 100}%`);
   }
   function show(state) {
     if (state === currentState) return;
@@ -235,12 +241,13 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
     });
   }
   const finished = () => timing && timing.count > 0 && elapsed >= playbackTotal() * timing.count;
-  function running() { return timing && !finished() && !preference.matches && !paused && inView && !document.hidden; }
+  function running() { return timing && !preference.matches && !paused && inView && !document.hidden; }
   function paintControls() {
     pause.disabled = preference.matches || !timing;
     replay.disabled = preference.matches || !timing;
-    pause.textContent = preference.matches || !timing ? m.reducedMotion : paused || finished() ? m.play : m.pause;
+    pause.textContent = preference.matches || !timing ? m.reducedMotion : paused ? m.play : m.pause;
     root.classList.toggle('is-paused', !running());
+    root.classList.toggle('is-inspecting', inspecting);
     root.classList.toggle('is-complete', Boolean(finished()));
   }
   function tick(time) {
@@ -251,7 +258,7 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
       if(next.state==='answer') {
         const transcript=root.querySelector('.decision-transcript');
         const active=transcript.querySelector(`[data-decision-turn="${next.turn}"]`);
-        const answerStart=timing.durations[0]+timing.durations[1];
+        const answerStart=timing.durations.slice(0, demoStates.indexOf('answer')).reduce((sum, value) => sum + value, 0);
         const local=finished()?timing.total:elapsed%timing.total;
         const fraction=Math.max(0,Math.min(1,((local-answerStart)/(timing.total-answerStart)-0.25)/0.6));
         const distance=Math.max(0,active.offsetHeight-transcript.clientHeight);
@@ -259,7 +266,15 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
       }
     }
     else show(demoFrameAt(elapsed, timing));
-    if (finished()) { frame = null; lastTime = null; paintControls(); return; }
+    if (finished()) {
+      paintControls();
+      // Use the same visibility-aware clock for the gap; pause/replay/navigation
+      // never leave a separate timer that can switch scenes behind the user.
+      if (elapsed >= playbackTotal() * timing.count + timing.nextHold) {
+        selectScene(demoSceneAt(demoScenes.indexOf(scene) + 1));
+        return;
+      }
+    }
     frame = requestAnimationFrame(tick);
   }
   function sync() {
@@ -275,11 +290,16 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
   pause.addEventListener('click', () => {
     inspecting = false;
     setSidebar(false);
-    if (finished()) { elapsed = 0; paused = false; decisionTurn = -1; decisionPhase = ''; if(isConversationScene(scene)) showDecision(0,'question'); else show('question'); }
-    else paused = !paused;
+    paused = !paused;
     sync();
   });
-  replay.addEventListener('click', () => { inspecting = false; setSidebar(false); elapsed = 0; paused = false; decisionTurn = -1; decisionPhase = ''; if(isConversationScene(scene)) showDecision(0,'question'); else show('question'); sync(); });
+  replay.addEventListener('click', () => {
+    inspecting = false; setSidebar(false); elapsed = 0; paused = false;
+    decisionTurn = -1; decisionPhase = ''; currentState = ''; root.dataset.state = '';
+    void root.offsetWidth; // Restart typing even when replay is pressed during the draft.
+    if(isConversationScene(scene)) showDecision(0,'question'); else show('question');
+    sync();
+  });
   const observer = new IntersectionObserver(entries => {
     inView = entries[0].isIntersecting && entries[0].intersectionRatio >= (timing?.threshold ?? 0);
     sync();
@@ -398,8 +418,8 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
       el.hidden=index>turn;
       const phase=index<turn?'answer':state;
       el.dataset.turnPhase=phase;
-      el.querySelector('.film-question').hidden=phase==='question';
-      el.querySelector('.film-thinking').hidden=phase!=='click';
+      el.querySelector('.film-question').hidden=['question', 'move', 'click'].includes(phase);
+      el.querySelector('.film-thinking').hidden=phase!=='thinking';
       const answer=el.querySelector('.film-answer');
       answer.hidden=phase!=='answer'; answer.toggleAttribute('inert',phase!=='answer');
     });
@@ -419,7 +439,7 @@ export function initAnimatedDemo({ locale = 'zh-Hant', messages = getMessages(lo
   }
   function inspectDecision(turn) {
     inspecting=true; paused=true; setSidebar(false,true);
-    if(timing)elapsed=turn*timing.total+timing.durations[0]+timing.durations[1];
+    if(timing)elapsed=turn*timing.total+timing.durations.slice(0, demoStates.indexOf('answer')).reduce((sum, value) => sum + value, 0);
     decisionTurn=-1; showDecision(turn,'answer'); sync();
   }
   function playChapter(chapter) {

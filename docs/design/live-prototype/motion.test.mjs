@@ -43,7 +43,7 @@ test('motion values accept seconds or milliseconds and reject invalid settings',
 test('demo uses CSS phase durations, finite repeats end on the last frame', () => {
   const timing = readDemoTiming(style);
   assert.ok(timing);
-  const names = ['question', 'click', 'answer', 'source', 'library'];
+  const names = ['question', 'move', 'click', 'thinking', 'answer', 'source', 'library'];
   let elapsed = 0;
   for (let i = 0; i < names.length; i++) {
     assert.equal(demoFrameAt(elapsed, timing), names[i]);

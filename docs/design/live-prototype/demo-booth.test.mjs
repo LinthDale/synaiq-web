@@ -66,7 +66,7 @@ test('all five demos share three compact chapter buttons below the screen and th
 });
 
 test('chapter seeking starts the selected dialogue or visual phase in every demo', () => {
-  const timing = { durations: [2400, 1400, 4600, 800, 800], total: 10000, count: 1 };
+  const timing = { durations: [2400, 1000, 300, 1100, 3600, 800, 800], total: 10000, count: 1 };
   const chapters = ['question', 'source', 'library'];
   for (const scene of ['decision', 'profit']) for (const [turn, chapter] of chapters.entries()) {
     const start = demoChapterStart(scene, chapter, timing);

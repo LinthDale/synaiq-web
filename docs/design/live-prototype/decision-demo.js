@@ -67,5 +67,10 @@ export function decisionFrameAt(milliseconds, timing) {
   const local=end?total-1:((milliseconds%total)+total)%total;
   const turn=Math.min(2,Math.floor(local/timing.total));
   const offset=local-turn*timing.total;
-  return {turn,state:end?'answer':offset<timing.durations[0]?'question':offset<timing.durations[0]+timing.durations[1]?'click':'answer'};
+  let boundary = 0;
+  if (!end) for (const [index, state] of ['question', 'move', 'click', 'thinking'].entries()) {
+    boundary += timing.durations[index];
+    if (offset < boundary) return { turn, state };
+  }
+  return { turn, state: 'answer' };
 }

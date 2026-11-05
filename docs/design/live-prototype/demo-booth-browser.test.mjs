@@ -14,7 +14,7 @@ test('cinema booth starts a newly selected film without replay or inherited paus
     browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH, headless: true });
     const origin = `http://127.0.0.1:${server.address().port}`;
     const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');
-    const fast = ['question', 'click', 'answer', 'source', 'library'].map(state => `--demo-${state}-hold:120ms!important;`).join('');
+    const fast = ['question', 'move', 'click', 'thinking', 'answer', 'source', 'library'].map(state => `--demo-${state}-hold:120ms!important;`).join('');
     for (const name of ['home', 'kip']) for (const locale of ['zh-Hant', 'en']) for (const width of [320, 390, 768, 1440]) {
       await t.test(`${name}/${locale}/${width}`, async () => {
         const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'no-preference' });
@@ -31,6 +31,9 @@ test('cinema booth starts a newly selected film without replay or inherited paus
           await booth.scrollIntoViewIfNeeded();
           for (const scene of ['profit', 'decision', 'knowledge', 'text-image', 'image-image']) {
             await page.locator(`[data-demo-select="${scene}"]`).click();
+            // The controls can fill a narrow screen; playback intentionally waits
+            // until the film itself crosses the configured visibility threshold.
+            await page.locator('[data-demo-screen]').scrollIntoViewIfNeeded();
             await page.waitForFunction(() => document.querySelector('[data-demo-animation]').classList.contains('is-complete'));
             assert.equal(await booth.getAttribute('data-demo-scene'), scene);
             assert.equal(await booth.getAttribute('data-state'), ['decision', 'profit'].includes(scene) ? 'answer' : 'library');
@@ -63,6 +66,7 @@ test('cinema booth starts a newly selected film without replay or inherited paus
           assert.equal(await page.evaluate(() => document.activeElement.dataset.demoSelect), 'text-image');
           await page.locator('[data-demo-pause]').click();
           await page.locator('[data-demo-next]').click();
+          await page.locator('[data-demo-screen]').scrollIntoViewIfNeeded();
           await page.waitForFunction(() => !document.querySelector('[data-demo-animation]').classList.contains('is-paused'));
           await booth.evaluate(root => { root.style.setProperty('--demo-step-size', '25px'); root.style.setProperty('--demo-step-number-size', '31px'); });
           assert.equal(await page.locator('.demo-chapters').evaluate(el => getComputedStyle(el).fontSize), '25px');

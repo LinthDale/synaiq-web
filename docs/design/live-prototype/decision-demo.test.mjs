@@ -32,11 +32,14 @@ test('decision is first, with a readable comparison and conditional advice in ev
 });
 
 test('three timed turns type, send and answer, then stop on the final answer',()=>{
- const timing={total:10000,durations:[2400,1400,4600,800,800],count:1};
+ const timing={total:10000,durations:[2400,1000,300,1100,3600,800,800],count:1};
  for(let turn=0;turn<3;turn++){
-  assert.deepEqual(decisionFrameAt(turn*10000,timing),{turn,state:'question'});
-  assert.deepEqual(decisionFrameAt(turn*10000+2400,timing),{turn,state:'click'});
-  assert.deepEqual(decisionFrameAt(turn*10000+3800,timing),{turn,state:'answer'});
+  let offset = 0;
+  for (const [index, state] of ['question','move','click','thinking','answer'].entries()) {
+   assert.deepEqual(decisionFrameAt(turn*10000+offset,timing),{turn,state});
+   assert.deepEqual(decisionFrameAt(turn*10000+offset+timing.durations[index]-1,timing),{turn,state});
+   offset += timing.durations[index];
+  }
  }
  assert.deepEqual(decisionFrameAt(30000,timing),{turn:2,state:'answer'});
  assert.deepEqual(decisionFrameAt(0,timing),{turn:0,state:'question'});

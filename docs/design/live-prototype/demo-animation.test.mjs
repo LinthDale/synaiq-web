@@ -25,8 +25,9 @@ test('animation progresses from pointer click to answer and original source', ()
   const timing = readDemoTiming({ getPropertyValue: name => css.match(new RegExp(`${name}:\\s*([^;]+);`))?.[1] ?? '' });
   assert.ok(timing);
   let elapsed = 0;
-  for (const [index, state] of ['question', 'click', 'answer', 'source', 'library'].entries()) {
+  for (const [index, state] of ['question', 'move', 'click', 'thinking', 'answer', 'source', 'library'].entries()) {
     assert.equal(demoFrameAt(elapsed, timing), state);
+    assert.equal(demoFrameAt(elapsed + timing.durations[index] - 1, timing), state);
     elapsed += timing.durations[index];
   }
   assert.equal(demoFrameAt(elapsed, { ...timing, count: 0 }), 'question');

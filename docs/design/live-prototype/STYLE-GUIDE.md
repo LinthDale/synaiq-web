@@ -1,8 +1,8 @@
 # 官網樣式維護指南
 
-Demo 共用操作列：五個功能都由 `renderDemoChapters()` 產生三個 `data-demo-chapter` 按鈕，`playChapter()` 對應段落並自動播放；再次點選可重播。章節列一律放在畫面下方，與畫面等寬；桌面三欄、699px 以下單欄。文字與數字皆使用內文字體，桌面 16px、899px 以下 14px；保留至少 44px 點按高度。幾何在 `site.css` 的 `.demo-chapters`，字級與底線在 `tokens.css`。共用提示接在按鈕下方，由三語 `demo.json` 的 `chapterHint` 維護。所有功能預設播放一輪後停止。
+Demo 共用操作列：五個功能都由 `renderDemoChapters()` 產生三個 `data-demo-chapter` 按鈕，`playChapter()` 對應段落並自動播放；再次點選可重播。章節列一律放在畫面下方，與畫面等寬；桌面三欄、699px 以下單欄。文字與數字皆使用內文字體，桌面 16px、899px 以下 14px；保留至少 44px 點按高度。幾何在 `site.css` 的 `.demo-chapters`，字級與底線在 `tokens.css`。共用提示接在按鈕下方，由三語 `demo.json` 的 `chapterHint` 維護。每組預設播放一輪，末幕停留 1.2 秒後接續下一組，最後一組接回第一組。
 
-核心優勢使用同一張手撕紙條展開：原 `.advantage-sheet` 保留紙邊與標題，膠帶掀起脫落、紙面由原位置放大，說明在紙內浮現。移出時由當下尺寸縮回原格，膠帶重新貼上，再將紙條移回原本的文件位置。展開與收合都保留原格高度，不另外產生矩形框、不拉長頁面。桌面五欄、平板三欄、手機兩欄；滑鼠移入／鍵盤焦點即展開，移出／焦點離開／Esc 收起，手機點按操作。`shared-design.js` 處理定位、收合完成及中途重開，`site.css` 管理紙面、撕膠帶與貼回動作；`tokens.css` 的 `--advantage-return-duration` 控制縮回時間。捲動、視窗尺寸改變或減少動態效果時立即復位。十項文案維護 `locales/<語言>/common.json` 的 `advantages`。
+核心優勢使用同一張手撕紙條展開：原 `.advantage-sheet` 保留紙邊與標題，膠帶掀起脫落、紙面由原位置放大，說明在紙內浮現。移出時由當下尺寸縮回原格，膠帶重新貼上，再將紙條移回原本的文件位置。展開與收合都保留原格高度，不另外產生矩形框、不拉長頁面。桌面五欄、平板三欄、手機兩欄；滑鼠移入／鍵盤焦點即展開，移出／焦點離開／Esc 收起，手機點按操作。`shared-design.js` 處理定位、收合完成及中途重開，`site.css` 管理紙面、撕膠帶與貼回動作；`tokens.css` 的 `--advantage-return-duration` 控制縮回時間。紙面與上下撕邊共用 `--advantage-note-paper` 底色，`torn-paper-cotton-v2.webp` 僅作 alpha mask，不直接貼用圖片顏色，避免異色材質接縫。捲動、視窗尺寸改變或減少動態效果時立即復位。十項文案維護 `locales/<語言>/common.json` 的 `advantages`。
 
 最後更新：2026-10-12。
 
@@ -173,7 +173,7 @@ DevTools 的 `font-size`、`color` 等文字規則應顯示 `tokens.css`；`grid
 | `BEGIN KIP` | KIP 平台的區塊與 RWD |
 | `BEGIN EDITORIAL` | 實績展示、關於我們、人物／場域水墨顯影與 RWD |
 
-`home-design.js`／`kip-design.js` 組合各頁 HTML、指定圖片並啟動互動；`shared-design.js` 組合八項優勢與聯絡區；`demo-animation.js` 同時產生三片共用的聊天介面、設定示例圖片，並執行出場、切片與五段播放。這些檔案不是日常字級或秒數的設定入口。
+`home-design.js`／`kip-design.js` 組合各頁 HTML、指定圖片並啟動互動；`shared-design.js` 組合八項優勢與聯絡區；`demo-animation.js` 同時產生五組共用的聊天介面、設定示例圖片，並執行出場、切片與七階段播放。這些檔案不是日常字級或秒數的設定入口。
 `cases-design.js`／`about-design.js` 組合兩個新增頁面，共用 `ink-photo.js` 的 `renderInkPhoto`／`initInkPhotos`。`cases-design.js` 是**總覽與案例詳情共用的一份版型**，依 `cases-data.js` 的資料渲染；新增案例不改版型，也不為單一案例複製 HTML。頁面登錄在 `prototype.js`，詞典登錄與合法頁名在 `i18n.js`；預覽外框由 `index.html`／`preview.js` 控制。
 手繪註記 `handwritten-note`、信紙 `source-paper`、圖片標籤 `slot-caption`、Demo 介面 `film-*` 的**文字樣式**在 `tokens.css` 下半部；文字內容仍在語言檔。版型尺寸與座標在 `site.css`。
 
@@ -285,26 +285,28 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 ### 模擬滑鼠 Demo 與其他效果
 
-搜尋「06 Demo」，以下五段停留時間相加就是一輪總長。第一片使用 `:root` 設定；另兩片的覆寫緊接在同段下方，以 `data-demo-scene="text-image"`／`data-demo-scene="image-image"` 區分。只改 `:root` 不會蓋過另兩片的設定。
+搜尋「06 Demo」，以下七段停留時間相加就是一輪總長。經營決策、損益分析與知識問答使用 `:root` 設定；圖片搜尋的覆寫緊接在同段下方，以 `data-demo-scene="text-image"`／`data-demo-scene="image-image"` 區分。只改 `:root` 不會蓋過圖片搜尋的設定。兩組三輪對話在最後三段都保持回答，供閱讀與捲動。
 
-| 設定 | 第一片：知識問答 | 第二／三片：圖片搜尋 |
+| 設定 | 知識問答 | 圖片搜尋 |
 |---|---|---|
-| `--demo-question-hold` | 顯示提問、打字 | 輸入描述／選入參考圖 |
-| `--demo-click-hold` | 點擊寄出、查找資料 | 點擊寄出、比對圖片 |
+| `--demo-question-hold` | 在輸入框打字 | 輸入描述／選入參考圖 |
+| `--demo-move-hold` | 游標移至寄出，草稿保留 | 同左 |
+| `--demo-click-hold` | 按下寄出，完成前不顯示訊息 | 同左 |
+| `--demo-thinking-hold` | 清空草稿，顯示訊息與等待提示 | 清空草稿，送出查詢並等待比對 |
 | `--demo-answer-hold` | 顯示採購流程回答 | 顯示三張結果 |
 | `--demo-source-hold` | 打開引用原文 | 選中第一張結果 |
 | `--demo-library-hold` | 顯示知識中心文件列表 | 打開原始素材面板 |
 
-`--demo-play-count`：`0` 持續循環、`1` 一輪、`2` 兩輪，結束停在最後一幕；「重播」重新計數。`--demo-view-threshold` 決定可見多少才播放，不是秒數。`--demo-typing-duration`、`--demo-pointer-duration`、`--demo-source-duration` 控制動作速度，不會加長該幕停留時間；動作時間應小於所屬幕的停留時間。文案變長時，需實看回答與原文是否有足夠閱讀時間。
+`--demo-play-count`：`0` 持續重複目前這組、`1` 一輪、`2` 兩輪；有限次數播完後，依 `--demo-next-hold` 停留末幕，再接續下一組，最後一組接回第一組。「重播」重新計數並取消原先換片進度。`--demo-view-threshold` 決定可見多少才播放，不是秒數。寄出前游標移動時間與 `--demo-move-hold` 相同，確保抵達按鈕才點擊；`--demo-pointer-duration` 控制其他移動。`--demo-typing-duration`、`--demo-source-duration` 控制動作速度，不會加長該幕停留時間；動作時間應小於所屬幕的停留時間。文案變長時，需實看回答與原文是否有足夠閱讀時間。
 
-**三段動畫共用同一個 KIP 對話介面**：知識問答、以自然語言找圖、以圖搜圖。使用左右箭頭或片名切換，不會自動換片。切片重設時間與次數，但保留手動暫停狀態；可按「播放動畫」繼續，或按「重新播放」從頭播放。同一時間只渲染一段、只使用一個播放時鐘。鍵盤可在片名按鈕上用左右鍵切換。
+**五組動畫共用同一個 KIP 對話介面**：經營決策、損益分析、知識問答、以自然語言找圖、以圖搜圖，依此順序自動接續。也可使用左右箭頭或片名切換；切片重設時間、次數與手動暫停狀態，從輸入開始播放。暫停、離開畫面、切到其他瀏覽器分頁時，播放與換片倒數一起暫停；減少動態效果時保持靜態、不自動換片。同一時間只渲染一組、只使用一個播放時鐘。鍵盤可在片名按鈕上用左右鍵切換。
 
 網站實際播放的是 HTML／CSS／JavaScript 動畫，不是 MP4、GIF 或影片播放器。另行錄製匯出的 MP4 是獨立檔案；修改網站文案或秒數不會更新既有 MP4，需要重新錄製。
 
-兩段圖片動畫只更換聊天內容、輸入框內的文字／圖片附件與回傳結果，不能再另造一套搜尋頁。動畫不是實際上傳、搜尋或連線產品；使用 `public/brand/` 中既有的公開 Wally 素材，沒有私有帳戶畫面。
+兩段圖片動畫只更換聊天內容、輸入框內的文字／圖片附件與回傳結果，不能再另造一套搜尋頁。動畫不是實際上傳、搜尋或連線產品；使用既有 KIP 介面示意圖，沒有私有帳戶畫面。
 
 - 步驟「01 用自然語言提問」的文字字型／大小用 `--demo-step-font`／`--demo-step-size`；前方數字用 `--demo-step-number-font`／`--demo-step-number-size`，都在同一段。目前桌機文字與數字各為 22px；899px 以下文字覆寫為 12px，639px 以下數字為 18px。改桌機字級不會自動取消這些窄版覆寫。
-- 三段共用播放次數、滑鼠與介面效果。兩個新片的五段停留時間，在同一「06 Demo」內搜尋 `data-demo-scene="text-image"`／`data-demo-scene="image-image"`，各自修改，不要在檔尾再覆寫。
+- 五組共用播放次數、滑鼠與介面效果。兩組圖片搜尋的停留時間，在同一「06 Demo」內搜尋 `data-demo-scene="text-image"`／`data-demo-scene="image-image"`，各自修改，不要在檔尾再覆寫。
 - 圖片回覆的進場／逐張延遲／原圖展開時間用 `--demo-image-results-duration`／`--demo-image-results-stagger`／`--demo-image-preview-duration`。
 - 問答、提示與步驟文案在 `locales/<語言>/demo.json`，但第一段與圖片查詢不在同一層；請依下表修改 `zhHant`／`en` 兩份。新增場景、改動作順序、介面結構或示例圖片時才需要改 `demo-animation.js`；排版在 `site.css` 的 `BEGIN DEMO`，文字外觀與播放設定仍只在 `tokens.css`。
 
