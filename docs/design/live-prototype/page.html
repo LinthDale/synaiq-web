@@ -20,7 +20,12 @@
 if (!["kip", "ems", "pvsim", "cases", "about"].includes(new URLSearchParams(location.search).get('page'))) {
   const cover = document.createElement('link');
   cover.rel = 'preload'; cover.as = 'image'; cover.fetchPriority = 'high';
-  cover.href = 'assets/kip-d-opening-v5.webp'; document.head.append(cover);
+  const portrait = matchMedia('(orientation: portrait)').matches;
+  const small = matchMedia('(max-width: 899px)').matches;
+  cover.href = portrait
+    ? (small ? 'assets/kip-d-scroll-portrait-small-v1/frame-000.webp' : 'assets/kip-d-scroll-portrait-v1/frame-000.webp')
+    : (small ? 'assets/kip-d-scroll-mobile-v1/frame-000.webp' : 'assets/kip-d-opening-v5.webp');
+  document.head.append(cover);
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

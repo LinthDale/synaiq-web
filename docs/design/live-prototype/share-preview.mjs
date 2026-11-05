@@ -6,6 +6,7 @@ import { dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node
 import { fileURLToPath } from 'node:url';
 import { LOCALE_PUBLIC_FILES } from './locale-config.js';
 import { DECISION_FRAME_FILES, DECISION_MOBILE_FRAME_FILES, DECISION_MOBILE_BUNDLE_FILES } from './decision-frames.js';
+import { DECISION_RESPONSIVE_FILES } from './decision-responsive.js';
 
 // This is a public design-only allowlist, not a general repository file server.
 // New assets must be reviewed and explicitly named before they can be shared.
@@ -13,7 +14,7 @@ const runtimeFiles = [
   'index.html', 'page.html', 'prototype.js', 'auth/index.html',
   'site.css', 'tokens.css',
   'home-design.js',
-  'decision-scroll.js', 'decision-frames.js', 'decision-mobile-source.js', ...DECISION_FRAME_FILES,
+  'decision-scroll.js', 'decision-frames.js', 'decision-responsive.js', 'decision-mobile-source.js', ...DECISION_FRAME_FILES, ...DECISION_RESPONSIVE_FILES,
   DECISION_MOBILE_FRAME_FILES[0], ...DECISION_MOBILE_BUNDLE_FILES,
   'assets/kip-d-opening-v5.webp',
   'demo-animation.js', 'decision-demo.js',
@@ -98,9 +99,9 @@ const securityHeaders = Object.freeze({
   ].join('; '),
 });
 
-const immutableImages = new Set([...DECISION_FRAME_FILES, ...DECISION_MOBILE_FRAME_FILES, ...DECISION_MOBILE_BUNDLE_FILES, 'assets/kip-d-opening-v5.webp']);
+const immutableImages = new Set([...DECISION_FRAME_FILES, ...DECISION_MOBILE_FRAME_FILES, ...DECISION_MOBILE_BUNDLE_FILES, ...DECISION_RESPONSIVE_FILES, 'assets/kip-d-opening-v5.webp']);
 function imageCacheHeaders(entry, body) {
-  if (!['.svg', '.png', '.jpg', '.webp'].includes(extname(entry.file)) && !DECISION_MOBILE_BUNDLE_FILES.includes(entry.file)) return {};
+  if (!['.svg', '.png', '.jpg', '.webp'].includes(extname(entry.file)) && !immutableImages.has(entry.file)) return {};
   return {
     'Cache-Control': immutableImages.has(entry.file)
       ? 'public, max-age=31536000, immutable'

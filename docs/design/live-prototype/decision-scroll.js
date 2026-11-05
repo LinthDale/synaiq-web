@@ -1,9 +1,11 @@
-import { DECISION_FRAME_COUNT, decisionFrameFile, decisionMobileFrameFile } from './decision-frames.js';
+import { DECISION_FRAME_COUNT } from './decision-frames.js';
 import { createDecisionMobileSource } from './decision-mobile-source.js';
+import { DECISION_VARIANTS, decisionVariantAt, DECISION_SMALL_MEDIA, DECISION_PORTRAIT_MEDIA } from './decision-responsive.js';
 
 export const DECISION_POLICIES = Object.freeze({
   mobile: Object.freeze({ cacheSize: 6, concurrent: 2, ahead: 2, behind: 1, warmWholeSequence: false, warmAhead: 48, warmBehind: 12, warmConcurrent: 6, visibleOnly: true }),
   desktop: Object.freeze({ cacheSize: 32, concurrent: 6, ahead: 20, behind: 8, warmWholeSequence: true, warmConcurrent: 2, visibleOnly: false }),
+  portraitLarge: Object.freeze({ cacheSize: 3, concurrent: 1, ahead: 1, behind: 0, warmWholeSequence: false, warmAhead: 48, warmBehind: 12, warmConcurrent: 6, visibleOnly: true }),
 });
 
 const clamp = value => Math.max(0, Math.min(1, value));
@@ -84,33 +86,42 @@ export function scenePlacement(width, height, imageWidth, imageHeight) {
   const drawnWidth = imageWidth * scale;
   const drawnHeight = imageHeight * scale;
   // Portrait cropping keeps the hand and bulb on the right in the same frame.
-  const anchor = width < 640 ? 0.9 : width < 1100 ? 0.68 : 0.5;
-  return { width: drawnWidth, height: drawnHeight, x: (width - drawnWidth) * anchor, y: (height - drawnHeight) * 0.55 };
+  const portrait = imageHeight > imageWidth;
+  const anchor = portrait ? 0.5 : width < 640 ? 0.9 : width < 1100 ? 0.68 : 0.5;
+  return { width: drawnWidth, height: drawnHeight, x: (width - drawnWidth) * anchor, y: (height - drawnHeight) * (portrait ? 1 : 0.55) };
 }
 
 export function initDecisionScroll() {
-  const mobile = matchMedia('(max-width: 899px), (pointer: coarse)');
+  const queries = [matchMedia(DECISION_SMALL_MEDIA), matchMedia(DECISION_PORTRAIT_MEDIA), matchMedia('(pointer: coarse)')];
   let stop = () => {};
+  let selected = '';
   const update = () => {
+    const variant = decisionVariantAt(innerWidth, innerHeight);
+    const profile = queries[0].matches || queries[2].matches ? 'mobile' : 'desktop';
+    const key = `${variant}:${profile}`;
+    if (selected === key) return;
+    selected = key;
     stop();
-    stop = initAnimatedDecisionScroll(mobile.matches ? 'mobile' : 'desktop');
+    stop = initAnimatedDecisionScroll(profile, variant);
   };
-  mobile.addEventListener('change', update);
+  for (const query of queries) query.addEventListener('change', update);
   update();
-  return () => { mobile.removeEventListener('change', update); stop(); };
+  return () => { for (const query of queries) query.removeEventListener('change', update); stop(); };
 }
 
-function initAnimatedDecisionScroll(profile) {
+function initAnimatedDecisionScroll(profile, variantKey) {
   const hero = document.querySelector('.home-opening');
   const proof = document.getElementById('proof');
   if (!hero || !proof) return () => {};
-  const policy = DECISION_POLICIES[profile];
-  const frameFile = profile === 'mobile' ? decisionMobileFrameFile : decisionFrameFile;
+  const variant = DECISION_VARIANTS[variantKey];
+  const policy = variantKey === 'portrait-large' ? DECISION_POLICIES.portraitLarge : DECISION_POLICIES[profile];
+  const frameFile = variant.frameFile;
   document.body.dataset.decisionProfile = profile;
+  document.body.dataset.decisionVariant = variantKey;
   const surfaces = [...document.querySelectorAll('[data-decision-surface]')];
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
   const abort = new AbortController();
-  const source = profile === 'mobile' ? createDecisionMobileSource({ signal: abort.signal }) : null;
+  const source = variant.bundles ? createDecisionMobileSource({ signal: abort.signal, files: variant.bundles }) : null;
   const surfaceFrames = new Map();
   const cache = new Map();
   const pending = new Map();
@@ -135,8 +146,8 @@ function initAnimatedDecisionScroll(profile) {
   let raf = 0;
   let disposed = false;
   let ready = false;
-  let imageWidth = 1152;
-  let imageHeight = 768;
+  let imageWidth = variant.width;
+  let imageHeight = variant.height;
   let headerHeight = 74;
   let timeline = {segments:[],total:0};
 
@@ -337,7 +348,7 @@ function initAnimatedDecisionScroll(profile) {
     cache.clear(); pending.clear();
     source?.clear(); surfaceFrames.clear(); displayedUrl = '';
     document.body.classList.remove('decision-scroll-ready');
-    for (const key of ['decisionFrame', 'decisionTarget', 'decisionPreloaded', 'decisionProfile', 'decisionCached']) delete document.body.dataset[key];
+    for (const key of ['decisionFrame', 'decisionTarget', 'decisionPreloaded', 'decisionProfile', 'decisionVariant', 'decisionCached']) delete document.body.dataset[key];
     for (const surface of surfaces) for (const property of ['--decision-frame', '--decision-size', '--decision-position', '--decision-tear-position']) surface.style.removeProperty(property);
   }
   addEventListener('pagehide', event => { if (!event.persisted) dispose(); }, {signal:abort.signal});
