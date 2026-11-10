@@ -128,7 +128,17 @@ export function buildRouting(base, name, paths, assets = []) {
     assert.equal([...text.matchAll(block)].length, 1, 'Ambiguous generated locale cache block');
     return text.replace(block, () => cache);
   };
-  return { preview: updateCache(preview), live: updateCache(live), current };
+  const updateDocumentCache = text => {
+    if (!paths.some(path => path.startsWith('prerender/'))) return text;
+    const marker = '# Generated page document cache policy';
+    // FilesMatch sees the final internally rewritten filename, not index.html.
+    const block = `${marker}${eol}<FilesMatch "\\.html$">${eol}<IfModule mod_expires.c>${eol}ExpiresActive Off${eol}</IfModule>${eol}<IfModule mod_headers.c>${eol}Header onsuccess unset Cache-Control${eol}Header always set Cache-Control "no-cache, must-revalidate"${eol}Header onsuccess unset Expires${eol}Header always unset Expires${eol}</IfModule>${eol}</FilesMatch>`;
+    const existing = /# Generated page document cache policy\r?\n<FilesMatch[^>]*>[\s\S]*?<\/FilesMatch>/g;
+    if (!text.includes(marker)) return `${text}${eol}${block}${eol}`;
+    assert.equal([...text.matchAll(existing)].length, 1, 'Ambiguous generated page cache block');
+    return text.replace(existing, () => block);
+  };
+  return { preview: updateDocumentCache(updateCache(preview)), live: updateDocumentCache(updateCache(live)), current };
 }
 export function transformSource(bytes, path, name) {
   releaseName(name);

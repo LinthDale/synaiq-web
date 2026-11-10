@@ -119,6 +119,12 @@ test('staging retains old root routes; activation and later releases replace com
   const required = [...paths, 'page.html', 'robots.txt', 'sitemap.xml'];
   const base = `RewriteRule ^$ /${old}/index.html [L]\nRewriteRule ^robots\\.txt$ /${old}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${old}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${old}/(?:index\\.html|page\\.html)$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${old};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
   const first = buildRouting(base, next, required);
+  const cache = first.preview.match(/# Generated page document cache policy[\s\S]*?<\/FilesMatch>/)?.[0];
+  assert.ok(cache, 'Generated documents require the same revalidation policy as the old index');
+  const filePattern = cache.match(/<FilesMatch "([^"]+)">/)[1];
+  for (const file of paths) assert.ok(new RegExp(filePattern).test(file.split('/').at(-1)), file);
+  assert.match(cache, /ExpiresActive Off/);
+  assert.match(cache, /Header always set Cache-Control "no-cache, must-revalidate"/);
   assert.equal(activeRelease(first.preview), old);
   assert.equal(routedFile(first.preview, '', 'page=pvsim&lang=en'), `/${old}/index.html`);
   assert.equal(routedFile(first.preview, `${next}/index.html`, 'page=pvsim&lang=en'), `/${next}/${prerenderPath('?page=pvsim&lang=en', paths)}`);
@@ -127,5 +133,6 @@ test('staging retains old root routes; activation and later releases replace com
   assert.equal(routedFile(last.preview, '', 'page=pvsim&lang=en'), `/${next}/${prerenderPath('?page=pvsim&lang=en', paths)}`);
   assert.equal(routedFile(last.live, '', 'page=pvsim&lang=en'), `/synaiq-release-last/${prerenderPath('?page=pvsim&lang=en', paths)}`);
   const fourth = buildRouting(last.live, 'synaiq-release-fourth', required);
+  assert.equal((fourth.live.match(/# Generated page document cache policy/g) || []).length, 1);
   assert.ok(!fourth.live.includes(`${next}/`), 'No orphaned RewriteCond blocks from retired entries');
 });
