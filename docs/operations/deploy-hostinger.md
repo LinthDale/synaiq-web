@@ -1,8 +1,16 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-11-05（Asia/Taipei）。
+最後更新：2026-11-10（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-11-10 PVsim SEO 與完整 HTML 發布
+
+[Run 42830916488](https://github.com/LinthDale/synaiq-web/actions/runs/42830916488) 已完成發布、正式驗證、加密備份與三版保留。來源 `4d0e99f3b40312e21733edd737a272abe6a98e24`，現行 `public_html/synaiq-release-ci-42830916488-1/`。六頁與實績三語直接回傳完整內容及各頁 SEO，保留 Synaiq KIP；修正生成 HTML 的 revalidation 規則。CI local／staged／live 各 52 組通過，另獨立核對 24 頁原始 HTML 與 3 個舊入口 URL，共 27 項通過。
+
+路由 SHA-256 `ea2e5880143c1ac9a57618b284c2d7ef7f33057d3bbb3c01c4462d3afa22f4ae`；state `6b589143a1bc6572c59fbfca41f392005adaa68b0651160be13b43301c8e4297`。保留現行版與 `42002538039-1`、`41951556292-1`，加密備份 `hostinger-backup-42830916488-1`。首輪 `42826585943-1` 在 staging 的快取檢查停止，已回復舊路由；失敗候選與證據保留，沒有公開。
+
+DGX 舊 PVsim 登入入口已加 noindex 並修正 robots.txt。Search Console 僅處理使用者指定的 taistro.com.tw；不驗證 synaiq-ai.com。完整變更、Google 提交狀態、驗證證據及回復方式見 [PVsim SEO 修正紀錄](pvsim-seo-20261110.md)。其他既有未提交文件修改保留，未併入本次提交。
 
 ## 2026-11-05 Demo 送出時序、自動接播與紙條材質
 

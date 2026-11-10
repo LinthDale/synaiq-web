@@ -1,12 +1,12 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-11-05。
+給工程師及新的 AI session。最後核對：2026-11-10。
 
 2026-11-03 新增 `auth.taistro.com.tw` 子網域，接續方式見 [auth 子網域](auth-handoff.md)。目錄為 `public_html/auth/`，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。最近成功發布為 [Run 42002538039](https://github.com/LinthDale/synaiq-web/actions/runs/42002538039)（2026-11-05），來源 `1543b4fa3593968b97242ff2d68bf80c8e2c5d76`，現行 `public_html/synaiq-release-ci-42002538039-1/`。本次修正 Demo 寄出前先顯示訊息的時序、播完自動接續下一組，以及紙條與撕邊的底色接縫；local／staged／live 各 52 組與本機 Chrome 動畫回歸 25 項通過，正式檔案雜湊與三語入口已獨立核對。草稿備份為 `hostinger-backup-42002538039-1`；保留現行版及 `41951556292-1`、`41944747569-1`。主機 `.htaccess` 與 state 為即時依據，詳見 [部署紀錄](deploy-hostinger.md)。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。GitHub `main` 更新會自動測試、部署、清快取、加密備份，保留現行版＋最近兩版。最近成功發布為 [Run 42830916488](https://github.com/LinthDale/synaiq-web/actions/runs/42830916488)（2026-11-10），來源 `4d0e99f3b40312e21733edd737a272abe6a98e24`，現行 `public_html/synaiq-release-ci-42830916488-1/`。各頁三語已在首次 HTTP 回應提供完整內容與 SEO 標記，保留 Synaiq KIP；CI local／staged／live 各 52 組及獨立 27 項公開核對通過。草稿備份 `hostinger-backup-42830916488-1`；保留現行版及 `42002538039-1`、`41951556292-1`。首輪失敗候選已保留、未公開。主機 `.htaccess` 與 state 為即時依據，詳見 [PVsim SEO 修正](pvsim-seo-20261110.md)及[部署紀錄](deploy-hostinger.md)。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
