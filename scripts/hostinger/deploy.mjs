@@ -6,6 +6,7 @@ import { request } from './client.mjs';
 import { smoke } from './browser.mjs';
 import { verifyPublicAssets } from './public-assets.mjs';
 import { reviewedRoutingRepair } from './reviewed-routing-repair.mjs';
+import { prerenderPath } from './prerender-routing.mjs';
 
 const json = data => Buffer.from(JSON.stringify(data, null, 2));
 export async function save(work, path, bytes) {
@@ -141,7 +142,8 @@ export async function publicChecks(config, manifest, root = true) {
   for (const path of paths) {
     const response = await request(new URL(path, config.origin));
     assert.equal(response.status, 200, `${path}: public HTTP ${response.status}`);
-    const file = /^\/auth(?:[/?]|$)/.test(path) ? 'auth/index.html' : /\.(txt|xml)$/.test(path) ? path.slice(1) : 'index.html';
+    const file = /^\/auth(?:[/?]|$)/.test(path) ? 'auth/index.html' : /\.(txt|xml)$/.test(path) ? path.slice(1)
+      : prerenderPath(new URL(path, config.origin).search, manifest.files.map(file => file.path));
     assert.equal(sha(Buffer.from(await response.arrayBuffer())), manifest.files.find(f => f.path === file).sha256, `${path}: public version mismatch`);
     assert.match(response.headers.get('cache-control') || '', /no-cache/, `${path}: document cache policy missing`);
   }

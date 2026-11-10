@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { PUBLIC_FILES } from '../../docs/design/live-prototype/share-preview.mjs';
 import { sha, transformSource, safePath, releaseName, sharedPath } from './core.mjs';
 import { syncLocales } from '../../docs/design/live-prototype/scripts/sync-locales.mjs';
+import { createPrerenderedPages } from './prerender.mjs';
 
 export async function packageSite(work, name) {
   syncLocales({ check: true });
@@ -12,7 +13,7 @@ export async function packageSite(work, name) {
   const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
   if (process.env.GITHUB_SHA) assert.equal(sourceCommit, process.env.GITHUB_SHA);
   // Preserve unrelated staged work, but never silently package uncommitted site inputs.
-  const changed = execFileSync('git', ['status', '--porcelain', '--', 'docs/design/live-prototype', 'public/brand'], { encoding: 'utf8' });
+  const changed = execFileSync('git', ['status', '--porcelain', '--', 'docs/design/live-prototype', 'public/brand', 'scripts/hostinger'], { encoding: 'utf8' });
   assert.equal(changed, '', 'Commit website inputs before packaging');
   const files = [];
   for (const entry of PUBLIC_FILES.filter(entry => !['index.html', 'preview.js'].includes(entry.file))) {
@@ -29,11 +30,14 @@ export async function packageSite(work, name) {
       const urls = [...bytes.toString().matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
       assert.ok(urls.length > 0 && urls.every(u => u.startsWith('https://taistro.com.tw/') && !u.includes('synaiq-release-')));
     }
-    for (const output of path === 'page.html' ? ['page.html', 'index.html'] : [path]) {
+    const documents = path === 'page.html' ? await createPrerenderedPages(original.toString('utf8')) : null;
+    if (documents) documents.set('page.html', documents.get('index.html'));
+    const outputs = documents ? [...documents].map(([output, html]) => [output, transformSource(Buffer.from(html), 'page.html', name)]) : [[path, bytes]];
+    for (const [output, payload] of outputs) {
       const target = join(work, 'artifact', output);
-      await mkdir(join(target, '..'), { recursive: true }); await writeFile(target, bytes, { flag: 'wx' });
-      const hash = sha(bytes), pooled = sharedPath(output, hash);
-      files.push({ path: output, size: bytes.length, sha256: hash, source, ...(pooled ? { sharedPath: pooled } : {}) });
+      await mkdir(join(target, '..'), { recursive: true }); await writeFile(target, payload, { flag: 'wx' });
+      const hash = sha(payload), pooled = sharedPath(output, hash);
+      files.push({ path: output, size: payload.length, sha256: hash, source, ...(pooled ? { sharedPath: pooled } : {}) });
     }
   }
   const manifest = { release: name, sourceCommit, storage: 'shared-assets-v1', createdAt: new Date().toISOString(), files };

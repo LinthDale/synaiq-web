@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash, createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
+import { prerenderRules, retainPrerenderBlocks, replaceRootPrerender } from './prerender-routing.mjs';
 
 export const sha = data => createHash('sha256').update(data).digest('hex');
 export const payloadDigest = manifest => sha(JSON.stringify({ release: manifest.release, sourceCommit: manifest.sourceCommit, storage: manifest.storage, files: manifest.files }));
@@ -83,7 +84,7 @@ export function buildRouting(base, name, paths, assets = []) {
   ];
   assert.ok(rules.every(rule => Buffer.byteLength(rule) < 8000), 'One asset alias exceeds the routing line limit');
   // Only current and candidate are public. Other host directives remain byte-for-byte intact.
-  const lines = base.split(eol).filter(line => {
+  const lines = retainPrerenderBlocks(base, current).split(eol).filter(line => {
     if (line.startsWith(`RewriteRule ^${ASSET_ROOT}/`)) return false;
     const match = line.match(/^RewriteRule \^(synaiq-release-[a-z0-9-]+)\//);
     return !match || match[1] === current;
@@ -94,7 +95,8 @@ export function buildRouting(base, name, paths, assets = []) {
   });
   rules.push(...fileRules(ASSET_ROOT, [...new Set([...currentAssets, ...aliases.values()])].sort().map(path => path.slice(ASSET_ROOT.length + 1))));
   assert.ok(lines.some(line => line.startsWith(`RewriteRule ^${current}/`)), 'Missing current release allowlist');
-  const preview = lines.join(eol).replace(anchor, () => `${anchor}${eol}${rules.join(eol)}`);
+  const entryRules = prerenderRules(name, paths, 'entry').replaceAll('\n', eol);
+  const preview = lines.join(eol).replace(anchor, () => `${anchor}${eol}${entryRules ? entryRules + eol : ''}${rules.join(eol)}`);
   let live = preview;
   for (const [from, to] of [
     [`RewriteRule ^$ /${current}/index.html [L]`, `RewriteRule ^$ /${name}/index.html [L]`],
@@ -109,6 +111,7 @@ export function buildRouting(base, name, paths, assets = []) {
   }
   assert.equal(activeRelease(preview), current);
   assert.equal(activeRelease(live), name);
+  live = replaceRootPrerender(live, name, paths, eol);
   // Expose only the reserved entry. Descendants still reach deny-by-default routing.
   // Staging preserves the current public entry; activation moves it with this release.
   if (paths.includes(authPath)) {

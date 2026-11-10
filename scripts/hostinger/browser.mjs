@@ -3,9 +3,11 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
-import { canonicalUrl, crawlTargets } from '../../docs/design/live-prototype/page-metadata.js';
+import { canonicalUrl, crawlTargets, pageMetadata } from '../../docs/design/live-prototype/page-metadata.js';
 import { sha, payloadDigest } from './core.mjs';
-import { SUPPORTED_LOCALES } from '../../docs/design/live-prototype/locale-store.js';
+import { SUPPORTED_LOCALES, loadMessages } from '../../docs/design/live-prototype/locale-store.js';
+import { escapeHtml } from '../../docs/design/live-prototype/i18n.js';
+import { prerenderPath } from './prerender-routing.mjs';
 
 const PAGES = ['home', 'kip', 'ems', 'pvsim', 'cases', 'about'];
 const LANGS = SUPPORTED_LOCALES.map(({ code }) => code);
@@ -33,6 +35,8 @@ export function smokeQuery({ page, caseId, lang }) {
 }
 
 export async function smoke(manifest, work, origin, mode) {
+  await Promise.all(SUPPORTED_LOCALES.map(({ code }) => loadMessages(code)));
+  const paths = manifest.files.map(file => file.path);
   let server, browser;
   const cases = [];
   try {
@@ -46,7 +50,9 @@ export async function smoke(manifest, work, origin, mode) {
       }
       assets.set('/', assets.get(`/${manifest.release}/index.html`));
       server = createServer((req, res) => {
-        const asset = assets.get(new URL(req.url, 'http://localhost').pathname);
+        const url = new URL(req.url, 'http://localhost');
+        const entry = ['/', `/${manifest.release}/index.html`, `/${manifest.release}/page.html`].includes(url.pathname);
+        const asset = assets.get(entry ? `/${manifest.release}/${prerenderPath(url.search, paths)}` : url.pathname);
         res.writeHead(asset ? 200 : 404, { 'Content-Type': asset?.type || 'text/plain' }); res.end(asset?.bytes);
       });
       await new Promise(done => server.listen(0, '127.0.0.1', done));
@@ -77,7 +83,17 @@ export async function smoke(manifest, work, origin, mode) {
       const response = await page.goto(`${origin}${path}${smokeQuery(item)}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
       assert.equal(response.status(), 200);
       // A working older release is not a successful deployment of this commit.
-      assert.equal(sha(await response.body()), manifest.files.find(f => f.path === 'index.html').sha256);
+      const body = await response.body();
+      const documentPath = prerenderPath(smokeQuery(item), paths);
+      assert.equal(sha(body), manifest.files.find(f => f.path === documentPath).sha256);
+      if (documentPath.startsWith('prerender/')) {
+        const meta = pageMetadata({ page: item.page, locale: item.lang, caseId: item.caseId });
+        const html = body.toString();
+        assert.ok(html.includes(`<title>${escapeHtml(meta.title)}</title>`), 'Initial title differs from requested page');
+        assert.ok(html.includes(`<meta name="description" content="${escapeHtml(meta.description)}">`));
+        assert.ok(html.includes(`<link rel="canonical" href="${escapeHtml(meta.canonical)}">`));
+        assert.doesNotMatch(html, /<main id="main"><\/main>/, 'Initial product content is empty');
+      }
       // Idle background prefetch is not page readiness. Wait for rendered content
       // and fonts explicitly, rather than every optional animation download.
       await page.locator('html[data-i18n-ready="true"]').waitFor();
