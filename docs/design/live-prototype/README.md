@@ -34,7 +34,7 @@ Demo 排版與操作統一：五個功能都使用畫面下方的共用三段按
 | 排版、RWD 幾何、撕紙邊界 | [site.css](site.css)；搜尋對應 BEGIN 區段 |
 | 首頁文字、CEO quote | [locales/zh-Hant/home.json](locales/zh-Hant/home.json)；搜尋 `ceo:`，繁中、英文、德文分別修改 |
 | KIP 文字／共用導覽、優勢、聯絡、頁尾 | [locales/zh-Hant/kip.json](locales/zh-Hant/kip.json)／[locales/zh-Hant/common.json](locales/zh-Hant/common.json) |
-| EMS／PVsim 敘事頁 | `energy-design.js` 共用版型與六步互動示意；`locales/<語言>/ems.json`／`locales/<語言>/pvsim.json` 維護中英文產品故事、流程、核心能力、示範說明與聯絡文案；頁面後段提供 EMS 示範預約及 PVsim 官網連結 |
+| EMS／PVsim 敘事頁 | `energy-design.js` 共用版型與六步互動示意；`locales/<語言>/ems.json`／`locales/<語言>/pvsim.json` 維護中英文產品故事、流程、核心能力、示範說明與聯絡文案；頁面後段保留原有 EMS 示範登入及 PVsim 官網連結 |
 | EMS／PVsim 實際介面截圖 | `energy-screens.js` 維護畫面清單、鍵盤可操作的切換及原圖連結；各 locale 的 `screens` 維護中英圖說。素材來源及 hash 見 [產品畫面紀錄](product-screen-provenance.md)。截圖是示範環境，不是客戶上線實績；PVsim 以場域設計為主軸，屋頂只是本次示範案例。 |
 | PVsim「01 三維場域與配置」互動 | `pvsim-viewer.js` 維護啟用、旋轉／縮放／平移、俯視、配置復位、全場景與截圖備援；中英操作文字在 `locales/<語言>/pvsim.json` 的 `screens.viewer`。模型只在點擊啟用後從官網載入，不連 DGX；素材來源見 [產品畫面紀錄](product-screen-provenance.md)。`npm run build:pvsim-viewer` 重建固定版本 Three.js 靜態模組，`npm run test:pvsim-viewer` 驗證真實渲染與觸控。新增模組及 GLB 都須保留在發布白名單。 |
 | 智慧方案／Solutions 產品選單 | `locales/<語言>/common.json` 的 `navigation.products` 改標籤；`page.html` 維護導覽及頁尾的 KIP／EMS／PVsim 連結，`prototype.js` 處理收合與鍵盤操作；三個產品皆連至站內介紹頁。選單圖樣沿用 `assets/taistro-logo-ink.svg` 的兩筆 A 路徑，尺寸由 `site.css` 的 `.product-navigation-chevron` 控制為 11 × 10px，開啟時旋轉 180 度；保留手繪底線。 |

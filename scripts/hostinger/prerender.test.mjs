@@ -37,7 +37,9 @@ test('every sitemap URL supplies its own full content and metadata before JavaSc
 
 test('all public documents present only the current company and product identities', () => {
   for (const [file, html] of pages) {
-    assert.ok(!/synaiq|鑫揚|鑫扬/i.test(html), file);
+    // The existing EMS demo destination is the single approved exception.
+    const publicCopy = html.replace('href="https://synaiq-ai.com/ems/#Monitor"', '');
+    assert.ok(!/synaiq|鑫揚|鑫扬/i.test(publicCopy), file);
     assert.match(html, />KIP<\/a>/, file);
   }
 });
