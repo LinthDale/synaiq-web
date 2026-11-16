@@ -1,8 +1,20 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-11-10（Asia/Taipei）。
+最後更新：2026-11-16（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-11-16 官網移除 Synaiq 品牌識別
+
+[Run 43798531492](https://github.com/LinthDale/synaiq-web/actions/runs/43798531492) 自 `1efadf759061010bef3128f92bac585071296c17` 發布至 `public_html/taistro-release-ci-43798531492-1/`。KIP、EMS、PVsim 使用各自產品名稱。全站導覽、頁尾、首頁介紹、實績、產品畫面與搜尋引擎讀取的標題和描述同步更新。唯一例外是使用者指定保留的 EMS 示範網址 `https://synaiq-ai.com/ems/#Monitor`。舊版發布前綴仍可辨識及回退。
+
+封裝共 410 檔，其中 119 個文字檔均經品牌掃描。獨立核對 sitemap 全部 24 個網址，另驗根網址、回報的繁中首頁及無語系 PVsim 入口。27 個正式 HTML 的 SHA-256 均與發布包一致。以 874 × 830 的 Chrome 核對首頁介紹、了解 KIP 連結及智慧方案選單，並點入 KIP 頁。驗證資料在 `out/taistro-brand-20261116/verified-live.json`。
+
+Hostinger 部署、正式站測試及加密備份已完成，備份標籤 `hostinger-backup-43798531492-1`。回退依本文件與主機私有 state。較早的候選執行 43798343996 在改動正式主機前已跳過部署。
+
+主機路由 SHA-256 `d0902554f12d25afccaea68dba20efa41af90c293761c3f29997650d7335afde`，最終 state SHA-256 `77f949fc18b0a62fd1b76aca821d995a2e2fceb0e260502b14a79fe47fc24dc3`。主機保留的新舊版本依序為 `taistro-release-ci-43798531492-1`、`synaiq-release-ci-42830916488-1`、`synaiq-release-ci-42002538039-1`。
+
+Search Console 已受理繁中首頁、KIP、實績、關於我們、EMS 及英文 PVsim 六個網址重新建立索引。實查原搜尋詞時，繁中 PVsim 結果已顯示現行標題，部分其他結果仍帶舊品牌。英文 PVsim 的 11 月 11 日檢索快照已是「PVsim — tAistro」。
 
 ## 2026-11-10 PVsim SEO 與完整 HTML 發布
 

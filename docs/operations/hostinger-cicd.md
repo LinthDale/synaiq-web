@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前狀態：**已啟用，Demo 時序、自動接播與紙條材質修正已上線**。[Run 42002538039](https://github.com/LinthDale/synaiq-web/actions/runs/42002538039) 來源 `1543b4fa3593968b97242ff2d68bf80c8e2c5d76`，現行 `synaiq-release-ci-42002538039-1`。五組 Demo 完成寄出後才顯示訊息，播完停留 1.2 秒後接續下一組；紙條本體與撕邊共用底色。local／staged／live 各 52 組、本機 Chrome 動畫回歸 25 項及正式檔案雜湊核對通過。`HOSTINGER_DEPLOY_ENABLED=true`；改為 `false` 可暫停後續部署。詳見 [部署紀錄](deploy-hostinger.md)。
+目前已啟用 `HOSTINGER_DEPLOY_ENABLED=true`。最近成功發布為 [Run 43798531492](https://github.com/LinthDale/synaiq-web/actions/runs/43798531492)，現行 `public_html/taistro-release-ci-43798531492-1/`。最新驗收及回退資訊見[部署紀錄](deploy-hostinger.md)。
 
-本次備份在草稿 Release `hostinger-backup-42002538039-1`，包含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`；歷次清理與發布的加密備份仍保留。
+本次備份在草稿 Release `hostinger-backup-43798531492-1`，含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。
 
 ## 平常如何更新
 
@@ -25,12 +25,12 @@
 2. 按公開 allowlist 從 Git commit 封裝檔案（2026-11-02 為 338 檔，含 243 張背景動畫幀；數量隨 allowlist 調整），正式 `index.html` 由 `page.html` 產生。CSS、JS、圖片指向唯一的新版本目錄。精確檔名白名單可拆成多條路由，每條小於 8,000 bytes，仍只開放已封裝檔案；後續發布會保留現行版的全部白名單路由。
 3. 本機瀏覽器測試：六頁 × 繁中／英文／德文 × 手機／桌面，另加 EMS／PVsim 的 320／835px，以及每個公開案例的三語內頁 × 手機／桌面（案例清單取自 `page-metadata.js` 的 `crawlTargets()`，與 sitemap 相同；兩個案例時共 52 組）；包含圖片、語言切換、案例頁 canonical 及 PVsim 3D。 三語手機首頁使用正常動態模式、觸控與 DPR 3，反覆上下捲動至頁尾，確認輕量背景存在且沒有桌面解析度幀請求；桌面首頁也使用正常動態模式並檢查反覆解碼，其餘內頁保留減少動態模式。本機驗收只跑一次；報告綁定來源 commit、release 與完整 manifest 摘要，deploy job 重建封裝、核對相同才沿用。
 4. 核對主機路由、目前版本逐檔 hash；首次導入另比對 `bootstrap-hashes.json` 中六個已知正式版本。任何主機外部修改都會停止，不能自行更新 hash 掩蓋差異。
-5. 入口文件上傳到 `public_html/synaiq-release-ci-<run_id>-<attempt>/`；圖片、動畫、模型、JS、CSS、SVG 等靜態資源以封裝後內容的 SHA-256 儲存在 `public_html/synaiq-assets-v1/<sha256>.<副檔名>`。已存在的資源先透過 authenticated raw 核對大小與 SHA-256，完全相同才重用；缺少時才上傳及下載驗證，絕不覆寫既有 hash 檔案。獨立檔案最多四個並行，失敗會等已開始的操作結束再回退。
+5. 入口文件上傳到 `public_html/taistro-release-ci-<run_id>-<attempt>/`；圖片、動畫、模型、JS、CSS、SVG 等靜態資源以封裝後內容的 SHA-256 儲存在 `public_html/synaiq-assets-v1/<sha256>.<副檔名>`。已存在的資源先透過 authenticated raw 核對大小與 SHA-256，完全相同才重用；缺少時才上傳及下載驗證，絕不覆寫既有 hash 檔案。獨立檔案最多四個並行，失敗會等已開始的操作結束再回退。
 6. 用候選檔＋原 hash 保護 rename 開放新版本直接網址，逐檔核對公開資源，再執行 staged 同一組瀏覽器檢查；成功後才切換 root、robots 與 sitemap。Hostinger 原始檔必須精確符合 SHA-256；CDN 圖片另核對可解碼、尺寸、比例及畫素差異。依使用者 2026-10-12 要求，64 × 64 採樣的平均誤差低於 3 正常，3 至未滿 12 僅記警示並繼續，達 12 才因明顯差異停止；這是實務檢查值，不代表內容相同的數學保證。已目視確認的特殊照片仍可用 `cdn-approved-images.json` 精確來源／回應 hash 配對通過。
 7. 清除兩網域快取，正式網址檢查及同一組瀏覽器驗證成功後，更新主機私有維護說明及 `.hostinger-ci-state.json`。
 8. 按**實際成功啟用順序**保留現行版＋最近兩版。先重驗保留檔案及跨版本相依，完整下載待刪版本並建立逐檔清單。
 9. 備份 tar.gz 以 AES-256-GCM 加密，解包核對每個檔案，存至 GitHub **草稿 Release**，重新下載、比對 SHA-256 並驗證解密後才允許刪除。
-10. 再次核對路由、保留版本、待刪版本及備份；刪除清單內的 `synaiq-release-*` 目錄。共用素材也依三個保留版本的引用清單回收：只有無引用、路由未開放、已備份並核對 hash 的物件才可刪除；有未納管候選目錄時暫停素材回收。清理完成後重新核對公開站，將最終證據加密存入同一份草稿 Release。
+10. 再次核對路由、保留版本、待刪版本及備份；刪除清單內已封存的版本目錄（`taistro-release-*` 或歷史 `synaiq-release-*`）。共用素材也依三個保留版本的引用清單回收：只有無引用、路由未開放、已備份並核對 hash 的物件才可刪除；有未納管候選目錄時暫停素材回收。清理完成後重新核對公開站，將最終證據加密存入同一份草稿 Release。
 
 共用儲存保留每版原有網址，例如 `/<release>/prototype.js`，由精確 RewriteRule 在主機內部對應到 hash 檔案，不做瀏覽器轉址。相對 ES module imports、`import.meta.url`、動畫幀與 CSS 相對路徑仍以原網址解析；公開白名單只開放現行／候選版所需的確切檔案，私有 `.hostinger-assets.json` 不開放。生成語系的 `no-cache, must-revalidate` 規則涵蓋改寫後的 hash JS 檔名。
 
