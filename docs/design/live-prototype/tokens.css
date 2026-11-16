@@ -303,7 +303,7 @@
 
 /* ── 10 KIP 平台（不是首頁；只影響 KIP 頁） ── */
 body[data-page="kip"] {
-  /* 英文小標：SYNAIQ KIP */
+  /* 英文小標：KIP */
   --kip-eyebrow-font: var(--body);        /* 字型 */
   --kip-eyebrow-size: 12px;               /* 大小 */
   --kip-eyebrow-color: var(--kip-olive);   /* 顏色 */
@@ -552,7 +552,7 @@ a:hover {
   color: var(--contact-body-color);
   font-size: var(--contact-body-size);
 }
-/* 頁尾：鑫揚智能科技股份有限公司、公司地址、聯絡與版權 */
+/* 頁尾：星洋智能科技股份有限公司、公司地址、聯絡與版權 */
 footer {
   color: var(--paper);
   font-size: var(--footer-body-size);
@@ -577,7 +577,7 @@ footer {
   }
 }
 @media (max-width: 639px) {
-  /* 頁尾：鑫揚智能科技股份有限公司、公司地址、聯絡與版權 */
+  /* 頁尾：星洋智能科技股份有限公司、公司地址、聯絡與版權 */
   .footer-links {
     font-size: var(--footer-link-size);
   }
@@ -629,7 +629,7 @@ body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navi
 .page-context-label::after {
   color: #a7a79d;
 }
-/* 目錄連結：Wally 數位人、產品畫面、關於 SynaiQ */
+/* 目錄連結：Wally 數位人、產品畫面、關於 tAistro */
 .page-context-links a {
   font-size: var(--nav-context-size);
 }
@@ -642,7 +642,7 @@ body:is([data-page="kip"], [data-page="ems"], [data-page="pvsim"]) .product-navi
   .page-navigation a {
     font-size: var(--nav-text-size);
   }
-  /* 目錄連結：Wally 數位人、產品畫面、關於 SynaiQ */
+  /* 目錄連結：Wally 數位人、產品畫面、關於 tAistro */
   .page-context-links a {
     font-size: var(--nav-context-size);
   }
@@ -1139,7 +1139,7 @@ body[data-page="home"] .ceo-message .editorial-quote blockquote p {
 body[data-page="home"] .ceo-attribution > span:first-child {
   font-size: var(--ceo-name-size);
 }
-/* CEO of Synaiq */
+/* CEO of tAistro */
 body[data-page="home"] .ceo-attribution .ceo-role {
   font: 12px/1.5 var(--body);
   letter-spacing: 0.04em;
@@ -1198,7 +1198,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   color: var(--film-ink);
   font-size: clamp(11px, 1.15vw, 16px);
 }
-/* Demo 上排：SynaiQ／右上 KIP 字標、智慧知識搜尋 */
+/* Demo 上排：tAistro／KIP 介面、智慧知識搜尋 */
 .film-top {
   font-size: 13px;
 }
@@ -1351,7 +1351,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
   .demo-playback button {
     font-size: 11px;
   }
-  /* Demo 上排：SynaiQ／右上 KIP 字標、智慧知識搜尋 */
+  /* Demo 上排：tAistro／KIP 介面、智慧知識搜尋 */
   .film-top {
     font-size: 10px;
   }
@@ -1444,7 +1444,7 @@ body[data-page="home"] .ceo-attribution .ceo-role {
 /* BEGIN TEXT HOME PAPER / 首頁手撕紙邊界 */
 /* END TEXT HOME PAPER */
 /* BEGIN TEXT KIP / 平台頁與 RWD */
-/* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+/* KIP／問得到、答得準、接得上。／首屏說明 */
 body[data-page="kip"] .kip-opening {
   color: var(--ink);
 }
@@ -1605,7 +1605,7 @@ body[data-page="kip"] .kip-capability-list dd {
   font-size: var(--kip-capability-body-size);
 }
 @media (max-width: 999px) {
-  /* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+  /* KIP／問得到、答得準、接得上。／首屏說明 */
   body[data-page="kip"] .kip-opening h1 {
     font-size: var(--kip-title-size);
   }
@@ -1615,7 +1615,7 @@ body[data-page="kip"] .kip-capability-list dd {
   }
 }
 @media (max-width: 699px) {
-  /* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+  /* KIP／問得到、答得準、接得上。／首屏說明 */
   body[data-page="kip"] .kip-opening h1 {
     font-size: var(--kip-title-size);
   }
@@ -1663,7 +1663,7 @@ body[data-page="kip"] .kip-capability-list dd {
     font-size: var(--kip-capability-title-size);
   }
 }
-/* SYNAIQ KIP／問得到、答得準、接得上。／首屏說明 */
+/* KIP／問得到、答得準、接得上。／首屏說明 */
 html:lang(en) body[data-page="kip"] .kip-opening h1 {
   font-size: var(--kip-title-size);
 }
@@ -1738,7 +1738,7 @@ html:lang(en) .editorial-section h2 { line-height: 1.25; }
   :root { --ink-reveal-duration: 0ms; --ink-ripple-duration: 0ms; }
 }
 
-/* Product identity next to the approved Synaiq mark. */
+/* Product label. */
 .product-identity span { font-size: 15px; line-height: 1.5; }
 /* EMS / PVsim product story typography. */
 .energy-product { color: var(--ink); }

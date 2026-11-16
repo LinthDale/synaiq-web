@@ -30,10 +30,10 @@ test('page links and language changes preserve page and section without choosing
       assert.ok(getMessages(locale).common.title[page]);
       const navigation = getMessages(locale).common.navigation;
       const label = page === 'kip'
-        ? (locale === 'zh-Hant' ? 'Synaiq KIP 平台' : 'Synaiq KIP Platform')
+        ? (locale === 'zh-Hant' ? 'KIP 平台' : 'KIP Platform')
         : ({ ems: 'EMS', pvsim: 'PVsim' }[page] ?? navigation[`${page}Page`] ?? navigation[page]);
       // Home deliberately leads with the brand and tagline; every other page leads with its own name.
-      if (page === 'kip') assert.ok(getMessages(locale).common.title[page].startsWith('Synaiq KIP'), `${locale}/${page}`);
+      if (page === 'kip') assert.ok(getMessages(locale).common.title[page].startsWith('KIP'), `${locale}/${page}`);
       else if (page !== 'home') assert.ok(getMessages(locale).common.title[page].startsWith(`${label} — tAistro`), `${locale}/${page}`);
     }
   }

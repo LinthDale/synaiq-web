@@ -41,7 +41,7 @@
     "scroll": "Follow the thread"
   },
   "narrative": {
-    "pretitle": "Synaiq KIP｜A platform for business decisions and reasoning",
+    "pretitle": "KIP｜A platform for business decisions and reasoning",
     "title": [
       "Behind the numbers,",
       "a business story unfolds."
@@ -56,19 +56,19 @@
       "KIP connects documents, reports and experience, retrieves relevant evidence, reasons through possible causes and calculates outcomes from data and assumptions to help teams compare their options.",
       "KIP has no token-based fees, and sensitive data need not be sent to external online models. Use retrieval, reasoning and computation to support business decisions while retaining control of company data."
     ],
-    "action": "Explore Synaiq KIP ↗",
+    "action": "Explore KIP ↗",
     "artAlt": "A hand-drawn illustration of two hands passing knowledge through sheets of paper and fine threads",
     "artNote": "Pass experience to the next pair of hands."
   },
   "products": {
-    "label": "Synaiq KIP business decision interface concept",
+    "label": "KIP business decision interface concept",
     "note": "From evidence to analysis and calculation.",
     "title": [
       "Turn enterprise knowledge",
       "into a basis for business judgment."
     ],
     "screenAlt": "KIP concept comparing three options, expected net benefits and conditional recommendations; not a live calculation or product screenshot",
-    "screenCaption": "Synaiq KIP business decisions / Concept illustration",
+    "screenCaption": "KIP business decisions / Concept illustration",
     "paperLabel": "Business decisions supported by data and computation",
     "paperEyebrow": "DATA & COMPUTATION",
     "paperTitle": [
@@ -103,7 +103,7 @@
     "growthBasis": "2024 share: 5% → Expected 2027 share: 14.5%",
     "respondents": "166 CIOs",
     "spending": "Together, the respondents oversaw $123 billion in annual enterprise IT spending.",
-    "caveat": "These were respondents’ expectations in 2024—not realized results or evidence of Synaiq KIP’s performance.",
+    "caveat": "These were respondents’ expectations in 2024—not realized results or evidence of KIP’s performance.",
     "detailsLabel": "Read the survey context and source",
     "details": "We calculate the implied compound annual growth rate from the reported endpoints: (14.5 ÷ 5)^(1 ÷ 3) − 1 ≈ 42.6%. This measures expected growth in AI hardware's budget share, not growth in total IT budgets or actual spending. It does not imply the same rate in every year. The article describes the rate as roughly 45%, which differs slightly from the calculation using the published endpoints.",
     "sourceLabel": "Investing.com · Reported June 29, 2024 ↗",

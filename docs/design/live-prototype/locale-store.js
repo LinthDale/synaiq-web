@@ -1,4 +1,4 @@
-import { BRAND, PRODUCT_BRAND } from './brand.js';
+import { BRAND } from './brand.js';
 import { DEFAULT_LOCALE, LOCALE_CONFIG, LOCALE_ASSETS } from './locale-config.js';
 import loaders from './locales/generated/loaders.js';
 export { DEFAULT_LOCALE };
@@ -56,5 +56,5 @@ export const loadMessages = async (locale = DEFAULT_LOCALE) => {
 };
 export function getMessages(locale = DEFAULT_LOCALE) {
   const code = resolveLocale(locale), messages = store.get(code);
-  return { ...messages, common: { ...messages.common, assets: LOCALE_ASSETS[code], brand: BRAND, productBrand: PRODUCT_BRAND } };
+  return { ...messages, common: { ...messages.common, assets: LOCALE_ASSETS[code], brand: BRAND } };
 }

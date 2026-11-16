@@ -67,14 +67,14 @@ Demo 共用操作列：五個功能都由 `renderDemoChapters()` 產生三個 `d
 - 摘要只能從該頁**既有的**首屏文案節錄，不新增承諾或數字；`page.html` 的靜態 `description`
   必須與繁中首頁那一句完全相同，`seo-metadata.test.mjs` 會比對。
 - 正規網址一律建在 `https://taistro.com.tw`（`page-metadata.js` 的 `SITE_ORIGIN`），與 `location.origin` 無關；從 www 或版本目錄
-  （`/synaiq-release-*/page.html`）開啟時也指回主網域。繁中首頁是 `https://taistro.com.tw/`，
+  （`/taistro-release-*/page.html`）開啟時也指回主網域。繁中首頁是 `https://taistro.com.tw/`，
   其餘 11 組固定為 `https://taistro.com.tw/?page=<頁>&lang=<語言>`，參數順序不可對調。
 - 案例網址固定為 `https://taistro.com.tw/?page=cases&case=<識別碼>&lang=<語言>`，
   參數順序是**頁面 → 案例 → 語言**，不可對調。
 - 每頁三個 hreflang：`zh-Hant`、`en`、`x-default`（指向繁中）；案例的三個 hreflang 指向同一個案例。
 - 無效或尚未公開的案例識別碼：`robots` 寫 `noindex, nofollow`，並**移除** canonical、hreflang 與
   `og:url`，不改指到總覽——指過去會把打錯的網址併進總覽。回到正常網址時這些標籤會補回來。
-- `robots.txt` **不可** Disallow `/synaiq-release-`：Googlebot 需要版本目錄裡的 JS／CSS 才能算出頁面；
+- `robots.txt` **不可** Disallow 目前的發布目錄：Googlebot 需要版本目錄裡的 JS／CSS 才能算出頁面；
   下架的舊版本由主機路由回 410，不靠 robots 擋。
 - 改動網址規則或新增公開案例後，`sitemap.xml` 必須跟著改：網址數 = 12 + 每個公開案例 2；
   兩邊不一致時 `seo-metadata.test.mjs` 會失敗；該測試寫死的網址清單也要補上新案例。上架由 GitHub Actions 依 `sitemap.xml` 自動封裝，不再修改 `release.mjs`。
@@ -98,7 +98,7 @@ Demo 共用操作列：五個功能都由 `renderDemoChapters()` 產生三個 `d
 同段下面就是手機設定；例如手機小標原本是 `9px`。桌機與手機需要一起調整時，兩處都要改。
 產業觀察使用 `--outlook-growth-size` 調整 +42.6% 主數字，分桌機、899px 以下平板、639px 以下手機設定。字體由 `--outlook-growth-font` 指向內文 Manrope 無襯線字體，字重 500；百分比符號維持數字的 0.38 倍。裝飾箭頭已移除。
 K、I、P 首字母用 `--hero-eyebrow-initial-increase`，自動比當下的小標增加指定大小，手機亦沿用；目前保留你調整的 `4px`。顏色用 `--hero-eyebrow-initial-color: #cca858`，與 Logo 金色一致。兩個設定不會改其他字母。
-首頁英文小標與 KIP 頁的 `SYNAIQ KIP` 已分開，調首頁不會連動 KIP。
+首頁英文小標與 KIP 頁的 `KIP` 已分開，調首頁不會連動 KIP。
 大標題搜尋 `散落的企業文件`，下方說明搜尋 `從一個問題開始`，不需要先猜英文變數名稱。
 
 | 想修改的地方 | `tokens.css` 變數 |
@@ -335,7 +335,7 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 | 畫面上的字 | 在 `tokens.css` 搜尋 |
 |---|---|
-| 上排右側知識智慧平台／Knowledge Platform | `.film-wordmark-label`；左側仍使用品牌原版 SynaiQ，KIP 為獨立字標 |
+| 上排右側知識智慧平台／Knowledge Platform | `.film-wordmark-label`；示意圖左側使用公司 tAistro 字標，產品名為 KIP |
 | 左側最近問題／知識中心 | `.film-sidebar`／`.film-sidebar > button` |
 | 手機對話紀錄／收合 | `.film-mobilebar button`／`.film-sidebar-heading button` |
 | 寄出文字／手繪筆 | `.film-input`／`.film-send`；筆寬 `--demo-send-pen-width` |
@@ -350,14 +350,14 @@ Email 的顯示文字與 `mailto:` 在 `page.html` 的頁尾；「洽談導入�
 
 ### 紙質 Demo 的維護位置
 
-2026-09-11 核准樣稿：黑金外部框架不變；原版 SynaiQ 在左上，KIP 字標與產品名稱在右上（當時為智慧知識搜尋，現已更名為知識智慧平台／Knowledge Platform）。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
+2026-09-11 核准樣稿：黑金外部框架不變；目前左上為 tAistro，產品名稱使用 KIP（當時為智慧知識搜尋，現已更名為知識智慧平台／Knowledge Platform）。標題下緣是手撕紙；側欄採暖灰紙質，左下放小幅對話線稿。對話維持簡潔，只在查看原文時展開帶淡格線、圈註與撕邊的筆記紙。三組動畫共用「寄出／Send＋手繪筆」。
 
 | 調整項目 | 位置 |
 |---|---|
 | 紙面／文字／側欄／對話框／筆記紙顏色 | `tokens.css` 的 `.animated-product`：`--film-paper`／`--film-ink`／`--film-side`／`--film-question-paper`／`--film-note-paper` |
 | 撕痕深度／側欄纖維濃度 | 同段的 `--demo-tear-depth`／`--demo-sidebar-grain` |
 | 頂部與筆記紙的撕邊素材 | `assets/demo-paper-edge.webp`；以遮罩套用紙面顏色，不另疊米色圖片 |
-| KIP 字標／側欄線稿／寄出筆 | `assets/kip-wordmark.png`／`assets/demo-sidebar-dialogues.webp`／`assets/demo-send-pen.webp` |
+| 側欄線稿／寄出筆 | `assets/demo-sidebar-dialogues.webp`／`assets/demo-send-pen.webp` |
 | 圖像顯示、裁切與排列 | `site.css` 的 `.film-kip`／`.film-sidebar-art`／`.film-send-pen`；改大小需一起核對完整圖案，不只改裁切框 |
 | 頂部分隔、側欄、原文面板結構 | `demo-animation.js` 的 `renderChatFilm`／`renderKnowledgeFilm` |
 
@@ -494,7 +494,7 @@ node scripts/check-typography.mjs --output=out/typography-check-current
 
 ## Logo 與靜態產品示意圖
 
-公司 tAistro 與產品 Synaiq KIP 的 Logo 由 `brand.js` 分開管理，沒有 Logo 上傳後台。換固定原檔後仍需同步所有已登錄語言的靜態產品 SVG：
+公司 Logo 由 `brand.js` 管理；產品只標示 KIP 名稱，沒有 Logo 上傳後台。換固定原檔後仍需同步所有已登錄語言的靜態產品 SVG：
 
 ```powershell
 node docs/design/live-prototype/scripts/sync-brand-screens.mjs
@@ -524,7 +524,7 @@ node docs/design/live-prototype/scripts/sync-brand-screens.mjs --check
 | 昱儒真照 | `team/celestine-photo.webp`；完整原構圖，SVG 取景見「實績與團隊頁」 |
 | Dale、Steve 真照 | `team/{dale,steve}-20260624-photo.webp`；保留公司簡報原始人物素材與透明背景，SVG 取景見「實績與團隊頁」 |
 | 東京食品展原照與手繪 | `cases/tokyo-2-scaled.jpg`（1440×2560，兼作總覽封面）／`tokyo-2-sketch.webp`（941×1672）、`cases/tokyo-5.jpg`（1774×2364）／`tokyo-5-sketch.webp`（1086×1449）；來源為舊官網回收的活動照片，配對用於顯影。路徑與配對只在 `cases-data.js` 定義 |
-| 臺南市科技產業論壇原照與手繪 | `cases/tainan-tech-forum-2026-panel.jpg`（1476×1107，4:3，198KB，綜合論談台上；兼作總覽封面與案例主照，`hero.key` 為 `panel`）／`tainan-tech-forum-2026-panel-sketch.webp`（1200×900，169KB）、`cases/tainan-tech-forum-2026-cover.jpg`（2400×1350，16:9，261KB，展區 Synaiq KIP 示範；現場紀錄照片，key 為 `hero`）／`tainan-tech-forum-2026-cover-sketch.webp`（1600×900，228KB）；原照由使用者提供，白底淡褐色手繪以原照作構圖、`ceo-speaking-sketch-v1.webp` 作筆觸參考，由內建 imagegen 生成；配對只在 `cases-data.js` 定義 |
+| 臺南市科技產業論壇原照與手繪 | `cases/tainan-tech-forum-2026-panel.jpg`（1476×1107，4:3，198KB，綜合論談台上；兼作總覽封面與案例主照，`hero.key` 為 `panel`）／`tainan-tech-forum-2026-panel-sketch.webp`（1200×900，169KB）、`cases/tainan-tech-forum-2026-cover.jpg`（2400×1350，16:9，261KB，展區 KIP 示範；現場紀錄照片，key 為 `hero`）／`tainan-tech-forum-2026-cover-sketch.webp`（1600×900，228KB）；原照由使用者提供，白底淡褐色手繪以原照作構圖、`ceo-speaking-sketch-v1.webp` 作筆觸參考，由內建 imagegen 生成；配對只在 `cases-data.js` 定義 |
 | 新案例照片 | 放 `assets/cases/`，檔名含案例識別碼，只用小寫英數、`-`、`.`。橫式封面 2400×1350（16:9）、直式主照長邊 ≥ 1600px，JPG、sRGB、mozjpeg 品質 85、4:2:0，約 200–700KB。總覽保留原始比例，只有宣告比例與原檔不同時才需要 `cover.focus`。手繪選填；有宣告就必須存在並列入白名單，WebP、白底不透明、與配對照片同比例；現有四張長邊 1200–1672px、約 170–290KB |
 | KIP 系統介接插畫 | `kip-connected-work-v1.webp`；白底以 multiply 融合，保留手與文件完整外形 |
 | 聯絡區黑白貓 | `contact-cat-yarn-v1.webp`；深底已寫入圖片，並非透明；改聯絡區背景時需一起確認 |
@@ -555,7 +555,7 @@ CEO quote 只改語言檔，不從歷史筆記還原舊句，也不因改插畫�
 **儲存本機檔案、測試通過或 commit，都不等於正式站已更新。** 推送到 GitHub `main`（或把 PR merge 進 `main`）後，`.github/workflows/hostinger.yml` 會自動測試、封裝、部署、清兩個網域的 CDN 快取並加密備份；只推 Azure（`origin`）不會觸發。日常步驟見 [官網更新 README](../../operations/WEBSITE-UPDATE-README.md)，CI 細節、失敗與回退見 [CI/CD 說明](../../operations/hostinger-cicd.md)。`npm run build` 產生的 Astro `dist/` 不是上架包。
 
 - 觸發範圍：`docs/design/live-prototype/`、`public/brand/`、`scripts/hostinger/`、workflow 與 `package.json`／`package-lock.json`。本目錄的 `README.md` 與本指引也在範圍內，只改文件推上去同樣會跑一次部署。
-- 每次部署建立新目錄 `public_html/synaiq-release-ci-<run_id>-<attempt>/`，再由主機 `.htaccess` 切換入口，主機私有維護入口 `00-SYNAIQ-START-HERE.txt` 也由 CI 同步。現行目錄以 `.htaccess` 與 Actions summary 為準。
+- 每次部署建立新目錄 `public_html/taistro-release-ci-<run_id>-<attempt>/`，再由主機 `.htaccess` 切換入口，主機私有維護入口 `00-SYNAIQ-START-HERE.txt` 也由 CI 同步。現行目錄以 `.htaccess` 與 Actions summary 為準。
 - 不要在 CI 執行時手動修改主機，也不要手動上傳或覆蓋版本目錄。
 
 | 本機來源 | 封裝結果（`scripts/hostinger/package.mjs`） |

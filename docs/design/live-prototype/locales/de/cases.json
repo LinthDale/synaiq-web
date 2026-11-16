@@ -25,7 +25,7 @@
     "exhibition": "Internationale Messe",
     "multilingual": "Vier Sprachen",
     "digitalHuman": "Digitaler KI-Mensch",
-    "knowledge-platform": "Synaiq KIP Wissensplattform",
+    "knowledge-platform": "KIP Wissensplattform",
     "industry-forum": "Industrieforum",
     "panel": "Podiumsgespräch"
   },
@@ -115,14 +115,14 @@
     "tainan-tech-forum-2026": {
       "name": "Tainan Technology Industry Forum",
       "dateLabel": "SEPTEMBER 2026",
-      "summary": "Auf dem Forum in Tainan zeigte tAistro Synaiq KIP: Unternehmensdokumente, nachvollziehbare Antworten und geteilte Erfahrung verbinden.",
+      "summary": "Auf dem Forum in Tainan zeigte tAistro KIP: Unternehmensdokumente, nachvollziehbare Antworten und geteilte Erfahrung verbinden.",
       "chapter": "02 / TECHNOLOGIE- UND INDUSTRIEFORUM TAINAN",
       "journey": "TAINAN · IN UNSERER HEIMAT",
       "photos": {
         "hero": {
-          "alt": "tAistro-Mitarbeitende zeigen Vertreterinnen und Vertretern der Wirtschaftsentwicklungsbehörde Synaiq KIP auf einem Bildschirm auf dem Forum in Tainan",
+          "alt": "tAistro-Mitarbeitende zeigen Vertreterinnen und Vertretern der Wirtschaftsentwicklungsbehörde KIP auf einem Bildschirm auf dem Forum in Tainan",
           "label": "Einblendung des Ausstellungsfotos aus Tainan pausieren oder fortsetzen",
-          "caption": "16. Sept. 2026 · Ausstellungsfläche, Synaiq KIP-Demo"
+          "caption": "16. Sept. 2026 · Ausstellungsfläche, KIP-Demo"
         },
         "panel": {
           "alt": "Fünf Teilnehmende auf dem Podium; der Vertreter von tAistro spricht ganz rechts",
@@ -138,7 +138,7 @@
         ],
         [
           "Präsentiert",
-          "Synaiq KIP Wissensplattform",
+          "KIP Wissensplattform",
           "Unternehmenswissen mit nachvollziehbaren Quellen"
         ],
         [
@@ -155,7 +155,7 @@
         ],
         "paragraphs": [
           "Das Tainan Technology Industry Forum mit Ausstellung fand am 16. und 17. September 2026 im ICC Tainan statt. Veranstalter war die Wirtschaftsentwicklungsbehörde der Stadt Tainan. Zwei Tage mit Vorträgen und Präsentationen widmeten sich angewandter KI und grüner Energie.",
-          "tAistro präsentierte Synaiq KIP anhand alltäglicher Anforderungen im Wissensmanagement: verstreute Dokumente, aufwendige Suche und schwer weiterzugebende Erfahrung. Synaiq KIP verbindet Dokumentenimport, Verarbeitung und Bibliotheksverwaltung. Teams können in natürlicher Sprache fragen und Quellenverweisen bis zum Original folgen.",
+          "tAistro präsentierte KIP anhand alltäglicher Anforderungen im Wissensmanagement: verstreute Dokumente, aufwendige Suche und schwer weiterzugebende Erfahrung. KIP verbindet Dokumentenimport, Verarbeitung und Bibliotheksverwaltung. Teams können in natürlicher Sprache fragen und Quellenverweisen bis zum Original folgen.",
           "tAistro nahm auch am Podiumsgespräch teil. Unser Beitrag konzentrierte sich auf betriebliches Wissensmanagement: Dokumente und Erfahrung zu durchsuchbarem, nachvollziehbarem und pflegbarem Wissen ordnen, das tägliche Arbeit und Wissenstransfer unterstützt."
         ]
       },
@@ -165,7 +165,7 @@
           "Von gespeicherten Informationen",
           "zu gemeinsamem Wissen."
         ],
-        "intro": "Synaiq KIP konzentriert sich auf das Wissensmanagement im Unternehmen. Dokumentenintegration, Suche und Quellenprüfung helfen Teams, Organisationswissen zu finden, zu verstehen und wiederzuverwenden.",
+        "intro": "KIP konzentriert sich auf das Wissensmanagement im Unternehmen. Dokumentenintegration, Suche und Quellenprüfung helfen Teams, Organisationswissen zu finden, zu verstehen und wiederzuverwenden.",
         "notes": [
           [
             "Dokumente zusammenführen",

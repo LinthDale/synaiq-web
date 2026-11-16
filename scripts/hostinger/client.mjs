@@ -78,7 +78,7 @@ export async function connect(config, token, fetcher = request, { retryDelayMs =
     safePath(path);
     if (path.startsWith(ASSET_ROOT + '/')) {
       assetPath(path); assert.equal(path.split('/')[1].split('.')[0], sha(bytes), 'Shared asset bytes differ from address');
-    } else assert.ok(/^synaiq-release-[a-z0-9-]+\//.test(path) || /^\.ci-candidate-[a-z0-9-]+$/.test(path), 'Upload outside candidate scope');
+    } else assert.ok(/^(?:synaiq|taistro)-release-[a-z0-9-]+\//.test(path) || /^\.ci-candidate-[a-z0-9-]+$/.test(path), 'Upload outside candidate scope');
     assert.equal(await meta(path, true), null, `${path}: already exists`);
     const headers = { ...auth, 'Tus-Resumable': '1.0.0', 'Upload-Offset': '0' };
     const created = await fetcher(url(path, 'tus'), { method: 'POST', headers: { ...headers, 'Upload-Length': String(bytes.length) } });

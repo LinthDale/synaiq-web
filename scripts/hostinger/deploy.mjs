@@ -8,6 +8,7 @@ import { verifyPublicAssets } from './public-assets.mjs';
 import { reviewedRoutingRepair } from './reviewed-routing-repair.mjs';
 import { prerenderPath } from './prerender-routing.mjs';
 
+const isReleaseDirectory = name => /^(?:taistro|synaiq)-release-/.test(name);
 const json = data => Buffer.from(JSON.stringify(data, null, 2));
 export async function save(work, path, bytes) {
   const target = join(work, path); await mkdir(join(target, '..'), { recursive: true });
@@ -132,7 +133,7 @@ export async function audit(client, config, work, repair = null) {
     console.log(`Verified reviewed routing repair: ${repair.id}; host rules preserved`);
   }
   const root = await client.meta();
-  const unmanaged = root.items.filter(i => i.isDir && i.name.startsWith('synaiq-release-') && !state.releases.some(r => r.name === i.name)).map(i => i.name);
+  const unmanaged = root.items.filter(i => i.isDir && isReleaseDirectory(i.name) && !state.releases.some(r => r.name === i.name)).map(i => i.name);
   await save(work, 'audit.json', { active, routingSha256: sha(route), stateSha256: stateBytes ? sha(stateBytes) : null, guideSha256: sha(guide), unmanaged });
   return { route, guide, state, stateBytes, unmanaged };
 }
@@ -237,7 +238,7 @@ export async function prepareCleanup(client, config, work, state) {
   let pool;
   if (state.releases.some(r => r.assets?.length)) {
     const root = await client.meta();
-    const unmanaged = root.items.filter(i => i.isDir && i.name.startsWith('synaiq-release-') && !state.releases.some(r => r.name === i.name)).map(i => i.name);
+    const unmanaged = root.items.filter(i => i.isDir && isReleaseDirectory(i.name) && !state.releases.some(r => r.name === i.name)).map(i => i.name);
     pool = { remove: [], blockedByUnmanaged: unmanaged };
     // Unknown/failed candidates may still need shared assets. Preserve the pool until their
     // directories have been separately reviewed and archived, instead of guessing dependencies.
@@ -284,7 +285,7 @@ export async function prune(client, config, work, state, receipt, id) {
   }
   if (plan.pool?.remove.length) {
     const root = await client.meta();
-    assert.ok(!root.items.some(i => i.isDir && i.name.startsWith('synaiq-release-') && !state.releases.some(r => r.name === i.name)), 'New unmanaged candidate; shared asset cleanup stopped');
+    assert.ok(!root.items.some(i => i.isDir && isReleaseDirectory(i.name) && !state.releases.some(r => r.name === i.name)), 'New unmanaged candidate; shared asset cleanup stopped');
     const referenced = new Set(state.releases.filter(r => plan.keep.includes(r.name)).flatMap(r => (r.assets || []).map(f => f.sharedPath)));
     for (const file of plan.pool.remove) {
       assetPath(file.path); assert.ok(!referenced.has(file.path));

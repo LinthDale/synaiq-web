@@ -25,7 +25,7 @@
     "exhibition": "International exhibition",
     "multilingual": "Four languages",
     "digitalHuman": "AI digital human",
-    "knowledge-platform": "Synaiq KIP Knowledge Platform",
+    "knowledge-platform": "KIP Knowledge Platform",
     "industry-forum": "Industry forum",
     "panel": "Panel"
   },
@@ -115,14 +115,14 @@
     "tainan-tech-forum-2026": {
       "name": "Tainan Technology Industry Forum",
       "dateLabel": "SEPTEMBER 2026",
-      "summary": "At the Tainan forum, tAistro presented Synaiq KIP for enterprise knowledge management: connecting company documents, traceable answers, and shared experience.",
+      "summary": "At the Tainan forum, tAistro presented KIP for enterprise knowledge management: connecting company documents, traceable answers, and shared experience.",
       "chapter": "02 / TAINAN TECHNOLOGY INDUSTRY FORUM",
       "journey": "TAINAN · HOME GROUND",
       "photos": {
         "hero": {
-          "alt": "tAistro staff presenting Synaiq KIP on a screen to Bureau of Economic Development officials on the Tainan forum exhibition floor",
+          "alt": "tAistro staff presenting KIP on a screen to Bureau of Economic Development officials on the Tainan forum exhibition floor",
           "label": "Pause or resume the Tainan forum exhibition photograph reveal",
-          "caption": "16 Sep 2026 · Exhibition floor, Synaiq KIP demo"
+          "caption": "16 Sep 2026 · Exhibition floor, KIP demo"
         },
         "panel": {
           "alt": "Five panelists on the forum stage; the tAistro panelist speaks at far right",
@@ -138,7 +138,7 @@
         ],
         [
           "On show",
-          "Synaiq KIP Knowledge Platform",
+          "KIP Knowledge Platform",
           "Enterprise knowledge management with traceable sources"
         ],
         [
@@ -155,7 +155,7 @@
         ],
         "paragraphs": [
           "The 2026 Tainan Technology Industry Forum and Exhibition, hosted by the Bureau of Economic Development, Tainan City Government, ran on 16–17 September 2026 at ICC Tainan. Two days of talks and showcases focused on applied AI and green energy.",
-          "tAistro presented Synaiq KIP around everyday knowledge management needs: scattered documents, time spent searching, and experience that is difficult to pass on. Synaiq KIP connects document ingestion, parsing, and library management, so teams can ask questions in natural language and follow citations back to the original material.",
+          "tAistro presented KIP around everyday knowledge management needs: scattered documents, time spent searching, and experience that is difficult to pass on. KIP connects document ingestion, parsing, and library management, so teams can ask questions in natural language and follow citations back to the original material.",
           "tAistro also joined the forum panel. Our contribution focused on enterprise knowledge management: organizing documents and experience into knowledge that can be searched, traced, and maintained to support daily work and knowledge transfer."
         ]
       },
@@ -165,7 +165,7 @@
           "From stored information",
           "to shared knowledge."
         ],
-        "intro": "Synaiq KIP focuses on knowledge management within the enterprise. Document integration, search, and source verification help teams find, understand, and reuse what their organization knows.",
+        "intro": "KIP focuses on knowledge management within the enterprise. Document integration, search, and source verification help teams find, understand, and reuse what their organization knows.",
         "notes": [
           [
             "Bring documents together",

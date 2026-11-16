@@ -38,7 +38,7 @@ function first(key, value) {
 const condition = (pattern, negative = false) => `RewriteCond %{QUERY_STRING} ${negative ? '!' : ''}${pattern}`;
 
 export function prerenderRules(release, paths, mode) {
-  assert.match(release, /^synaiq-release-[a-z0-9]+(?:-[a-z0-9]+)*$/);
+  assert.match(release, /^(?:synaiq|taistro)-release-[a-z0-9]+(?:-[a-z0-9]+)*$/);
   assert.ok(['root', 'entry'].includes(mode));
   const entries = paths.filter(path => path.startsWith('prerender/')).map(path => {
     const match = path.match(/^prerender\/([a-z]+)(?:\.([a-z0-9_-]+))?\.([A-Za-z-]+)\.html$/);
@@ -72,11 +72,11 @@ export function prerenderRules(release, paths, mode) {
 }
 
 export function retainPrerenderBlocks(base, current) {
-  return base.replace(/^# BEGIN prerender (entry|root) (synaiq-release-[a-z0-9-]+)\r?\n[\s\S]*?^# END prerender \1 \2\r?\n?/gm,
+  return base.replace(/^# BEGIN prerender (entry|root) ((?:synaiq|taistro)-release-[a-z0-9-]+)\r?\n[\s\S]*?^# END prerender \1 \2\r?\n?/gm,
     (block, mode, release) => release === current ? block : '');
 }
 export function replaceRootPrerender(base, release, paths, eol) {
-  const clean = base.replace(/^# BEGIN prerender root (synaiq-release-[a-z0-9-]+)\r?\n[\s\S]*?^# END prerender root \1\r?\n?/gm, '');
+  const clean = base.replace(/^# BEGIN prerender root ((?:synaiq|taistro)-release-[a-z0-9-]+)\r?\n[\s\S]*?^# END prerender root \1\r?\n?/gm, '');
   const rules = prerenderRules(release, paths, 'root').replaceAll('\n', eol);
   return rules ? clean.replace(/^RewriteRule \^\$ /m, `${rules}${eol}RewriteRule ^$ `) : clean;
 }

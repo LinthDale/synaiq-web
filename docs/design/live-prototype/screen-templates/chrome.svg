@@ -20,7 +20,6 @@
     <svg y="68" width="1440" height="24" viewBox="0 0 1440 24"><g transform="translate(0 24) scale(1 -1)"><rect width="1440" height="24" fill="#f8f8f7" mask="url(#header-tear)"/></g></svg>
   </g>
   <image x="32" y="20" width="166" height="28" href="{{brand.logoDataUrl}}"/>
-  <image id="product-logo" x="{{layout.productLogoX}}" y="22.69" width="139.35" height="23.62" href="{{product.logoDataUrl}}"/>
   <text x="1412.13" y="34.5" text-anchor="end" dominant-baseline="central" font-family="Manrope,Noto Sans TC,Microsoft JhengHei,sans-serif" font-size="13.94" letter-spacing=".557" fill="#282825" textLength="{{layout.productLabelWidth}}" lengthAdjust="spacingAndGlyphs">{{productLabel}}</text>
   <g font-family="Noto Sans TC,Microsoft JhengHei,sans-serif" fill="#282825">
     <rect x="18" y="111" width="194" height="50" rx="6" fill="#282825"/>

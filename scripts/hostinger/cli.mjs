@@ -26,7 +26,7 @@ export async function main() {
   let phase = mode;
   try {
     if (mode === 'package') {
-      const name = `synaiq-release-ci-${id}`;
+      const name = `taistro-release-ci-${id}`;
       const manifest = await packageSite(work, name);
       console.log(`Packaged ${manifest.files.length} files from ${manifest.sourceCommit} into ${work}`);
       return;

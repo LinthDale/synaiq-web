@@ -6,7 +6,7 @@ import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildScreens, renderScreen, resolveBrandAsset, syncBrandScreens } from './scripts/sync-brand-screens.mjs';
 import { screenLocaleSuffixes, screenMessages } from './locale-screens.js';
-import { BRAND, PRODUCT_BRAND } from './brand.js';
+import { BRAND } from './brand.js';
 import { getMessages as readCatalog } from './i18n.js';
 const zhHant = readCatalog('zh-Hant').demo;
 const en = readCatalog('en').demo;
@@ -31,7 +31,7 @@ test('all static product screens use the approved shared paper chrome and curren
     const demo = readCatalog(locale).demo;
     assert.match(source, /id="paper-header"/);
     assert.match(source, /id="sidebar-dialogues"/);
-    assert.match(source, /id="product-logo"/);
+    assert.doesNotMatch(source, /id="product-logo"|synaiq|鑫揚/i);
     assert.match(source, /fill="#e9e6dc"/);
     assert.doesNotMatch(source, /第\s*12\s*頁|page\s*12|保固|warranty|Procurement_Contract/i);
     if (screen === 'decision') {
@@ -60,7 +60,7 @@ test('every configured locale generates both screen assets with the current sing
     const embedded = source.match(/href="data:image\/svg\+xml;base64,([^"]+)"/)?.[1];
     assert.ok(embedded, relativePath);
     assert.deepEqual(Buffer.from(embedded, 'base64'), master, relativePath);
-    assert.ok(source.includes(canonicalLogo(PRODUCT_BRAND.ink).toString('base64')), relativePath);
+    assert.equal((source.match(/data:image\/svg\+xml;base64,/g) || []).length, 1, relativePath);
     assert.equal(read(relativePath).replaceAll('\r\n', '\n'), source.replaceAll('\r\n', '\n'), relativePath);
     assert.match(source, /width="1440" height="900" viewBox="0 0 1440 900"/);
     assert.doesNotMatch(source, /\{\{/);
@@ -89,7 +89,7 @@ test('logo resolution rejects intermediate directory links, inside or outside as
   }
   const prefix = `assets/${basename(fixture)}`;
   assert.throws(() => resolveBrandAsset(`${prefix}/outside-assets/search.svg`), /Logo master must be a local SVG inside assets/);
-  assert.throws(() => resolveBrandAsset(`${prefix}/inside-assets/synaiq-logo-ink.svg`), /Logo master must be a local SVG inside assets/);
+  assert.throws(() => resolveBrandAsset(`${prefix}/inside-assets/taistro-logo-ink.svg`), /Logo master must be a local SVG inside assets/);
 });
 
 test('screen logo source follows brand configuration and refuses non-local or escaping paths', () => {
@@ -135,10 +135,10 @@ test('screen templates escape text and reject missing or unused keys', () => {
 });
 
 test('embedded SVG logos are identical across Windows and Linux line endings', () => {
-  const template = '<svg><image href="{{brand.logoDataUrl}}"/><image href="{{product.logoDataUrl}}"/></svg>';
+  const template = '<svg><image href="{{brand.logoDataUrl}}"/></svg>';
   const lf = Buffer.from('<svg>\n<path d="M0 0L1 1"/>\n</svg>\n');
   const crlf = Buffer.from(lf.toString().replaceAll('\n', '\r\n'));
-  assert.equal(renderScreen(template, {}, crlf, {}, lf), renderScreen(template, {}, lf, {}, crlf));
+  assert.equal(renderScreen(template, {}, crlf), renderScreen(template, {}, lf));
 });
 
 test('the sync command has a read-only check mode and rejects unexpected arguments', () => {

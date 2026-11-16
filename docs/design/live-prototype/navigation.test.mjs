@@ -73,7 +73,7 @@ test('solutions disclosure leads to three internal product stories', () => {
   const products = html.match(/<details class="product-navigation">([\s\S]*?)<\/details>/)?.[1];
   assert.ok(products);
   assert.match(products, /<summary>[\s\S]*navigation\.products/);
-  assert.match(products, /href="\?page=kip" data-page-link="kip">Synaiq KIP/);
+  assert.match(products, /href="\?page=kip" data-page-link="kip">KIP/);
   for (const page of ['ems', 'pvsim']) {
     assert.ok(products.includes(`href="?page=${page}" data-page-link="${page}"`));
   }

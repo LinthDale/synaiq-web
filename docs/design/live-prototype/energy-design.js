@@ -2,7 +2,7 @@ import { getMessages, escapeHtml as e } from './i18n.js';
 import { renderContact } from './shared-design.js';
 import { productScreens, screenPath, renderProductScreens, initProductScreens } from './energy-screens.js?v=20261002-products';
 
-const destinations = Object.freeze({ ems: 'https://synaiq-ai.com/ems/#Monitor', pvsim: 'https://www.pvsim.com.tw/' });
+const destinations = Object.freeze({ ems: '#contact', pvsim: 'https://www.pvsim.com.tw/' });
 
 function stageContent(m, index) {
   const [, question, action, flow] = m.stages[index];
@@ -32,7 +32,7 @@ function renderEnergy(product, { locale = 'zh-Hant', messages = getMessages(loca
         <div class="energy-stage-layout"><div class="energy-stage-art"><ol class="energy-progress" aria-hidden="true">${m.stages.map((_, index) => `<li data-energy-marker="${index}" class="${index === 0 ? 'is-active' : ''}">0${index + 1}</li>`).join('')}</ol></div><div id="energy-stage" class="energy-stage-copy" aria-live="polite" aria-atomic="true">${stageContent(m, 0)}</div></div>
         <p class="energy-demo-note">${e(m.demoNote)}</p>
       </div>
-      <div class="energy-external"><a class="button" href="${destinations[product]}" target="_blank" rel="noopener noreferrer" aria-describedby="energy-external-note">${e(m.external)} <span aria-hidden="true">↗</span></a><p id="energy-external-note">${e(m.externalNote)}</p></div>
+      <div class="energy-external"><a class="button" href="${destinations[product]}"${product === 'pvsim' ? ' target="_blank" rel="noopener noreferrer"' : ''} aria-describedby="energy-external-note">${e(m.external)} <span aria-hidden="true">${product === 'pvsim' ? '↗' : '↓'}</span></a><p id="energy-external-note">${e(m.externalNote)}</p></div>
     </div></section>
     ${renderContact({ ...messages.common, contact: m.contact })}
   </div>`;

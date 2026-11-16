@@ -28,7 +28,7 @@ export async function packageSite(work, name) {
     }
     if (path === 'sitemap.xml') {
       const urls = [...bytes.toString().matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-      assert.ok(urls.length > 0 && urls.every(u => u.startsWith('https://taistro.com.tw/') && !u.includes('synaiq-release-')));
+      assert.ok(urls.length > 0 && urls.every(u => u.startsWith('https://taistro.com.tw/') && !/(?:taistro|synaiq)-release-/.test(u)));
     }
     const documents = path === 'page.html' ? await createPrerenderedPages(original.toString('utf8')) : null;
     if (documents) documents.set('page.html', documents.get('index.html'));

@@ -30,7 +30,7 @@ test('only knowledge citations use the ruled notebook with matching localized an
 });
 
 test('approved artwork is allowlisted without exposing the standalone design mockup', () => {
-  for (const file of ['assets/kip-wordmark.png', 'assets/demo-sidebar-dialogues.webp', 'assets/demo-send-pen.webp']) {
+  for (const file of ['assets/demo-sidebar-dialogues.webp', 'assets/demo-send-pen.webp']) {
     assert.ok(PUBLIC_FILES.some(entry => entry.file === file), file);
   }
   assert.ok(PUBLIC_FILES.every(entry => !/sample-v4|\.md$|\.test\.|\.env/.test(entry.file)));

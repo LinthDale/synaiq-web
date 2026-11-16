@@ -5,7 +5,7 @@
   "pause": "暫停動畫",
   "play": "播放動畫",
   "reducedMotion": "減少動態：靜態展示",
-  "productTitle": "Synaiq KIP 決策輔助",
+  "productTitle": "KIP 決策輔助",
   "productNote": "品牌化介面 · 示例資料",
   "productLabel": "KIP 決策輔助",
   "history": "對話紀錄",
@@ -66,7 +66,7 @@
   ],
   "note": "功能情境示例 · 示例資料 · 非實際連線操作",
   "booth": {
-    "label": "Synaiq KIP 功能動畫展示",
+    "label": "KIP 功能動畫展示",
     "previous": "上一段動畫",
     "next": "下一段動畫",
     "select": "選擇功能動畫",

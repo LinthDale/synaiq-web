@@ -19,7 +19,7 @@ export function assetPath(path) {
   return path;
 }
 export const releaseName = name => {
-  assert.match(name, /^synaiq-release-[a-z0-9]+(?:-[a-z0-9]+)*$/);
+  assert.match(name, /^(?:synaiq|taistro)-release-[a-z0-9]+(?:-[a-z0-9]+)*$/);
   return name;
 };
 export function safePath(path) {
@@ -28,7 +28,7 @@ export function safePath(path) {
   return path;
 }
 export function activeRelease(text) {
-  const matches = [...text.matchAll(/^RewriteRule \^\$ \/(synaiq-release-[a-z0-9-]+)\/index\.html \[L\]\r?$/gm)];
+  const matches = [...text.matchAll(/^RewriteRule \^\$ \/((?:synaiq|taistro)-release-[a-z0-9-]+)\/index\.html \[L\]\r?$/gm)];
   assert.equal(matches.length, 1, 'Expected one known production root rule');
   return releaseName(matches[0][1]);
 }
@@ -86,7 +86,7 @@ export function buildRouting(base, name, paths, assets = []) {
   // Only current and candidate are public. Other host directives remain byte-for-byte intact.
   const lines = retainPrerenderBlocks(base, current).split(eol).filter(line => {
     if (line.startsWith(`RewriteRule ^${ASSET_ROOT}/`)) return false;
-    const match = line.match(/^RewriteRule \^(synaiq-release-[a-z0-9-]+)\//);
+    const match = line.match(/^RewriteRule \^((?:synaiq|taistro)-release-[a-z0-9-]+)\//);
     return !match || match[1] === current;
   });
   const currentAssets = lines.flatMap(line => {

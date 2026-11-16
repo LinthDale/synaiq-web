@@ -1,14 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { BRAND, PRODUCT_BRAND } from './brand.js';
+import { BRAND } from './brand.js';
 
 const read = file => readFileSync(new URL(file, import.meta.url), 'utf8');
 
-test('company artwork is independent from the Synaiq product identity', () => {
+test('company artwork is the approved tAistro identity', () => {
   assert.equal(BRAND.name, 'tAistro');
-  assert.equal(PRODUCT_BRAND.ink, 'assets/synaiq-logo-ink.svg');
-  assert.notEqual(BRAND.ink, PRODUCT_BRAND.ink);
   for (const asset of [BRAND.ink, BRAND.light]) {
     const svg = read(asset);
     assert.match(svg, /viewBox="0 0 374 75"/);
@@ -16,7 +14,6 @@ test('company artwork is independent from the Synaiq product identity', () => {
     assert.doesNotMatch(svg, /<script|<image|<foreignObject|\bon\w+=/i);
   }
   assert.match(read('demo-animation.js'), /messages\.common\.brand\.ink/);
-  assert.match(read('kip-design.js'), /messages\.common\.productBrand\.ink/);
 });
 
 test('site header and footer use the supplied official mark instead of a typographic imitation', () => {
@@ -38,11 +35,4 @@ test('product demonstration uses an image for the same official brand', () => {
     assert.doesNotMatch(svg, /font-family="Georgia,serif">SynaiQ<\/text>/);
     assert.doesNotMatch(svg, /fill="#151515"/);
   }
-});
-
-test('CIS ink variant changes only the approved letter color, preserving vector geometry and gold', () => {
-  const original = read('../../../public/brand/synaiq-logo-light.svg').trim().replace(/\r\n/g, '\n');
-  const ink = read('assets/synaiq-logo-ink.svg').trim().replace(/\r\n/g, '\n');
-  assert.equal(ink, original.replace('fill: #fff;', 'fill: #000;'));
-  assert.doesNotMatch(ink, /<rect|<image/);
 });

@@ -5,7 +5,7 @@
   "pause": "Animation pausieren",
   "play": "Animation abspielen",
   "reducedMotion": "Reduzierte Bewegung: Standbildvorschau",
-  "productTitle": "Synaiq KIP Entscheidungshilfe",
+  "productTitle": "KIP Entscheidungshilfe",
   "productNote": "Gestaltungsstudie · Beispieldaten",
   "productLabel": "KIP Entscheidungshilfe",
   "history": "Gespräche",
@@ -66,7 +66,7 @@
   ],
   "note": "Funktionsbeispiel · Beispieldaten · Keine Live-Verbindung",
   "booth": {
-    "label": "Synaiq KIP-Vorführraum",
+    "label": "KIP-Vorführraum",
     "previous": "Vorherige Animation",
     "next": "Nächste Animation",
     "select": "Funktionsanimation auswählen",

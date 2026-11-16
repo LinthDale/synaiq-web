@@ -30,8 +30,15 @@ test('every sitemap URL supplies its own full content and metadata before JavaSc
       const main = html.match(/<main id="main">([\s\S]*?)<\/main>/)[1];
       assert.doesNotMatch(main, /Synaiq/i);
       assert.match(main, /PVsim/);
-      assert.match(html, />Synaiq KIP<\/a>/, 'Keep the distinct KIP product name');
+      assert.match(html, />KIP<\/a>/, 'Keep the KIP product link');
     }
+  }
+});
+
+test('all public documents present only the current company and product identities', () => {
+  for (const [file, html] of pages) {
+    assert.ok(!/synaiq|鑫揚|鑫扬/i.test(html), file);
+    assert.match(html, />KIP<\/a>/, file);
   }
 });
 
@@ -115,7 +122,7 @@ test('Apache rules match query order, tracking parameters, first duplicate value
 });
 
 test('staging retains old root routes; activation and later releases replace complete route blocks', () => {
-  const old = 'synaiq-release-old', next = 'synaiq-release-next';
+  const old = 'synaiq-release-old', next = 'taistro-release-next';
   const required = [...paths, 'page.html', 'robots.txt', 'sitemap.xml'];
   const base = `RewriteRule ^$ /${old}/index.html [L]\nRewriteRule ^robots\\.txt$ /${old}/robots.txt [L]\nRewriteRule ^sitemap\\.xml$ /${old}/sitemap.xml [L]\n# Only inspected static releases remain public.\nRewriteRule ^${old}/(?:index\\.html|page\\.html)$ - [L]\nRewriteRule ^ - [G,L]\n# Active folder: ${old};\nHeader always set Cache-Control "no-cache, must-revalidate"\n`;
   const first = buildRouting(base, next, required);
@@ -129,10 +136,10 @@ test('staging retains old root routes; activation and later releases replace com
   assert.equal(routedFile(first.preview, '', 'page=pvsim&lang=en'), `/${old}/index.html`);
   assert.equal(routedFile(first.preview, `${next}/index.html`, 'page=pvsim&lang=en'), `/${next}/${prerenderPath('?page=pvsim&lang=en', paths)}`);
   assert.equal(routedFile(first.live, '', 'page=pvsim&lang=en'), `/${next}/${prerenderPath('?page=pvsim&lang=en', paths)}`);
-  const last = buildRouting(first.live, 'synaiq-release-last', required);
+  const last = buildRouting(first.live, 'taistro-release-last', required);
   assert.equal(routedFile(last.preview, '', 'page=pvsim&lang=en'), `/${next}/${prerenderPath('?page=pvsim&lang=en', paths)}`);
-  assert.equal(routedFile(last.live, '', 'page=pvsim&lang=en'), `/synaiq-release-last/${prerenderPath('?page=pvsim&lang=en', paths)}`);
-  const fourth = buildRouting(last.live, 'synaiq-release-fourth', required);
+  assert.equal(routedFile(last.live, '', 'page=pvsim&lang=en'), `/taistro-release-last/${prerenderPath('?page=pvsim&lang=en', paths)}`);
+  const fourth = buildRouting(last.live, 'taistro-release-fourth', required);
   assert.equal((fourth.live.match(/# Generated page document cache policy/g) || []).length, 1);
   assert.ok(!fourth.live.includes(`${next}/`), 'No orphaned RewriteCond blocks from retired entries');
 });

@@ -56,7 +56,7 @@ const TAINAN_TECH_FORUM_2026 = Object.freeze({
       aspect: '16 / 9', kind: 'scene',
     })]),
   }),
-  // Index-matched to press.links in locales/<language>/cases.json; each article names 鑫揚智能 in its text.
+  // Index-matched to press.links in locales/<language>/cases.json.
   media: Object.freeze([
     'https://money.udn.com/money/story/5635/9766564',
     'https://www.setn.com/news/1906433',

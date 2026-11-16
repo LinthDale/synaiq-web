@@ -20,7 +20,7 @@ async function fixture(t) {
   await mkdir(join(folder, 'locales'));
   for (const code of ['zh-Hant', 'en', 'de', 'generated']) await cp(join(source, 'locales', code), join(folder, 'locales', code), { recursive: true });
   await mkdir(join(folder, 'assets'));
-  for (const entry of ['taistro-logo-ink.svg', 'synaiq-logo-ink.svg', 'demo-paper-edge.webp', 'kip-wordmark.png', 'demo-sidebar-dialogues.webp', 'demo-send-pen.webp']) await cp(join(source, 'assets', entry), join(folder, 'assets', entry));
+  for (const entry of ['taistro-logo-ink.svg', 'demo-paper-edge.webp', 'demo-sidebar-dialogues.webp', 'demo-send-pen.webp']) await cp(join(source, 'assets', entry), join(folder, 'assets', entry));
   await cp(join(source, 'page.html'), join(folder, 'page.html'));
   run(folder);
   return folder;

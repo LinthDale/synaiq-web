@@ -41,7 +41,7 @@
     "scroll": "Folgen Sie dem Faden"
   },
   "narrative": {
-    "pretitle": "Synaiq KIP｜Plattform für Unternehmensentscheidungen und logisches Schlussfolgern",
+    "pretitle": "KIP｜Plattform für Unternehmensentscheidungen und logisches Schlussfolgern",
     "title": [
       "Hinter den Zahlen",
       "stecken die Details des Geschäfts."
@@ -56,19 +56,19 @@
       "KIP verbindet Dokumente, Berichte und Erfahrungen, findet relevante Belege, analysiert mögliche Ursachen und berechnet Ergebnisse anhand von Daten und Annahmen, damit Teams ihre Optionen vergleichen können.",
       "KIP erhebt keine tokenbasierten Gebühren. Vertrauliche Daten müssen nicht an externe Online-Modelle übermittelt werden. Recherche, logisches Schlussfolgern und Berechnungen unterstützen Entscheidungen, während das Unternehmen die Kontrolle über seine Daten behält."
     ],
-    "action": "Synaiq KIP kennenlernen ↗",
+    "action": "KIP kennenlernen ↗",
     "artAlt": "Handgezeichnete Darstellung zweier Hände, die Wissen über Papierblätter und feine Fäden weitergeben",
     "artNote": "Erfahrung in die nächsten Hände geben."
   },
   "products": {
-    "label": "Synaiq KIP: Oberflächenkonzept für Unternehmensentscheidungen",
+    "label": "KIP: Oberflächenkonzept für Unternehmensentscheidungen",
     "note": "Von Belegen zu Analyse und Berechnung.",
     "title": [
       "Unternehmenswissen",
       "als Grundlage für Geschäftsentscheidungen."
     ],
     "screenAlt": "KIP-Konzept mit drei Optionen, erwartetem Nettonutzen und bedingten Empfehlungen; keine Live-Berechnung oder Produktaufnahme",
-    "screenCaption": "Synaiq KIP Unternehmensentscheidungen / Konzeptdarstellung",
+    "screenCaption": "KIP Unternehmensentscheidungen / Konzeptdarstellung",
     "paperLabel": "Geschäftsentscheidungen auf Basis von Daten und Berechnungen",
     "paperEyebrow": "DATEN & BERECHNUNGEN",
     "paperTitle": [
@@ -103,7 +103,7 @@
     "growthBasis": "Anteil 2024: 5% → Erwarteter Anteil 2027: 14,5%",
     "respondents": "166 CIOs",
     "spending": "Die Befragten verantworteten zusammen jährliche IT-Ausgaben von 123 Milliarden US-Dollar.",
-    "caveat": "Dies waren Erwartungen aus dem Jahr 2024 – keine bereits erreichten Ergebnisse oder Leistungsnachweise für Synaiq KIP.",
+    "caveat": "Dies waren Erwartungen aus dem Jahr 2024 – keine bereits erreichten Ergebnisse oder Leistungsnachweise für KIP.",
     "detailsLabel": "Hintergrund und Quelle der Umfrage lesen",
     "details": "Die jährliche Wachstumsrate wird hier aus den veröffentlichten Ausgangs- und Endwerten berechnet: (14,5 ÷ 5)^(1 ÷ 3) − 1 ≈ 42,6%. Sie beschreibt das erwartete durchschnittliche Wachstum des KI-Hardware-Budgetanteils, nicht das Wachstum des gesamten IT-Budgets oder tatsächlicher Ausgaben. Eine gleichbleibende Rate in jedem Jahr ist damit nicht zugesagt. Der Artikel nennt näherungsweise 45%, was leicht von der Berechnung anhand der veröffentlichten Werte abweicht.",
     "sourceLabel": "Investing.com · Bericht vom 29. Juni 2024 ↗",

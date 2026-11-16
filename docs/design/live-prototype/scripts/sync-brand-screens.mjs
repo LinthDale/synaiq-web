@@ -6,7 +6,7 @@ import { isAbsolute, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { screenLocaleSuffixes, screenMessages } from '../locale-screens.js';
 import { LOCALE_CONFIG } from '../locale-config.js';
-import { BRAND, PRODUCT_BRAND } from '../brand.js';
+import { BRAND } from '../brand.js';
 
 const root = new URL('../', import.meta.url);
 const screenNames = Object.freeze(['search', 'library', 'decision']);
@@ -34,13 +34,12 @@ export function resolveBrandAsset(assetPath) {
   return target;
 }
 
-export function renderScreen(template, messages, logo, art = {}, productLogo = logo, layout = {}) {
+export function renderScreen(template, messages, logo, art = {}, layout = {}) {
   // Canonical SVG bytes keep embedded logos identical on Windows and Linux.
   const encodeLogo = bytes => Buffer.from(normalize(bytes.toString('utf8'))).toString('base64');
   const used = new Set();
   const source = template.replace(/\{\{([a-zA-Z][a-zA-Z0-9.]*)\}\}/g, (placeholder, key) => {
     if (key === 'brand.logoDataUrl') return `data:image/svg+xml;base64,${encodeLogo(logo)}`;
-    if (key === 'product.logoDataUrl') return `data:image/svg+xml;base64,${encodeLogo(productLogo)}`;
     if (key.startsWith('layout.')) {
       const value = layout[key.slice(7)];
       if (!Number.isFinite(value)) throw new Error(`Missing screen layout value: ${key}`);
@@ -75,10 +74,9 @@ export function renderScreen(template, messages, logo, art = {}, productLogo = l
 
 export function buildScreens() {
   const logo = readFileSync(resolveBrandAsset(BRAND.ink));
-  const productLogo = readFileSync(resolveBrandAsset(PRODUCT_BRAND.ink));
   if (!/<svg\b/.test(logo.toString('utf8'))) throw new Error('The approved ink logo master must be an SVG');
   // Fixed approved local assets only. No remote references or private image paths.
-  const art = Object.fromEntries(Object.entries({ edge: 'demo-paper-edge.webp', kip: 'kip-wordmark.png', dialogues: 'demo-sidebar-dialogues.webp', pen: 'demo-send-pen.webp' }).map(([key, name]) => {
+  const art = Object.fromEntries(Object.entries({ edge: 'demo-paper-edge.webp', dialogues: 'demo-sidebar-dialogues.webp', pen: 'demo-send-pen.webp' }).map(([key, name]) => {
     const path = new URL(`assets/${name}`, root);
     const metadata = lstatSync(path);
     if (!metadata.isFile() || metadata.isSymbolicLink()) throw new Error(`Invalid approved artwork file: ${name}`);
@@ -91,15 +89,12 @@ export function buildScreens() {
   const outputs = [];
   const paths = new Set();
   for (const [locale, suffix] of Object.entries(screenLocaleSuffixes)) {
-    // Match the desktop film header at 1240px, normalized to this 1440px canvas:
-    // 24px right padding, 120px product logo, 11px gap, 12px label.
     // Existing reviewed geometry lives in JSON. New languages get conservative defaults.
     const settings = LOCALE_CONFIG.find(item => item.code === locale).screen;
     const estimatedWidth = [...screenMessages[locale].search.productLabel].reduce((width, character) => width + (/[^\u0000-\u00ff]/.test(character) ? 12 : 7), 0);
     const productLabelWidth = (settings.labelWidth ?? estimatedWidth) * 1440 / 1240;
     const layout = {
       productLabelWidth,
-      productLogoX: (1440 - 24 * 1440 / 1240) - productLabelWidth - (120 + 11) * 1440 / 1240,
       answerLineLength: settings.answerLineLength ?? 76,
       answerUnderlineOffset: settings.answerUnderlineOffset ?? 32,
       answerNoteY: settings.answerNoteY ?? 493,
@@ -112,7 +107,7 @@ export function buildScreens() {
       const relativePath = `assets/kip-${screen}-demo${suffix}.svg`;
       if (paths.has(relativePath)) throw new Error(`Duplicate screen output: ${relativePath}`);
       paths.add(relativePath);
-      outputs.push({ locale, screen, relativePath, source: renderScreen(templates[screen], messages, logo, art, productLogo, layout) });
+      outputs.push({ locale, screen, relativePath, source: renderScreen(templates[screen], messages, logo, art, layout) });
     }
   }
   return outputs;

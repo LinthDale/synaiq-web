@@ -4,7 +4,7 @@ import { renderEms, renderPvsim } from './energy-design.js';
 import { getMessages } from './i18n.js';
 
 for (const [product, render, destination] of [
-  ['ems', renderEms, 'https://synaiq-ai.com/ems/#Monitor'],
+  ['ems', renderEms, '#contact'],
   ['pvsim', renderPvsim, 'https://www.pvsim.com.tw/'],
 ]) for (const locale of ['zh-Hant', 'en']) {
   test(`${product}/${locale} has a story, workflow, capabilities and an explicitly illustrative demo`, () => {
@@ -20,8 +20,10 @@ for (const [product, render, destination] of [
     assert.ok(html.includes('data-screen-enlarge'));
     assert.ok(html.includes(m.demoNote));
     assert.ok(html.includes(m.status));
-    assert.ok(html.indexOf(destination) > html.indexOf('id="proof"'));
-    assert.ok(html.includes(`href="${destination}" target="_blank" rel="noopener noreferrer"`));
+    const cta = html.slice(html.indexOf('class="energy-external"'));
+    assert.ok(cta.includes(`href="${destination}"`));
+    if (product === 'pvsim') assert.ok(cta.includes(`href="${destination}" target="_blank" rel="noopener noreferrer"`));
+    else assert.doesNotMatch(cta, /href="#contact" target=/);
     assert.ok(html.includes('mailto:service@taistro.com.tw'));
     assert.doesNotMatch(html, /<iframe|<form|\son[a-z]+=/);
     if (locale === 'en') assert.doesNotMatch(html, /[\p{Script=Han}]/u);

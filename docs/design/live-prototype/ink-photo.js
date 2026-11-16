@@ -5,7 +5,7 @@ const initialized = new WeakMap();
 
 function imagePath(value) {
   const path = String(value ?? '');
-  if (!path || !['https:', 'http:'].includes(new URL(path, 'https://synaiq.invalid/').protocol)) {
+  if (!path || !['https:', 'http:'].includes(new URL(path, 'https://example.invalid/').protocol)) {
     throw new TypeError('Ink photos require a relative or HTTP image URL');
   }
   return esc(path);

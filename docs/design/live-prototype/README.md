@@ -34,10 +34,10 @@ Demo 排版與操作統一：五個功能都使用畫面下方的共用三段按
 | 排版、RWD 幾何、撕紙邊界 | [site.css](site.css)；搜尋對應 BEGIN 區段 |
 | 首頁文字、CEO quote | [locales/zh-Hant/home.json](locales/zh-Hant/home.json)；搜尋 `ceo:`，繁中、英文、德文分別修改 |
 | KIP 文字／共用導覽、優勢、聯絡、頁尾 | [locales/zh-Hant/kip.json](locales/zh-Hant/kip.json)／[locales/zh-Hant/common.json](locales/zh-Hant/common.json) |
-| EMS／PVsim 敘事頁 | `energy-design.js` 共用版型與六步互動示意；`locales/<語言>/ems.json`／`locales/<語言>/pvsim.json` 維護中英文產品故事、流程、核心能力、示範說明與聯絡文案；外部示範入口位於頁面後段，均需帳號 |
+| EMS／PVsim 敘事頁 | `energy-design.js` 共用版型與六步互動示意；`locales/<語言>/ems.json`／`locales/<語言>/pvsim.json` 維護中英文產品故事、流程、核心能力、示範說明與聯絡文案；頁面後段提供 EMS 示範預約及 PVsim 官網連結 |
 | EMS／PVsim 實際介面截圖 | `energy-screens.js` 維護畫面清單、鍵盤可操作的切換及原圖連結；各 locale 的 `screens` 維護中英圖說。素材來源及 hash 見 [產品畫面紀錄](product-screen-provenance.md)。截圖是示範環境，不是客戶上線實績；PVsim 以場域設計為主軸，屋頂只是本次示範案例。 |
 | PVsim「01 三維場域與配置」互動 | `pvsim-viewer.js` 維護啟用、旋轉／縮放／平移、俯視、配置復位、全場景與截圖備援；中英操作文字在 `locales/<語言>/pvsim.json` 的 `screens.viewer`。模型只在點擊啟用後從官網載入，不連 DGX；素材來源見 [產品畫面紀錄](product-screen-provenance.md)。`npm run build:pvsim-viewer` 重建固定版本 Three.js 靜態模組，`npm run test:pvsim-viewer` 驗證真實渲染與觸控。新增模組及 GLB 都須保留在發布白名單。 |
-| 智慧方案／Solutions 產品選單 | `locales/<語言>/common.json` 的 `navigation.products` 改標籤；`page.html` 維護導覽及頁尾的 Synaiq KIP／EMS／PVsim 連結，`prototype.js` 處理收合與鍵盤操作；三個產品皆連至站內介紹頁。選單圖樣沿用 `assets/taistro-logo-ink.svg` 的兩筆 A 路徑，尺寸由 `site.css` 的 `.product-navigation-chevron` 控制為 11 × 10px，開啟時旋轉 180 度；保留手繪底線。 |
+| 智慧方案／Solutions 產品選單 | `locales/<語言>/common.json` 的 `navigation.products` 改標籤；`page.html` 維護導覽及頁尾的 KIP／EMS／PVsim 連結，`prototype.js` 處理收合與鍵盤操作；三個產品皆連至站內介紹頁。選單圖樣沿用 `assets/taistro-logo-ink.svg` 的兩筆 A 路徑，尺寸由 `site.css` 的 `.product-navigation-chevron` 控制為 11 × 10px，開啟時旋轉 180 度；保留手繪底線。 |
 | 實績總覽文字、各案例故事與圖說 | [locales/zh-Hant/cases.json](locales/zh-Hant/cases.json) 的 `overview`／`tags`／`cases.<識別碼>`，中英同步 |
 | 案例日期、排序、精選、照片路徑、封面取景與報導網址 | [cases-data.js](cases-data.js)；版型在 [cases-design.js](cases-design.js)，不為單一案例改版型 |
 | 新增一筆實績 | 本檔「新增一筆實績」小節；步驟固定，不需改共用版型 |
@@ -83,7 +83,7 @@ npm run dev:design
 
 共用版型不跟著每案重寫；固定七步，順序不要跳：
 
-1. **核對內容**：名稱、日期、場域、合作單位可否公開、SynaiQ 實際提供的內容、照片使用依據。未確認的活動訊息或產品介紹不能直接當成實績。
+1. **核對內容**：名稱、日期、場域、合作單位可否公開、tAistro 實際提供的內容、照片使用依據。未確認的活動訊息或產品介紹不能直接當成實績。
 2. **取固定識別碼**：小寫英數與連字號，例如 `tainan-tech-forum-2026`；一旦發布就不再更動，它是公開網址的一部分。
 3. **加三語文字**：`locales/<語言>/cases.json` 的 `cases.<識別碼>`，繁中、英文、德文都要，欄位與既有案例一致。沒有現場紀錄或報導就整段不寫，不放「待補」。
 4. **加一筆案例設定**：在 `cases-data.js` 新增一個用 `Object.freeze` 凍結的常數，並把它加進 `CASES` 陣列。填 `id`、`published`、`featured`（兩者都是布林；公開案例最多一筆 `featured: true`，目前是東京）、`date`（只寫實際已知精度）、`tags`、`cover`、`hero`，選填 `field`／`media`。`published: false` 的案例不會顯示，也不會進 sitemap。

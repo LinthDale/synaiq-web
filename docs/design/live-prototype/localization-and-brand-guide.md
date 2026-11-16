@@ -96,7 +96,7 @@ npm run test:i18n:browser
 
 KIP 動畫與靜態示意圖共用 demo.json；搜尋示意圖支援德文回答換行。EMS／PVsim 真實截圖、現場照片和新聞截圖保留原圖，只翻譯圖說、替代文字及網站操作介面。
 
-共用品牌分為公司 tAistro 與產品 Synaiq KIP；Logo 路徑在 brand.js。更改 Logo 或示意圖文案後，重跑 sync-brand-screens.mjs，確認六張中英德示意圖一致。照片像素中已有的 Logo 不會自動改變。
+官網品牌為 tAistro；產品一律稱 KIP、EMS、PVsim。公司 Logo 路徑在 brand.js；不要加舊產品字標。更新示意圖後執行 npm run i18n:sync，同步三語九張示意圖；照片須另行檢查。
 
 ## 預覽與發布
 

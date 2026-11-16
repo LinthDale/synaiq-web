@@ -34,12 +34,11 @@ const runtimeFiles = [
   'assets/knowledge-threads-v2.png', 'assets/shared-knowledge-hands-v1.png',
   'assets/torn-letter-edge.svg', 'assets/torn-paper-cotton-v2.webp',
   'assets/ceo-speaking-sketch-v1.webp',
-  'assets/synaiq-logo-ink.svg',
   'assets/taistro-logo-ink.svg', 'assets/taistro-logo-light.svg',
   'assets/kip-connected-work-v1.webp',
   'assets/contact-cat-yarn-v1.webp',
   'assets/investing-cio-20240629.png', 'assets/news-sketch-frame-v2.webp',
-  'assets/kip-wordmark.png', 'assets/demo-paper-edge.webp',
+  'assets/demo-paper-edge.webp',
   'assets/demo-sidebar-dialogues.webp', 'assets/demo-send-pen.webp',
   'assets/team/wilson-sketch.webp', 'assets/team/sunny-sketch.webp',
   'assets/team/leef-sketch.webp', 'assets/team/lou-sketch.webp',
@@ -54,12 +53,10 @@ const runtimeFiles = [
   'assets/cases/tainan-tech-forum-2026-cover-sketch.webp',
   'assets/cases/tainan-tech-forum-2026-panel-sketch.webp',
 ];
-const productFiles = ['synaiq-logo-light.svg'];
 const teamFiles = ['team/wilson-web-1.jpg', 'team/sunny-web-1.1.jpg', 'team/leff-web-1.jpg', 'team/lou-web-1.jpg', 'team/daniel-web-1.jpg'];
 
 export const PUBLIC_FILES = Object.freeze([
   ...runtimeFiles.map(file => Object.freeze({ url: `/live-prototype/${file}`, root: 'prototype', file })),
-  ...productFiles.map(file => Object.freeze({ url: `/brand/${file}`, root: 'brand', file })),
   ...teamFiles.map(file => Object.freeze({ url: `/brand/${file}`, root: 'brand', file })),
 ]);
 
