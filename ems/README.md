@@ -2,6 +2,12 @@
 
 [TaistroEMS 首頁](https://ems.taistro.com.tw/) 會開啟 [3D 廠區總覽](https://ems.taistro.com.tw/ems/#plant)。分頁標題與頁首皆為 `TaistroEMS`。舊的 `#Monitor` 網址仍可用於設備監看。
 
+## 2026-11-17 EMS 字標
+
+公開 Demo 現行靜態版本為 `20261117-taistroems-logo-v1`。3D 廠區、設備監看、灑水控制及舊版監看畫面使用使用者提供的黑色 EMS 字標。分頁名稱為 TaistroEMS。本次更新公開版的 `index.html`、`brand-header.css` 與 `assets/ems-wordmark-03.svg`。本機 4783 示範的頁首來源位於 WSL 的 `services/dajia-twin/ui/shell.html` 及 `operations.css`。舊版監看共用的兩個品牌檔案由 `services/dajia-twin/package-release.mjs` 從 `output/ems-design-preview-20260923/public/` 納入新發布包。
+
+公開版 45 個檔案已由外網 HTTPS 逐一核對，manifest SHA-256 為 `272f3b5b63f02f1916140c418e0d0b7ac02987187ef637c128690c0e774a6b92`。閘道版本收據與前後配置位於 `~/ems-release-ops/20261117-taistroems-logo-v1/`；前版為 `20261117-taistroems-3d-v1`。回退時先核對現行配置雜湊與收據，恢復 `previous.conf` 後執行 Nginx 配置檢查與平滑重載。
+
 ## 2026-11-17 獨立網域
 
 DGX 的 `ems.taistro.com.tw.conf` 提供 HTTPS，靜態首頁使用 `config/nginx/static/taistroems/20261117-taistroems-3d-v1/ems/`；`/ems/api/` 透過原有的受限發布服務存取資料。只有來自新網域的瀏覽器 Origin 會轉為既有服務認得的內部 Origin。登入與操作權限由原服務驗證。更新 3D 廠區時，需將新發布包的公開檔案與 manifest 放在新的閘道版本目錄，再修改此虛擬主機的版本路徑、執行 `nginx -t` 並平滑重載。

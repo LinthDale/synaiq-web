@@ -4,6 +4,12 @@
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
+## 2026-11-17 TaistroEMS 字標與 Demo
+
+[Run 44006492296](https://github.com/LinthDale/synaiq-web/actions/runs/44006492296) 已將 `78ab279d4d921e9fd0b492b6b43e470503e0cd4b` 發布至 `public_html/taistro-release-ci-44006492296-1/`。EMS 產品區、互動示範與三張實際截圖均顯示新的黑色 EMS 字標，公司導覽使用 tAistro。三語頁面各以桌面與手機核對公司及產品標誌、圖集切換、圖說與原圖。截圖來源及雜湊見[產品畫面紀錄](../design/live-prototype/product-screen-provenance.md)，獨立 Demo 版本見 [EMS 發布紀錄](../../ems/README.md)。
+
+正式路由 SHA-256 為 `903416b5a1152bb313be811760c47f9c677bf061e114cfdd6718ee25a99e14da`，前版 `taistro-release-ci-44000600619-2` 的路由為 `d29950e2825c838346ef29c7bd960337838c1d8196577d5205bbba52eaa6540d`。草稿 Release `hostinger-backup-44006492296-1` 保留加密備份及驗收證據。本機紀錄在 `out/ems-logo-20261117/` 與 `out/hostinger-ci/ems-logo-live-20261117/`。
+
 ## 2026-11-17 TaistroEMS 官網產品截圖與灑水控制
 
 [Run 44000600619](https://github.com/LinthDale/synaiq-web/actions/runs/44000600619) 已將 `853d98ca6bf264b4e894de5973390be03da8d76a` 發布到 `public_html/taistro-release-ci-44000600619-2/`。繁中、英文、德文 EMS 頁首採用新版 3D 廠區，圖集另提供設備監看與 A 區灑水面板。核心能力新增 A、B 區高壓清洗與背面噴霧降溫的獨立啟停、控制輸出、模擬回饋與全停。截圖取自示範系統待機狀態，來源檔案與雜湊見[產品畫面紀錄](../design/live-prototype/product-screen-provenance.md)。
