@@ -37,7 +37,7 @@ function renderEnergy(product, destination, { locale = 'zh-Hant', messages = get
   </div>`;
 }
 
-export const renderEms = options => renderEnergy('ems', options?.emsPreviewUrl ?? 'https://ems.taistro.com.tw/ems/#plant', options);
+export const renderEms = options => renderEnergy('ems', options?.emsPreviewUrl ?? 'https://ems.taistro.com.tw/ems/#login', options);
 export const renderPvsim = options => renderEnergy('pvsim', 'https://www.pvsim.com.tw/', options);
 
 export function initEnergy({ locale = 'zh-Hant', messages = getMessages(locale) } = {}) {

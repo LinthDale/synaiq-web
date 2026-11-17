@@ -156,7 +156,7 @@ function send(response, method, status, body, type = 'text/plain; charset=utf-8'
 // machine can open the development twin listening on its loopback interface.
 const localEmsPreview = `<script>
   if (['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname)) {
-    document.body.dataset.emsPreviewUrl = 'http://127.0.0.1:4783/#plant';
+    document.body.dataset.emsPreviewUrl = 'http://127.0.0.1:4783/#login';
   }
 </script>`;
 

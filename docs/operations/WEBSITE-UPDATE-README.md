@@ -12,7 +12,7 @@
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。正式站使用 `public_html/taistro-release-ci-44006492296-1/`，來源 `78ab279d4d921e9fd0b492b6b43e470503e0cd4b`。官網三語的 EMS 按鈕連至 [TaistroEMS 3D 廠區](https://ems.taistro.com.tw/ems/#plant)。產品區與互動示範使用黑色 EMS 字標，3D 廠區、設備監看與灑水截圖皆已同步。發布與回退證據見 [Run 44006492296](https://github.com/LinthDale/synaiq-web/actions/runs/44006492296) 及[部署紀錄](deploy-hostinger.md)。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。正式站使用 `public_html/taistro-release-ci-44006492296-1/`，來源 `78ab279d4d921e9fd0b492b6b43e470503e0cd4b`。官網三語的 EMS 按鈕連至 [TaistroEMS 登入頁](https://ems.taistro.com.tw/ems/#login)，登入後進入 3D 廠區（2026-11-17 起 EMS 全站須登入）。產品區與互動示範使用黑色 EMS 字標，3D 廠區、設備監看與灑水截圖皆已同步。發布與回退證據見 [Run 44006492296](https://github.com/LinthDale/synaiq-web/actions/runs/44006492296) 及[部署紀錄](deploy-hostinger.md)。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 
