@@ -39,7 +39,7 @@ test('all public documents present only the current company and product identiti
   for (const [file, html] of pages) {
     assert.doesNotMatch(html, /synaiq|鑫揚|鑫扬/i, file);
     if (html.includes('data-energy-product="ems"')) {
-      assert.match(html, /href="https:\/\/ems\.taistro\.com\.tw\/ems\/#plant"/, file);
+      assert.match(html, /href="https:\/\/ems\.taistro\.com\.tw\/ems\/#login"/, file);
     }
     assert.match(html, />KIP<\/a>/, file);
   }
