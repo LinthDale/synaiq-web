@@ -82,6 +82,12 @@ DGX 舊 PVsim 登入入口已加 noindex 並修正 robots.txt。Search Console �
 
 保留版本：synaiq-release-ci-41951556292-1、synaiq-release-ci-41944747569-1、synaiq-release-ci-41806595635-1。完整加密備份及證據：草稿 Release hostinger-backup-41951556292-1。路由 SHA-256 2b2786f69b91096cfe7683bbd0a4fc30653385e224a74ffaea53078c83f56855，state SHA-256 f9d72f24c49994ce412e54d49deb9662da51928ced798719232add9d8548720c。本機證據在 out/responsive-background-20261105/，first-* 保留初版與使用者卡頓回饋。
 
+## 2026-11-04 PVsim 主網域連接 WordPress
+
+已將 `pvsim.com.tw` 連接至原 `aquamarine-ibex-708690.hostingersite.com` WordPress，網址列保留正式網域。原空白站先換成 `blue-cobra-562163.hostingersite.com`，使用者確認永久刪除後已移除；唯一預設檔案已下載備份。原 DNS 區域被 Hostinger 更換網域流程移除後，在連接完成的新區域恢復 portal A、DKIM 及 DMARC；最後 API 確認 `portal` 仍為 `114.35.86.211`、TTL 300，WordPress 網站保留、空白站不存在。
+
+操作中誤把產品頁 1860 設為首頁，使用者已自行改回原「01-首頁」626。最後唯讀 HTTPS GET 根網址為 200、無轉址且 page-id-626。另產品頁上層曾從 1511 改成 0（網址 `/pvsim/`），此欄位尚未還原；使用者修正首頁後未再變更頁面，不得將此誤改視為已接受。詳細交接與限制見 [PVsim](auth-handoff.md#pvsim)，備份與完整操作證據在 `out/pvsim-domain-20261104/`。本次不涉及 taistro 官網 release、Git push 或 portal 應用部署。
+
 ## 2026-11-04 共用素材發布流程與未納管清理
 
 依使用者要求改善每次完整上傳的流程，靜態資源改以封裝後內容的 SHA-256 共用儲存；已存在且大小／hash 相同才重用，獨立新檔最多四個並行。保留每版網址、精確公開白名單、語系快取規則、原子切換與回退。三個保留版本都不再引用的素材，需先完成可還原加密備份與刪前重驗才回收；有未納管候選目錄時暫停素材回收。
@@ -108,6 +114,14 @@ DGX 舊 PVsim 登入入口已加 noindex 並修正 robots.txt。Search Console �
 
 本機證據在 `out/mobile-loading-20261104/`：`cleanup-success.log`、`storage-after-cleanup.json`、`transfer-simulation.json`、`storage-host-verification.json`、`storage-live-acceptance.json`、`storage-workflow-final.json`；復原方式見 [CI/CD](hostinger-cicd.md)。
 
+## 2026-11-04 Hibox 通知寄信 SPF 修正（送達待驗證）
+
+使用者回報 `service@taistro.com.tw` 經 Hibox 寄送網站通知，網站沒有顯示錯誤但 Gmail 沒收到。唯讀檢查確認原 SPF 僅包含 `include:_spf.mail.hostinger.com`，缺少 Hibox；依官方設定加入 `include:hibox.hinet.net`，保留原授權及 `~all`。14:32（Asia/Taipei）Hostinger API 驗證及更新回應均為 200，重新讀取確認只有 `@` TXT 的 SPF 內容改變，仍只有一筆 SPF、TTL 3600 秒，include 展開共 4 個 DNS 查詢機制。所有 MX、DKIM、DMARC、auth 與網站記錄保持原值；未進行公司收信搬遷。
+
+14:33 的 Google／Cloudflare 查詢仍有原 SPF 快取（剩餘約 3556 秒），Hostinger 已儲存新值；14:37 重新核對新 SPF 仍在、MX 未變，公開查詢仍為舊 SPF。尚未取得退信、寄送追蹤或實際 Gmail 收件結果，因此只確認 DNS 修正已儲存，不能宣稱寄送問題已解決。使用者後續釐清本次只處理 `@taistro.com.tw` 透過 Hibox 寄信給 Gmail，不進行收信 MX 切換，也不以決定公司信箱搬遷作為修正寄信問題的前置條件。
+
+證據與回復請求在 `out/hibox-spf-20261104/`：`zone-before.json`、`zone-after.json`、`rollback-request.json`、`verification.json`、`public-dns-fresh-query.json`。詳細接續見 [通知寄信](auth-handoff.md#通知寄信)。
+
 ## 2026-11-04 iPhone Chrome 內容載入修正
 
 移除 `page.html` 重複執行 `locale-bootstrap.js` 的 module 入口，保留 modulepreload 並統一由 `prototype.js` 初始化。修正前 WebKit 26.0 在語系載入與頁面載入重疊時會無錯誤地停在「內容載入中」；同一瀏覽器回歸測試已先重現失敗，再驗證修正。
@@ -118,7 +132,25 @@ DGX 舊 PVsim 登入入口已加 noindex 並修正 robots.txt。Search Console �
 
 先前 Run 41778203133 第 1 次執行在上傳前讀取舊版 `frame-022.webp` 時收到 403 而停止；獨立重讀確認 hash 正確、路由未變，才重跑。第 2 次上傳及 staged 52 組檢查通過，但舊首頁檢查以檔名結尾選取，誤用了排序較前的 `auth/index.html` 雜湊，因此回退至原路由。`69637d1` 將啟用前及回退的核對都改為精確選取 `<目前版本>/index.html`，新增有／無巢狀 index 的回歸測試，41 項部署測試通過；沒有放寬雜湊保護。失敗與成功證據分開保留在 `out/mobile-loading-20261104/`，主要檔案為 `failed-deployment-recheck.json`、`live-acceptance.json`、`host-verification.json`、`workflow-final.json` 及兩次加密失敗封存。
 
+## 2026-11-04 PVsim 購買入口交接（尚未部署）
+
+使用者新增 `https://portal.pvsim.com.tw/purchase/`，並指定由工程師建立購買流程。已加入 [auth 與 PVsim 接續文件](auth-handoff.md)，與 `/trial/`、`/download/`、`/form/` 共用既有 portal DNS 及 `114.35.86.211`；本次沒有新增 Hostinger 網站、DNS 或轉址，也沒有發布購買功能。13:58（Asia/Taipei）唯讀檢查確認 Cloudflare DNS 回傳該 IP、正常 HTTPS 驗證成功，但 `/purchase/` 回應 404；證據在 `out/portal-purchase-20261104/inspection.json`。
+
+## 2026-11-04 移除多餘 auth 空白站
+
+依使用者要求，以 Hostinger 子網域刪除 API 移除 `auth.taistro.com.tw` 的本機主機綁定（parent 為 `taistro.com.tw`），回應 200。刪除前確認 `public_html/auth/` 只有 42,559 bytes 的供應商預設 `default.php`（SHA-256 `b379ec4e1a18e7b2daaf905a693cd26d6bb117050e9de0ec29a5076ce67f6bef`），並備份檔案、完整 DNS、網站／子網域清單及官網三個控制檔。
+
+刪除後網站及子網域 API、重新整理的 Websites 清單均不再列出 auth。完整 `taistro.com.tw` DNS 與刪除前相同，`auth` A → `114.35.86.211`／TTL 300 秒；無須重建記錄。Google／Cloudflare 公開 DNS 重新驗證成功，其他網站與官網 `.htaccess`、state、私有維護入口雜湊均不變。Hostinger 保留原 auth 實體目錄，沒有再綁定該網域；本次沒有測試外部認證程式或更新其 HTTPS 憑證。
+
+證據與可回復的預設頁備份在 `out/auth-hosting-cleanup-20261104/`，成功回應為 `delete-response.json`，最終核對為 `verification.json`。DNS 的管理入口為 Domains → `taistro.com.tw` → DNS / Nameservers → 搜尋 `auth`。
+
 ## 2026-11-03 auth.taistro.com.tw 子網域
+
+使用者後續指定 `114.35.86.211`，因此目前已將 `auth.taistro.com.tw` 改為直接指向該 IP：停用僅 auth 子網域的 Hostinger CDN，將 A 記錄設為 `114.35.86.211`／TTL 300 秒，移除原 Hostinger AAAA 記錄。Cloudflare 公開 DNS 已回傳指定 IP；其他主網域、www、郵件等 DNS 記錄經前後比對保持不變。外部主機提供的憑證目前只有 `synaiq-ai.com`，新網域 HTTPS 尚待工程師設定，不能沿用下方 Hostinger 預設頁的成功驗證結果。
+
+同時要求的 `portal.pvsim.com.tw/trial/`、`/download/`、`/form/` 共用 `portal` A 記錄，已設為 `114.35.86.211`／TTL 300 秒。使用者確認網域在中華電信，並授權交由 Hostinger 管理 DNS。已在現有 Hostinger Business 方案接入空白 `pvsim.com.tw` 網站，未安裝應用程式；中華電信原本沒有名稱伺服器，現已儲存 Hostinger 實際指定的 `pixel.dns-parking.com`、`byte.dns-parking.com`，Google 公開 NS 查詢已確認這兩筆。Hostinger 同步完成後，新增 portal 回應 200，重新讀取確認只有這筆新增、其他 root／www 記錄不變。Cloudflare 公開 DNS 已回傳 `114.35.86.211`；Google A 查詢當時仍有 NXDOMAIN 快取。主機的 HTTPS 憑證與三個功能路徑仍需工程師設定，未修改外部伺服器。記錄在 `out/external-auth-portal-dns-20261103/`，成功結果為 `portal-final-response.json`、`portal-final-zone.json` 與 `portal-public-verification.json`。較早因未同步而失敗的請求與登入逾期過程保留，不能當作最終狀態；本機直接 53 port 查詢出現異常攔截 IP，不作為公開 DNS 依據。
+
+以下保留建立過程：
 
 依使用者最新要求，後續服務入口改用 `https://auth.taistro.com.tw/`。已在 Hostinger 的 `taistro.com.tw` 下建立 `auth` 子網域，根目錄為 `/home/u235694681/domains/synaiq.com/public_html/auth/`。使用獨立目錄，沒有轉址至主官網或 `/auth`。
 
@@ -126,7 +158,7 @@ DNS 自動建立 `auth` ALIAS → `auth.taistro.com.tw.cdn.hstgr.net.`（TTL 300
 
 接續方式見 [auth.taistro.com.tw](auth-handoff.md)。子網域檔案不由官網 CI 的 release 管理；後續可在該目錄部署，或將 `auth` DNS 改指向工程師的服務主機。設定、DNS 前後備份及 HTTPS 證據在 `out/auth-subdomain-20261103/`。
 
-同日較早依原始網址準備的 `/auth` 頁面來源為 `e6f1fff83c56ebcf040a26ba659ced4665b92c8e`，[Run 41592808706](https://github.com/LinthDale/synaiq-web/actions/runs/41592808706) 已通過 test job。15:19 主機觀察到路由切至 `synaiq-release-ci-41592808706-1`，但 deploy job 仍在驗證／收尾，state 與維護入口尚待 CI 更新；此時不能視為整個官網發布完成。沒有中斷主機變更或手動覆寫 CI 控制檔。後續交接使用上述子網域，不使用 `/auth`。
+同日較早依原始網址準備的 `/auth` 頁面來源為 `e6f1fff83c56ebcf040a26ba659ced4665b92c8e`，[Run 41592808706](https://github.com/LinthDale/synaiq-web/actions/runs/41592808706) 的 test／deploy 均已成功。15:37 獨立讀取確認 `.htaccess` 與 state 均為 `synaiq-release-ci-41592808706-1`（339 檔），路由 SHA-256 為 `1a6d1e5df5ac6f750782ee90b726a7b410947a3f4bb2b78e278ccaf27b016ef9`，state 所記雜湊一致；維護入口已更新。保留本次版本及 `41409243321-1`、`41406663947-1`，證據為 `out/auth-entry-inspect-20261103/ci-final-state.json`。另一次獨立完整檢查在拒絕路徑取得 403、而腳本預期 410，因此未宣稱該檢查全數通過。後續交接使用上述子網域，不使用 `/auth`。
 
 ## 2026-11-02 Demo 頂欄修正已上線
 

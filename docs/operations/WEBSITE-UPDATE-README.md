@@ -2,7 +2,13 @@
 
 給工程師及新的 AI session。最後核對：2026-11-17。
 
-2026-11-03 新增 `auth.taistro.com.tw` 子網域，接續方式見 [auth 子網域](auth-handoff.md)。目錄為 `public_html/auth/`，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
+2026-11-03 已將 `auth.taistro.com.tw` 與 `portal.pvsim.com.tw` 以 A 記錄指向 `114.35.86.211`，接續方式見 [auth 與 PVsim](auth-handoff.md)。`pvsim.com.tw` 仍由中華電信註冊，DNS 已委派 Hostinger。服務部署在指定 IP，HTTPS 與功能路徑仍由工程師設定，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
+
+2026-11-04 已移除多餘的 Hostinger auth 子網站，保留 `auth` DNS A → `114.35.86.211`。IP 設定在 Domains → `taistro.com.tw` → DNS / Nameservers，不需要在 Websites 建立空白 auth 站；Google／Cloudflare 公開 DNS 已重新驗證。
+
+同日已將 Hibox 加入 `taistro.com.tw` 的 SPF，保留 Hostinger 授權與原有 MX 收信設定；公開 DNS 快取及實際 Gmail 送達仍待驗證。接續見 [通知寄信](auth-handoff.md#通知寄信)，不應將寄信授權修正視為公司信箱搬遷。
+
+同日 `pvsim.com.tw` 已接到原 aquamarine WordPress，原空白站經使用者確認後刪除，portal A 已恢復為 `114.35.86.211`。首頁由使用者改回「01-首頁」626，HTTPS 根網址已驗證；操作中誤改產品頁上層的狀態與備份見 [PVsim 接續紀錄](auth-handoff.md#pvsim)，不得再把產品頁設為首頁。
 
 ## GitHub 自動部署入口
 
