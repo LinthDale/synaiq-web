@@ -4,6 +4,10 @@
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
+## 2026-11-17 EMS 按鈕改連登入頁
+
+[Run 44039511842](https://github.com/LinthDale/synaiq-web/actions/runs/44039511842) 已將 `2626dfa68bb0720dcae31c216e8b51e7d54bcf35` 發布至 `public_html/taistro-release-ci-44039511842-1/`。EMS 產品頁三語的「進入 TaistroEMS 3D 廠區」改連 `https://ems.taistro.com.tw/ems/#login`，因為 EMS 已改為全站登入（EMS ADR-060），登入後進入 3D 廠區。部署後以 HTTPS 核對 zh-Hant、en、de 三頁，連結都是 `#login`。第一次推送 [Run 44039206273](https://github.com/LinthDale/synaiq-web/actions/runs/44039206273) 因 `prerender.test.mjs` 仍斷言 `#plant`，停在 `test:deploy`，主機沒有任何變更；`20e5e8f` 修正測試後重新發布。前版為 `taistro-release-ci-44006492296-1`；路由雜湊、加密備份及驗收證據保存在本次 Run 的草稿 Release 與 artifact。
+
 ## 2026-11-17 TaistroEMS 字標與 Demo
 
 [Run 44006492296](https://github.com/LinthDale/synaiq-web/actions/runs/44006492296) 已將 `78ab279d4d921e9fd0b492b6b43e470503e0cd4b` 發布至 `public_html/taistro-release-ci-44006492296-1/`。EMS 產品區、互動示範與三張實際截圖均顯示新的黑色 EMS 字標，公司導覽使用 tAistro。三語頁面各以桌面與手機核對公司及產品標誌、圖集切換、圖說與原圖。截圖來源及雜湊見[產品畫面紀錄](../design/live-prototype/product-screen-provenance.md)，獨立 Demo 版本見 [EMS 發布紀錄](../../ems/README.md)。
