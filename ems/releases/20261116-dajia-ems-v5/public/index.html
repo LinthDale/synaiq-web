@@ -1,0 +1,235 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>大甲工務段 EMS · 能源管理系統</title><style>body{margin:0;background:#faf9f4}</style></head><body><div id="factory-twin" lang="zh-Hant">
+<style>
+#factory-twin{color-scheme:light;--ink:#163831;--muted:#52685f;--line:#d6ddd4;--paper:#faf9f4;--teal:#175441;--mint:#d4e7ad;display:block;background:var(--paper);color:var(--ink);font:15px/1.48 "Microsoft JhengHei","Noto Sans TC",Arial,sans-serif;isolation:isolate}
+#factory-twin *{box-sizing:border-box}#factory-twin [hidden]{display:none!important}
+#factory-twin button,#factory-twin select{font:inherit;color:inherit}#factory-twin button{cursor:pointer}#factory-twin button:focus-visible,#factory-twin select:focus-visible{outline:3px solid #b36518;outline-offset:2px}
+#factory-twin header{background:#143832;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px clamp(12px,2.1vw,32px);flex-wrap:wrap}
+#factory-twin .brand{display:flex;align-items:center;gap:12px}#factory-twin .brand strong{font:700 25px/1 Arial;color:#d1e8a1;letter-spacing:-.065em;padding-right:12px;border-right:1px solid #617b6b}#factory-twin .env{color:#f1ddac;font-size:13px;white-space:nowrap}#factory-twin .env:before{content:"";display:inline-block;background:#e8bd68;border-radius:50%;width:8px;height:8px;margin-right:6px}
+#factory-twin main{padding:clamp(12px,1.8vw,26px);max-width:1560px;margin:auto}
+#factory-twin h2,#factory-twin h3,#factory-twin p,#factory-twin figure{margin:0}
+#factory-twin .top{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap;margin-bottom:13px}#factory-twin .kicker,#factory-twin .tag{color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.095em}
+#factory-twin h2{font-size:clamp(25px,3vw,38px);letter-spacing:-.04em;line-height:1.25;margin-top:2px}#factory-twin h3{font-size:clamp(21px,2.1vw,29px);line-height:1.35;margin:2px 0 11px}
+#factory-twin .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(224px,25%);gap:clamp(14px,2vw,26px);align-items:start}
+#factory-twin .stage{position:relative;overflow:hidden;border-radius:5px;background:#e9e8df;width:100%;height:clamp(370px,46vw,695px)}
+#factory-twin .stage canvas{width:100%;height:100%;display:block;touch-action:none;outline:none}
+#factory-twin .overlay{position:absolute;inset:0;pointer-events:none}#factory-twin .pin{position:absolute;pointer-events:auto;display:flex;align-items:center;justify-content:center;background:transparent;border:0;min-width:44px;min-height:44px;transform:translate(-50%,-100%);padding:0}
+#factory-twin .pin span{display:block;font:700 12px/1.25 Arial;letter-spacing:.035em;color:#fffef5;background:#225e4e;border:1px solid #f3f5e7;box-shadow:0 2px 6px #20372e30;border-radius:12px;padding:4px 7px;white-space:nowrap}#factory-twin .pin span:after{position:absolute;content:"";width:1px;height:9px;background:#264d41;top:calc(50% + 10px);left:50%}
+#factory-twin .pin.ctrl span{background:#fbf3d0;color:#584111;border-color:#bb924b}#factory-twin .pin[aria-pressed=true] span{background:#cced92;color:#1c3c2c;border-color:#345d3d}
+#factory-twin .tools{display:flex;gap:4px;position:absolute;bottom:8px;right:8px;align-items:center}
+#factory-twin .tools button,#factory-twin .minor{border:1px solid #b5c2b8;background:#fafbf3;color:#274c3d;border-radius:5px;padding:6px 10px;min-height:36px;font-size:13px}
+#factory-twin .tools button{min-width:38px;background:#fafbf2f5}#factory-twin .tools .sign{font:600 21px/1 Arial}
+#factory-twin .legend{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px}#factory-twin .legend b{color:#226754}#factory-twin .legend i{font-style:normal;color:#725416}
+#factory-twin .side{border-top:3px solid #254b3c;padding-top:12px;min-width:0}
+#factory-twin .device{display:flex;align-items:center;justify-content:space-between;gap:7px;width:100%;text-align:left;background:transparent;border:0;border-top:1px solid var(--line);padding:12px 2px}
+#factory-twin .device:hover,#factory-twin .minor:hover{background:#e9efdf}#factory-twin .device strong{display:block;font-size:15px}#factory-twin .id{font:12px/1.4 Consolas,monospace;color:var(--muted);letter-spacing:.04em}
+#factory-twin .reading{font:600 17px/1.4 Arial;white-space:nowrap}#factory-twin .reading small{font-size:12px;font-weight:400}#factory-twin .value{font:500 clamp(35px,4vw,53px)/1.13 Arial;letter-spacing:-.05em;margin:3px 0}#factory-twin .value small{font:16px/1.3 Arial;color:var(--muted);letter-spacing:0;margin-left:5px}
+#factory-twin .meta{font-size:13px;color:var(--muted)}#factory-twin .section{padding-top:11px;margin-top:11px;border-top:1px solid var(--line)}#factory-twin .stamp{font-variant-numeric:tabular-nums}#factory-twin .stale{color:#924d13}
+#factory-twin .history{display:flex;gap:8px;margin:7px 0 11px}#factory-twin .history div{border-left:2px solid #a0be9c;padding-left:7px;flex:1}#factory-twin .history time{font:11px/1.4 Consolas,monospace;color:var(--muted);display:block}#factory-twin .history strong{font:600 17px/1.3 Arial}
+#factory-twin .full{width:100%;margin-top:6px}#factory-twin .cta{display:block;width:100%;background:#195240;color:#fff;border:0;border-radius:5px;padding:10px 12px;font-weight:600;margin-top:8px}
+#factory-twin button:disabled{opacity:.6;cursor:default}#factory-twin select{width:100%;padding:6px;border:1px solid #a8bca9;border-radius:4px;background:white;margin-top:4px}
+#factory-twin .note{font-size:14px;margin-top:8px}#factory-twin .fallback{position:absolute;inset:0;display:grid;place-content:center;align-items:center;text-align:center;background:#eae9df;pointer-events:none;z-index:3}
+#factory-twin .fallback img{display:block;width:100%;height:auto;max-height:330px;object-fit:contain}#factory-twin .fallback b{padding:7px 12px}
+@media(max-width:720px){#factory-twin .layout{grid-template-columns:1fr}#factory-twin .stage{height:clamp(270px,72vw,440px)}#factory-twin .tools button,#factory-twin .minor,#factory-twin select,#factory-twin .cta{min-height:44px}#factory-twin .tools{gap:2px;bottom:5px;right:5px}#factory-twin .tools button{min-width:44px;padding:4px 7px}#factory-twin .side{padding-top:8px}#factory-twin .device{padding:9px 1px}#factory-twin header{padding:10px 12px}#factory-twin .top{margin-bottom:9px}#factory-twin .legend{font-size:12px}}
+#factory-twin .pin.waterpin span{font-family:"Microsoft JhengHei",Arial,sans-serif;color:#f3fdff;background:#12617b;border-color:#d5edf3}#factory-twin .pin.activewater span{background:#b7f4fc;color:#0c465b;border-color:#287387}#factory-twin .actions{display:flex;flex-wrap:wrap;gap:5px}#factory-twin .legend .watercolor{color:#12617b}
+@media(max-width:500px){#factory-twin .pin.waterpin span{font-size:10px;padding:3px 4px}}
+#factory-twin .pin.hppin span{background:#99461e;color:#fff6e7;border-color:#fadaad;font-family:inherit}#factory-twin .pin.mistpin span{background:#086d85;color:#efffff;border-color:#a9e5e9;font-family:inherit}#factory-twin .pin.hppin[aria-pressed=true] span,#factory-twin .pin.mistpin[aria-pressed=true] span{outline:2px solid #223f38}
+#factory-twin [data-act=w-wash]{background:#99461e;color:white}#factory-twin [data-act=w-cool]{background:#086d85;color:white;border-color:#086d85}
+#factory-twin .cut-label{display:none;position:absolute;top:11px;left:12px;background:#ffffffd9;color:#304c47;padding:4px 9px;border-radius:4px;font-size:13px}#factory-twin[data-pipeview^=row] .cut-label{display:block}
+#factory-twin [data-act=under],#factory-twin .pipelegend{display:none}#factory-twin[data-pipeview^=row] [data-act=under],#factory-twin[data-pipeview^=row] .pipelegend{display:inline-block}#factory-twin[data-pipeview^=row] .sitelegend{display:none}#factory-twin .pipelegend .hot{color:#a54621}#factory-twin .pipelegend .cold{color:#096e87}
+#factory-twin [data-act=solid]{display:none}#factory-twin[data-pipe-selected$=High] [data-act=solid],#factory-twin[data-pipe-selected$=Low] [data-act=solid]{display:inline-block}
+@media(max-width:520px){#factory-twin .tools{max-width:96%;flex-wrap:wrap;justify-content:flex-end}#factory-twin .tools button{font-size:12px}}
+#factory-twin .water-zone{margin-top:12px;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+#factory-twin .zone-head{display:flex;align-items:center;gap:8px;padding:5px 10px;background:#edf0e8}
+#factory-twin .zone-look{margin-left:auto;background:none;border:0;color:#225846;min-height:32px;font-size:13px}
+#factory-twin .water-zone[data-current=true] .zone-head{background:#dce8d6}
+#factory-twin .water-control{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:7px 10px;border-top:1px solid var(--line)}
+#factory-twin .water-control b,#factory-twin .water-control small{display:block}
+#factory-twin .water-control small{color:var(--muted);font-size:12px}
+#factory-twin .water-control button{border:1px solid #588077;border-radius:5px;background:#f5faf6;color:#194b40;min-width:60px;min-height:36px}
+#factory-twin .water-control button[aria-pressed=true]{background:#235c4e;color:white}
+#factory-twin .water-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:10px 0}
+#factory-twin .water-actions [data-act="w-allstop"]{grid-column:1/-1}
+@media(max-width:720px){#factory-twin .water-control button,#factory-twin .zone-look{min-height:44px}}
+@media(min-width:350px) and (max-width:720px){#factory-twin .water-zones{display:grid;grid-template-columns:1fr 1fr;gap:6px}#factory-twin .water-control{padding:6px}#factory-twin .water-control button{min-width:46px}#factory-twin .zone-head{gap:4px;padding:4px 6px}#factory-twin .zone-look{padding:0;font-size:12px}}
+#factory-twin .landmarks{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:13px;color:var(--muted)}
+#factory-twin .ops-bar{display:flex;align-items:center;gap:24px;padding:0 clamp(16px,3.4vw,54px);min-height:62px;background:#123b38;color:#f5fbf5}
+#factory-twin .ops-brand{display:flex;gap:10px;align-items:center;color:inherit;text-decoration:none;white-space:nowrap}
+#factory-twin .ops-brand b{font:800 26px/1.1 "Arial",sans-serif;letter-spacing:-.06em;color:#d2ed9b}
+#factory-twin .ops-brand span{border-left:1px solid #72938a;padding-left:11px;font-size:14px}
+#factory-twin .ops-nav{display:flex;gap:1px;align-self:stretch;align-items:stretch;margin-left:auto;max-width:100%;overflow-x:auto}
+#factory-twin .ops-nav a{display:flex;align-items:center;padding:0 11px;border-bottom:3px solid transparent;color:#e1ebe5;text-decoration:none;white-space:nowrap;font-size:14px}
+#factory-twin .ops-nav a[aria-current=page]{color:#d5eda3;border-color:#c9e991;background:#1d4843;font-weight:700}
+#factory-twin .ops-nav a:hover{background:#28504a}
+#factory-twin .ops-bar .env{font-size:12px}
+#factory-twin .ops-alarm-frame{width:100%;display:block;border:0;min-height:190px}
+[data-command-error]{color:#973b23;background:#fff2df;padding:10px 14px;border-left:3px solid}
+[data-grid-history]{margin-top:1.2rem}.transfer-scroll{overflow-x:auto}.transfer-scroll table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}.transfer-scroll caption{text-align:left;color:#556b65;margin-bottom:.5rem}.transfer-scroll td,.transfer-scroll th{padding:8px 5px;text-align:left;white-space:nowrap;border-bottom:1px solid #dce3d9}
+.ops-desk{max-width:1390px;margin:auto;padding:28px clamp(16px,3.4vw,54px) 40px}
+#factory-twin .ops-heading,#factory-twin .ops-panel-head,#factory-twin .ops-power-top,#factory-twin .ops-watch-line,#factory-twin .ops-event{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#factory-twin .ops-heading{margin-bottom:18px}
+#factory-twin .ops-heading h1{margin:2px 0 0;font-size:clamp(28px,3vw,41px);line-height:1.15;letter-spacing:-.05em;color:#153b34}
+#factory-twin .ops-site,#factory-twin .ops-panel small,#factory-twin .ops-clock,#factory-twin .ops-last,#factory-twin .ops-select{color:#50685e;font-size:13px}
+#factory-twin .ops-clock{display:grid;gap:2px;text-align:right;font-variant-numeric:tabular-nums}
+#factory-twin .ops-clock span{color:#1d5945;font-weight:bold}
+#factory-twin .ops-over-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr);gap:16px;margin-bottom:16px}
+#factory-twin .ops-power{height:100%;display:flex;flex-direction:column;justify-content:space-between;background:#163f3b;color:#f4f8eb;border-radius:9px;padding:24px clamp(17px,2.5vw,34px)}
+#factory-twin .ops-power-label{font-weight:600;color:#e5efdf}
+#factory-twin .ops-total{margin:4px 0 8px;font:600 clamp(52px,6.3vw,90px)/1.1 "Segoe UI",Arial,sans-serif;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+#factory-twin .ops-total small{font-size:20px;color:#c2d7cb;font-weight:400;letter-spacing:0;margin-left:8px}
+#factory-twin .ops-derived{font-size:12px;color:#c5d9cc;align-self:flex-start;border-bottom:1px solid #52746b;padding-bottom:4px}
+#factory-twin .ops-strip{display:flex;min-height:9px;overflow:hidden;border-radius:3px;background:#43635b;margin:10px 0 17px}
+#factory-twin .ops-color-pv{background:#d2e58c}#factory-twin .ops-color-meter{background:#83c1bd}#factory-twin .ops-color-pcs{background:#e2aa68}
+#factory-twin .ops-sources{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#factory-twin .ops-sources a{color:inherit;text-decoration:none;padding:4px 0}
+#factory-twin .ops-sources a:hover,#factory-twin .ops-panel a:hover{text-decoration:underline}
+#factory-twin .ops-sources a>span{font-size:13px;color:#deebe0;display:flex;align-items:center;gap:6px;white-space:nowrap}
+#factory-twin .ops-dot{width:8px;height:8px;border-radius:100%;display:inline-block}
+#factory-twin .ops-sources b{display:block;font:600 clamp(21px,2.4vw,33px)/1.3 "Segoe UI",Arial,sans-serif;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+#factory-twin .ops-sources small{font-size:12px;font-weight:400;color:#d4e1d5}
+#factory-twin .ops-panel{background:#fffffb;border:1px solid #d0dacf;border-radius:9px;padding:19px clamp(15px,2vw,24px)}
+#factory-twin .ops-panel+.ops-panel{margin-top:16px}
+#factory-twin .ops-panel h3{font-size:20px;letter-spacing:-.035em}
+#factory-twin .ops-panel a,#factory-twin .ops-empty a{color:#205e4b;text-decoration:none}
+#factory-twin .ops-panel-head{flex-wrap:wrap}
+#factory-twin .ops-panel-head>a,#factory-twin .ops-watch-line{font-size:13px}
+#factory-twin .ops-alert{padding:12px 13px;background:#edf2e8;color:#285541;margin:12px 0;border-left:3px solid #739b73}
+#factory-twin .ops-alert.fault{background:#faece0;border-color:#ae582a;color:#823a20}
+#factory-twin .ops-alert b,#factory-twin .ops-alert a,#factory-twin .ops-alert span{display:block}
+#factory-twin .ops-alert a,#factory-twin .ops-alert span{font-size:12px;color:inherit;margin-top:2px}
+#factory-twin .ops-watch-line{padding:6px 0;border-bottom:1px solid #e1e8df}
+#factory-twin .ops-watch-line a{font-weight:600}
+#factory-twin .ops-map-link{display:flex;justify-content:space-between;align-items:center;font-weight:600;margin-top:9px;min-height:30px}
+#factory-twin .ops-plot{margin:9px 0 1px}
+#factory-twin .ops-plot svg{width:100%;height:auto;max-height:207px;display:block}
+#factory-twin .ops-plot text{font:12px "Segoe UI",Arial,sans-serif;fill:#577167}
+#factory-twin .ops-gridline{fill:none;stroke:#d9e3db;stroke-width:.8}#factory-twin .ops-curve{fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+#factory-twin .ops-curve.c0{stroke:#27685c}#factory-twin .ops-curve.c1{stroke:#ba7845}
+#factory-twin .ops-legend,#factory-twin .ops-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#factory-twin .ops-legend{font-size:12px;color:#476458}
+#factory-twin .ops-key{display:inline-block;width:14px;height:3px;vertical-align:middle;background:#27685c;margin-right:5px}#factory-twin .ops-key.k1{background:#ba7845}
+#factory-twin .ops-select select,#factory-twin .ops-btn{font-size:13px;padding:6px 9px;background:#f5f7ee;border:1px solid #acbdb1;border-radius:5px;min-height:34px;color:#234a3d;text-decoration:none}
+#factory-twin .ops-roster>a{display:grid;grid-template-columns:minmax(130px,1fr) minmax(100px,.5fr) 77px 12px;gap:12px;align-items:center;border-top:1px solid #e0e6dd;padding:12px 0}
+#factory-twin .ops-roster>a:first-child{margin-top:14px}
+#factory-twin .ops-roster a b,#factory-twin .ops-roster a small{display:block}
+#factory-twin .ops-roster .ops-deviceval{font-weight:600;font-variant-numeric:tabular-nums}
+#factory-twin .ops-roster .ops-deviceval small{display:inline;font-weight:400}
+#factory-twin .ops-quality{font-size:12px;color:#326653}#factory-twin .ops-quality.attention{color:#96502b}
+#factory-twin .ops-detail-value{font:600 48px/1.2 "Segoe UI",Arial,sans-serif;margin:12px 0}
+#factory-twin .ops-detail-value small{font-size:18px}
+#factory-twin .ops-soc-readings{display:flex;align-items:center;flex-wrap:wrap;gap:16px clamp(22px,5vw,64px);margin:12px 0 18px}
+#factory-twin .ops-soc-readings .ops-detail-value{margin:0}
+#factory-twin .ops-soc-readings strong{display:block;margin:3px 0;color:#205b4c;font-size:24px;font-variant-numeric:tabular-nums}
+#factory-twin .ops-soc-window{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 18px;margin:12px 0;font-variant-numeric:tabular-nums}
+#factory-twin .ops-soc-window b{font-size:20px;color:#205b4c}
+#factory-twin .ops-soc-window span{font-size:14px;color:#50685e}
+#factory-twin .ops-soc-point{fill:#27685c;stroke:#fffffb;stroke-width:1.5}
+#factory-twin .ops-empty{padding:25px 0 12px}#factory-twin .ops-empty p,#factory-twin .ops-event p{color:#51685c;font-size:13px;margin-top:4px}
+#factory-twin .ops-event{border-top:1px solid #dfe6dc;padding:14px 0;align-items:flex-start}
+#factory-twin .ops-event:first-child{margin-top:14px}#factory-twin .ops-event b,#factory-twin .ops-event small{display:block}
+#factory-twin .ops-event>div+div{display:grid;gap:5px;justify-items:end;flex-shrink:0;font-size:13px}
+@media(max-width:850px){#factory-twin .ops-bar{padding-top:10px;gap:6px 12px;flex-wrap:wrap}#factory-twin .ops-nav{order:3;width:100%;margin:0}#factory-twin .ops-nav a{min-height:40px;flex:1;justify-content:center}#factory-twin .ops-bar .env{margin-left:auto}}
+@media(max-width:660px){#factory-twin .ops-desk{padding-top:19px}#factory-twin .ops-heading{margin-bottom:13px}#factory-twin .ops-over-grid{grid-template-columns:1fr;gap:12px}#factory-twin .ops-power{padding:18px}#factory-twin .ops-nav a{font-size:12px;padding:0 5px}#factory-twin .ops-plot svg{min-height:108px}#factory-twin .ops-roster>a{grid-template-columns:minmax(90px,1fr) auto 55px 9px;gap:6px}#factory-twin .ops-panel-head{gap:7px}#factory-twin .ops-bar .ops-brand span{font-size:12px}}
+#factory-twin .ops-scenarios{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 16px}
+#factory-twin .ops-scenarios [aria-pressed=true]{background:#205246;color:#ffffff;border-color:#205246}
+#factory-twin .ops-sim .grid-toggle{color:#7a3824;background:#fff5ed;border-color:#cba18e;font-weight:600}
+#factory-twin .ops-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-top:1px solid #dae4d8;padding-top:12px}
+#factory-twin .ops-facts b{display:block;color:#214a40;font:600 clamp(17px,2vw,24px)/1.5 "Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
+#factory-twin .ops-facts .deficit{color:#a44324}
+#factory-twin .sim-reason{margin:8px 0 1px;font-size:14px;color:#245544}
+#factory-twin .ops-model{font-size:12px;color:#566b61;margin:6px 0 0}
+#factory-twin .ops-model summary{cursor:pointer}
+@media(max-width:520px){#factory-twin .ops-facts{gap:6px}#factory-twin .ops-scenarios{gap:5px}#factory-twin .ops-scenarios .ops-btn{padding-inline:8px}}
+#factory-twin .day-caption{margin:5px 0;color:#516b5e;font-size:13px}
+#factory-twin .day-stats{display:flex;gap:22px;flex-wrap:wrap;margin:13px 0 4px;font-size:13px;color:#405d53}
+#factory-twin .day-stats b{font:600 clamp(22px,2.7vw,36px)/1 "Segoe UI",sans-serif;color:#234c40}
+#factory-twin .day-date,#factory-twin .day-tools label{color:#365548;font-size:13px;white-space:nowrap}
+#factory-twin .day-date input,#factory-twin .day-tools input{font:inherit;color:#204739;background:#fcfdf7;border:1px solid #aec4b5;border-radius:4px;padding:7px 9px}
+#factory-twin .day-tools input{width:5.4em;font-variant-numeric:tabular-nums}
+#factory-twin .day-panel .day-future{fill:#f0f3ed}
+#factory-twin .day-zoom{border-top:1px solid #e0e8dc;margin-top:16px;padding-top:12px}
+#factory-twin .day-tools{display:flex;gap:4px 12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+#factory-twin .day-tools>b{font-size:14px}
+#factory-twin .day-rail{height:36px;margin:5px 12px 0;position:relative;touch-action:none;cursor:crosshair}
+#factory-twin .day-rail:before,#factory-twin .day-band{position:absolute;top:15px;height:7px;border-radius:3px}
+#factory-twin .day-rail:before{content:"";inset-inline:0;background:#d4e0d5}
+#factory-twin .day-band{left:var(--from);right:calc(100% - var(--to));background:#5c8a72;pointer-events:none}
+#factory-twin .day-rail button{position:absolute;top:1px;bottom:1px;min-width:24px;width:24px;background:none;border:0;transform:translateX(-50%);cursor:ew-resize;padding:0}
+#factory-twin .day-rail button:before{content:"";display:block;border:2px solid #376652;background:#fcfdf8;width:9px;height:22px;margin:auto;border-radius:4px}
+#factory-twin .day-rail [data-handle="0"]{left:var(--from)}#factory-twin .day-rail [data-handle="1"]{left:var(--to)}
+#factory-twin .day-ticks{display:flex;justify-content:space-between;font:12px "Segoe UI",sans-serif;color:#536d5f}
+#factory-twin .day-list{margin-top:10px}#factory-twin .day-r{width:100%;display:grid;grid-template-columns:1.65fr 1fr 1fr;gap:5px;border:0;border-top:1px solid #dce5da;border-radius:0;text-align:right;padding:8px 10px;color:#284c3b;background:transparent;font-variant-numeric:tabular-nums}
+#factory-twin .day-r>*:first-child{text-align:left}#factory-twin .day-r[aria-pressed="true"]{background:#e5eddf;font-weight:600}
+#factory-twin .day-list>div{font-size:12px;color:#596f61}
+@media(max-width:520px){#factory-twin .day-r{font-size:12px;padding:9px 2px}#factory-twin .day-rail{height:44px}#factory-twin .day-rail:before,#factory-twin .day-band{top:19px}#factory-twin .day-tools input{padding:6px;width:4.6em}#factory-twin .day-stats{gap:12px}}
+#factory-twin .day-jump{display:flex;align-items:center;gap:6px}
+#factory-twin .day-plot{position:relative;cursor:crosshair;user-select:none;touch-action:pan-y pinch-zoom}
+#factory-twin .day-plot.is-selecting::before{content:"";position:absolute;left:var(--select-left);right:var(--select-right);top:10.38%;bottom:14.75%;background:rgba(44,130,107,.17);border-inline:1px solid #23775f;pointer-events:none}
+#factory-twin .day-plot.has-cursor:after{content:"";position:absolute;left:var(--at);top:10%;bottom:14%;border-left:1px dashed #698575;pointer-events:none}
+#factory-twin .day-probe{min-height:1.5em;font-variant-numeric:tabular-nums}
+#factory-twin .day-modes{display:inline-flex;flex-wrap:wrap;gap:3px;margin:12px 0 4px;padding:3px;border:1px solid #bdcbbf;border-radius:7px;background:#eef2e9}
+#factory-twin .day-modes button{padding:7px 12px;border:0;border-radius:4px;background:transparent;color:#26483b;line-height:1.35}
+#factory-twin .day-modes button[aria-pressed="true"]{background:#215647;color:#fff;font-weight:600}
+#factory-twin .day-peak{stroke:#fffffb;stroke-width:1.5px}#factory-twin .day-peak.mark-0{fill:#27685c}#factory-twin .day-peak.mark-1{fill:#ba7845}
+#factory-twin .day-panel .ops-curve.c2{stroke:#785890}
+#factory-twin .day-panel .ops-key.k2{background:#785890}
+#factory-twin .sim-balance{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:15px;margin:14px 0;border-block:1px solid #dfe6dc;padding:15px 0}
+#factory-twin .sim-balance b{display:block;font-size:clamp(16px,2vw,24px);font-variant-numeric:tabular-nums;color:#214638}
+#factory-twin .sim-transfer{background:#f0f4eb;padding:10px 12px;margin:8px 0;color:#2b5041}
+#factory-twin .sim-return{margin-top:18px}
+#factory-twin .day-zero{stroke:#718476;stroke-width:1.3}
+#factory-twin .storage-mark{fill:#785890}
+#factory-twin .ops-grid-control{display:grid;gap:6px;justify-items:end;align-self:flex-start}
+#factory-twin .ops-grid-control span{font-size:13px;color:#e4f0e8}
+#factory-twin .ops-grid-control .grid-toggle{font-weight:700;background:#fff4e5;color:#65351c;border-color:#d5ab82;min-height:40px}
+#factory-twin .ops-transfer-note,#factory-twin .ops-shortage{margin:12px 0 0;border-top:1px solid #567369;padding-top:9px;font-size:13px}
+#factory-twin .ops-shortage{color:#ffe0b2}
+#factory-twin .day-panel [data-series="loadKW"]{stroke-width:3.4}
+#factory-twin .day-panel [data-series="gridKW"],#factory-twin .day-panel [data-series="gridImport"]{stroke:#12659d;stroke-width:2.5;stroke-dasharray:7 4;stroke-linecap:butt}
+#factory-twin .day-panel .ops-curve.c4{stroke:#985237}
+#factory-twin .day-panel .ops-key.k4{background:#985237}
+#factory-twin .day-panel .ops-key.k3{width:23px;background:repeating-linear-gradient(to right,#12659d 0 7px,transparent 7px 11px)}
+#factory-twin .day-grid-end{fill:#12659d;stroke:#fff;stroke-width:1}
+#factory-twin .day-peak-window,#factory-twin [data-band="peak"]::before{fill:#f7edcf;background:#f7edcf}
+#factory-twin .day-semi-window,#factory-twin [data-band="semi"]::before{fill:#e3eaf7;background:#e3eaf7}
+#factory-twin [data-band="peak"]::before,#factory-twin [data-band="semi"]::before{content:"";display:inline-block;width:14px;height:10px;margin-right:5px}
+#factory-twin .day-outage-band{fill:#f5b9c0;fill-opacity:.9}
+#factory-twin .day-outage-mark{fill:#be2941}
+#factory-twin .day-plot .day-outage-label{fill:#a31e36;font-weight:600}
+#factory-twin [data-outage-legend]::before{content:"";display:inline-block;width:14px;height:10px;margin-right:5px;background:#f5b9c0;border-left:2px solid #be2941}
+
+</style>
+<header class="ops-bar"><a class="ops-brand" href="#overview" aria-label="EMS 營運總覽"><b>EMS</b><span>能源管理系統</span></a>
+<nav class="ops-nav" aria-label="EMS 主選單"><a href="#overview">營運總覽</a><a href="#devices">設備監看</a><a href="#trends">歷史趨勢</a><a href="#events">告警與事件</a><a href="#plant">3D 廠區</a></nav><span class="env">電力模擬</span></header>
+<main class="ops-desk" data-ops-desk></main>
+<main data-twin-main hidden><div class="top"><div><div class="kicker">空拍場景　/　光電規劃 v4</div><h2>大甲工務段・廠區地圖</h2></div><div class="actions"><button type="button" class="minor" data-act="plan">排部俯視</button><button type="button" class="minor" data-act="water">灑水控制</button><button type="button" class="minor" data-act="energy">儲能設備</button><button type="button" class="minor" data-act="stream">暫停模擬資料</button></div></div>
+<div class="layout"><div><div class="stage"><canvas aria-label="可旋轉的三維廠區。按住地面或物件拖曳，可繞按下位置旋轉。滾輪縮放，右鍵平移；也可使用設備清單與視角按鈕。"></canvas><div class="overlay"></div>
+<span class="cut-label">棚架近景</span><div class="tools"><button type="button" data-act="solid">還原板面</button><button type="button" data-act="glass" hidden>顯示實色板面</button><button type="button" data-act="under">查看板背</button><button class="sign" type="button" data-act="in" aria-label="拉近">＋</button><button class="sign" type="button" data-act="out" aria-label="拉遠">−</button><button type="button" data-act="home">全廠視角</button></div>
+<div class="fallback"><img src="data:image/jpeg;base64,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" alt="廠區場景預覽"><b>正在載入 3D 廠區…</b></div></div>
+<div class="legend"><span class="pipelegend"><b class="hot">━</b> 板面上方高壓管</span><span class="pipelegend"><b class="cold">━</b> 板架下方噴霧管</span><span class="sitelegend"><b>A</b>　7 帶 × 2 排 × 9 片</span><span class="sitelegend"><b>B</b>　5 帶 × 2 排 × 12 片</span><span class="sitelegend"><b class="watercolor">━</b> 灑水系統</span><span>按住場景上的點拖曳旋轉 · 滾輪或雙指縮放</span></div>
+<nav class="landmarks" aria-label="場景定位"><span>場景定位</span><button type="button" class="minor" data-key="court">籃球場</button><button type="button" class="minor" data-key="shelter">大型棚架</button><button type="button" class="minor" data-key="garage">車庫與宿舍</button><button type="button" class="minor" data-key="tower">基地台</button><button type="button" class="minor" data-act="energy">儲能區</button></nav></div>
+<section class="side" aria-label="設備與點位"><div class="detail"></div></section></div></main></div>
+
+
+<!-- three.js: The MIT License
+
+Copyright © 2010-2026 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<script src="twin.mjs" defer></script></body></html>

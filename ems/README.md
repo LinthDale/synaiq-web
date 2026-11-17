@@ -16,6 +16,10 @@ DGX 的 `ems.taistro.com.tw.conf` 提供 HTTPS，靜態首頁使用 `config/ngin
 
 ## 本機轉送與舊入口
 
+2026-11-17 主站下一次啟動使用 `20261117-meter-label-v1`。進線總表的顯示名稱改為「實際用電」，累計值顯示為「累計實際用電」。此版承接 `20261116-account-hints-v1`，需要回復時可將 `server-config.json` 的 `release` 指回該版本。
+
+2026-11-16 主站下一次啟動使用 `20261116-dajia-ems-v10`。開啟 `/ems/` 進入 3D 廠區首頁，點設備標籤看即時讀值，再點「放大查看」移動鏡頭。右側呈現即時營運並可展開設備清單，下方當日趨勢可勾選個別曲線、拖曳區間、放大圖表或回到全日。`#overview` 開啟營運總覽與斷復電模擬，`#Alarms` 進入告警與事件，`#Monitor` 進入設備監看並可開啟既有實測。`#dispatch` 從當下 SOC 試算停電期間的供電缺口與期末電量。電力模擬與自動告警使用本機 `ems-dajia-twin` 及 SQLite，水控保護由水控模擬器回報。要還原上一版前端，將 `server-config.json` 的 `release` 設為 `releases/20261116-dajia-ems-v9`，再雙擊 `start-public.cmd`。
+
 - 即時監控與歷史：https://synaiq-ai.com/ems/#Monitor
 - 本機檢查：http://127.0.0.1:4179/ems/#Monitor
 
