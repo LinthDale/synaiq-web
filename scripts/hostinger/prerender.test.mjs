@@ -37,9 +37,10 @@ test('every sitemap URL supplies its own full content and metadata before JavaSc
 
 test('all public documents present only the current company and product identities', () => {
   for (const [file, html] of pages) {
-    // The existing EMS demo destination is the single approved exception.
-    const publicCopy = html.replace('href="https://synaiq-ai.com/ems/#Monitor"', '');
-    assert.ok(!/synaiq|鑫揚|鑫扬/i.test(publicCopy), file);
+    assert.doesNotMatch(html, /synaiq|鑫揚|鑫扬/i, file);
+    if (html.includes('data-energy-product="ems"')) {
+      assert.match(html, /href="https:\/\/ems\.taistro\.com\.tw\/ems\/#plant"/, file);
+    }
     assert.match(html, />KIP<\/a>/, file);
   }
 });

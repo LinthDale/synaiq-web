@@ -43,7 +43,7 @@
   "demoTitle": ["Ein Tag voller Energie.", "Ein vollständiger Managementzyklus."],
   "demoIntro": "Wählen Sie einen Schritt und erfahren Sie, welche Frage er beantwortet und welche Informationen als Nächstes zu prüfen sind.",
   "demoLabel": "Interaktive Ablaufdarstellung · Keine Live-Überwachung",
-  "demoNote": "Diese Darstellung verbindet sich nicht mit Anlagen und steuert keine Geräte. Die EMS-Demo verwendet derzeit Simulatordaten; für den Zugang ist ein Konto erforderlich.",
+  "demoNote": "Dieses Beispiel zeigt den Ablauf des Energiemanagements. Die 3D-Anlagenansicht verwendet simulierte Daten.",
   "stageGroup": "Schritte des Energiemanagements",
   "questionLabel": "Die zentrale Frage",
   "actionLabel": "Der nächste Prüfschritt",
@@ -55,8 +55,8 @@
     ["Ereignisse verfolgen", "Was geschah nach dem Alarm?", "Verknüpfen Sie Alarmzeiten, Anlagenaufzeichnungen und Bearbeitungsstatus, um den Ablauf nachzuvollziehen.", "Alarmereignisse → Bearbeitungsprotokolle"],
     ["Zeitraum auswerten", "Welche Anpassung sollten wir als Nächstes prüfen?", "Führen Sie Verläufe und Ereignisse als Grundlage für die nächste Managementbewertung zusammen.", "Managementberichte → Weitere Verbesserungen"]
   ],
-  "external": "EMS-Demo öffnen",
-  "externalNote": "Öffnet in einem neuen Tab · Demo-Konto erforderlich",
+  "external": "EMS-Anlage in 3D erkunden",
+  "externalNote": "Öffnet in einem neuen Tab",
   "contact": {
     "heading": ["Erzählen Sie uns von Ihrem Standort.", "Gemeinsam planen wir den Energieablauf."],
     "description": ["Beginnen wir mit Anlagen, Datenquellen und Managementzielen.", "Gemeinsam legen wir Demonstration und Umsetzungsumfang fest."],

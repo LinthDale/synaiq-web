@@ -93,6 +93,7 @@ const language = document.getElementById('language');
 language.innerHTML = SUPPORTED_LOCALES.map(item => `<option value="${esc(item.code)}" lang="${esc(item.code)}" ${item.code === locale ? 'selected' : ''}>${esc(item.shortLabel)}</option>`).join('');
 language.addEventListener('change', () => { location.href = localeHref(location.href, language.value); });
 const sections = { advantageSection: () => renderAdvantageSection(common), contact: () => renderContact(common), locale, messages, caseId, caseState };
+if (page === 'ems') sections.emsPreviewUrl = document.body.dataset.emsPreviewUrl;
 document.getElementById('main').innerHTML = pages[page].render(sections);
 // Internal links are rebuilt for the requested language, so the rewrite has to carry the
 // case identifier a card or a back link already chose; dropping it would flatten every card

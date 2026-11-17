@@ -152,6 +152,14 @@ function send(response, method, status, body, type = 'text/plain; charset=utf-8'
   response.end(method === 'HEAD' ? undefined : body);
 }
 
+// Shared preview tunnels use the public EMS destination. Only a browser on this
+// machine can open the development twin listening on its loopback interface.
+const localEmsPreview = `<script>
+  if (['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname)) {
+    document.body.dataset.emsPreviewUrl = 'http://127.0.0.1:4783/#plant';
+  }
+</script>`;
+
 /** Build a read-only handler. Root overrides exist for isolated tests, not URL parameters. */
 export function createPreviewHandler({ prototypeRoot = defaultRoots.prototype, brandRoot = defaultRoots.brand } = {}) {
   const roots = Object.freeze({ prototype: resolve(prototypeRoot), brand: resolve(brandRoot) });
@@ -175,8 +183,9 @@ export function createPreviewHandler({ prototypeRoot = defaultRoots.prototype, b
     const entry = routes.get(pathname);
     if (entry) {
       try {
-        const body = await readPublicFile(roots[entry.root], entry);
+        let body = await readPublicFile(roots[entry.root], entry);
         if (body !== null) {
+          if (entry.file === 'page.html') body = body.toString('utf8').replace('<body>', `<body>${localEmsPreview}`);
           const cacheHeaders = imageCacheHeaders(entry, body);
           const validators = String(request.headers['if-none-match'] ?? '').split(',').map(value => value.trim().replace(/^W\//, ''));
           if (cacheHeaders.ETag && validators.some(value => value === '*' || value === cacheHeaders.ETag)) {

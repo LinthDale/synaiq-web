@@ -99,7 +99,7 @@
   ],
   "demoIntro": "點選步驟，看看每個環節要回答的問題，以及下一步需要核對的資訊。",
   "demoLabel": "互動流程示意 · 非即時監控",
-  "demoNote": "本頁為情境示意，不連接設備或下達控制。EMS 示範環境目前以模擬器資料呈現，查看資料需登入。",
+  "demoNote": "本頁以情境示意說明能源管理流程。3D 廠區使用模擬資料。",
   "stageGroup": "能源管理流程步驟",
   "questionLabel": "此刻要回答的問題",
   "actionLabel": "接著核對",
@@ -141,8 +141,8 @@
       "管理報表 → 下一輪改善"
     ]
   ],
-  "external": "進入 EMS 示範環境",
-  "externalNote": "另開視窗 · 需示範帳號",
+  "external": "進入 EMS 3D 廠區",
+  "externalNote": "另開分頁",
   "contact": {
     "heading": [
       "先說說你的場域，",

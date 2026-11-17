@@ -99,7 +99,7 @@
   ],
   "demoIntro": "Choose a step to see the question it addresses and the information to check next.",
   "demoLabel": "Interactive workflow illustration · Not live monitoring",
-  "demoNote": "This illustration does not connect to or control equipment. The EMS demo currently uses simulator data; viewing it requires an account.",
+  "demoNote": "This example illustrates the energy management workflow. The 3D plant view uses simulated data.",
   "stageGroup": "Energy management workflow steps",
   "questionLabel": "The question to answer",
   "actionLabel": "What to check next",
@@ -141,8 +141,8 @@
       "Management reports → Further improvement"
     ]
   ],
-  "external": "Open the EMS demo",
-  "externalNote": "Opens in a new tab · Demo account required",
+  "external": "Explore the EMS 3D plant",
+  "externalNote": "Opens in a new tab",
   "contact": {
     "heading": [
       "Tell us about your site.",
