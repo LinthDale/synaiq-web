@@ -55,7 +55,7 @@
     ["Ereignisse verfolgen", "Was geschah nach dem Alarm?", "Verknüpfen Sie Alarmzeiten, Anlagenaufzeichnungen und Bearbeitungsstatus, um den Ablauf nachzuvollziehen.", "Alarmereignisse → Bearbeitungsprotokolle"],
     ["Zeitraum auswerten", "Welche Anpassung sollten wir als Nächstes prüfen?", "Führen Sie Verläufe und Ereignisse als Grundlage für die nächste Managementbewertung zusammen.", "Managementberichte → Weitere Verbesserungen"]
   ],
-  "external": "EMS-Anlage in 3D erkunden",
+  "external": "TaistroEMS in 3D erkunden",
   "externalNote": "Öffnet in einem neuen Tab",
   "contact": {
     "heading": ["Erzählen Sie uns von Ihrem Standort.", "Gemeinsam planen wir den Energieablauf."],

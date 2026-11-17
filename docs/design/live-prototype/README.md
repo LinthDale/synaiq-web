@@ -57,7 +57,7 @@ Demo 排版與操作統一：五個功能都使用畫面下方的共用三段按
 
 ## 本機預覽
 
-EMS 產品頁的「進入 EMS 3D 廠區」在本機預覽時開啟 `http://127.0.0.1:4783/#plant`。官網與分享預覽使用規劃中的 `https://ems.taistro.com.tw/ems/#plant`，沿用 EMS 服務的 `/ems/` 路徑。`#Monitor` 會開啟設備監看。2026-11-17 核對時，新子網域尚未解析。發布官網連結前，需確認新網址的 HTTPS 與 EMS 轉送可用，且開啟後能看到新版「3D 廠區總覽」。
+EMS 產品頁的「進入 TaistroEMS 3D 廠區」在本機預覽時開啟 `http://127.0.0.1:4783/#plant`。官網與分享預覽使用 `https://ems.taistro.com.tw/ems/#plant`。直接開啟 `https://ems.taistro.com.tw/` 也會進入 TaistroEMS 的「3D 廠區總覽」。設備監看可從主選單進入，或使用 `#Monitor`。
 
 在 repo 根目錄執行：
 
