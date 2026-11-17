@@ -4,7 +4,7 @@ import { renderPvsimViewer, initPvsimViewer } from './pvsim-viewer.js?v=20261002
 // Captured from the owner's DGX demonstration sites. These are product screens,
 // not commissioned-site evidence. See product-screen-provenance.md.
 export const productScreens = Object.freeze({
-  ems: ['ems-main', 'ems-demand', 'ems-storage'],
+  ems: ['taistroems-plant', 'taistroems-devices', 'taistroems-sprinkler'],
   pvsim: ['pvsim-model', 'pvsim-shading', 'pvsim-generation', 'pvsim-wiring'],
 });
 export const screenPath = name => 'assets/' + name + '-demo.webp';

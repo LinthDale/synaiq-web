@@ -9,7 +9,7 @@ function stageContent(m, index) {
 
 function renderEnergy(product, destination, { locale = 'zh-Hant', messages = getMessages(locale) } = {}) {
   const m = messages[product];
-  const name = product === 'ems' ? 'EMS' : 'PVsim';
+  const name = product === 'ems' ? 'TaistroEMS' : 'PVsim';
   return `<div class="energy-product" data-energy-product="${product}">
     <section class="energy-opening" aria-labelledby="energy-title"><div class="wrap energy-opening-layout">
       <div class="energy-opening-copy">

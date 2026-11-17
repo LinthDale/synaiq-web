@@ -1,25 +1,25 @@
 {
   "screens": {
     "label": "Inside the demo environment",
-    "note": "Actual interface captures · De-identified · Sample data",
+    "note": "TaistroEMS interface in Chinese · Simulated data",
     "group": "EMS product screens",
     "enlarge": "View full-size image",
     "items": [
       [
-        "Energy overview",
-        "Review grid, solar, storage and site load together, with energy composition and demand trends."
+        "3D plant overview",
+        "The map locates the meter, solar arrays, battery and sprinkler system. The side panel shows site load, solar output and battery charge."
       ],
       [
-        "Demand management",
-        "Read demand trends alongside contracted capacity to identify the periods that need attention."
+        "Equipment monitoring",
+        "One list shows four electrical measurement points and sprinkler zones A and B. It displays power readings, battery charge and the reported status of each zone."
       ],
       [
-        "Storage management",
-        "Review storage state, charge and discharge schedules, and operating information."
+        "Sprinkler zone control",
+        "Zone A has separate start and stop controls for high-pressure washing and rear-panel mist cooling. Both are on standby here, with outputs and simulated feedback off."
       ]
     ]
   },
-  "productLabel": "EMS · Energy Management System",
+  "productLabel": "TaistroEMS · Energy Management System",
   "title": [
     "See the energy.",
     "Understand the change.",
@@ -28,7 +28,7 @@
   "intro": "A site’s energy story goes beyond its electricity bill. From live monitoring and demand management to storage dispatch, EMS is designed around a complete management cycle, with site data behind each decision.",
   "status": "Demo environment",
   "cta": "Explore the workflow",
-  "sceneLabel": "From equipment to the whole site",
+  "sceneLabel": "Locate equipment on the 3D map and check site load and solar output",
   "sceneNote": "Actual demo interface",
   "sceneNodes": [
     "Site equipment",
@@ -66,11 +66,15 @@
     "Understand each device.",
     "See the entire site."
   ],
-  "capabilitiesIntro": "Six connected areas define the intended EMS scope. The demo supports workflow discussions; data connections, control conditions and delivery scope are confirmed for each site.",
+  "capabilitiesIntro": "Find equipment on the 3D map to check readings, review trends or open its controls. The sprinkler demo uses simulated equipment. Supported devices and control conditions depend on the site.",
   "capabilities": [
     [
       "Energy overview and live monitoring",
       "Move from a site overview to equipment readings through a shared starting point for daily checks."
+    ],
+    [
+      "Sprinkler monitoring and control",
+      "Start or stop high-pressure washing and rear-panel mist cooling independently in zones A and B. Compare the control output with simulated feedback for each zone, or stop both zones from the main panel."
     ],
     [
       "Historical trends and equipment analysis",

@@ -1,21 +1,21 @@
 {
   "screens": {
     "label": "Einblick in die Demo-Umgebung",
-    "note": "Originalaufnahmen der Oberfläche · Anonymisiert · Beispieldaten",
+    "note": "TaistroEMS-Oberfläche auf Chinesisch · Simulierte Daten",
     "group": "EMS-Produktansichten",
     "enlarge": "Bild in voller Größe ansehen",
     "items": [
-      ["Energieübersicht", "Betrachten Sie Netz, Photovoltaik, Speicher und Standortlast gemeinsam – einschließlich Energiemix und Lastverlauf."],
-      ["Lastmanagement", "Vergleichen Sie den Lastverlauf mit der vertraglich vereinbarten Leistung, um relevante Zeiträume zu erkennen."],
-      ["Speichermanagement", "Prüfen Sie Speicherzustand, Lade- und Entladepläne sowie Betriebsinformationen."]
+      ["3D-Anlagenübersicht", "Die Karte zeigt Zähler, PV-Felder, Batteriespeicher und Sprühanlage. Rechts stehen Standortlast, PV-Leistung und Ladezustand."],
+      ["Geräteüberwachung", "Eine Liste zeigt vier elektrische Messpunkte und die Sprühzonen A und B mit Leistungswerten, Batterieladezustand und gemeldetem Zonenstatus."],
+      ["Steuerung der Sprühzonen", "In Zone A lassen sich Hochdruckreinigung und Sprühnebelkühlung der Modulrückseiten getrennt starten und stoppen. Beide sind hier in Bereitschaft. Ausgänge und simulierte Rückmeldungen stehen auf „Aus“."]
     ]
   },
-  "productLabel": "EMS · Energiemanagementsystem",
+  "productLabel": "TaistroEMS · Energiemanagementsystem",
   "title": ["Energie sichtbar machen.", "Veränderungen verstehen.", "Den Standort steuern."],
   "intro": "Die Energiegeschichte eines Standorts reicht über seine Stromrechnung hinaus. Von der Echtzeitüberwachung über das Lastmanagement bis zum Speichereinsatz bildet EMS einen vollständigen Managementzyklus ab, in dem Standortdaten jede Entscheidung unterstützen.",
   "status": "Demo-Umgebung",
   "cta": "Ablauf entdecken",
-  "sceneLabel": "Vom Gerät zum gesamten Standort",
+  "sceneLabel": "Geräte im 3D-Modell finden und Standortlast und PV-Leistung ablesen",
   "sceneNote": "Originalansicht der Demo",
   "sceneNodes": ["Anlagen am Standort", "Energieverläufe", "Managemententscheidungen"],
   "storyLabel": "Ein ganz normaler Arbeitstag",
@@ -31,9 +31,10 @@
     ["Handeln und überprüfen", "Verbinden Sie Speichereinsatz, Ereignisverfolgung und Berichte in einem Zyklus und prüfen Sie, wie die jeweilige Strategie mit dem Standortbetrieb zusammenhängt."]
   ],
   "capabilitiesTitle": ["Jedes Gerät verstehen.", "Den ganzen Standort sehen."],
-  "capabilitiesIntro": "Sechs verknüpfte Bereiche beschreiben den vorgesehenen EMS-Funktionsumfang. Die Demo unterstützt Gespräche über Abläufe; Datenanbindungen, Steuerungsbedingungen und Lieferumfang werden für jeden Standort vereinbart.",
+  "capabilitiesIntro": "Auf der 3D-Karte können Sie Geräte auswählen, Messwerte und Verläufe prüfen oder die Steuerung öffnen. Die Sprühanlage wird simuliert. Welche Geräte und Steuerfunktionen verfügbar sind, hängt vom Standort ab.",
   "capabilities": [
     ["Energieübersicht und Echtzeitüberwachung", "Wechseln Sie von der Standortübersicht zu einzelnen Messwerten – mit einem gemeinsamen Einstieg für die tägliche Kontrolle."],
+    ["Überwachung und Steuerung der Sprühanlage", "Hochdruckreinigung und Sprühnebelkühlung der Modulrückseiten lassen sich für die Zonen A und B getrennt starten und stoppen. Für jede Zone sind Ausgangszustand und simulierte Rückmeldung sichtbar. Die zentrale Steuerung kann beide Zonen gemeinsam stoppen."],
     ["Historische Verläufe und Anlagenanalyse", "Ordnen Sie Veränderungen zeitlich ein und vergleichen Sie Betriebsphasen mit Originalaufzeichnungen, um Zusammenhänge zu verstehen."],
     ["Lastmanagement", "Betrachten Sie Lastspitzen, Lastverläufe und Standortziele gemeinsam als Grundlage für Ihre Betriebsstrategie."],
     ["Speichermanagement und Einsatzplanung", "Prüfen Sie Speicherzustand, Ladebedarf und Standortnutzung gemeinsam, um umsetzbare Einsatzbedingungen festzulegen."],
