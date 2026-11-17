@@ -1,4 +1,14 @@
-# EMS 公開入口（synaiq-ai.com/ems）
+# TaistroEMS 公開入口
+
+[TaistroEMS 首頁](https://ems.taistro.com.tw/) 會開啟 [3D 廠區總覽](https://ems.taistro.com.tw/ems/#plant)。分頁標題與頁首皆為 `TaistroEMS`。舊的 `#Monitor` 網址仍可用於設備監看。
+
+## 2026-11-17 獨立網域
+
+DGX 的 `ems.taistro.com.tw.conf` 提供 HTTPS，靜態首頁使用 `config/nginx/static/taistroems/20261117-taistroems-3d-v1/ems/`；`/ems/api/` 透過原有的受限發布服務存取資料。只有來自新網域的瀏覽器 Origin 會轉為既有服務認得的內部 Origin。登入與操作權限由原服務驗證。更新 3D 廠區時，需將新發布包的公開檔案與 manifest 放在新的閘道版本目錄，再修改此虛擬主機的版本路徑、執行 `nginx -t` 並平滑重載。
+
+這次 45 個公開檔案均已自 HTTPS 逐檔驗證，manifest SHA-256 為 `d48d3f96e4e6be43b718ffa4671e289d843aaa70e6e663d05c8a72df257ef6a4`。TLS 使用閘道既有的 Certbot webroot 續期，憑證更新後由 `taistroems-cert-reload.path` 觸發 Nginx 配置檢查及平滑重載。Let’s Encrypt 的續期演練與重載測試均通過。日本和美國外網節點通過憑證驗證，確認根網址導向同一新網域，首頁回傳 HTTP 200 與 TaistroEMS 標題。閘道的 `~/ems-release-ops/20261117-taistroems-3d-v1/` 保留本次封裝、配置與續期載入檔，本機驗收資料在 `out/ems-domain-20261117/`。
+
+## 本機轉送與舊入口
 
 - 即時監控與歷史：https://synaiq-ai.com/ems/#Monitor
 - 本機檢查：http://127.0.0.1:4179/ems/#Monitor

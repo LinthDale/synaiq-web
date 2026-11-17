@@ -1,12 +1,12 @@
 # 官網更新與部署 README
 
-給工程師及新的 AI session。最後核對：2026-11-16。
+給工程師及新的 AI session。最後核對：2026-11-17。
 
 2026-11-03 新增 `auth.taistro.com.tw` 子網域，接續方式見 [auth 子網域](auth-handoff.md)。目錄為 `public_html/auth/`，不走下方官網 release 流程；同日 `/auth` 原路徑發布狀態另記於 [部署紀錄](deploy-hostinger.md)。
 
 ## GitHub 自動部署入口
 
-已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。正式站目前使用 `public_html/taistro-release-ci-43798531492-1/`，來源 `1efadf759061010bef3128f92bac585071296c17`。繁中、英文、德文均使用 KIP、EMS 與 PVsim。EMS 示範按鈕保留原有網址。發布與回退證據見 [Run 43798531492](https://github.com/LinthDale/synaiq-web/actions/runs/43798531492) 及[部署紀錄](deploy-hostinger.md)。
+已啟用 [GitHub Actions CI/CD](hostinger-cicd.md)。正式站使用 `public_html/taistro-release-ci-43996191723-1/`，來源 `eb1f2ff057efa3ad0823cbec6cf892d361dcaf92`。官網三語的 EMS 按鈕連至 [TaistroEMS 3D 廠區](https://ems.taistro.com.tw/ems/#plant)。發布與回退證據見 [Run 43996191723](https://github.com/LinthDale/synaiq-web/actions/runs/43996191723) 及[部署紀錄](deploy-hostinger.md)。
 
 本機 **`github` remote 是 GitHub**，`origin` 仍是 Azure DevOps。自動化啟用後，日常網站更新使用 `git push github main`；只推 Azure 不觸發它。下方單次 `out/` 流程保留作歷史操作參考與緊急修復，不要與 CI 同時修改主機。CI 的成功紀錄在 Actions summary、加密草稿 Release 與主機私有 state／維護入口，不由機器提交文件，避免重複觸發。
 

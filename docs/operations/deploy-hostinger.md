@@ -1,8 +1,14 @@
 # Hostinger 官網更新指引
 
-最後更新：2026-11-16（Asia/Taipei）。
+最後更新：2026-11-17（Asia/Taipei）。
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
+
+## 2026-11-17 官網連接 TaistroEMS 3D 廠區
+
+[Run 43996191723](https://github.com/LinthDale/synaiq-web/actions/runs/43996191723) 已將 `eb1f2ff057efa3ad0823cbec6cf892d361dcaf92` 發布到 `public_html/taistro-release-ci-43996191723-1/`。官網 EMS 產品頁的繁中、英文、德文按鈕都開啟 `https://ems.taistro.com.tw/ems/#plant`。正式網站三語各以桌面和手機尺寸實際點入，共六組；均看到 TaistroEMS 頁首及分頁標題、「3D 廠區總覽」與 WebGL 2 畫布。原設備監看可由廠區主選單進入。
+
+新網域的 DNS、憑證續期與發布包記在 [TaistroEMS 公開入口](../../ems/README.md)。Hostinger 新版正式路由 SHA-256 為 `d5e6c8e0810ea4aeb52a18864237bc9433e8b7fd64ed601a559d0e81d9572dd5`。前版 `taistro-release-ci-43798531492-1` 的路由 SHA-256 為 `d0902554f12d25afccaea68dba20efa41af90c293761c3f29997650d7335afde`，已與本次加密備份的原路由逐位元組核對。本次備份及原路由存於草稿 Release `hostinger-backup-43996191723-1`。本機驗收紀錄在 `out/ems-domain-20261117/`，主機路由核對在 `out/hostinger-ci/taistroems-live-20261117/`。
 
 ## 2026-11-16 官網移除 Synaiq 品牌識別
 

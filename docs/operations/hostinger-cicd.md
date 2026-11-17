@@ -2,9 +2,9 @@
 
 設定日期：2026-10-12（Asia/Taipei）。
 
-目前已啟用 `HOSTINGER_DEPLOY_ENABLED=true`。最近成功發布為 [Run 43798531492](https://github.com/LinthDale/synaiq-web/actions/runs/43798531492)，現行 `public_html/taistro-release-ci-43798531492-1/`。最新驗收及回退資訊見[部署紀錄](deploy-hostinger.md)。
+目前已啟用 `HOSTINGER_DEPLOY_ENABLED=true`。最近成功發布為 [Run 43996191723](https://github.com/LinthDale/synaiq-web/actions/runs/43996191723)，現行 `public_html/taistro-release-ci-43996191723-1/`。最新驗收及回退資訊見[部署紀錄](deploy-hostinger.md)。
 
-本次備份在草稿 Release `hostinger-backup-43798531492-1`，含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。
+本次備份在草稿 Release `hostinger-backup-43996191723-1`，含 `backup.tar.gz.enc` 與 `evidence.tar.gz.enc`。
 
 ## 平常如何更新
 
