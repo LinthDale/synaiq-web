@@ -1,5 +1,17 @@
 # 產品畫面與背景動畫來源
 
+## 2026-11-17 EMS 字標與 Demo 截圖更新
+
+官網 EMS 產品介紹與互動示範採用使用者提供的 SVG。網頁版保留原稿三條向量路徑與 `#040000` 填色，裁去周圍留白。原稿 SHA-256 為 `96631867e6691da65350b008a731153b7785943fdcbb9477320260af5dfc04a0`。公開版檔名為 `assets/ems-wordmark.svg`。
+
+系統更新至 `20261117-taistroems-logo-v1` 後，從[正式示範站](https://ems.taistro.com.tw/ems/#plant)重新擷取以下畫面。三張圖均包含新版頁首，灑水面板擷取時仍為模擬待機。原始 PNG 與驗收資料位於 `out/ems-logo-20261117/`。
+
+| 現行檔案 | 尺寸 | SHA-256 |
+|---|---|---|
+| assets/taistroems-plant-demo.webp | 1600 × 954 | `4a7070320f9ef55af58b3d2b936249a1a129c2826e0088865f65f4320ed3eee5` |
+| assets/taistroems-devices-demo.webp | 1600 × 870 | `7d56321d7525c5cb7054ebf10fcb4d8edb6211624c5e52693b25c58a8f17e83b` |
+| assets/taistroems-sprinkler-demo.webp | 1600 × 954 | `5f57c845cfb1c0449efc138a84b84d30c53d5a8bca4ad481203151c0b08135c6` |
+
 ## 2026-11-17 TaistroEMS 產品截圖
 
 三張圖均擷取自 [TaistroEMS 示範站](https://ems.taistro.com.tw/ems/#plant) 的中文介面。首圖在 3D 廠區旋轉並放大模型；設備監看從廠區主選單開啟；灑水控制選取 A 區並使用「看整區」檢視光電棚架。以示範帳號讀取模擬器資料，截圖時高壓清洗與背面噴霧均為待機，未取得操作權或下達設備指令。截圖保留原畫面讀值，未含客戶名稱、帳號或登入表單。

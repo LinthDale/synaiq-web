@@ -22,7 +22,7 @@ const runtimeFiles = [
   'energy-design.js', 'energy-screens.js',
   'pvsim-viewer.js', 'vendor/pvsim-three.js', 'vendor/three-LICENSE.txt',
   'assets/pvsim-site-demo.glb', 'assets/pvsim-panels-demo.glb',
-  'assets/taistroems-plant-demo.webp', 'assets/taistroems-devices-demo.webp', 'assets/taistroems-sprinkler-demo.webp',
+  'assets/ems-wordmark.svg', 'assets/taistroems-plant-demo.webp', 'assets/taistroems-devices-demo.webp', 'assets/taistroems-sprinkler-demo.webp',
   'assets/pvsim-model-demo.webp', 'assets/pvsim-shading-demo.webp', 'assets/pvsim-generation-demo.webp', 'assets/pvsim-wiring-demo.webp',
   'cases-design.js', 'about-design.js', 'ink-photo.js',
   'i18n.js', 'page-metadata.js', 'cases-data.js', 'brand.js', 'shared-design.js', 'preview.js',

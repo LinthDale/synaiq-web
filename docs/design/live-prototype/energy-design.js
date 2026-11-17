@@ -10,10 +10,11 @@ function stageContent(m, index) {
 function renderEnergy(product, destination, { locale = 'zh-Hant', messages = getMessages(locale) } = {}) {
   const m = messages[product];
   const name = product === 'ems' ? 'TaistroEMS' : 'PVsim';
+  const wordmark = product === 'ems' ? '<img class="ems-wordmark" src="assets/ems-wordmark.svg" alt="" width="88" height="20">' : '';
   return `<div class="energy-product" data-energy-product="${product}">
     <section class="energy-opening" aria-labelledby="energy-title"><div class="wrap energy-opening-layout">
       <div class="energy-opening-copy">
-        <p class="product-identity"><span>${e(m.productLabel)}</span></p>
+        <p class="product-identity">${wordmark}<span>${e(m.productLabel)}</span></p>
         <h1 id="energy-title">${m.title.map((line, index) => index === 2 ? `<span class="marked">${e(line)}</span>` : e(line)).join('<br>')}</h1>
         <p class="energy-intro">${e(m.intro)}</p>
         <div class="energy-opening-actions"><a class="button" href="#process">${e(m.cta)}</a><span class="energy-status">${e(m.status)}</span></div>
@@ -25,7 +26,7 @@ function renderEnergy(product, destination, { locale = 'zh-Hant', messages = get
     <section class="energy-capabilities energy-torn" id="capabilities" aria-labelledby="energy-capabilities-title"><div class="wrap energy-capabilities-layout"><div><span class="energy-section-number">03</span><h2 id="energy-capabilities-title">${m.capabilitiesTitle.map(e).join('<br>')}</h2><p>${e(m.capabilitiesIntro)}</p></div><dl class="energy-capability-list">${m.capabilities.map(([title, copy], index) => `<div><dt><span>0${index + 1}</span>${e(title)}</dt><dd>${e(copy)}</dd></div>`).join('')}</dl></div></section>
     <section class="energy-demo" id="proof" aria-labelledby="energy-demo-title"><div class="wrap"><div class="energy-demo-heading"><h2 id="energy-demo-title">${m.demoTitle.map(e).join('<br>')}</h2><p>${e(m.demoIntro)}</p></div>
       ${renderProductScreens(product, m)}
-      <div class="energy-workbook"><div class="energy-workbook-top"><span>${name}</span><span>${e(m.demoLabel)}</span></div>
+      <div class="energy-workbook"><div class="energy-workbook-top"><span class="energy-workbook-brand">${wordmark}${name}</span><span>${e(m.demoLabel)}</span></div>
         <div class="energy-stage-buttons" role="group" aria-label="${e(m.stageGroup)}">${m.stages.map(([title], index) => `<button type="button" data-energy-step="${index}" aria-pressed="${index === 0}" aria-controls="energy-stage"><span>0${index + 1}</span>${e(title)}</button>`).join('')}</div>
         <div class="energy-stage-layout"><div class="energy-stage-art"><ol class="energy-progress" aria-hidden="true">${m.stages.map((_, index) => `<li data-energy-marker="${index}" class="${index === 0 ? 'is-active' : ''}">0${index + 1}</li>`).join('')}</ol></div><div id="energy-stage" class="energy-stage-copy" aria-live="polite" aria-atomic="true">${stageContent(m, 0)}</div></div>
         <p class="energy-demo-note">${e(m.demoNote)}</p>
