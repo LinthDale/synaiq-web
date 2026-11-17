@@ -2,7 +2,7 @@
 
 | 版本 | 狀態 | Owner | ADO Feature | 最後更新 |
 |---|---|---|---|---|
-| v0.2 | Draft | Dale | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) | 2026-09-14 |
+| v0.3 | Draft | Dale | [#1301](https://dev.azure.com/synaiq/SynaiqDev/_workitems/edit/1301) | 2026-11-05 |
 
 ## 0. 本文件定位
 
@@ -50,6 +50,19 @@
 | 建置 | `npm run build` 與 `npm test` 綠燈 |
 | 密鑰 | 無硬編碼密鑰；疑似外洩者列輪替待辦 |
 
+### 4.1 統一維護規範（繼承全域 v1.1 §3.5）
+
+每份新建／修訂 PRD 在 §2 範圍引用[官網維護入口](../design/live-prototype/README.md)及[樣式維護指南](../design/live-prototype/STYLE-GUIDE.md)，填本次變更的權威來源、Owner、狀態及驗收案例；無變更寫「沿用」，不適用附理由。保留八節結構與篇幅限制，詳細表格連至共用手冊。
+
+| 修改類別 | 本專案權威來源／分工 |
+|---|---|
+| CSS／設計設定 | 正式網站 `page.html → site.css → tokens.css`；排版在 `site.css`，文字外觀及共用視覺設定在 `tokens.css`。保留的 Astro 基礎依 [CSS 手冊](CSS-Handbook.md)，不混淆兩套入口 |
+| 文案／產件範本 | `locales/<語言>/*.json` 及維護指南列出的特定來源；文案、資料 ID 與生成邏輯分離。涉及範本時另列版本及資料契約 |
+| Logo／圖片／圖示 | `brand.js`、`assets/` 及既有素材映射；素材公開範圍與封裝依 `share-preview.mjs` 白名單。每次改圖註明實際映射，不另建重複來源 |
+| RWD／發布 | 實際容器寬度、斷點與覆寫有明確歸屬；修改生成來源後重建，依既有發布手冊驗證路徑、快取與素材完整性 |
+
+只建立手冊不代表集中化完成。新增／修改範圍內須採共用入口；既有缺口列基線、Owner 及處理時點，不將未處理項標為符合。§6 驗收方式須引用相關樣式／文案／素材檢查與受影響的 RWD 案例，純文件更新只做文件一致性檢查。
+
 ## 5. 風險登錄表
 
 固定 4 欄，每份 PRD **至少 3 列**：
@@ -70,9 +83,9 @@
 |---|---|---|
 | 1 Overview & Context | 併入 §1 問題與目標 | 單一行銷站，無上下游系統 |
 | 3 User Stories & Personas | 降為 §1 內一列，≤ 3 角色 | 訪客角色單純 |
-| 6 System Architecture（C4 三圖） | 降級為本文件 §9 一張共用圖 | 單一 Worker，無多容器 |
-| 7 Data Model | 不適用 | 無 DB；`hosting.json` 的 d1/r2 皆 null，`drizzle/` 零 migration |
-| 8 API Contract | 不適用 | 無對外 API；唯一端點 `/_vinext/image` 為框架內建 |
+| 6 System Architecture（C4 三圖） | 降級為本文件 §9 一張共用圖 | 現行為 Hostinger 靜態前端，無自建多服務部署 |
+| 7 Data Model | 不適用 | 本 profile 範圍為靜態官網，未含業務資料庫；新增資料服務時須重評適用性 |
+| 8 API Contract | 不適用 | 現行靜態官網未提供自建業務 API；新增表單／資料 API 或跨系統契約時須補入 |
 | 10 Observability | 精簡為 NFR 一列 | 無自建監控；依實際主機狀態與 Lighthouse 抽查 |
 | 12 Rollout & Migration | 依 [部署指南](../operations/deploy-hostinger.md) 核對版本、備份與路由後回退 | 靜態站，無資料遷移 |
 | 13 覆蓋率 ≥ 80% | 改為渲染測試加 build 綠燈加 Lighthouse 門檻 | 幾無業務邏輯層 |
@@ -89,6 +102,7 @@
 - [ ] §6 驗收方式寫得出指令或量測步驟
 - [ ] Open Questions 有待決者與期限
 - [ ] 全文 ≤ 110 行，未複製其他文件已寫過的內容
+- [ ] 已依 §4.1 引用統一維護入口，列本次差異、Owner、現況／缺口及相關驗收；生成來源與發布產物清楚分開
 
 ## 9. 全案共用架構圖
 
@@ -100,6 +114,6 @@ flowchart LR
   B --> R["Hostinger 版本目錄"]
   R --> G["核對後切換根路由"]
   U["訪客瀏覽器"] --> G
-  G --> P["HTML / CSS / JavaScript 四頁中英文"]
+  G --> P["HTML / CSS / JavaScript 多頁與多語內容"]
   A["src Astro Phase A"] --> D["dist 檢驗產物，尚未部署"]
 ```
