@@ -14,6 +14,12 @@ DGX 的 `ems.taistro.com.tw.conf` 提供 HTTPS，靜態首頁使用 `config/ngin
 
 這次 45 個公開檔案均已自 HTTPS 逐檔驗證，manifest SHA-256 為 `d48d3f96e4e6be43b718ffa4671e289d843aaa70e6e663d05c8a72df257ef6a4`。TLS 使用閘道既有的 Certbot webroot 續期，憑證更新後由 `taistroems-cert-reload.path` 觸發 Nginx 配置檢查及平滑重載。Let’s Encrypt 的續期演練與重載測試均通過。日本和美國外網節點通過憑證驗證，確認根網址導向同一新網域，首頁回傳 HTTP 200 與 TaistroEMS 標題。閘道的 `~/ems-release-ops/20261117-taistroems-3d-v1/` 保留本次封裝、配置與續期載入檔，本機驗收資料在 `out/ems-domain-20261117/`。
 
+## 2026-11-17 EMS 登入頁與 twin 工作階段轉送（已上線）
+
+4179 於 2026-11-17 15:17 以 `20261117-ems-login-v1` 重啟（共 49 個檔案，manifest SHA-256 開頭 `7278cd9ea25bd062`）。`synaiq-ai.com/ems/` 改為先登入：除 `#login` 外的路由都要先確認工作階段，不再提供訪客入口（EMS ADR-060）。轉送器同時新增 `.webp`／`.jpg` 的 MIME，供登入場景素材使用；CSP 的 `connect-src` 只多允許 `https://api.open-meteo.com`，供登入頁取得天氣。`ems.taistro.com.tw/ems/` 的靜態頁由 DGX 閘道提供，需另外更新版本目錄。回退時，把 `rollback-20261117-ems-login/` 的 `server-config.json` 與 `server.mjs` 複製回本資料夾，再執行 `start-public.cmd`。
+
+同版 `server.mjs` 轉送 `/api/twin/*` 時改為只帶 `ems_bff_session`，提示 cookie 和其他 cookie 都不送。twin 開啟 `TWIN_REQUIRE_SESSION=1` 後，會自行向 BFF 確認身分（EMS ADR-060）。twin 沒開這個開關時會忽略這個 cookie，所以已先上線。選用設定 `twinTarget` 預設為 `http://127.0.0.1:4783`，只接受 loopback，用於在隔離埠驗證。回歸測試為 `tests/ems-relay.test.mjs`。
+
 ## 本機轉送與舊入口
 
 2026-11-17 主站下一次啟動使用 `20261117-meter-label-v1`。進線總表的顯示名稱改為「實際用電」，累計值顯示為「累計實際用電」。此版承接 `20261116-account-hints-v1`，需要回復時可將 `server-config.json` 的 `release` 指回該版本。

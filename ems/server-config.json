@@ -2,7 +2,7 @@
   "port": 4179,
   "tailscaleAddress": "100.114.126.85",
   "bffTarget": "http://127.0.0.1:8003",
-  "release": "releases/20261117-meter-label-v1",
+  "release": "releases/20261117-ems-login-v1",
   "dajiaTwin": true,
   "wslDistro": "Ubuntu",
   "waterSimulation": true,

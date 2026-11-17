@@ -33,13 +33,15 @@ const allowedGet=/^\/api\/(?:auth\/(?:session|password-hint)|alarms\/demo|device
 const allowedPost=/^\/api\/(?:auth\/(?:login|logout|password-hint(?:\/(?:remind|forget-device))?)|alarms\/demo)$/;
 const target=new URL(config.bffTarget);
 if(target.hostname!=='127.0.0.1')throw Error('BFF target must be loopback');
+const twinTarget=new URL(config.twinTarget||'http://127.0.0.1:4783');
+if(twinTarget.hostname!=='127.0.0.1')throw Error('twin target must be loopback');
 const manifest=JSON.parse(await readFile(resolve(base,config.release,'manifest.json'),'utf8'));
 const published=new Set(manifest.files.map(f=>'/'+f.path));
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.txt':'text/plain; charset=utf-8'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.txt':'text/plain; charset=utf-8'};
 const buckets=new Map();let active=0,activeStop=0;
 function consume(ip,kind,limit){const now=Date.now(),key=ip+':'+kind;let b=buckets.get(key);if(!b||now>b.until){b={count:0,until:now+60000};buckets.set(key,b);}return ++b.count<=limit;}
 setInterval(()=>{const now=Date.now();for(const[k,v]of buckets)if(now>v.until)buckets.delete(k);},60000).unref();
-const action=Symbol('action'),reason=Symbol('reason'),assets=/\.(?:css|js|mjs|png|svg|json|txt)$/;
+const action=Symbol('action'),reason=Symbol('reason'),assets=/\.(?:css|js|mjs|png|webp|jpg|svg|json|txt)$/;
 const clientIp=req=>{const peer=req.socket.remoteAddress;return peer==='100.64.84.58'?String(req.headers['x-real-ip']||peer).slice(0,64):peer;};
 const answer=(res,code,detail)=>{res[reason]=detail;res.writeHead(code,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify({detail}));};
 async function handle(req,res){
@@ -76,8 +78,10 @@ async function handle(req,res){
    if(!auth.ok){answer(res,auth.status,'EMS login required');return;}
    const identity=await auth.json();if(identity.role!=='ops'){answer(res,403,'OPS required');return;}
   }
-  const destination=twin?'http://127.0.0.1:4783':target;
-  if(twin){delete headers.cookie;if(req.method==='POST')headers.origin=destination;headers['accept-encoding']=req.headers['accept-encoding']||'identity';}
+  const destination=twin?twinTarget:target;
+  // The twin confirms ems_bff_session with the BFF itself (EMS ADR-060); the hint cookie is only for the BFF.
+  if(twin){const twinSession=session.split('; ').filter(s=>s.startsWith('ems_bff_session=')).join('; ');if(twinSession)headers.cookie=twinSession;else delete headers.cookie;
+   if(req.method==='POST')headers.origin=twinTarget.origin;headers['accept-encoding']=req.headers['accept-encoding']||'identity';}
   const upstream=http.request(new URL(pathname+url.search,destination),{method:req.method,headers,timeout:15000},reply=>{
    res.statusCode=reply.statusCode;
    for(const name of ['content-type','retry-after','content-encoding','vary'])if(reply.headers[name])res.setHeader(name,reply.headers[name]);
@@ -95,7 +99,7 @@ async function handle(req,res){
   const file=await realpath(resolve(root,'.'+relative));
   if(!file.startsWith(root+sep)||!(await stat(file)).isFile()||!types[extname(file)]){answer(res,404,'not found');return;}
   res.setHeader('Content-Type',types[extname(file)]);
-  if(extname(file)==='.html')res.setHeader('Content-Security-Policy',"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'");
+  if(extname(file)==='.html')res.setHeader('Content-Security-Policy',"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.open-meteo.com; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'");
   if(req.method==='HEAD')res.end();else res.end(await readFile(file));
  }catch{answer(res,404,'not found');}
 }
