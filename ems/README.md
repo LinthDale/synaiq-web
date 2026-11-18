@@ -2,6 +2,20 @@
 
 [TaistroEMS 首頁](https://ems.taistro.com.tw/) 會開啟 [3D 廠區總覽](https://ems.taistro.com.tw/ems/#plant)。分頁標題與頁首皆為 `TaistroEMS`。舊的 `#Monitor` 網址仍可用於設備監看。
 
+## 2026-11-18 轉送器開放報告、預測與處置紀錄讀取（待重新啟動）
+
+`20261117-ems-login-v1` 的前端新增營運效益報告（`#overview`）、文檔管理中心（`#documents`）與預測面板，告警處置紀錄自 `20261117-taistroems-logo-v1` 起也向 twin 讀取。但轉送器的 twin 白名單只有 state、day、weather 及 command。因此 11/17 15:18 重新啟動後，這些請求在正式站都回 `404 unsupported route`，報告區無法使用。至 11/18 10:05 的日誌中，benefits 被擋 272 次、documents 5 次、journal 4 次、forecast 1 次。EMS 弱掃紀錄 `output/relay-session-forward-scan-20261117/` 已把這列為功能缺口。
+
+`server.mjs` 的修改：
+
+- `GET /api/twin/forecast`、`/api/twin/journal` 比照 state 等讀取路由，只轉送 `ems_bff_session`，由 twin 自行確認登入（EMS ADR-060）。
+- 報告路由：`GET /api/twin/benefits`、`/api/twin/documents`、`/api/twin/documents/<bill-11402-v1 或 ops-24 位十六進位>`，以及其下 `files/` 的 `report.pdf`、`report.docx`、`daily|energy|items|carbon.csv`；另有 `POST /api/twin/documents`。轉送器沿用 command 的檢查方式，先向 BFF 確認是 OPS，twin 也會再檢查一次。其他路徑、檔名或方法仍回 404。
+- 報告回應保留 `Content-Length` 與 `Content-Disposition`；建立報告時，`Location` 改寫到 `/ems/` 之下。
+
+驗證：`tests/ems-relay.test.mjs` 新增 1 項。兩項測試在 WSL Node v24.13.0 與線上同版 Windows Node v24.11.0 都通過；改用舊版轉送器時，新測試在 forecast 回 404 而失敗。另用 EMS `services/dajia-twin` 的真實 twin（暫存 SQLite、`requireSession`）搭配替身 BFF，隔離串接修改後的轉送器。結果：匿名請求回 401；OPS 可讀效益、報告清單與單筆報告；PDF／CSV 下載帶有檔名；建立報告回 201。驗證過程沒有接觸正式服務。帳單 PDF 首次產製約 0.4 秒，遠低於 15 秒上游逾時。
+
+**須重新啟動轉送程序才會生效**（由使用者雙擊 `start-public.cmd`）；發布包與 `server-config.json` 不變。啟動後先確認未登入時 `https://ems.taistro.com.tw/ems/api/twin/benefits?period=today` 回 401，不再是 404；再用 OPS 帳號開啟 `#documents` 與 `#overview`。回退時，把 `rollback-20261118-report-routes/server.mjs` 複製回本資料夾，再重新啟動。
+
 ## 2026-11-17 EMS 字標
 
 公開 Demo 現行靜態版本為 `20261117-taistroems-logo-v1`。3D 廠區、設備監看、灑水控制及舊版監看畫面使用使用者提供的黑色 EMS 字標。分頁名稱為 TaistroEMS。本次更新公開版的 `index.html`、`brand-header.css` 與 `assets/ems-wordmark-03.svg`。本機 4783 示範的頁首來源位於 WSL 的 `services/dajia-twin/ui/shell.html` 及 `operations.css`。舊版監看共用的兩個品牌檔案由 `services/dajia-twin/package-release.mjs` 從 `output/ems-design-preview-20260923/public/` 納入新發布包。
@@ -148,7 +162,7 @@ Azure `main` 已由 PR #734 合併新版發布包及設定；本補充只記錄�
 ## 安全邊界
 
 - 只監聽 `127.0.0.1` 與 Tailscale 位址，並且只接受 DGX-01 `100.64.84.58` 和本機的連線。
-- API 白名單：session、登入／登出、設備清單／單筆、量測／歷史／紀錄讀取，以及 `GET/POST /api/alarms/demo`。其餘一律回 404，寫入設備的 API 不在白名單中。
+- API 白名單：session、登入／登出、密碼提示、設備清單／單筆、量測／歷史／紀錄讀取，以及 `GET/POST /api/alarms/demo`。水控模擬只開放 `water-policy.mjs` 列出的路由。twin 可讀 state、day、weather、forecast、journal；`POST /api/twin/command` 與報告路由（benefits、documents）須通過 OPS 檢查。其餘一律回 404，寫入實體設備的 API 不在白名單中。
 - 每個 IP 每分鐘最多 120 次 API、5 次登入。同時最多 4 個請求，BFF 逾時 15 秒。
 - Cookie 限定在 `/ems/` 路徑，並設定 Secure、HttpOnly、SameSite=Strict。
 - DGX 的路由設定在 `/home/nick/projects/YIYI-Global-Gateway/config/nginx/conf.d/synaiq-ai.com.conf` 的 `# BEGIN EMS LOCAL 20260923` 區塊。

@@ -28,7 +28,9 @@ const root=await realpath(resolve(base,config.release,'public'));
 const origins=new Set(['https://synaiq-ai.com',`http://127.0.0.1:${config.port}`]);
 const hosts=new Set(['synaiq-ai.com',`127.0.0.1:${config.port}`]);
 const allowedPeers=new Set(['127.0.0.1','100.64.84.58']);
-const twinRead=new Set(['/api/twin/state','/api/twin/day','/api/twin/weather']);
+const twinRead=new Set(['/api/twin/state','/api/twin/day','/api/twin/weather','/api/twin/forecast','/api/twin/journal']);
+// Reports: the benefit summary, the archive (list, one report, its fixed downloads) and creating one. OPS only, here and at the twin (EMS ADR-060).
+const reportGet=/^\/api\/twin\/(?:benefits|documents(?:\/(?:bill-11402-v1|ops-[a-f0-9]{24})(?:\/files\/(?:report\.(?:pdf|docx)|(?:daily|energy|items|carbon)\.csv))?)?)$/;
 const allowedGet=/^\/api\/(?:auth\/(?:session|password-hint)|alarms\/demo|devices(?:\/[A-Za-z0-9_-]{1,64}(?:\/(?:measurements|history|records))?)?)$/;
 const allowedPost=/^\/api\/(?:auth\/(?:login|logout|password-hint(?:\/(?:remind|forget-device))?)|alarms\/demo)$/;
 const target=new URL(config.bffTarget);
@@ -55,7 +57,8 @@ async function handle(req,res){
   res.setHeader('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'");
   const water=!!config.waterSimulation&&waterRoute(req.method,pathname);
   const stop=water&&waterStop(req.method,pathname);
-  const twin=!!config.dajiaTwin&&(req.method==='GET'&&twinRead.has(pathname)||req.method==='POST'&&pathname==='/api/twin/command');
+  const report=!!config.dajiaTwin&&(req.method==='GET'&&reportGet.test(pathname)||req.method==='POST'&&pathname==='/api/twin/documents');
+  const twin=report||!!config.dajiaTwin&&(req.method==='GET'&&twinRead.has(pathname)||req.method==='POST'&&pathname==='/api/twin/command');
   if(!water&&!twin&&!(req.method==='GET'&&allowedGet.test(pathname))&&!(req.method==='POST'&&allowedPost.test(pathname))){answer(res,404,'unsupported route');return;}
   if(req.method==='POST'&&!origins.has(req.headers.origin)){answer(res,403,'origin check failed');return;}
   const chunks=[];let size=0;
@@ -73,7 +76,7 @@ async function handle(req,res){
   const cookieNames=new Set(['ems_bff_session','ems_hint_device']);
   const session=String(req.headers.cookie||'').split(';').map(s=>s.trim()).filter(s=>cookieNames.has(s.split('=',1)[0])).join('; ');if(session)headers.cookie=session;
   if(size)headers['content-length']=size;
-  if(twin&&req.method==='POST'){
+  if(twin&&(report||req.method==='POST')){
    const auth=await fetch(new URL('/api/auth/session',target),{headers:session?{cookie:session}:{},signal:AbortSignal.timeout(5000)});
    if(!auth.ok){answer(res,auth.status,'EMS login required');return;}
    const identity=await auth.json();if(identity.role!=='ops'){answer(res,403,'OPS required');return;}
@@ -85,6 +88,10 @@ async function handle(req,res){
   const upstream=http.request(new URL(pathname+url.search,destination),{method:req.method,headers,timeout:15000},reply=>{
    res.statusCode=reply.statusCode;
    for(const name of ['content-type','retry-after','content-encoding','vary'])if(reply.headers[name])res.setHeader(name,reply.headers[name]);
+   if(report){
+    if(reply.headers.location?.startsWith('/api/twin/documents/'))res.setHeader('Location','/ems'+reply.headers.location);
+    for(const name of ['content-length','content-disposition'])if(reply.headers[name])res.setHeader(name,reply.headers[name]);
+   }
    if(reply.headers['set-cookie'])res.setHeader('Set-Cookie',reply.headers['set-cookie'].filter(c=>cookieNames.has(c.split('=',1)[0])).map(c=>c.replace(/;\s*Path=\/([;]|$)/i,'; Path=/ems/$1')));
    reply.on('error',()=>res.destroy());reply.pipe(res);
   });
