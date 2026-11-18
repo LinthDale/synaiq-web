@@ -30,6 +30,6 @@
 | 自動部署流程 | [GitHub CI/CD 說明](docs/operations/hostinger-cicd.md) |
 | 主機操作與部署紀錄 | [Hostinger 部署指南](docs/operations/deploy-hostinger.md) |
 | 檔案保留與清理 | [Repo 維護規則](docs/operations/repository-hygiene.md) |
-| EMS 公開入口服務 | [EMS 維護文件](ems/README.md) |
+| EMS 公開入口服務 | 已移出本 repo（2026-11-18）：前端發布包在 private repo [taistroems-frontend](https://github.com/LinthDale/taistroems-frontend)，轉送器在 EMS repo 的 `services/public-relay`（ADR-062） |
 
 其他文件：[現行文件索引](docs/README.md) · [歷史文件索引](docs/archive/README.md) · [Astro Phase A 紀錄](docs/migration/phaseA-log.md)。

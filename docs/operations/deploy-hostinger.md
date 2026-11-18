@@ -4,13 +4,18 @@
 
 工程師及新的 AI session 請先讀 [官網更新與部署 README](WEBSITE-UPDATE-README.md)。本文件保留現行目錄與歷次發布、驗證及回退紀錄。
 
+
+## 2026-11-18 EMS 公開入口移出官網 repo
+
+`ems/`（Windows 公開轉送器與 EMS 前端發布包）已移出本 repo：前端發布包連同歷史移到 private repo [taistroems-frontend](https://github.com/LinthDale/taistroems-frontend)，轉送器改為 EMS repo 的容器 `ems-public-relay`（ADR-062），`tests/ems-relay.test.mjs` 移為 EMS 的 `services/public-relay/server.test.mjs`。舊資料夾完整備份在 `C:\Users\User\synaiq\ems-relay-windows-rollback-20261118`，只供回退。官網內容與 Hostinger 發布不受影響。
+
 ## 2026-11-17 EMS 按鈕改連登入頁
 
 [Run 44039511842](https://github.com/LinthDale/synaiq-web/actions/runs/44039511842) 已將 `2626dfa68bb0720dcae31c216e8b51e7d54bcf35` 發布至 `public_html/taistro-release-ci-44039511842-1/`。EMS 產品頁三語的「進入 TaistroEMS 3D 廠區」改連 `https://ems.taistro.com.tw/ems/#login`，因為 EMS 已改為全站登入（EMS ADR-060），登入後進入 3D 廠區。部署後以 HTTPS 核對 zh-Hant、en、de 三頁，連結都是 `#login`。第一次推送 [Run 44039206273](https://github.com/LinthDale/synaiq-web/actions/runs/44039206273) 因 `prerender.test.mjs` 仍斷言 `#plant`，停在 `test:deploy`，主機沒有任何變更；`20e5e8f` 修正測試後重新發布。前版為 `taistro-release-ci-44006492296-1`；路由雜湊、加密備份及驗收證據保存在本次 Run 的草稿 Release 與 artifact。
 
 ## 2026-11-17 TaistroEMS 字標與 Demo
 
-[Run 44006492296](https://github.com/LinthDale/synaiq-web/actions/runs/44006492296) 已將 `78ab279d4d921e9fd0b492b6b43e470503e0cd4b` 發布至 `public_html/taistro-release-ci-44006492296-1/`。EMS 產品區、互動示範與三張實際截圖均顯示新的黑色 EMS 字標，公司導覽使用 tAistro。三語頁面各以桌面與手機核對公司及產品標誌、圖集切換、圖說與原圖。截圖來源及雜湊見[產品畫面紀錄](../design/live-prototype/product-screen-provenance.md)，獨立 Demo 版本見 [EMS 發布紀錄](../../ems/README.md)。
+[Run 44006492296](https://github.com/LinthDale/synaiq-web/actions/runs/44006492296) 已將 `78ab279d4d921e9fd0b492b6b43e470503e0cd4b` 發布至 `public_html/taistro-release-ci-44006492296-1/`。EMS 產品區、互動示範與三張實際截圖均顯示新的黑色 EMS 字標，公司導覽使用 tAistro。三語頁面各以桌面與手機核對公司及產品標誌、圖集切換、圖說與原圖。截圖來源及雜湊見[產品畫面紀錄](../design/live-prototype/product-screen-provenance.md)，獨立 Demo 版本見 [EMS 發布紀錄](https://github.com/LinthDale/taistroems-frontend/blob/main/docs/public-entry-history.md)。
 
 正式路由 SHA-256 為 `903416b5a1152bb313be811760c47f9c677bf061e114cfdd6718ee25a99e14da`，前版 `taistro-release-ci-44000600619-2` 的路由為 `d29950e2825c838346ef29c7bd960337838c1d8196577d5205bbba52eaa6540d`。草稿 Release `hostinger-backup-44006492296-1` 保留加密備份及驗收證據。本機紀錄在 `out/ems-logo-20261117/` 與 `out/hostinger-ci/ems-logo-live-20261117/`。
 
@@ -26,7 +31,7 @@
 
 [Run 43996191723](https://github.com/LinthDale/synaiq-web/actions/runs/43996191723) 已將 `eb1f2ff057efa3ad0823cbec6cf892d361dcaf92` 發布到 `public_html/taistro-release-ci-43996191723-1/`。官網 EMS 產品頁的繁中、英文、德文按鈕都開啟 `https://ems.taistro.com.tw/ems/#plant`。正式網站三語各以桌面和手機尺寸實際點入，共六組；均看到 TaistroEMS 頁首及分頁標題、「3D 廠區總覽」與 WebGL 2 畫布。原設備監看可由廠區主選單進入。
 
-新網域的 DNS、憑證續期與發布包記在 [TaistroEMS 公開入口](../../ems/README.md)。Hostinger 新版正式路由 SHA-256 為 `d5e6c8e0810ea4aeb52a18864237bc9433e8b7fd64ed601a559d0e81d9572dd5`。前版 `taistro-release-ci-43798531492-1` 的路由 SHA-256 為 `d0902554f12d25afccaea68dba20efa41af90c293761c3f29997650d7335afde`，已與本次加密備份的原路由逐位元組核對。本次備份及原路由存於草稿 Release `hostinger-backup-43996191723-1`。本機驗收紀錄在 `out/ems-domain-20261117/`，主機路由核對在 `out/hostinger-ci/taistroems-live-20261117/`。
+新網域的 DNS、憑證續期與發布包記在 [TaistroEMS 公開入口](https://github.com/LinthDale/taistroems-frontend/blob/main/docs/public-entry-history.md)。Hostinger 新版正式路由 SHA-256 為 `d5e6c8e0810ea4aeb52a18864237bc9433e8b7fd64ed601a559d0e81d9572dd5`。前版 `taistro-release-ci-43798531492-1` 的路由 SHA-256 為 `d0902554f12d25afccaea68dba20efa41af90c293761c3f29997650d7335afde`，已與本次加密備份的原路由逐位元組核對。本次備份及原路由存於草稿 Release `hostinger-backup-43996191723-1`。本機驗收紀錄在 `out/ems-domain-20261117/`，主機路由核對在 `out/hostinger-ci/taistroems-live-20261117/`。
 
 ## 2026-11-16 官網移除 Synaiq 品牌識別
 
